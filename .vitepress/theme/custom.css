@@ -221,8 +221,8 @@
   letter-spacing: -0.04em;
 }
 
-/* The hero image slot holds a full conversation panel, not a logo — free it
-   from VitePress' fixed 320px logo container so it flows in normal height
+/* The hero image slot holds the lifecycle graphic, not a logo: free it from
+   VitePress' fixed 320px logo container so it flows in normal height
    (otherwise it overflows and the hero text overlaps it on mobile). */
 :root:has(.VPHome) .VPHero .image-container {
   width: auto;
@@ -238,39 +238,17 @@
     min-width: 440px;
   }
 }
-/* On mobile, lead with the headline (what is this?) then the demo panel. */
+/* On mobile, lead with the headline (what is this?) then the lifecycle. */
 @media (max-width: 959px) {
   :root:has(.VPHome) .VPHero .main {
     order: 1;
   }
   :root:has(.VPHome) .VPHero .image {
     order: 2;
-    margin-top: 40px;
+    /* VitePress pulls the hero image to the screen edges (-24px); the
+       lifecycle graphic keeps the page gutter instead. */
+    margin: 40px 0 0;
   }
-}
-
-/* Feature cards → quiet editorial directory: no fill, a top hairline that
-   takes the brand accent on hover, so they recede behind the hero instead
-   of competing with it as four more boxes. */
-:root:has(.VPHome) .VPFeature {
-  background-color: transparent;
-  border: none;
-  border-top: 1px solid var(--vp-c-border);
-  border-radius: 0;
-  padding: 22px 0 0;
-  transition: border-color var(--cd-motion-base) var(--cd-ease);
-}
-:root:has(.VPHome) .VPFeature:hover {
-  background-color: transparent;
-  border-top-color: var(--vp-c-brand-1);
-}
-:root:has(.VPHome) .VPFeature .title {
-  font-size: 16px;
-  letter-spacing: -0.01em;
-}
-:root:has(.VPHome) .VPFeature .details {
-  font-size: 13.5px;
-  line-height: 1.6;
 }
 
 /* ── Landing entrances (fade-up) ────────────────────────────────────── */
@@ -301,26 +279,13 @@
 :root:has(.VPHome) .VPHero .image {
   animation: mgn-fade-up 1s 0.35s ease both;
 }
-:root:has(.VPHome) .VPFeatures .item {
-  animation: mgn-fade-up 0.7s 0.45s ease both;
-}
-:root:has(.VPHome) .VPFeatures .item:nth-child(2) {
-  animation-delay: 0.52s;
-}
-:root:has(.VPHome) .VPFeatures .item:nth-child(3) {
-  animation-delay: 0.59s;
-}
-:root:has(.VPHome) .VPFeatures .item:nth-child(4) {
-  animation-delay: 0.66s;
-}
 
 @media (prefers-reduced-motion: reduce) {
   :root:has(.VPHome) .VPHero .name,
   :root:has(.VPHome) .VPHero .text,
   :root:has(.VPHome) .VPHero .tagline,
   :root:has(.VPHome) .VPHero .actions,
-  :root:has(.VPHome) .VPHero .image,
-  :root:has(.VPHome) .VPFeatures .item {
+  :root:has(.VPHome) .VPHero .image {
     animation: none;
   }
 }
