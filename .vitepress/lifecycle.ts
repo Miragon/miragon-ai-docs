@@ -14,6 +14,8 @@ export interface Phase {
   link: string
   /** The job of the phase, a few words. */
   job: string
+  /** Runs once, before the loop: the loop from Optimize returns to the first phase without it. */
+  once?: boolean
   tools: Tool[]
 }
 
@@ -21,8 +23,9 @@ export const PHASES: Phase[] = [
   {
     name: "Analyse",
     link: "/analyse",
-    job: "See how your processes connect",
-    tools: [{ name: "analyzr", link: "/tools/analyzr", job: "Link and review your as-is" }],
+    job: "Which processes, how they connect",
+    once: true,
+    tools: [{ name: "analyzr", link: "/tools/analyzr", job: "Map how your processes connect" }],
   },
   {
     name: "Design",

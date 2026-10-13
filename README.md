@@ -10,7 +10,8 @@ file outside the dot directories is a page, except this README and `CLAUDE.md`.
 
 ## Lifecycle and tools
 
-Analyse, Design, Implement, Execute, Optimize. Optimize feeds back into Analyse.
+Analyse runs once, at the start. Then Design, Implement, Execute and Optimize form a loop, and
+Optimize feeds back into Design.
 
 | Phase                     | Tool               | Page                                                       |
 | ------------------------- | ------------------ | ---------------------------------------------------------- |

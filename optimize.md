@@ -5,7 +5,7 @@ description: What the Optimize phase needs from your running processes and what 
 
 # Optimize
 
-In Optimize your team learns from the processes in production what to change in them, and takes those findings back into [Analyse](/analyse).
+In Optimize your team learns from the processes in production what to change in them, and takes those findings back into [Design](/design). From there the loop starts again. Analyse comes only once, at the start.
 
 ## The problem today
 
@@ -40,11 +40,11 @@ We decide from real cases what to build for Optimize, if anything. If your team 
 
 ## Human and AI
 
-Your team weighs the findings and decides what goes back into Analyse. An agent could turn your questions into queries and lay the numbers side by side without remodelling anything itself, but no tool for that exists yet.
+Your team weighs the findings and decides what goes back into Design. An agent could turn your questions into queries and lay the numbers side by side without remodelling anything itself, but no tool for that exists yet.
 
 ## Hand-over
 
-| Direction                | What is handed over                                                                                                                                                                                                                                                                                                                            | Format                                        |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| From [Execute](/execute) | The raw material described above: Pulse's activity ranking, BPMN heatmap and KPI deltas, and the raw results of operate's history queries.                                                                                                                                                                                                     | JSON and chat widgets (Pulse), JSON (operate) |
-| To [Analyse](/analyse)   | Findings and change requests for the model, with no fixed format yet. Your team can pin one as a todo to a BPMN element in [designIQ](/tools/design-iq). Re-uploading a changed model to [analyzr](/tools/analyzr) (alpha) creates a new revision, and only models whose facts changed are analysed again. analyzr does not read runtime data. | GitHub issues, `.bpmn` files                  |
+| Direction                | What is handed over                                                                                                                                      | Format                                        |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| From [Execute](/execute) | The raw material described above: Pulse's activity ranking, BPMN heatmap and KPI deltas, and the raw results of operate's history queries.               | JSON and chat widgets (Pulse), JSON (operate) |
+| To [Design](/design)     | Findings and change requests for the model, with no fixed format yet. Your team can pin one as a todo to a BPMN element in [designIQ](/tools/design-iq). | GitHub issues                                 |
