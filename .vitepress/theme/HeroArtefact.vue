@@ -5,6 +5,7 @@
     artefact: { type: chat }                                   Pulse's chat
     artefact: { type: terminal, title, lines: [...] }          TerminalWindow
     artefact: { type: screenshot, src, alt, url, caption }     ScreenshotFrame
+    artefact: { type: flow, examples: [...] }                  HeroFlow (landing)
   Without `artefact` the lifecycle graphic renders.
 -->
 <script setup lang="ts">
@@ -14,6 +15,7 @@ import LifecycleMap from "./LifecycleMap.vue"
 import PulseChat from "./PulseChat.vue"
 import TerminalWindow from "./TerminalWindow.vue"
 import ScreenshotFrame from "./ScreenshotFrame.vue"
+import HeroFlow from "./HeroFlow.vue"
 
 const { frontmatter } = useData()
 const artefact = computed(() => frontmatter.value.artefact ?? { type: "lifecycle" })
@@ -33,5 +35,6 @@ const artefact = computed(() => frontmatter.value.artefact ?? { type: "lifecycle
     :url="artefact.url"
     :caption="artefact.caption"
   />
+  <HeroFlow v-else-if="artefact.type === 'flow'" :examples="artefact.examples ?? []" />
   <LifecycleMap v-else />
 </template>

@@ -70,6 +70,12 @@
   margin-top: 32px;
 }
 
+/* The lifecycle graphic as the landing's first band, centred. */
+.lifecycle-band {
+  display: flex;
+  justify-content: center;
+}
+
 /* The page ends in its last band; the legal footer follows directly. */
 .VPHome {
   margin-bottom: 0 !important;
@@ -94,6 +100,13 @@
 }
 :root .VPHero .tagline {
   color: color-mix(in srgb, var(--cd-weiss) 84%, transparent);
+}
+
+/* The hero artefact sits level with the hero text. */
+@media (min-width: 960px) {
+  :root .VPHome .VPHero .container {
+    align-items: center;
+  }
 }
 
 /* A tool's page (it has an eyebrow): the tool name is a label above the

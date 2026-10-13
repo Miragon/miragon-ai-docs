@@ -10,7 +10,7 @@ hero:
   actions:
     - theme: brand
       text: Explore the lifecycle
-      link: /analyse
+      link: "#lifecycle"
     - theme: alt
       text: Talk to us
       link: /#contact
@@ -172,32 +172,63 @@ limits:
   - icon: chart
     title: No savings numbers
     text: No numbers on time or cost savings until we have published them.
+artefact:
+  type: flow
+  examples:
+    - tool: analyzr
+      phase: Analyse
+      link: /tools/analyzr
+      agent: proposes a message link
+      detail: "Invoicing → Order handling, at 73 % confidence"
+      team: Accept the link
+    - tool: designIQ
+      phase: Design
+      link: /tools/design-iq
+      agent: edits order-to-cash.bpmn
+      detail: adds the user task “Check credit limit”
+      team: Merge the pull request
+    - tool: Skills
+      phase: Implement
+      link: /tools/skills
+      agent: makes payment.bpmn deployable
+      detail: sets the external task topic, validate --strict passes
+      team: Review the change
+    - tool: Pulse
+      phase: Execute
+      link: /tools/pulse/
+      agent: groups the open incidents
+      detail: 112 failed jobs on 2 processes, one ticket draft
+      team: File the ticket
 ---
 
-<PageSection eyebrow="Who it is for" title="New tools for the Camunda 7 world" intro="For teams with their own developers whose processes run on Camunda 7, CIB seven or Operaton. Miragon AI brings AI agents to exactly that stack: they map your process landscape, edit your models, make them deployable and tell you what is stuck. No new engine, no migration. Find your role and the tool to start with.">
+<PageSection id="lifecycle" align="center" eyebrow="The lifecycle" title="Analyse once, then one loop" intro="Analyse maps what you have. Design, Implement, Execute and Optimize form the loop, and what you learn in Optimize goes back into Design. Every phase and tool below is a link.">
+  <div class="lifecycle-band"><LifecycleMap /></div>
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Who it is for" title="New tools for the Camunda 7 world" intro="For teams with their own developers whose processes run on Camunda 7, CIB seven or Operaton. Miragon AI brings AI agents to exactly that stack: they map your process landscape, edit your models, make them deployable and tell you what is stuck. No new engine, no migration. Find your role and the tool to start with.">
   <CardGrid :items="$frontmatter.roles" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="What Miragon AI does" title="A tool for four of the five phases" intro="Analyse runs once, at the start. Design, Implement, Execute and Optimize form the loop, and what you learn in Optimize goes back into Design.">
+<PageSection eyebrow="What Miragon AI does" title="A tool for four of the five phases" intro="Analyse runs once, at the start. Design, Implement, Execute and Optimize form the loop, and what you learn in Optimize goes back into Design.">
   <CardGrid :items="$frontmatter.phases" />
 </PageSection>
 
-<PageSection eyebrow="Human and AI" title="Who does what, phase by phase" intro="The business flow of a process stays with people. In every phase the agent prepares the work and someone on your team decides.">
+<PageSection tone="tint" eyebrow="Human and AI" title="Who does what, phase by phase" intro="The business flow of a process stays with people. In every phase the agent prepares the work and someone on your team decides.">
   <CardGrid :items="$frontmatter.human" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Why Miragon" title="Built by a process automation consultancy">
+<PageSection eyebrow="Why Miragon" title="Built by a process automation consultancy">
   <FeatureList :items="$frontmatter.why" />
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Open it before you talk to us" intro="Versions as of 13 October 2026. Every link is public and needs no login.">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Open it before you talk to us" intro="Versions as of 13 October 2026. Every link is public and needs no login.">
   <CardGrid :items="$frontmatter.proof" :columns="4" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="What we don't promise" title="Where the tools stop today">
+<PageSection eyebrow="What we don't promise" title="Where the tools stop today">
   <FeatureList :items="$frontmatter.limits" />
 </PageSection>
 
-<PageSection>
+<PageSection tone="tint">
   <BrandContact />
 </PageSection>
