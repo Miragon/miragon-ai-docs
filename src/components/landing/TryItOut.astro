@@ -1,4 +1,181 @@
 ---
-// Pulse's "connect your Claude" band: open the playground in the MCP
-// inspector, no login. Scaffold: renders nothing.
+// Pulse's playground card: a prominent "try it now" CTA on the Pulse
+// landing page (content/tools/pulse.mdx), modelled on the marketing site's
+// CtaBanner (centered card under a brand-gradient edge). The button opens
+// Pulse's hosted playground (miragon-ai-playground.fly.dev) in the MCP
+// inspector; the example-prompt hint shows newcomers a concrete first thing
+// to ask.
+// Colours come from the site's roles (styles/tokens.css → CI tokens).
+const INSPECTOR_URL =
+  "https://inspector.manufact.com/inspector?server=https%3A%2F%2Fmiragon-ai-playground.fly.dev%2Fmcp&tab=chat"
 ---
+
+<section class="tio" aria-label="Try it out">
+  <div class="card">
+    <div class="grad-line" aria-hidden="true"></div>
+
+    <p class="eyebrow">
+      <span class="dot"></span>Live playground
+    </p>
+    <h2 class="title">Talk to your processes.</h2>
+    <p class="desc">
+      No install, no login. Open Pulse's hosted playground in an MCP chat, connected to a live,
+      seeded CIB seven engine. Ask a question and watch the interactive widgets render.
+    </p>
+
+    <a class="cta" href={INSPECTOR_URL} target="_blank" rel="noopener noreferrer">
+      Try it out
+      <span class="arrow" aria-hidden="true">
+        →
+      </span>
+    </a>
+
+    <p class="hint">
+      <span class="hint-label">Try asking</span>
+      <span class="prompt">Show me the Cockpit</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  :root .tio {
+    margin-top: 64px;
+  }
+
+  :root .card {
+    position: relative;
+    overflow: hidden;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 40px;
+    text-align: center;
+    background: var(--site-bg-soft);
+    border: 1px solid var(--site-divider);
+    border-radius: var(--cd-radius-lg);
+  }
+
+  /* Brand gradient across the top edge */
+  :root .grad-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--cd-gradient-brand);
+  }
+
+  :root .eyebrow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 16px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--site-text-2);
+  }
+  /* Live indicator */
+  :root .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cd-gruen);
+    animation: tio-pulse 2s ease-in-out infinite;
+  }
+  @keyframes tio-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  :root .title {
+    position: relative;
+    margin: 0 0 16px;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--site-text-1);
+    border: none;
+  }
+
+  :root .desc {
+    position: relative;
+    max-width: 460px;
+    margin: 0 auto 32px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--site-text-2);
+  }
+
+  :root .cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 28px;
+    border-radius: var(--cd-radius-pill);
+    background: var(--site-button-bg);
+    color: var(--site-button-text);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background var(--cd-motion-fast) var(--cd-ease),
+      transform var(--cd-motion-fast) var(--cd-ease);
+  }
+  :root .cta:hover {
+    background: var(--site-button-bg-hover);
+    color: var(--site-button-text);
+    transform: translateY(-1px);
+  }
+  :root .arrow {
+    transition: transform var(--cd-motion-fast) var(--cd-ease);
+  }
+  :root .cta:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  :root .hint {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 24px 0 0;
+    font-size: 13px;
+  }
+  :root .hint-label {
+    color: var(--site-text-3);
+    letter-spacing: 0.04em;
+  }
+  :root .prompt {
+    padding: 6px 14px;
+    border-radius: var(--cd-radius-pill);
+    border: 1px solid color-mix(in srgb, var(--site-accent) 30%, transparent);
+    background: color-mix(in srgb, var(--site-accent) 8%, transparent);
+    color: var(--site-accent);
+    font-family: var(--site-font-mono);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root .dot {
+      animation: none;
+    }
+    :root .cta,
+    :root .arrow {
+      transition: none;
+    }
+  }
+</style>

@@ -1,6 +1,10 @@
 ---
-// Before and after, side by side. Scaffold: two plain lists.
+// Today against with the tool, as two cards side by side: the left card
+// muted with a cross per line, the right one in the accent with a check.
+// Lines stay short and concrete; each pair should be about the same thing.
+// Props: before { title, items: string[] }, after { title, items: string[] }.
 import type { CompareSide } from "../../data/schemas"
+import Icon from "./Icon.astro"
 
 interface Props {
   before: CompareSide
@@ -11,14 +15,98 @@ const { before, after } = Astro.props
 ---
 
 <div class="compare">
-  {[before, after].map((side) => (
-    <div>
-      <p>{side.title}</p>
-      <ul>
-        {side.items.map((item) => (
-          <li>{item}</li>
-        ))}
-      </ul>
-    </div>
-  ))}
+  <div class="side before">
+    <p class="label">{before.title}</p>
+    <ul>
+      {before.items.map((line) => (
+        <li>
+          <span class="mark">
+            <Icon name="x" size={16} stroke={2.5} />
+          </span>
+          {line}
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="side after">
+    <p class="label">{after.title}</p>
+    <ul>
+      {after.items.map((line) => (
+        <li>
+          <span class="mark">
+            <Icon name="check" size={16} stroke={2.5} />
+          </span>
+          {line}
+        </li>
+      ))}
+    </ul>
+  </div>
 </div>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  :root .compare {
+    display: grid;
+    gap: 20px;
+  }
+  @media (min-width: 768px) {
+    :root .compare {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  :root .side {
+    padding: 28px;
+    border: 1px solid var(--l-card-border);
+    border-radius: 24px;
+    background: var(--l-card-bg);
+  }
+  :root .after {
+    border-color: var(--cd-blau);
+    box-shadow: inset 0 0 0 1px var(--cd-blau);
+  }
+  :root .label {
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--l-text-muted);
+  }
+  :root .after .label {
+    color: var(--l-accent);
+  }
+  :root .compare ul {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  :root .compare li {
+    display: flex;
+    gap: 12px;
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--l-text);
+  }
+  :root .mark {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-top: 1px;
+    border-radius: 50%;
+  }
+  :root .before .mark {
+    background: var(--l-tile-muted-bg);
+    color: var(--l-text-muted);
+  }
+  :root .after .mark {
+    background: var(--cd-gruen);
+    color: var(--cd-schwarz);
+  }
+</style>

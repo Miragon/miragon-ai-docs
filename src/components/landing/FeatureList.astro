@@ -1,6 +1,10 @@
 ---
-// Icon, title and text per item, in 1 to 3 columns. Scaffold: a plain list.
+// An icon list as on miragon.io ("Das Problem"): each item an icon tile, a
+// short title and one or two sentences. One column next to other content,
+// two or three columns on its own. Items: { icon?, title, text? }; `icon` is
+// a key of icons.ts.
 import type { Feature } from "../../data/schemas"
+import Icon from "./Icon.astro"
 
 interface Props {
   items: Feature[]
@@ -12,9 +16,73 @@ const { items, columns = 2 } = Astro.props
 
 <ul class:list={["features", `cols-${columns}`]}>
   {items.map((item) => (
-    <li>
-      {item.title}
-      {item.text && <p>{item.text}</p>}
+    <li class="item">
+      {item.icon && (
+        <span class="tile">
+          <Icon name={item.icon} />
+        </span>
+      )}
+      <div>
+        <h3 class="title">{item.title}</h3>
+        {item.text && <p class="text">{item.text}</p>}
+      </div>
     </li>
   ))}
 </ul>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  :root .features {
+    display: grid;
+    gap: 28px 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 768px) {
+    :root .cols-2,
+    :root .cols-3 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    :root .cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  :root .features .item {
+    display: flex;
+    gap: 16px;
+    margin: 0;
+  }
+  :root .tile {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: var(--l-tile-bg);
+    color: var(--l-tile-fg);
+  }
+  :root .features .title {
+    margin: 2px 0 4px;
+    padding: 0;
+    border: 0;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: normal;
+    color: var(--l-text);
+  }
+  :root .features .text {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--l-text-muted);
+  }
+</style>
