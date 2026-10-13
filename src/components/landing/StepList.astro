@@ -1,0 +1,19 @@
+---
+// Numbered steps: title and text. Scaffold: a plain list.
+import type { Step } from "../../data/schemas"
+
+interface Props {
+  items: Step[]
+}
+
+const { items } = Astro.props
+---
+
+<ol class="steps">
+  {items.map((item) => (
+    <li>
+      {item.title}
+      {item.text && <p>{item.text}</p>}
+    </li>
+  ))}
+</ol>

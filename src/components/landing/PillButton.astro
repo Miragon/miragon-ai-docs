@@ -1,0 +1,15 @@
+---
+// A pill-shaped link button (dark, light or outline). External links open
+// in a new tab. Scaffold: a plain link.
+interface Props {
+  href: string
+  label: string
+  variant?: "dark" | "light" | "outline"
+}
+
+const { href, label, variant = "dark" } = Astro.props
+---
+
+<a class:list={["pill", variant]} href={href}>
+  {label}
+</a>

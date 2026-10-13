@@ -1,0 +1,23 @@
+---
+// Cards in a grid (2, 3 or 4 columns): icon, eyebrow, title, text and a
+// link. External links open in a new tab ("Open"), internal ones read
+// "Learn more" unless the card sets linkText. Scaffold: a plain list.
+import type { Card } from "../../data/schemas"
+
+interface Props {
+  items: Card[]
+  columns?: 2 | 3 | 4
+  center?: boolean
+}
+
+const { items, columns = 3, center = false } = Astro.props
+---
+
+<ul class:list={["cards", `cols-${columns}`, { center }]}>
+  {items.map((item) => (
+    <li>
+      {item.link ? <a href={item.link}>{item.title}</a> : item.title}
+      {item.text && <p>{item.text}</p>}
+    </li>
+  ))}
+</ul>

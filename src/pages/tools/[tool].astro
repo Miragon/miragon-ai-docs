@@ -1,0 +1,33 @@
+---
+// One landing page per tool (/tools/<tool>/), from
+// src/content/tools/<tool>.mdx: the hero with the tool's eyebrow and
+// artefact from its frontmatter (the VitePress home layout), then the bands
+// of its body.
+import { getCollection, render, type CollectionEntry } from "astro:content"
+import Website from "../../layouts/Website.astro"
+import Hero from "../../components/hero/Hero.astro"
+import HeroArtefact from "../../components/hero/HeroArtefact.astro"
+import { WEBSITE_COMPONENTS } from "../../components/landing"
+
+export async function getStaticPaths() {
+  const tools = await getCollection("tools")
+  return tools.map((entry) => ({ params: { tool: entry.id }, props: { entry } }))
+}
+
+interface Props {
+  entry: CollectionEntry<"tools">
+}
+
+const { entry } = Astro.props
+const { data } = entry
+const { Content } = await render(entry)
+---
+
+<Website title={data.title} description={data.description}>
+  <Hero hero={data.hero} eyebrow={data.eyebrow}>
+    <HeroArtefact slot="artefact" artefact={data.artefact} />
+  </Hero>
+  <div class="prose">
+    <Content components={WEBSITE_COMPONENTS} />
+  </div>
+</Website>

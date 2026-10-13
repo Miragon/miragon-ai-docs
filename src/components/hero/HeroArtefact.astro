@@ -1,0 +1,18 @@
+---
+// The hero artefact, picked by the page's frontmatter `artefact`:
+//   { type: chat }                                   PulseChat
+//   { type: terminal, title, lines: [...] }          TerminalWindow
+//   { type: screenshot, src, alt, url, caption }     ScreenshotFrame
+//   { type: flow, examples: [...] }                  HeroFlow (Vue island)
+// Without `artefact` the lifecycle graphic renders (LifecycleMap, Vue island).
+// Scaffold: an empty box.
+import type { Artefact } from "../../data/schemas"
+
+interface Props {
+  artefact?: Artefact
+}
+
+const { artefact } = Astro.props
+---
+
+<div class="hero-artefact" data-artefact={artefact?.type ?? "lifecycle"}></div>

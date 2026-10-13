@@ -1,0 +1,16 @@
+---
+// A terminal window as a tool page's hero artefact: commands, continuation
+// lines, output (with a tone) and notes. Scaffold: plain lines.
+import type { TerminalLine } from "../../data/schemas"
+
+interface Props {
+  title?: string
+  lines: TerminalLine[]
+}
+
+const { title, lines } = Astro.props
+---
+
+<div class="terminal" tabindex="0" role="group" aria-label={title ?? "Terminal"}>
+  <pre>{lines.map((line) => Object.values(line)[0]).join("\n")}</pre>
+</div>

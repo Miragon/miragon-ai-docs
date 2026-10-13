@@ -1,0 +1,39 @@
+---
+// The site footer on website pages, docs pages (the Starlight PageFrame
+// override) and the 404: Lifecycle, Tools and Docs columns from
+// data/lifecycle.ts, then the legal row. German DDG §5 requires the
+// Impressum, and GDPR Art. 13 the privacy policy, reachable from every page.
+// Scaffold: the legal row only.
+import { LEGAL } from "../../data/nav"
+---
+
+<footer class="site-footer">
+  <span>© 2022–2026 Miragon GmbH</span>
+  <nav aria-label="Legal">
+    {LEGAL.map((link) => (
+      <a href={link.url} target="_blank" rel="noopener noreferrer">
+        {link.name}
+      </a>
+    ))}
+  </nav>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding: 16px 24px;
+    border-top: 1px solid var(--site-divider);
+    font-size: 13px;
+    color: var(--site-text-2);
+  }
+  nav {
+    display: flex;
+    gap: 16px;
+  }
+  a {
+    color: inherit;
+  }
+</style>

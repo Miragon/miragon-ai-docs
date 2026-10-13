@@ -1,4 +1,10 @@
 node_modules/
+dist/
+.astro/
+.netlify/
+.context/
+
+# The VitePress site's build output and dev-server cache, until .vitepress/
+# leaves the tree with the end of the Astro migration.
 .vitepress/cache
 .vitepress/dist
-.context/

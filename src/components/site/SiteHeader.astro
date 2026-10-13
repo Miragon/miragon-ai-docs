@@ -1,0 +1,27 @@
+---
+// The site header on website pages (layouts/Website.astro) and docs pages
+// (the Starlight Header override): the wordmark, the website nav from
+// data/nav.ts, Starlight's Search, "Talk to us" and GitHub.
+// Scaffold: the wordmark only.
+interface Props {
+  /** On docs pages: below 50rem the burger is hidden, the nav moves into
+      Starlight's phone menu (components/starlight/MobileMenuFooter.astro). */
+  docs?: boolean
+}
+
+const { docs = false } = Astro.props
+---
+
+<div class="site-header" data-docs={docs ? "" : undefined}>
+  <a href="/" aria-label="Miragon AI, home">
+    <img src="/logo/miragon-logo-weiss.svg" alt="Miragon" height="24" />
+  </a>
+</div>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+</style>

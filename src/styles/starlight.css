@@ -1,0 +1,9 @@
+/*
+ * Docs only (Starlight customCss, after tokens.css): sidebar and LinkButton
+ * overrides, heading tracking, Mermaid in the CI colours.
+ */
+
+/* The shared header brings its own padding. */
+:root {
+  --sl-nav-pad-y: 0px;
+}

@@ -1,0 +1,20 @@
+---
+// The closing box of a tool page: title, text and a pill to the contact
+// form, with a small note. Scaffold: plain markup.
+interface Props {
+  title: string
+  text?: string
+  label?: string
+  href?: string
+  note?: string
+}
+
+const { title, text, label = "Talk to us", href = "/#contact", note } = Astro.props
+---
+
+<div class="cta">
+  <p>{title}</p>
+  {text && <p>{text}</p>}
+  <a href={href}>{label}</a>
+  {note && <p>{note}</p>}
+</div>

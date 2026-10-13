@@ -1,0 +1,14 @@
+---
+// Starlight's frame unchanged, plus the site footer at the end of the main
+// column (right of the sidebar, below the page's own footer with last
+// updated and prev/next).
+import Default from "@astrojs/starlight/components/PageFrame.astro"
+import SiteFooter from "../site/SiteFooter.astro"
+---
+
+<Default>
+  <slot name="header" slot="header" />
+  <slot name="sidebar" slot="sidebar" />
+  <slot />
+  <SiteFooter />
+</Default>

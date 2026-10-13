@@ -1,0 +1,27 @@
+---
+// The landing (/), from src/content/landing/index.mdx: the hero from its
+// frontmatter (the VitePress home layout), then the bands of its body.
+// Without the entry (an empty collection) the bare layout renders;
+// scripts/check-dist.mjs fails a build whose landing has no contact form.
+import { getEntry, render } from "astro:content"
+import Website from "../layouts/Website.astro"
+import Hero from "../components/hero/Hero.astro"
+import HeroArtefact from "../components/hero/HeroArtefact.astro"
+import { WEBSITE_COMPONENTS } from "../components/landing"
+
+const entry = await getEntry("landing", "index")
+const Content = entry && (await render(entry)).Content
+---
+
+<Website title={entry?.data.title ?? "Miragon AI"} description={entry?.data.description}>
+  {entry && Content && (
+    <>
+      <Hero hero={entry.data.hero}>
+        <HeroArtefact slot="artefact" artefact={entry.data.artefact} />
+      </Hero>
+      <div class="prose">
+        <Content components={WEBSITE_COMPONENTS} />
+      </div>
+    </>
+  )}
+</Website>

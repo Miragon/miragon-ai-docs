@@ -1,0 +1,23 @@
+/*
+ * Website pages only (layouts/Website.astro), after tokens.css: reset,
+ * base, .prose (the page text), the hero's fade-up and what Starlight's
+ * Search needs outside Starlight.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--site-bg);
+  color: var(--site-text-1);
+  font-family: var(--site-font);
+  line-height: 1.6;
+}
+
+body {
+  margin: 0;
+  background: var(--site-bg);
+}

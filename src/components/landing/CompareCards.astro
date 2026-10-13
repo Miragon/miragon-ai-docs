@@ -1,0 +1,24 @@
+---
+// Before and after, side by side. Scaffold: two plain lists.
+import type { CompareSide } from "../../data/schemas"
+
+interface Props {
+  before: CompareSide
+  after: CompareSide
+}
+
+const { before, after } = Astro.props
+---
+
+<div class="compare">
+  {[before, after].map((side) => (
+    <div>
+      <p>{side.title}</p>
+      <ul>
+        {side.items.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>

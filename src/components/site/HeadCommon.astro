@@ -1,0 +1,17 @@
+---
+// Head tags shared by website pages (layouts/Website.astro) and docs pages
+// (components/starlight/Head.astro): consent banner, favicons,
+// theme-color, the self-hosted Geist font and its preload.
+import "@fontsource-variable/geist"
+import "@fontsource-variable/geist/wght-italic.css"
+import "@fontsource-variable/geist-mono"
+// The same file the @font-face rule above points at: Vite hashes it once,
+// so the preload and the CSS share one URL.
+import geistLatin from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url"
+import { HEAD } from "../../data/head"
+---
+
+{HEAD.map(({ tag: Tag, attrs, content }) => (
+  <Tag {...attrs} set:html={content} />
+))}
+<link rel="preload" href={geistLatin} as="font" type="font/woff2" crossorigin />

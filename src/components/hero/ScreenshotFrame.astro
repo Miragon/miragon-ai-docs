@@ -1,0 +1,16 @@
+---
+// A screenshot (public/screens/) in a browser frame, as a tool page's hero
+// artefact. Scaffold: the image only.
+interface Props {
+  src: string
+  alt: string
+  url?: string
+  caption?: string
+}
+
+const { src, alt } = Astro.props
+---
+
+<figure class="screenshot">
+  <img src={src} alt={alt} />
+</figure>

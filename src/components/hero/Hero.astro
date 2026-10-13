@@ -1,0 +1,35 @@
+---
+// The hero of the landing and of every tool page, from the page's
+// frontmatter (the VitePress home layout's hero): name, headline, tagline
+// and buttons, with the artefact beside it (slot "artefact"). A tool page
+// passes its eyebrow; its name then renders as a small green label.
+// Scaffold: plain markup.
+import type { Eyebrow, Hero } from "../../data/schemas"
+import HeroEyebrow from "./HeroEyebrow.astro"
+
+interface Props {
+  hero: Hero
+  eyebrow?: Eyebrow
+}
+
+const { hero, eyebrow } = Astro.props
+---
+
+<section class="hero">
+  <div class="main">
+    {eyebrow && <HeroEyebrow eyebrow={eyebrow} />}
+    <h1>
+      <span class="name">{hero.name}</span>
+      <span class="text">{hero.text}</span>
+    </h1>
+    <p class="tagline">{hero.tagline}</p>
+    <div class="actions">
+      {hero.actions.map((action) => (
+        <a href={action.link}>{action.text}</a>
+      ))}
+    </div>
+  </div>
+  <div class="artefact">
+    <slot name="artefact" />
+  </div>
+</section>

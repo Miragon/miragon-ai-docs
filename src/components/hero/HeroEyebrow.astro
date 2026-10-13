@@ -1,0 +1,19 @@
+---
+// "Miragon AI · <phase>" above a tool page's hero name, the phase linking to
+// its page. Scaffold: plain markup.
+import type { Eyebrow } from "../../data/schemas"
+
+interface Props {
+  eyebrow: Eyebrow
+}
+
+const { eyebrow } = Astro.props
+---
+
+<p class="eyebrow">
+  <span>Miragon AI</span>
+  <span class="sep" aria-hidden="true">
+    ·
+  </span>
+  <a href={eyebrow.link}>{eyebrow.phase}</a>
+</p>
