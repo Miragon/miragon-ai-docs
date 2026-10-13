@@ -51,8 +51,8 @@ Value proposition first, then one page per phase, then one short page per tool.
 `.vitepress/lifecycle.ts` exports `PHASES` (name, link, job, tools) and `TOOLS`. The lifecycle
 graphic (`theme/LifecycleMap.vue`), the nav and the sidebar (`config.ts`) are built from it. Add,
 rename or move a tool there, never in `config.ts` alone. Page copy uses the same names and stays
-consistent with the job labels. To show the graphic on a page with one phase in focus, use
-`<LifecycleMap current="Design" />`.
+consistent with the job labels. The graphic is the landing's hero; `<LifecycleMap />` also works
+inside a page.
 
 ## Decisions
 

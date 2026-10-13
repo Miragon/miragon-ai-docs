@@ -5,7 +5,8 @@
 // site left that monorepo (Miragon/miragon-ai-docs#1).
 //
 // 1. Pin: every vendored file matches its SHA-256 from the pinned release.
-// 2. No fork: no other stylesheet or component declares a --cd-* token.
+// 2. No fork: no other stylesheet, component or page (a <style> block in
+//    Markdown) declares a --cd-* token.
 // 3. Source: when a miragon-brand plugin of the pinned version is at hand,
 //    every vendored file equals its CI source byte for byte. CI checks out
 //    Miragon/corporate-identity and points MIRAGON_BRAND_DIR at it; locally
@@ -73,7 +74,7 @@ function* walk(dir) {
     if (skip(entry)) continue
     const path = join(dir, entry)
     if (statSync(path).isDirectory()) yield* walk(path)
-    else if (/\.(css|vue)$/.test(entry)) yield path
+    else if (/\.(css|vue|md)$/.test(entry)) yield path
   }
 }
 const vendored = new Set(BRAND.files.map((f) => join(ROOT, f.path)))

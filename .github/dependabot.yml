@@ -1,5 +1,6 @@
 # Grouping rule (as in Miragon/miragon-ai): patch + minor updates travel
 # together per ecosystem, major updates get their own pull request.
+# Reviewers come from .github/CODEOWNERS (Dependabot retired `reviewers`).
 version: 2
 updates:
   - package-ecosystem: "npm"
@@ -10,9 +11,6 @@ updates:
     commit-message:
       prefix: "fix"
       prefix-development: "chore"
-    reviewers:
-      - "dominikhorn93"
-      - "emaarco"
     groups:
       npm-dependencies:
         patterns:
@@ -25,9 +23,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    reviewers:
-      - "dominikhorn93"
-      - "emaarco"
     groups:
       github-actions:
         patterns:

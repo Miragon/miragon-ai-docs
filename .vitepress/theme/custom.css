@@ -237,6 +237,12 @@
   :root:has(.VPHome) .VPHero .image {
     min-width: 440px;
   }
+  /* VitePress fixes the text column at 2/3 of the hero (max 592px) and lets
+     it not shrink; next to a 440px graphic that overflows below ~1100px. */
+  :root:has(.VPHome) .VPHero .main {
+    flex-shrink: 1;
+    min-width: 0;
+  }
 }
 /* On mobile, lead with the headline (what is this?) then the lifecycle. */
 @media (max-width: 959px) {

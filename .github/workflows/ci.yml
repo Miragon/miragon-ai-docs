@@ -72,15 +72,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Read access to the private Miragon/corporate-identity. Without the
-      # secret (e.g. on fork PRs) the job only leaves a notice; the pinned
-      # hashes in the site job still hold.
+      # secret (not set up yet, or a fork PR) the job warns and skips; the
+      # pinned hashes in the site job still hold.
       CI_SOURCE_TOKEN: ${{ secrets.CORPORATE_IDENTITY_READ_TOKEN }}
     steps:
       - uses: actions/checkout@v7.0.1
 
       - name: No access to Miragon/corporate-identity
         if: env.CI_SOURCE_TOKEN == ''
-        run: echo "::notice::CORPORATE_IDENTITY_READ_TOKEN is not set, brand checks against the CI source skipped"
+        run: echo "::warning title=Brand checks skipped::CORPORATE_IDENTITY_READ_TOKEN is not set, so the vendored tokens and logos are not compared with Miragon/corporate-identity and brand-lint does not run. Add the secret (contents:read on Miragon/corporate-identity)."
 
       # Keep ref on the release pinned as BRAND.version in scripts/check-brand-assets.mjs.
       - uses: actions/checkout@v7.0.1
