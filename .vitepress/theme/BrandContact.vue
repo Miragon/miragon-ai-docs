@@ -1,11 +1,11 @@
 <!--
-  Contact section ported from the marketing site
+  Contact section ported from the marketing site this one replaces
   (miragon-ai-website/src/components/ContactSection.tsx): Calendly inline
   widget + collapsible mail form. The form submits to Netlify Forms (AJAX
-  POST, urlencoded) — it stays in the DOM via v-show so the prerendered
+  POST, urlencoded); it stays in the DOM via v-show so the prerendered
   HTML carries the data-netlify markup Netlify's form detection needs.
   Calendly loads client-side only (onMounted), keeping SSG builds clean.
-  Colours come from the theme's CSS variables (custom.css → CI tokens) —
+  Colours come from the theme's CSS variables (custom.css → CI tokens),
   the Calendly embed included, whose URL colours are read from the tokens
   at mount time.
 -->
@@ -14,12 +14,12 @@
     <div class="left">
       <span class="label">Book a call</span>
       <h3 class="title">
-        Let's talk about your<br />
-        journey to process intelligence.
+        Let's find your<br />
+        biggest lever.
       </h3>
       <p class="desc">
-        Pick a slot that works for you: 30 minutes, no agenda required. We'll talk through your
-        current setup and where AI-native tooling can make a real difference.
+        Pick a slot for a 30-minute first call. Tell us where your processes run and what slows your
+        team down. You get an honest assessment of which tool helps first, or whether none does yet.
       </p>
 
       <div class="divider" />
