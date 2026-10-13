@@ -1,9 +1,96 @@
 /*
  * Docs only (Starlight customCss, after tokens.css): sidebar and LinkButton
- * overrides, heading tracking, Mermaid in the CI colours.
+ * overrides, heading tracking, Mermaid in the CI colours. Unlayered, so
+ * every rule here beats Starlight's own @layer starlight.* styles.
  */
 
-/* The shared header brings its own padding. */
+/* The shared header brings its own padding. The phone menu button takes the
+   size of the header's burger. */
 :root {
   --sl-nav-pad-y: 0px;
+  --sl-menu-button-size: 36px;
+}
+
+/* Docs on phones: Starlight's menu button takes the burger's place in the
+   shared header (components/site/SiteHeader.astro) and is drawn like it, a
+   plain icon in text-1, not Starlight's white disc. */
+.sl-menu-button,
+.sl-menu-button:has(~ :popover-open) {
+  padding: 6px;
+  border-radius: var(--cd-radius-sm);
+  background-color: transparent;
+  box-shadow: none;
+  color: var(--site-text-1);
+  font-size: 24px;
+}
+
+/* Current sidebar item as on the VitePress docs: green text, no fill.
+   Starlight fills it with --sl-color-text-accent, which is green here. */
+.sidebar-content a[aria-current="page"],
+.sidebar-content a[aria-current="page"]:hover,
+.sidebar-content a[aria-current="page"]:focus {
+  background: transparent;
+  color: var(--cd-gruen);
+  font-weight: 600;
+}
+
+/* LinkButton follows the CI: a blue fill with a white label, the deeper
+   blue on hover. Green is never a button surface. */
+.sl-link-button.primary {
+  border-color: var(--cd-blau);
+  background: var(--cd-blau);
+  color: var(--cd-weiss);
+}
+.sl-link-button.primary:hover {
+  border-color: var(--cd-blau-link);
+  background: var(--cd-blau-link);
+  color: var(--cd-weiss);
+}
+
+/* Tight heading tracking, as on the VitePress docs. Starlight renders the
+   page title (h1#_top) outside the Markdown content. */
+:is(h1#_top, .sl-markdown-content h1) {
+  letter-spacing: -0.03em;
+}
+.sl-markdown-content h2 {
+  letter-spacing: -0.02em;
+}
+
+/* ── Mermaid ─────────────────────────────────────────────────────────── */
+/* Mermaid's own dark theme is neutral grey and its edge labels miss WCAG AA
+   (#ccc on #585858, 4.45:1), so diagrams follow the CI instead: nodes as
+   --cd-blau surfaces with white labels (5.47:1), edges and the subgraph
+   edge in --cd-kontur (≥ 3:1), edge labels in text-2. Mermaid injects
+   id-scoped styles into every SVG, hence !important. */
+.mermaid :is(.node rect, .node circle, .node ellipse, .node polygon, .node path) {
+  fill: var(--cd-blau) !important;
+  stroke: var(--cd-blau) !important;
+}
+.mermaid .cluster rect {
+  fill: var(--site-bg-alt) !important;
+  stroke: var(--cd-kontur) !important;
+}
+.mermaid :is(.flowchart-link, .edgePaths .path) {
+  stroke: var(--cd-kontur) !important;
+}
+.mermaid :is(.marker, .arrowheadPath, .arrowMarkerPath) {
+  fill: var(--cd-kontur) !important;
+  stroke: var(--cd-kontur) !important;
+}
+.mermaid .node :is(.nodeLabel, .label text) {
+  color: var(--cd-weiss) !important;
+  fill: var(--cd-weiss) !important;
+}
+.mermaid .cluster-label .nodeLabel {
+  color: var(--site-text-1) !important;
+}
+.mermaid :is(.labelBkg, span.edgeLabel, span.edgeLabel p) {
+  background-color: var(--site-bg) !important;
+}
+.mermaid span.edgeLabel {
+  color: var(--site-text-2) !important;
+}
+.mermaid .edgeLabel rect {
+  fill: var(--site-bg) !important;
+  opacity: 1 !important;
 }

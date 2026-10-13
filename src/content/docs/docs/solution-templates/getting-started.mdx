@@ -1,0 +1,43 @@
+---
+title: Get started with Solution templates
+description: "Your own MCP server in five commands"
+---
+
+import { TabItem, Tabs } from "@astrojs/starlight/components"
+
+You need Node.js 22.22.2 or later, pnpm (`corepack enable` picks the pinned version) and the GitHub CLI, or the "Use this template" button on GitHub. All packages come from the public npm registry, so you need no npm credentials.
+
+<Tabs syncKey="solution-templates">
+<TabItem label="miragon-ai-starter">
+
+```sh
+gh repo create my-mcp-server --template Miragon/miragon-ai-starter --private --clone
+cd my-mcp-server
+pnpm install
+cp .env.example .env
+pnpm dev
+```
+
+</TabItem>
+<TabItem label="mcp-toolkit-starter">
+
+```sh
+gh repo create my-mcp-server --template Miragon/mcp-toolkit-starter --private --clone
+cd my-mcp-server
+pnpm install
+pnpm dev
+```
+
+</TabItem>
+</Tabs>
+
+Open the inspector (`http://localhost:8400/mcp/inspector` for miragon-ai-starter, the URL the terminal prints for mcp-toolkit-starter) and call `notes_show_notes` or `show_tasks_board`. The widget renders without any external system. The engine tools need a Camunda 7, CIB seven or Operaton REST API, and the analytics tools need Prometheus fed by the Miragon metrics plugin for CIB seven. The defaults in miragon-ai-starter's `.env.example` match the [playground stack](https://github.com/Miragon/miragon-ai/tree/main/playground) in Pulse's repo, which runs in Docker Compose.
+
+In miragon-ai-starter, connect Claude Code to the server and start a module for your own system, here your ERP, as a copy of the example module:
+
+```sh
+claude mcp add --transport http my-mcp-server http://localhost:8400/mcp
+cp -R modules/mcp-notes modules/mcp-erp
+```
+
+Or ask Claude Code in the repo and let the `create-module` skill walk through the wiring. Configuration, deployment and other assistants are in the [README](https://github.com/Miragon/miragon-ai-starter#readme).

@@ -3,8 +3,6 @@ title: Pulse operations
 description: Run Pulse (the miragon-ai server) in production with the Docker image, its security model, environment variables, toolsets, health routes and CI.
 ---
 
-# Operations
-
 ## Deployment artifact
 
 Pulse (the miragon-ai MCP server) ships as a single Docker image on Docker Hub, `docker.io/miragon/miragon-ai-server` (`:<version>` or `:latest`):
@@ -109,8 +107,10 @@ Three routes sit next to `/mcp`, outside the OAuth gate and the `Host` check:
 mcp-use logs one line per request to stdout (`MCP_USE_LOG_LEVEL=debug`/`trace` adds payloads; the
 boot warns). The server expects Camunda 7 / CIB seven and Prometheus; Grafana is optional (`:8470`).
 Engine metrics come from the Kotlin plugin via any Micrometer export (see
-[Architecture](/tools/pulse/architecture)); alert rules ship in `playground/docker/prometheus/alerts.yml`,
+[Architecture](/docs/pulse/architecture/)); alert rules ship in `playground/docker/prometheus/alerts.yml`,
 and `analytics_engine_health` surfaces the same gauges and firing alerts in one call.
+
+<span id="ci-cd"></span>
 
 ## CI/CD
 

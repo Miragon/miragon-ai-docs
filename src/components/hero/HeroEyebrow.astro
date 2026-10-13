@@ -1,6 +1,8 @@
 ---
-// "Miragon AI · <phase>" above a tool page's hero name, the phase linking to
-// its page. Scaffold: plain markup.
+// A small line above a tool page's hero name that places the tool:
+// "Miragon AI · Execute", the phase linking to its page. Set by the page's
+// frontmatter `eyebrow: { phase, link }`; hero/Hero.astro renders it only
+// when the page has one.
 import type { Eyebrow } from "../../data/schemas"
 
 interface Props {
@@ -17,3 +19,34 @@ const { eyebrow } = Astro.props
   </span>
   <a href={eyebrow.link}>{eyebrow.phase}</a>
 </p>
+
+<style>
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 18px;
+    font-family: var(--site-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--cd-weiss) 72%, transparent);
+  }
+  /* Below 960px the hero centres its text (text-align), which a flex row
+     does not follow: centre it with the name and headline. */
+  @media (max-width: 959px) {
+    .eyebrow {
+      justify-content: center;
+    }
+  }
+  .sep {
+    color: color-mix(in srgb, var(--cd-weiss) 50%, transparent);
+  }
+  .eyebrow a {
+    color: var(--cd-weiss);
+    text-decoration: none;
+  }
+  .eyebrow a:hover {
+    text-decoration: underline;
+  }
+</style>

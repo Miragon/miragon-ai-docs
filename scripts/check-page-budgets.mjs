@@ -1,20 +1,24 @@
 #!/usr/bin/env node
-// Page budgets: every page stays within the line budget the docs-style skill
+// Page budgets: every page (a .md or .mdx file: the website pages and the
+// docs under src/content/) stays within the line budget the docs-style skill
 // sets for it (.claude/skills/docs-style/SKILL.md, rows such as
-// "| `tools/*.md` | ≤ 70 lines |"), and every page has a budget, so a new
-// page cannot slip in without one. The first matching row wins, so list
-// specific paths before the globs that also cover them.
+// "| `src/content/tools/*.mdx` | ≤ 230 lines |"), and every page has a
+// budget, so a new page cannot slip in without one. The first matching row
+// wins, so list specific paths before the globs that also cover them.
 import { readdirSync, readFileSync, statSync } from "node:fs"
 import { join, relative } from "node:path"
 
 const ROOT = new URL("..", import.meta.url).pathname
 const SKILL = ".claude/skills/docs-style/SKILL.md"
-// Not pages: the repo's own docs (srcExclude in .vitepress/config.ts).
+// Not pages: the repo's own docs.
 const NOT_PAGES = new Set(["README.md", "CLAUDE.md"])
+// Not page sources: the build output, static files, packages, and dot
+// directories (.git, .claude, .astro, .netlify, .github).
+const SKIP = new Set(["dist", "public", "node_modules"])
 
 const budgets = [
   ...readFileSync(join(ROOT, SKILL), "utf8").matchAll(
-    /^\| `([\w./*-]+\.md)`\s*\| ≤ (\d+) lines\s*\|$/gm,
+    /^\| `([\w./*-]+\.mdx?)`\s*\| ≤ (\d+)(?: lines)?\s*\|$/gm,
   ),
 ].map(([, pattern, lines]) => ({
   pattern,
@@ -29,10 +33,10 @@ if (!budgets.length) {
 
 function* pages(dir) {
   for (const entry of readdirSync(dir)) {
-    if (entry === "node_modules" || entry.startsWith(".")) continue
+    if (SKIP.has(entry) || entry.startsWith(".")) continue
     const path = join(dir, entry)
     if (statSync(path).isDirectory()) yield* pages(path)
-    else if (entry.endsWith(".md")) yield relative(ROOT, path)
+    else if (/\.mdx?$/.test(entry)) yield relative(ROOT, path)
   }
 }
 

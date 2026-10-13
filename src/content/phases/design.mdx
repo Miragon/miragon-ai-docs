@@ -1,0 +1,46 @@
+---
+title: Design
+description: How designIQ and bpmn-cli let your team and your AI agents model the to-be process together and release it through a reviewed pull request.
+---
+
+# Design
+
+In Design, your team models the to-be process together and releases it as a reviewed file in Git. Both tools on this page read BPMN models for Camunda 7, CIB seven, Operaton and Camunda 8.
+
+## The problem today
+
+Usually only one person can safely edit a BPMN diagram at a time, and the approval happens outside the Git workflow your developers use. Legacy documentation in Visio, Word or Confluence gets redrawn by hand. When an AI agent changes a model, it rewrites the whole XML including the diagram coordinates, moves shapes someone placed by hand and can leave references pointing nowhere. In review, a DMN change shows up only as an XML diff, which does not tell you which answers of the decision changed.
+
+## How Miragon AI helps
+
+### designIQ
+
+designIQ is a self-hostable workspace on top of your GitHub repo. Your team edits models live in the browser while AI assistants work on the same models over MCP, in eight notations from BPMN and DMN to Event Storming, six of them with a visual modeler. A release validates the files you select and opens a pull request, so merging is the approval, and CODEOWNERS and branch protection decide who may merge. For a DMN change, the pull request lists every test case in `<decision>.tests.yaml` whose answer changed, so your reviewer sees the changed answers next to the XML diff.
+
+Status: v5.3.0 (released 2026-10-13), repo (MIT) and Docker image public. The hosted service is pre-GA, with a public launch planned around mid-November 2026.
+
+Details and first steps: [designIQ](/tools/design-iq/)
+
+### bpmn-cli
+
+With bpmn-cli, an agent names the element and the operation, for example `bpmn add order.bpmn userTask "Check invoice" --after Event_OrderReceived`, and the tool writes the XML. bpmn-cli refuses a change that would add a structural error and keeps a hand-drawn layout in place. `bpmn render` draws the result as an image, so the agent can look at what it did. What comes out is a plain `.bpmn` file with readable ids such as `Activity_CheckInvoice` and small Git diffs, and it opens in Camunda Modeler.
+
+Inside designIQ, bpmn-cli is the engine behind the opt-in semantic BPMN editing (since designIQ v5.3.0, off by default until an A/B benchmark has run). On its own, bpmn-cli runs in any shell or as a Claude Code plugin. Its `bpmn validate` checks the deploy rules of Camunda 7, CIB seven, Operaton or Camunda 8, and `--strict` stops a pipeline when a rule fails, so the tool reaches into [Implement](/implement/) too.
+
+Status: 0.6.0 on npm (released 2026-10-12), pre-1.0. Minor versions can still bring breaking changes.
+
+Details and first steps: [bpmn-cli](/tools/bpmn-cli/)
+
+## Human and AI
+
+The agent drafts models and turns the changes you describe into valid BPMN. Your team models the business flow and approves the result by merging the pull request.
+
+## Hand-over
+
+| Direction                   | What is handed over                                                                                                                                                                                                                                               | Format                                   |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| From [Analyse](/analyse/)   | Existing models, pushed to your designIQ content repo                                                                                                                                                                                                             | `.bpmn` in Git                           |
+| From [Analyse](/analyse/)   | Legacy documentation from Visio, draw.io, Word, Confluence or images, drafted into a model by the `import-process` skill of the designIQ template repo [process-documentation-starter](https://github.com/Miragon/process-documentation-starter)                  | draft `.bpmn`                            |
+| From [Analyse](/analyse/)   | The as-is value chain from analyzr (`analyzr value-chain pull`), which designIQ can keep in the content repo. There is no direct connection between analyzr and the Design tools yet, and whether designIQ opens analyzr's version of the format is not verified. | `.vc.json`                               |
+| From [Optimize](/optimize/) | Findings from operations that call for a change to the model, with no fixed format yet. Your team pins one as a todo to a BPMN element in [designIQ](/tools/design-iq/).                                                                                          | GitHub issues                            |
+| To [Implement](/implement/) | Merged design models in your default branch, with the decision tests next to each decision. Implement makes them executable, for example with the `bpmn` skill from the bpmn-cli plugin.                                                                          | `.bpmn`, `.dmn`, `<decision>.tests.yaml` |

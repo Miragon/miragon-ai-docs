@@ -1,8 +1,7 @@
 ---
-layout: home
 title: Skills
 description: Two Claude Code plugins that let your coding agent make a BPMN model deployable and run it once on a Camunda 7, CIB seven or Operaton dev engine.
-eyebrow: { phase: Implement, link: /implement }
+eyebrow: { phase: Implement, link: /implement/ }
 hero:
   name: Skills
   text: Your coding agent makes the model deployable.
@@ -10,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: "#get-started"
+      link: /docs/skills/getting-started/
     - theme: alt
       text: Recipes on GitHub
       link: https://github.com/Miragon/bpmn-cli/blob/main/plugins/bpmn-cli/skills/bpmn/reference/recipes.md
@@ -115,19 +114,19 @@ fits:
   - eyebrow: Phase
     title: Implement
     text: Where your team makes the model run. What goes on to Execute has passed bpmn validate --strict and run once on a dev engine.
-    link: /implement
+    link: /implement/
   - eyebrow: From Design
     title: designIQ
     text: Your team draws the .bpmn file in designIQ, in Camunda Modeler or with bpmn-cli, and the skill keeps that drawing.
-    link: /tools/design-iq
+    link: /tools/design-iq/
   - eyebrow: Same CLI
     title: bpmn-cli
     text: The CLI behind the bpmn skill. In Design it creates and changes models by command.
-    link: /tools/bpmn-cli
+    link: /tools/bpmn-cli/
   - eyebrow: In Execute
     title: operate
     text: The CLI behind the operate skill shows what runs and what is stuck on your engine.
-    link: /tools/operate
+    link: /tools/operate/
   - eyebrow: In Execute
     title: Pulse
     text: Pulse shows grouped incidents across your engines in the chat and drafts the ticket.
@@ -135,49 +134,23 @@ fits:
   - eyebrow: Your own systems
     title: Solution templates
     text: Start there if your agent also needs your own systems next to the engine.
-    link: /tools/solution-templates
+    link: /tools/solution-templates/
 ---
 
 <PageSection eyebrow="The problem" title="A model from Design is not yet a file the engine accepts" intro="A coding agent without guidance does not know which details the engine checks, so an external task without a topic shows up only when the engine rejects the deployment. The agent adds such details in XML that also holds your team's drawing, and a test run means chaining REST calls and copying ids from one response into the next.">
-  <CompareCards :before="$frontmatter.compare.before" :after="$frontmatter.compare.after" />
+  <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
 <PageSection tone="tint" align="center" eyebrow="How it works" title="Your agent changes the model by command and runs it once" intro="Validation covers Camunda 7, CIB seven and Operaton (W_C7_DEPLOY_* findings) and Camunda 8 (W_C8_DEPLOY_*). If the test instance runs into an incident, operate wait fails with exit code 9 and still shows where it stopped.">
-  <StepList :items="$frontmatter.steps" />
+  <StepList items={frontmatter.steps} />
 </PageSection>
 
 <PageSection id="get-started" eyebrow="Get started" title="Install both plugins in Claude Code">
-
-You need Claude Code. The `bpmn` skill needs Node.js 20 or later, `operate` needs Node.js 22.12 or later and a Camunda 7, CIB seven or Operaton engine. Add each marketplace and install its plugin in a Claude Code session:
-
-::: code-group
-
-```text [bpmn-cli]
-/plugin marketplace add Miragon/bpmn-cli
-/plugin install bpmn-cli@miragon-bpmn
-```
-
-```text [operate]
-/plugin marketplace add Miragon/operate
-/plugin install operate@miragon
-```
-
-:::
-
-The skills fall back to `npx` when a CLI is not on your PATH. Install both CLIs to run them yourself too. The other two lines start a local Operaton dev engine and check that operate reaches it at its default `http://localhost:8080/engine-rest`:
-
-```sh
-npm install -g @miragon/bpmn-cli @miragon/operate
-docker run -d --name engine -p 8080:8080 operaton/operaton:2.1.5
-operate ping
-```
-
-Then ask the agent for the change, and once `bpmn validate --strict` passes, for one test run. `/operate:status` gives you a read-only triage of the engine at any point.
-
+  <PillButton href="/docs/skills/getting-started/" label="Get started" variant="light" />
 </PageSection>
 
 <PageSection tone="tint" eyebrow="Human and AI" title="Who does what">
-  <CardGrid :items="$frontmatter.roles" :columns="2" />
+  <CardGrid items={frontmatter.roles} columns={2} />
 </PageSection>
 
 <PageSection eyebrow="For teams" title="Give your whole team the same plugins">
@@ -202,17 +175,17 @@ Claude Code does not update these plugins on its own. After a release, refresh t
 </PageSection>
 
 <PageSection tone="tint" eyebrow="Status" title="Where the skills stand on 13 October 2026" intro="bpmn-cli 0.6.0 (released 2026-10-12) and operate 0.5.0 (released 2026-10-11) are public under the MIT licence, and each plugin carries the version of its CLI on npm. Both are pre-1.0, and bpmn-cli has shipped breaking changes in minor releases.">
-  <FeatureList :items="$frontmatter.status" :columns="3" />
+  <FeatureList items={frontmatter.status} columns={3} />
 </PageSection>
 
 <PageSection eyebrow="Proof you can open" title="Read the skills before you install them">
-  <CardGrid :items="$frontmatter.proof" />
+  <CardGrid items={frontmatter.proof} />
 </PageSection>
 
 <PageSection tone="tint" eyebrow="Where it fits" title="Skills in the lifecycle">
-  <CardGrid :items="$frontmatter.fits" />
+  <CardGrid items={frontmatter.fits} />
 
-The model comes from [Design](/design) and goes on to [Execute](/execute). [Miragon AI](/) shows the whole lifecycle.
+The model comes from [Design](/design/) and goes on to [Execute](/execute/). [Miragon AI](/) shows the whole lifecycle.
 
 </PageSection>
 

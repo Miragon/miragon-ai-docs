@@ -3,10 +3,18 @@
 //   { type: chat }                                   PulseChat
 //   { type: terminal, title, lines: [...] }          TerminalWindow
 //   { type: screenshot, src, alt, url, caption }     ScreenshotFrame
-//   { type: flow, examples: [...] }                  HeroFlow (Vue island)
-// Without `artefact` the lifecycle graphic renders (LifecycleMap, Vue island).
-// Scaffold: an empty box.
+//   { type: flow, examples: [...] }                  HeroFlow (the landing)
+// Without `artefact` the lifecycle graphic renders (LifecycleMap).
+//
+// HeroFlow and LifecycleMap are Vue islands (client:visible): Astro renders
+// their HTML, the browser hydrates them once they scroll into view. The
+// others are static; their entrances are CSS only.
 import type { Artefact } from "../../data/schemas"
+import PulseChat from "./PulseChat.astro"
+import ScreenshotFrame from "./ScreenshotFrame.astro"
+import TerminalWindow from "./TerminalWindow.astro"
+import HeroFlow from "../vue/HeroFlow.vue"
+import LifecycleMap from "../vue/LifecycleMap.vue"
 
 interface Props {
   artefact?: Artefact
@@ -15,4 +23,19 @@ interface Props {
 const { artefact } = Astro.props
 ---
 
-<div class="hero-artefact" data-artefact={artefact?.type ?? "lifecycle"}></div>
+{artefact?.type === "chat" ? (
+  <PulseChat />
+) : artefact?.type === "terminal" ? (
+  <TerminalWindow title={artefact.title} lines={artefact.lines} />
+) : artefact?.type === "screenshot" ? (
+  <ScreenshotFrame
+    src={artefact.src}
+    alt={artefact.alt}
+    url={artefact.url}
+    caption={artefact.caption}
+  />
+) : artefact?.type === "flow" ? (
+  <HeroFlow client:visible examples={artefact.examples} />
+) : (
+  <LifecycleMap client:visible />
+)}

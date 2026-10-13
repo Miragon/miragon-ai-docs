@@ -1,6 +1,8 @@
 ---
-// A note box in a website page's text (VitePress' `::: info Title` block).
-// Scaffold: plain markup.
+// A note box in a website page's text, for what VitePress wrote as
+// `::: info Title`: the same markup role (a box, the title as its first
+// paragraph) and the look of VitePress' `.custom-block.info` on the dark
+// site. The text comes in the slot. Docs pages use Starlight's asides.
 interface Props {
   title?: string
 }
@@ -8,7 +10,50 @@ interface Props {
 const { title } = Astro.props
 ---
 
-<aside class="note">
+<div class="note">
   {title && <p class="title">{title}</p>}
   <slot />
-</aside>
+</div>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  :root .note {
+    margin: 16px 0;
+    padding: 16px 16px 8px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: var(--site-gray-soft);
+    color: var(--site-text-1);
+    font-size: 14px;
+    line-height: 24px;
+  }
+  :root .title {
+    font-weight: 600;
+  }
+  :root .note :global(p) {
+    margin: 8px 0;
+    line-height: 24px;
+  }
+  :root .note :global(p:first-child) {
+    margin: 0;
+  }
+  :root .note :global(a) {
+    color: var(--site-accent);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: opacity 0.25s;
+  }
+  :root .note :global(a:hover) {
+    color: var(--site-accent);
+    opacity: 0.75;
+  }
+  :root .note :global(code) {
+    color: var(--site-accent);
+    background-color: var(--site-gray-soft);
+    font-size: 13px;
+  }
+</style>

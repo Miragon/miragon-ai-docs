@@ -1,8 +1,7 @@
 ---
-layout: home
 title: designIQ
 description: designIQ is a self-hostable modelling workspace on your GitHub repo, where your team and AI assistants edit the same live models and every release is a pull request.
-eyebrow: { phase: Design, link: /design }
+eyebrow: { phase: Design, link: /design/ }
 hero:
   name: designIQ
   text: Model with your team and your AI. Release by pull request.
@@ -10,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: "#get-started"
+      link: /docs/design-iq/getting-started/
     - theme: alt
       text: GitHub
       link: https://github.com/Miragon/design-iq
@@ -124,27 +123,27 @@ fits:
   - eyebrow: Phase
     title: Design
     text: Your team models the to-be process in designIQ and releases it by pull request.
-    link: /design
+    link: /design/
   - eyebrow: From Analyse
     title: analyzr
     text: Its as-is value chain can sit in the same repo as a .vc.json file. There is no direct link yet, and the two formats have not been checked against each other.
-    link: /tools/analyzr
+    link: /tools/analyzr/
   - eyebrow: Same phase
     title: bpmn-cli
     text: The engine behind the opt-in semantic BPMN editing, where the agent changes elements by id and your hand-drawn layout stays.
-    link: /tools/bpmn-cli
+    link: /tools/bpmn-cli/
   - eyebrow: Next phase
     title: Implement
     text: Your merged .bpmn and .dmn files are design models. Implement makes them executable.
-    link: /implement
+    link: /implement/
   - eyebrow: In Implement
     title: Skills
     text: The bpmn skill for Claude Code is one way to make a merged design model executable.
-    link: /tools/skills
+    link: /tools/skills/
   - eyebrow: The way back
     title: Optimize
     text: What you learn in Execute and Optimize comes back here as a todo on the BPMN element (a GitHub issue) or through the process-feedback skill.
-    link: /optimize
+    link: /optimize/
 docs:
   - icon: book
     title: README
@@ -161,69 +160,42 @@ docs:
 ---
 
 <PageSection eyebrow="The problem" title="Process models live outside the repo your team reviews in" intro="Process models usually live in a separate modelling tool, away from the repo your developers work in. One person at a time works on a diagram there, and nobody signs it off in a pull request. An AI assistant either cannot see the current model, or it rewrites the whole BPMN XML when it changes one. In review, a DMN change arrives as an XML diff, where a >= that became > is easy to miss.">
-  <CompareCards :before="$frontmatter.compare.before" :after="$frontmatter.compare.after" />
+  <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
 <PageSection tone="tint" align="center" eyebrow="How it works" title="One live model in your repo, released by merge" intro="Your team models the to-be process and signs it off by merge. The AI drafts models and changes them on request.">
-  <StepList :items="$frontmatter.steps" />
+  <StepList items={frontmatter.steps} />
 </PageSection>
 
 <PageSection eyebrow="AI in the workspace" title="Your AI works on the model your team has open" intro="AI clients use the same server as the browser. With more than 30 MCP tools they read, validate and save every notation, simulate and test DMN, file todos and open the release pull request.">
-  <FeatureList :items="$frontmatter.agent" />
+  <FeatureList items={frontmatter.agent} />
 </PageSection>
 
 <PageSection tone="tint" eyebrow="Notations" title="Eight notations in one content repo" intro="Next to BPMN and DMN, your strategy and architecture models can live in the same repo. Six notations have a visual modeler in the browser, and every file has a text view, which is how you edit Value Chains and Markdown.">
-  <CardGrid :items="$frontmatter.notations" />
+  <CardGrid items={frontmatter.notations} />
 </PageSection>
 
 <PageSection id="get-started" eyebrow="Get started" title="Run designIQ on your machine">
-
-You need Docker. This evaluation container runs without login and serves the example models from the designIQ repo, which it clones on the first request. Anyone who reaches the port can edit every model, so keep it on your machine.
-
-```sh
-docker run --rm -p 8301:8080 \
-  -e LIVE_AUTH=none \
-  -e LIVE_PUBLIC_URL=http://localhost:8301 \
-  ghcr.io/miragon/designiq-live-host:latest
-```
-
-Open `http://localhost:8301`, pick the repo Miragon/design-iq and open the BPMN model `order-to-cash`. Then connect an AI client to the same models. Without a running host, your MCP client can start the read-only server itself, as a stdio process on any checkout.
-
-::: code-group
-
-```sh [Claude Code, live]
-claude mcp add --transport http designiq http://localhost:8301/mcp
-```
-
-```sh [Any checkout, read-only]
-npx @miragon/design-iq-mcp --root ./my-content-repo
-```
-
-:::
-
-For your own models, create a repo from the template [process-documentation-starter](https://github.com/Miragon/process-documentation-starter) and pass it to the container with `-e GITHUB_REPO=<owner>/<repo> -v designiq-data:/data`. Without a GitHub App the repo has to be public. Login, private repos and release as pull request need an OIDC provider and your own GitHub App, described in the [self-hosting guide](https://github.com/Miragon/design-iq/blob/main/docs/on-prem/README.md).
-
-After model edits, `npx @miragon/design-iq-validator --root .` checks the content repo, on your machine or as a gate in CI.
-
+  <PillButton href="/docs/design-iq/getting-started/" label="Get started" variant="light" />
 </PageSection>
 
 <PageSection tone="tint" eyebrow="Status" title="Where designIQ stands on 13 October 2026" intro="The self-hosted platform is at v5.3.0, released on 13 October 2026 as the fourth release since 4 October. The repo (MIT licence) and the Docker image are public.">
-  <FeatureList :items="$frontmatter.status" />
+  <FeatureList items={frontmatter.status} />
 
 Follow GitLab support in [issue #5](https://github.com/Miragon/design-iq/issues/5) and the playground in [issue #43](https://github.com/Miragon/design-iq/issues/43).
 
 </PageSection>
 
 <PageSection eyebrow="Proof you can open" title="Everything here is public">
-  <CardGrid :items="$frontmatter.proof" />
+  <CardGrid items={frontmatter.proof} />
 </PageSection>
 
 <PageSection tone="tint" eyebrow="Where it fits" title="designIQ in the lifecycle" intro="Models arrive as .bpmn files pushed to the content repo, or as drafts from Visio, draw.io, Word, Confluence or images through the starter's import-process skill. They leave as merged files in git, and findings from Optimize come back to them as todos.">
-  <CardGrid :items="$frontmatter.fits" />
+  <CardGrid items={frontmatter.fits} />
 </PageSection>
 
 <PageSection eyebrow="Docs" title="The reference lives in the repo">
-  <CardGrid :items="$frontmatter.docs" />
+  <CardGrid items={frontmatter.docs} />
 </PageSection>
 
 <CtaBox title="Run designIQ on your own repos." text="Tell us where your process models live today and who signs them off. We go through what designIQ covers for your team and what it does not cover yet." note="A 30-minute first call." />
