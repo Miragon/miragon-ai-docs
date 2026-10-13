@@ -19,7 +19,7 @@ hero:
       link: https://github.com/Miragon
 roles:
   - eyebrow: Architect
-    title: Before a migration or an AI decision, you cannot say which processes you have and how they connect
+    title: Before a bigger change or an AI decision, you cannot say which processes you have and how they connect
     text: analyzr brings your process models into one landscape and links them for your review.
     link: /tools/analyzr
     linkText: Start with analyzr
@@ -157,9 +157,9 @@ limits:
   - icon: gauge
     title: No tool for Optimize
     text: The analytics module of Pulse belongs to Execute, looks back 30 days at most and knows neither waiting times nor variants.
-  - icon: server
-    title: No Camunda 8 at runtime
-    text: bpmn-cli checks Camunda 8 models, but no tool deploys to or operates a Camunda 8 engine, and none generates worker code.
+  - icon: code
+    title: No generated worker code
+    text: The Skills make a model deployable, but no tool writes the worker or delegate code behind it. Your team does.
   - icon: warning
     title: analyzr is early alpha
     text: Version 0.1.0-alpha.0, in a private repository, with an interface in German only.
@@ -174,7 +174,7 @@ limits:
     text: No numbers on time or cost savings until we have published them.
 ---
 
-<PageSection eyebrow="Who it is for" title="For teams with their own developers" intro="Your processes run on Camunda 7, CIB seven or Operaton and stay there for now. The tools for Analyse and Design also read Camunda 8 models. Find your role and the tool to start with.">
+<PageSection eyebrow="Who it is for" title="New tools for the Camunda 7 world" intro="For teams with their own developers whose processes run on Camunda 7, CIB seven or Operaton. Miragon AI brings AI agents to exactly that stack: they map your process landscape, edit your models, make them deployable and tell you what is stuck. No new engine, no migration. Find your role and the tool to start with.">
   <CardGrid :items="$frontmatter.roles" />
 </PageSection>
 

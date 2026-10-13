@@ -6,7 +6,7 @@ eyebrow: { phase: Analyse, link: /analyse }
 hero:
   name: analyzr
   text: Which processes do you have, and how do they connect?
-  tagline: analyzr (early alpha) brings your process models from engines, BPM suites and modelling tools into one landscape. AI agents propose how the processes connect, your team decides, and you see what a change affects before you make it.
+  tagline: analyzr brings your process models from engines, BPM suites and modelling tools into one landscape. AI agents propose how the processes connect, your team decides, and you see what a change affects before you make it.
   actions:
     - theme: brand
       text: Try the demo
