@@ -13,6 +13,15 @@ export default withMermaid({
   lastUpdated: true,
   // The site sits at the repo root: repo docs are not pages.
   srcExclude: ["README.md", "CLAUDE.md"],
+  // The dev server pre-bundles only the dependencies it discovers, and it
+  // does not discover mermaid (imported from inside vitepress-plugin-mermaid).
+  // mermaid's CommonJS dependencies (fastdom since 11.17) then reach the
+  // browser unconverted and `pnpm dev` renders a blank page ("does not
+  // provide an export named 'default'"). Pre-bundling mermaid converts them
+  // all. The build is unaffected.
+  vite: {
+    optimizeDeps: { include: ["mermaid"] },
+  },
   // Shiki's VitePress default dark theme (github-dark) renders comments at
   // 3.9:1 on the dark code background; github-dark-default keeps every token
   // colour above WCAG AA. Light stays on the default github-light.
