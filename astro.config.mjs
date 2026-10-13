@@ -1,9 +1,9 @@
 // @ts-check
-import { existsSync } from "node:fs"
 import { defineConfig } from "astro/config"
 import starlight from "@astrojs/starlight"
 import vue from "@astrojs/vue"
 import mdx from "@astrojs/mdx"
+import { satteri } from "@astrojs/markdown-satteri"
 import sitemap from "@astrojs/sitemap"
 import mermaid from "astro-mermaid"
 import starlightLinksValidator from "starlight-links-validator"
@@ -18,21 +18,6 @@ const WEBSITE_PAGES = ["/", ...PHASES.map((p) => p.link), ...TOOLS.map((t) => t.
   .map((path) => path.replace(/\/$/, ""))
   .flatMap((path) => [path || "/", `${path}/`, `${path}#*`, `${path}/#*`])
 
-// MIGRATION SCAFFOLD, remove once every docs page exists (with the end of
-// the VitePress-to-Astro move): Starlight fails the build on a sidebar slug
-// without a page, and that check must come back. Until then the sidebar
-// lists only the pages that exist.
-/** @param {string} slug */
-const hasPage = (slug) =>
-  ["", "/index"].some((end) =>
-    [".md", ".mdx"].some((ext) => existsSync(`./src/content/docs/${slug}${end}${ext}`)),
-  )
-/** @type {(items: any[]) => any[]} */
-const existing = (items) =>
-  items
-    .map((item) => (item.items ? { ...item, items: existing(item.items) } : item))
-    .filter((item) => (item.items ? item.items.length > 0 : hasPage(item.slug)))
-
 export default defineConfig({
   site: "https://miragon.ai",
   // Every page is <path>/index.html, linked as /<path>/ (also what
@@ -40,6 +25,9 @@ export default defineConfig({
   // the same file.
   build: { format: "directory" },
   trailingSlash: "ignore",
+  // Astro's default Markdown processor, minus smart punctuation: straight
+  // quotes stay straight in Markdown and MDX, as the page text was written.
+  markdown: { processor: satteri({ features: { smartPunctuation: false } }) },
   // No adapter: every page is prerendered, dist/ is a plain static site.
   // No `redirects` either: without an adapter Astro writes them as
   // meta-refresh pages, and a file at the old path would shadow Netlify's
@@ -66,7 +54,7 @@ export default defineConfig({
         ThemeProvider: "./src/components/starlight/ThemeProvider.astro",
         ThemeSelect: "./src/components/starlight/ThemeSelect.astro",
       },
-      sidebar: existing(DOCS_SIDEBAR),
+      sidebar: DOCS_SIDEBAR,
       routeMiddleware: "./src/routeData.ts",
       // Always dark: one code theme. `frames` too, or terminal frames keep
       // Expressive Code's own background.
