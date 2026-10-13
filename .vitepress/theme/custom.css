@@ -1,18 +1,18 @@
 /**
  * Miragon corporate design for the docs site.
  *
- * Token source: the Miragon corporate identity (CI) — ci.miragon.io (move
+ * Token source: the Miragon corporate identity (CI) at ci.miragon.io (move
  * planned; until then corporate-identity.netlify.app), source of truth
  * `brand/tokens.json` in Miragon/corporate-identity. Its generated token set
  * (`--cd-*`) is vendored verbatim in cd-tokens.generated.css; this file only
  * MAPS VitePress' variables onto it. A CI change means re-copying that one
- * file — never edit it here.
+ * file and updating the pin in scripts/check-brand-assets.mjs; never edit
+ * it here.
  *
- * Every dark value below is a `--cd-*` token or a color-mix() of tokens (white
- * lifts of `--cd-schwarz` for surfaces, text and lines), and the theme
- * components read these variables. The only colour literals left are the
- * light-mode green scale, kept until the light follow-up. Text/background
- * pairs reach WCAG AA (CI contrast.json for the raw tokens).
+ * Every value below is a `--cd-*` token or a color-mix() of tokens (white
+ * lifts of `--cd-schwarz` for dark surfaces, text and lines), and the theme
+ * components read these variables. Text/background pairs reach WCAG AA (CI
+ * contrast.json for the raw tokens).
  *
  * Scoping:
  * - Dark appearance (`.dark` doc pages) and the landing page
@@ -21,9 +21,9 @@
  *   surface (no dark blue), text is white, links and accent text are
  *   `--cd-gruen` (10.1:1), buttons stay `--cd-blau` with a white label, and
  *   `--cd-blau-hell` is only for blue that must stay blue (focus rings).
- * - Light appearance keeps its previous green brand scale for now (the CI
- *   alignment of light mode is a separate follow-up); typeface and logo are
- *   global.
+ * - Light appearance (doc pages) follows the CI's rule for light grounds:
+ *   blue leads, green only as an accent, never as text on white. Typeface
+ *   and logo are global.
  */
 
 /* ── Global: typography (Geist / Geist Mono, self-hosted via @fontsource) ─ */
@@ -43,23 +43,26 @@
   letter-spacing: -0.02em;
 }
 
-/* ── Light appearance: previous green brand scale (follow-up) ──────────── */
+/* ── Light appearance: the CI light theme ─────────────────────────────── */
 
 :root {
-  --vp-c-brand-1: #00754b;
-  --vp-c-brand-2: #008757;
-  --vp-c-brand-3: #00e676;
-  --vp-c-brand-soft: rgba(0, 230, 118, 0.14);
+  /* Blue leads on light grounds, green is never text on white: links and
+     accent text in --cd-blau-link (AA on white), buttons --cd-blau with a
+     white label (5.47:1; hover/active on the deeper --cd-blau-link). */
+  --vp-c-brand-1: var(--cd-blau-link);
+  --vp-c-brand-2: var(--cd-blau);
+  --vp-c-brand-3: var(--cd-blau);
+  --vp-c-brand-soft: color-mix(in srgb, var(--cd-blau) 12%, transparent);
 
   --vp-button-brand-border: transparent;
-  --vp-button-brand-text: #000000;
-  --vp-button-brand-bg: #00e676;
+  --vp-button-brand-text: var(--cd-weiss);
+  --vp-button-brand-bg: var(--cd-blau);
   --vp-button-brand-hover-border: transparent;
-  --vp-button-brand-hover-text: #000000;
-  --vp-button-brand-hover-bg: rgba(0, 230, 118, 0.85);
+  --vp-button-brand-hover-text: var(--cd-weiss);
+  --vp-button-brand-hover-bg: var(--cd-blau-link);
   --vp-button-brand-active-border: transparent;
-  --vp-button-brand-active-text: #000000;
-  --vp-button-brand-active-bg: #00b388;
+  --vp-button-brand-active-text: var(--cd-weiss);
+  --vp-button-brand-active-bg: var(--cd-blau-link);
 }
 
 /* ── Dark appearance + landing page: the CI dark theme ─────────────────── */
