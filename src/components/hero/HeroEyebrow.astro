@@ -1,12 +1,13 @@
 ---
-// A small line above a tool page's hero name that places the tool:
-// "Miragon AI · Execute", the phase linking to its page. Set by the page's
-// frontmatter `eyebrow: { phase, link }`; hero/Hero.astro renders it only
-// when the page has one.
-import type { Eyebrow } from "../../data/schemas"
+// A small line above the hero name of a tool or phase page that places the
+// page: "Miragon AI · Execute" on a tool page (the frontmatter
+// `eyebrow: { phase, link }`), "Miragon AI · Lifecycle" on a phase page,
+// the label linking to its page. hero/Hero.astro renders it only when the
+// page has one.
+import type { HeroEyebrowLink } from "./Hero.astro"
 
 interface Props {
-  eyebrow: Eyebrow
+  eyebrow: HeroEyebrowLink
 }
 
 const { eyebrow } = Astro.props
@@ -17,7 +18,7 @@ const { eyebrow } = Astro.props
   <span class="sep" aria-hidden="true">
     ·
   </span>
-  <a href={eyebrow.link}>{eyebrow.phase}</a>
+  <a href={eyebrow.link}>{eyebrow.label}</a>
 </p>
 
 <style>

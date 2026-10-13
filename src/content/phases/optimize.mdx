@@ -1,48 +1,95 @@
 ---
 title: Optimize
 description: What the Optimize phase needs from your running processes and what Execute already hands over, since Miragon has no tool for Optimize yet.
+hero:
+  name: Optimize
+  text: Learn from what runs.
+  tagline: In Optimize your team learns from the processes in production what to change in them, and the loop starts again in Design. Miragon has no tool for this phase yet.
+  actions:
+    - theme: brand
+      text: Bring us your case
+      link: /#contact
+    - theme: alt
+      text: What Execute hands over
+      link: "#from-execute"
+questions:
+  - eyebrow: Product owner
+    title: Does the new version run faster, or was it the time window?
+  - eyebrow: Automation lead
+    title: Where does a case lose time, in the work itself or while waiting in front of a user task?
+  - eyebrow: Architect
+    title: Which paths and variants does the process take in production?
+  - eyebrow: Lead developer
+    title: What effect did the changed DMN rule have?
+  - eyebrow: Platform lead
+    title: Which metrics do we keep, and for how long, so that comparisons span months?
+  - eyebrow: Head of IT
+    title: Which change pays off first, and how do we see that it worked?
+raw:
+  - icon: chart
+    eyebrow: Pulse, in Execute
+    title: The analytics module
+    text: Ranks activities by execution time and incident rate, draws a heatmap on the BPMN diagram, and compares versions, time windows and engines, or the figures before and after a deployment.
+    link: /tools/pulse/
+    linkText: More on Pulse
+  - icon: terminal
+    eyebrow: operate, in Execute
+    title: History queries
+    text: Runs history queries such as operate historic-process-instance list and returns the raw results as JSON, without KPIs.
+    link: /tools/operate/
+    linkText: More on operate
+human:
+  - icon: cog
+    title: An agent
+    text: Could turn your questions into queries and lay the numbers side by side without remodelling anything itself, but no tool for that exists yet.
+  - icon: users
+    title: Your team
+    text: Weighs the findings and decides what goes back into Design.
+handover:
+  - direction: in
+    label: From Execute
+    link: /execute/
+    text: "The raw material described above: Pulse's activity ranking, BPMN heatmap and KPI deltas, and the raw results of operate's history queries."
+    formats:
+      - JSON and chat widgets (Pulse)
+      - JSON (operate)
+  - direction: out
+    label: To Design
+    link: /design/
+    text: Findings and change requests for the model, with no fixed format yet. Your team can pin one as a todo to a BPMN element in [designIQ](/tools/design-iq/).
+    formats:
+      - GitHub issues
 ---
 
-In Optimize your team learns from the processes in production what to change in them, and takes those findings back into [Design](/design/). From there the loop starts again. Analyse comes only once, at the start.
+<PageSection eyebrow="The problem today" title="There is no fixed way back from operations to the model">
 
-## The problem today
+Cockpit shows you, one engine at a time, what is running and what is failing. Questions such as "Where do instances spend their time?" or "Did the last deployment make things worse?" usually need someone who writes PromQL against Prometheus or queries the engine's history API. When a number stands out, someone carries it by hand to the team that changes the model.
 
-Cockpit shows you, one engine at a time, what is running and what is failing. Questions such as "Where do instances spend their time?" or "Did the last deployment make things worse?" usually need someone who writes PromQL against Prometheus or queries the engine's history API. When a number stands out, someone carries it by hand to the team that changes the model. There is no fixed way back from operations to the model.
-
-## No tool yet
+<Note title="No tool yet">
 
 Miragon has no tool for Optimize today, and we say so on purpose. The lifecycle map on the [landing page](/) leaves this slot open. The analytics module in [Pulse](/tools/pulse/) stays in [Execute](/execute/), because calling it the Optimize answer would promise more than it delivers.
 
-## What this phase needs
+</Note>
 
-Each role brings its own question to operations. These are the questions an Optimize tool would have to answer.
+</PageSection>
 
-| Role            | Question                                                                                  |
-| --------------- | ----------------------------------------------------------------------------------------- |
-| Product owner   | Does the new version run faster, or was it the time window?                               |
-| Automation lead | Where does a case lose time, in the work itself or while waiting in front of a user task? |
-| Architect       | Which paths and variants does the process take in production?                             |
-| Lead developer  | What effect did the changed DMN rule have?                                                |
-| Platform lead   | Which metrics do we keep, and for how long, so that comparisons span months?              |
-| Head of IT      | Which change pays off first, and how do we see that it worked?                            |
+<PageSection tone="tint" eyebrow="What this phase needs" title="The questions an Optimize tool would have to answer" intro="Each role brings its own question to operations.">
+  <CardGrid items={frontmatter.questions} />
+</PageSection>
 
-## What Execute already hands over
-
-Execute gives you raw material for some of these questions. The analytics module of Pulse ranks activities by execution time and incident rate, draws a heatmap on the BPMN diagram, and compares versions, time windows and engines, or the figures before and after a deployment. [operate](/tools/operate/) runs history queries such as `operate historic-process-instance list` and returns the raw results as JSON, without KPIs.
+<PageSection id="from-execute" eyebrow="What Execute already hands over" title="Raw material for some of these questions">
+  <CardGrid items={frontmatter.raw} columns={2} />
 
 The analytics module needs a CIB seven engine with the metrics plugin `io.miragon.mcp:cibseven-history-metrics`, which exports through Micrometer to Prometheus. The plugin exists for CIB seven only. The module looks back 30 days at most, and data from before you installed the plugin is missing. It shows no waiting times, paths or variants, no business data such as product or channel, and no run times per activity and version. Both Execute tools are pre-1.0 (Pulse v0.20.0, operate 0.5.0).
 
-## Talk to us
+</PageSection>
 
-We decide from real cases what to build for Optimize, if anything. If your team faces one of these questions right now, [get in touch](/#contact). We look at your process and your data with you and work out which question needs an answer first.
+<PageSection tone="tint" eyebrow="Human and AI" title="Your team weighs the findings">
+  <CardGrid items={frontmatter.human} columns={2} />
+</PageSection>
 
-## Human and AI
+<PageSection eyebrow="Hand-over" title="From raw figures to a change in Design">
+  <HandOver items={frontmatter.handover} />
+</PageSection>
 
-Your team weighs the findings and decides what goes back into Design. An agent could turn your questions into queries and lay the numbers side by side without remodelling anything itself, but no tool for that exists yet.
-
-## Hand-over
-
-| Direction                 | What is handed over                                                                                                                                       | Format                                        |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| From [Execute](/execute/) | The raw material described above: Pulse's activity ranking, BPMN heatmap and KPI deltas, and the raw results of operate's history queries.                | JSON and chat widgets (Pulse), JSON (operate) |
-| To [Design](/design/)     | Findings and change requests for the model, with no fixed format yet. Your team can pin one as a todo to a BPMN element in [designIQ](/tools/design-iq/). | GitHub issues                                 |
+<CtaBox title="Bring us a question from your operations." text="We decide from real cases what to build for Optimize, if anything. If your team faces one of these questions right now, we look at your process and your data with you and work out which question needs an answer first." note="A 30-minute first call." />

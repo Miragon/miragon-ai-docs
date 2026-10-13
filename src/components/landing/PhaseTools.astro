@@ -1,0 +1,170 @@
+---
+// The tools of a phase page, one card each: the tool's job in the phase
+// (data/lifecycle.ts) as a small label, its name, what it does in this
+// phase, its status, and links to its page and its getting-started page.
+// Two tools sit side by side, with status and links at the foot of each
+// card; one tool takes the full width, its status and links beside the
+// text.
+// Items: { tool, text: string[], status }; `tool` is the name in
+// lifecycle.ts, `text` one paragraph per string. Text and status may hold
+// `code` and [links](/path/) (inline.ts).
+import type { PhaseTool } from "../../data/schemas"
+import { TOOLS, docsLink } from "../../data/lifecycle"
+import Icon from "./Icon.astro"
+import { inline } from "./inline"
+
+interface Props {
+  items: PhaseTool[]
+}
+
+const { items } = Astro.props
+
+const tools = items.map((item) => {
+  const tool = TOOLS.find((t) => t.name === item.tool)
+  if (!tool) throw new Error(`PhaseTools: no tool "${item.tool}" in data/lifecycle.ts`)
+  return { ...item, tool }
+})
+---
+
+<ul class:list={["phase-tools", { pair: tools.length > 1 }]}>
+  {tools.map(({ tool, text, status }) => (
+    <li class="tool">
+      <div class="body">
+        <p class="job">{tool.job}</p>
+        <h3 class="name">{tool.name}</h3>
+        {text.map((paragraph) => (
+          <p class="text" set:html={inline(paragraph)} />
+        ))}
+      </div>
+      <div class="foot">
+        <p class="status">
+          <span class="status-label">Status</span>
+          <span set:html={inline(status)} />
+        </p>
+        <p class="links">
+          <a class="link" href={tool.link}>
+            More on {tool.name}
+            <Icon name="arrow" size={15} />
+          </a>
+          <a class="link" href={docsLink(tool)}>
+            Get started
+            <Icon name="arrow" size={15} />
+          </a>
+        </p>
+      </div>
+    </li>
+  ))}
+</ul>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  :root .phase-tools {
+    display: grid;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 900px) {
+    :root .phase-tools.pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  :root .phase-tools .tool {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0;
+    padding: 32px 28px 28px;
+    border: 1px solid var(--l-card-border);
+    border-radius: 24px;
+    background: var(--l-card-bg);
+    color: var(--l-text);
+  }
+  :root .phase-tools .job {
+    margin: 0 0 6px;
+    font-family: var(--site-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--l-text-muted);
+  }
+  /* Reset the .prose heading rules (border, margins). */
+  :root .phase-tools .name {
+    margin: 0 0 12px;
+    padding: 0;
+    border: 0;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--cd-gruen);
+  }
+  /* Two cards: the foot (status, links) sits at the bottom of each. */
+  :root .phase-tools .foot {
+    margin-top: auto;
+  }
+  /* One card: the foot beside the text. */
+  @media (min-width: 900px) {
+    :root .phase-tools:not(.pair) .tool {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 48px;
+      align-items: end;
+    }
+  }
+  :root .phase-tools .text {
+    max-width: 68ch;
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--l-text);
+  }
+  :root .phase-tools .text:last-child {
+    margin-bottom: 0;
+  }
+  :root .phase-tools .status {
+    max-width: 68ch;
+    margin: 0;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--l-tile-muted-bg);
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--l-text-muted);
+  }
+  :root .phase-tools .status-label {
+    display: block;
+    margin-bottom: 2px;
+    font-family: var(--site-font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--l-text);
+  }
+  :root .phase-tools :is(.text, .status) :global(code) {
+    font-size: 0.9em;
+  }
+  :root .phase-tools .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin: 0;
+    padding-top: 20px;
+  }
+  :root .phase-tools .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--l-link);
+  }
+  :root .phase-tools .link:hover {
+    text-decoration: underline;
+  }
+</style>

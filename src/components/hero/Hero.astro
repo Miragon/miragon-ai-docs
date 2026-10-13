@@ -1,22 +1,29 @@
 ---
-// The hero of the landing and of every tool page, from the page's
-// frontmatter (what VitePress' home layout rendered): name, headline,
-// tagline and buttons, with the artefact beside it (slot "artefact",
-// hero/HeroArtefact.astro). Below 960px the text is centred and the
+// The hero of the landing, the tool pages and the phase pages, from the
+// page's frontmatter (what VitePress' home layout rendered): name,
+// headline, tagline and buttons, with the artefact beside it (slot
+// "artefact": hero/HeroArtefact.astro, or the lifecycle graphic on a phase
+// page). Below 960px the text is centred and the
 // artefact follows it.
 //
-// A tool page passes its eyebrow ("Miragon AI · <phase>"); its name then
-// renders as a small green label above the headline, the hero's one green
-// word, and the headline carries the promise.
+// A tool or phase page passes an eyebrow ("Miragon AI · <phase>",
+// "Miragon AI · Lifecycle"); its name then renders as a small green label
+// above the headline, the hero's one green word, and the headline carries
+// the promise.
 //
 // Buttons as on miragon.io: `brand` is a white pill with a green circle and
 // an arrow, `alt` a quiet outline. External links open in a new tab.
-import type { Eyebrow, Hero } from "../../data/schemas"
+import type { Hero } from "../../data/schemas"
 import HeroEyebrow from "./HeroEyebrow.astro"
+
+export interface HeroEyebrowLink {
+  label: string
+  link: string
+}
 
 interface Props {
   hero: Hero
-  eyebrow?: Eyebrow
+  eyebrow?: HeroEyebrowLink
 }
 
 const { hero, eyebrow } = Astro.props

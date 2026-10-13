@@ -8,9 +8,11 @@ import CardGrid from "./CardGrid.astro"
 import CompareCards from "./CompareCards.astro"
 import CtaBox from "./CtaBox.astro"
 import FeatureList from "./FeatureList.astro"
+import HandOver from "./HandOver.astro"
 import LifecycleMapIsland from "./LifecycleMapIsland.astro"
 import Note from "./Note.astro"
 import PageSection from "./PageSection.astro"
+import PhaseTools from "./PhaseTools.astro"
 import PillButton from "./PillButton.astro"
 import StepList from "./StepList.astro"
 import TryItOut from "./TryItOut.astro"
@@ -24,6 +26,8 @@ export const WEBSITE_COMPONENTS = {
   PillButton,
   CtaBox,
   Note,
+  PhaseTools,
+  HandOver,
   TryItOut,
   BrandContact: BrandContactIsland,
   LifecycleMap: LifecycleMapIsland,

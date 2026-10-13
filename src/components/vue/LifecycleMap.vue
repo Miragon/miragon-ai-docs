@@ -18,9 +18,14 @@
   prefers-reduced-motion the graphic stays still, and it only runs while it
   is on screen.
 
+  On a phase page (`current`, the phase's name) the token runs from the
+  start event to that phase and stays there, and the phase's row stays lit:
+  without motion it is lit from the start.
+
   An island: Astro renders the graphic on the server and the browser
   hydrates it once it scrolls into view (client:visible in
-  hero/HeroArtefact.astro and landing/LifecycleMapIsland.astro).
+  hero/HeroArtefact.astro, landing/LifecycleMapIsland.astro and the phase
+  pages' hero, pages/[phase].astro).
 
   Colours: a surrounding element may set these to fit another ground (the
   defaults suit the site's dark ground). --lc-phase-bg,
@@ -33,6 +38,11 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue"
 import { PHASES } from "../../data/lifecycle"
+
+const props = defineProps<{
+  /** The phase whose page shows the graphic: the token runs to it and stays. */
+  current?: string
+}>()
 
 const LAST = PHASES.length - 1
 /** The first phase in the loop: the loop from the last phase returns here. */
@@ -71,6 +81,12 @@ const total = (steps: Step[]) => steps.reduce((sum, step) => sum + step.duration
 const INTRO = total(STEPS.slice(0, LOOP_STEP))
 const CYCLE = total(STEPS.slice(LOOP_STEP))
 
+/** The current phase's row, and the time the token first comes to rest in it. */
+const CURRENT = PHASES.findIndex((phase) => phase.name === props.current)
+if (props.current && CURRENT < 0) throw new Error(`LifecycleMap: no phase "${props.current}"`)
+const REST = STEPS.findIndex((step) => !step.move && step.row === CURRENT)
+const ARRIVAL = CURRENT < 0 ? Infinity : total(STEPS.slice(0, REST))
+
 type Point = [number, number]
 
 const root = ref<HTMLElement>()
@@ -80,13 +96,17 @@ const rows: HTMLElement[] = []
 const live = ref(false)
 const paused = ref(false)
 const held = ref<number | null>(null)
+const arrived = ref(false)
 const stepIndex = ref(0)
 
 const step = computed(() => STEPS[stepIndex.value])
-/** The lit row: the one under the pointer or focus, else the token's phase. */
-const activeRow = computed(
-  () => held.value ?? (live.value && !step.value.move ? step.value.row : null),
-)
+/** The lit row: the one under the pointer or focus, else the token's
+    phase; before the token runs (and without motion), the current phase. */
+const activeRow = computed(() => {
+  if (held.value !== null) return held.value
+  if (live.value) return step.value.move ? null : step.value.row
+  return CURRENT < 0 ? null : CURRENT
+})
 /** The token's move right now, if it is moving and not held. */
 const moving = computed(() => (live.value && held.value === null ? step.value.move : undefined))
 const flowingRow = computed(() => (moving.value === "hop" ? step.value.row : null))
@@ -173,12 +193,17 @@ function render() {
 function tick(now: number) {
   clock += Math.min(now - (last || now), 64)
   last = now
+  if (clock >= ARRIVAL) {
+    // Rest in the current phase for good.
+    clock = ARRIVAL
+    arrived.value = true
+  }
   render()
-  frame = requestAnimationFrame(tick)
+  frame = arrived.value ? 0 : requestAnimationFrame(tick)
 }
 
 function sync() {
-  const run = live.value && visible && !paused.value && held.value === null
+  const run = live.value && visible && !paused.value && held.value === null && !arrived.value
   if (run && !frame) frame = requestAnimationFrame(tick)
   if (!run && frame) {
     cancelAnimationFrame(frame)
@@ -267,7 +292,7 @@ onBeforeUnmount(() => {
         @focusout="hold(null)"
       >
         <span v-if="i === 0 && LOOP_START > 0" class="start-event" aria-hidden="true" />
-        <a class="phase" :href="phase.link">
+        <a class="phase" :href="phase.link" :aria-current="i === CURRENT ? 'page' : undefined">
           <span class="phase-name">{{ phase.name }}</span>
           <span class="phase-job">{{ phase.job }}</span>
         </a>
@@ -288,7 +313,7 @@ onBeforeUnmount(() => {
     <div class="foot">
       <p class="loop-label">{{ CAPTION }}</p>
       <button
-        v-if="live"
+        v-if="live && !arrived"
         type="button"
         class="pause"
         :aria-label="paused ? 'Play the animation' : 'Pause the animation'"

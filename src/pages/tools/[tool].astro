@@ -24,7 +24,7 @@ const { Content } = await render(entry)
 ---
 
 <Website title={data.title} description={data.description}>
-  <Hero hero={data.hero} eyebrow={data.eyebrow}>
+  <Hero hero={data.hero} eyebrow={{ label: data.eyebrow.phase, link: data.eyebrow.link }}>
     <HeroArtefact slot="artefact" artefact={data.artefact} />
   </Hero>
   <div class="prose">

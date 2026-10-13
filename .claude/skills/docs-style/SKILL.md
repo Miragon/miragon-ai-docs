@@ -89,8 +89,56 @@ before the loop), `TOOLS` (name, slug, link, job), `PULSE_DOCS` (Pulse's referen
 (`src/data/docs-sidebar.ts`) and the site footer (`src/components/site/SiteFooter.astro`) are built
 from it. Add, rename or move a tool there, never in one of them alone. Page copy uses the same names
 and stays consistent with the job labels, and a tool landing page's `eyebrow` names the phase the
-tool sits in there. The graphic fills the landing's first band (`id="lifecycle"`);
-`<LifecycleMap />` also works inside any website page.
+tool sits in there. The graphic fills the landing's first band (`id="lifecycle"`) and the hero of
+every phase page; `<LifecycleMap />` also works inside any website page.
+
+## Phase pages
+
+The five phase pages are website pages like the tool pages, not docs: `src/content/phases/` holds
+`analyse.mdx`, `design.mdx`, `implement.mdx`, `execute.mdx` and `optimize.mdx`, rendered by
+`src/pages/[phase].astro`. The hero carries "Miragon AI · Lifecycle" (linking to the landing's
+lifecycle band), the phase name in green and the phase's promise, with the lifecycle graphic beside
+it: the token runs from the start event to this phase and stays there, and the phase's row stays lit
+(`<LifecycleMap current="Design" />`). The frontmatter (`phaseSchema` in `src/data/schemas.ts`):
+
+```yaml
+---
+title: Design # the phase name, as in lifecycle.ts
+description: <one sentence for search and link previews>
+hero:
+  name: Design # the phase name again, the hero's one green word
+  text: <the phase's promise, one short sentence>
+  tagline: <one or two sentences on what your team does in this phase>
+  actions:
+    - theme: brand
+      text: See the tools
+      link: "#tools"
+    - theme: alt
+      text: Talk to us
+      link: /#contact
+compare: { before: { title, items }, after: { title, items } } # in block style, see below
+tools: # PhaseTools: one card per tool of the phase
+  - tool: designIQ # the name in lifecycle.ts; job, link and docs link come from there
+    text: [<one paragraph per string>]
+    status: <version, maturity, date>
+human: [<two cards: the agent (icon cog) and your team (icon users)>]
+handover: # HandOver: what comes in and what goes out
+  - direction: in # or out
+    label: From Analyse # or "At the start", "To Implement"
+    link: /analyse/
+    text: <what is handed over>
+    formats: [<.bpmn, REST (OpenAPI 3.1), ...>]
+---
+```
+
+The body, in bands: `The problem today` (`<CompareCards>`), `How Miragon AI helps` with
+`id="tools"` (`<PhaseTools>`, and a `<Note>` for what a tool does not do), `Human and AI`
+(`<CardGrid columns={2}>`), `Hand-over` (`<HandOver>`), then a `<CtaBox>`. Analyse adds a `sources`
+band (`<CardGrid>`, the status of each source as its eyebrow). Optimize has no tools: its bands are
+the problem with a `No tool yet` note, `questions` (what the phase needs, one card per role), `raw`
+(what Execute already hands over, with its limits) and the rest as above. The text of `tools` and
+`handover` may hold `` `code` `` and `[links](/path/)` (`src/components/landing/inline.ts`); card
+texts stay plain.
 
 ## Tool landing pages
 
@@ -199,21 +247,21 @@ They live in `src/components/`: `hero/` (the hero and its artefacts), `landing/`
 blocks pages use), `site/` (the shared header, footer and head), `starlight/` (the Starlight
 overrides) and `vue/` (the islands).
 
-| Component                  | Where it appears                                                                                                                                                                                                                                                                                             |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `Hero`                     | The route templates render it on the landing and every tool page from the frontmatter `hero` (and `eyebrow`). It holds `HeroEyebrow` and `HeroArtefact`.                                                                                                                                                     |
-| `HeroArtefact`             | Right of the hero text. It renders `PulseChat`, `TerminalWindow`, `ScreenshotFrame` or `HeroFlow` from the frontmatter `artefact`, else `LifecycleMap`.                                                                                                                                                      |
-| `HeroEyebrow`              | Above a tool page's hero name. It renders "Miragon AI · <phase>" from `eyebrow: { phase, link }`, and nothing without it; with it, the hero name turns green.                                                                                                                                                |
-| `PulseChat`                | Pulse's hero (`type: chat`). Its input opens the playground in the MCP inspector.                                                                                                                                                                                                                            |
-| `TerminalWindow`           | The hero of a CLI tool (`type: terminal`).                                                                                                                                                                                                                                                                   |
-| `ScreenshotFrame`          | The hero of a tool with a UI (`type: screenshot`).                                                                                                                                                                                                                                                           |
-| `HeroFlow`                 | The landing's hero (`type: flow`).                                                                                                                                                                                                                                                                           |
-| `LifecycleMap`             | The landing's first band as `<LifecycleMap />`, and inside any website page.                                                                                                                                                                                                                                 |
-| `TryItOut`                 | `<TryItOut />`, the Pulse playground card, on Pulse's landing page only.                                                                                                                                                                                                                                     |
-| `BrandContact`             | `<BrandContact />`, the contact form with `id="contact"`, on the landing only.                                                                                                                                                                                                                               |
-| `SiteHeader`, `SiteFooter` | Every page: website pages get them from `src/layouts/Website.astro`, docs and phase pages from the Starlight overrides `Header` and `PageFrame`. On a phone, those show the website nav in Starlight's menu (`MobileMenuFooter`). The footer lists the phases, the tools and their docs, then the legal row. |
-| `HeadCommon`               | The head of every page (the Website layout and the Starlight `Head` override): fonts, the consentmanager scripts, icons, theme colour.                                                                                                                                                                       |
-| `landing/*`                | The landing building blocks below, coloured through the `--l-*` variables in `src/styles/tokens.css`.                                                                                                                                                                                                        |
+| Component                  | Where it appears                                                                                                                                                                                                                                                                                   |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Hero`                     | The route templates render it on the landing, every phase page and every tool page from the frontmatter `hero` (and `eyebrow`). It holds `HeroEyebrow` and the artefact.                                                                                                                           |
+| `HeroArtefact`             | Right of the hero text. It renders `PulseChat`, `TerminalWindow`, `ScreenshotFrame` or `HeroFlow` from the frontmatter `artefact`, else `LifecycleMap`.                                                                                                                                            |
+| `HeroEyebrow`              | Above the hero name of a tool page ("Miragon AI · <phase>" from `eyebrow: { phase, link }`) and a phase page ("Miragon AI · Lifecycle"); with it, the hero name turns green.                                                                                                                       |
+| `PulseChat`                | Pulse's hero (`type: chat`). Its input opens the playground in the MCP inspector.                                                                                                                                                                                                                  |
+| `TerminalWindow`           | The hero of a CLI tool (`type: terminal`).                                                                                                                                                                                                                                                         |
+| `ScreenshotFrame`          | The hero of a tool with a UI (`type: screenshot`).                                                                                                                                                                                                                                                 |
+| `HeroFlow`                 | The landing's hero (`type: flow`).                                                                                                                                                                                                                                                                 |
+| `LifecycleMap`             | The landing's first band as `<LifecycleMap />`, the hero of every phase page with `current` (the token stops in that phase), and inside any website page.                                                                                                                                          |
+| `TryItOut`                 | `<TryItOut />`, the Pulse playground card, on Pulse's landing page only.                                                                                                                                                                                                                           |
+| `BrandContact`             | `<BrandContact />`, the contact form with `id="contact"`, on the landing only.                                                                                                                                                                                                                     |
+| `SiteHeader`, `SiteFooter` | Every page: website pages get them from `src/layouts/Website.astro`, docs pages from the Starlight overrides `Header` and `PageFrame`. On a phone, those show the website nav in Starlight's menu (`MobileMenuFooter`). The footer lists the phases, the tools and their docs, then the legal row. |
+| `HeadCommon`               | The head of every page (the Website layout and the Starlight `Head` override): fonts, the consentmanager scripts, icons, theme colour.                                                                                                                                                             |
+| `landing/*`                | The landing building blocks below, coloured through the `--l-*` variables in `src/styles/tokens.css`.                                                                                                                                                                                              |
 
 Website MDX (the landing, the phase pages and the tool pages) can use `LifecycleMap`, `TryItOut`,
 `BrandContact`, `Note` and the landing building blocks without importing them: the route templates
@@ -243,7 +291,9 @@ was VitePress.
 | `<CardGrid>`     | Cards with an optional icon tile or a small eyebrow label; a card with `link` is one link ("Learn more" or "Open" for external links). Proof, where it fits, docs, roles, phases. | `items: [{ icon, eyebrow, title, text, link, linkText }]`, `columns` (2, 3, 4), `center` |
 | `<StepList>`     | Two to four numbered steps, centred.                                                                                                                                              | `items: [{ title, text }]`                                                               |
 | `<CompareCards>` | Today against with the tool: short, paired lines.                                                                                                                                 | `before: { title, items }`, `after: { title, items }`                                    |
-| `<CtaBox>`       | The closing box of a tool page: a blue surface, a white pill button.                                                                                                              | `title`, `text`, `label`, `href` (default `/#contact`), `note`                           |
+| `<CtaBox>`       | The closing box of a tool or phase page: a blue surface, a white pill button.                                                                                                     | `title`, `text`, `label`, `href` (default `/#contact`), `note`                           |
+| `<PhaseTools>`   | The tools of a phase page, one card each with the tool's job, text, status and links to its page and getting-started page.                                                        | `items: [{ tool, text: [paragraphs], status }]`                                          |
+| `<HandOver>`     | A phase page's hand-overs in two columns, comes in and goes out, with the formats as chips.                                                                                       | `items: [{ direction, label, link, text, formats }]`                                     |
 | `<PillButton>`   | A miragon.io pill button inside a band.                                                                                                                                           | `href`, `label`, `variant` (`dark`, `light`, `outline`)                                  |
 | `<Note>`         | A note box in the text of a website page, sparingly.                                                                                                                              | `title`                                                                                  |
 
@@ -303,10 +353,10 @@ tool landing pages (Miragon/miragon-ai-docs#3). Follow them; changing one needs 
 
 - Frontmatter with `title` and `description` (one sentence; search and link previews use it). Tool
   landing pages add the hero fields (see [Tool landing pages](#tool-landing-pages)).
-- One `#` heading, then `##` sections. On the landing and the tool pages the hero name is the
-  heading and the body starts at `##`. On the phase pages and the docs pages Starlight renders the
-  frontmatter `title` as the heading, so the body has no `#` and starts at `##`. Tables for
-  structured data.
+- One `#` heading, then `##` sections. On the landing, the phase pages and the tool pages the hero
+  name is the heading and the body is bands (`<PageSection>`). On the docs pages Starlight renders
+  the frontmatter `title` as the heading, so the body has no `#` and starts at `##`. Tables for
+  structured data in docs.
 - Notes sparingly: `<Note title="…">` on website pages, Starlight asides (`:::note`, `:::tip`,
   `:::caution`) in docs. Asides only work in docs, and VitePress containers (`::: info`,
   `::: code-group`) no longer render anywhere. Code tabs only in docs (see [Docs pages](#docs-pages)).
@@ -329,12 +379,9 @@ tool landing pages (Miragon/miragon-ai-docs#3). Follow them; changing one needs 
   adapter, `build.format: "directory"`: every page is `<path>/index.html` and is linked as
   `/<path>/`. Pages live in `src/content/` (see
   [Information architecture and URLs](#information-architecture-and-urls)).
-- Website pages (the landing, the tool pages and the 404) are rendered by the route templates in
-  `src/pages/` in `src/layouts/Website.astro`. The phase pages (`src/pages/[phase].astro`) use the
-  docs layout through Starlight's `StarlightPage`, as on the VitePress site: a sidebar with the
-  lifecycle and the tools (`PHASES_SIDEBAR` in `src/data/docs-sidebar.ts`), "On this page", "Last
-  updated" and prev/next. The docs are Starlight's, with `lastUpdated` on (the date of each page's
-  last commit).
+- Website pages (the landing, the phase pages, the tool pages and the 404) are rendered by the route
+  templates in `src/pages/` in `src/layouts/Website.astro`. The docs are Starlight's, with
+  `lastUpdated` on (the date of each page's last commit).
 - Search: Starlight's Pagefind index covers the docs and the website pages (their `<main>` carries
   `data-pagefind-body`, and `data-pagefind-meta` names the result after the page title); the 404
   stays out.
@@ -349,8 +396,8 @@ tool landing pages (Miragon/miragon-ai-docs#3). Follow them; changing one needs 
   self-hosted via @fontsource. The header and the footer are shared (see [Components](#components)).
 - Styles in `src/styles/`: `tokens.css` maps the CI tokens onto the site roles (`--site-*`), the
   landing colours (`--l-*`) and Starlight's `--sl-*` variables; `website.css` holds the website base
-  and the `.prose` text styles; `starlight.css` the text styles of the docs and phase pages (as on
-  the VitePress docs) and the Mermaid colours; `code.css` the code blocks' language label.
+  and the `.prose` text styles; `starlight.css` the text styles of the docs (as on the VitePress
+  docs) and the Mermaid colours; `code.css` the code blocks' language label.
 - The CI tokens (`src/styles/cd-tokens.generated.css`) and the logos (`public/logo/`) are vendored
   verbatim from Miragon/corporate-identity and pinned by SHA-256 in
   `scripts/check-brand-assets.mjs` (miragon-brand 1.8.0). Never edit them, and never declare a
@@ -412,7 +459,7 @@ reads `.miragon/brand.json`, which switches the German-only rules off.
 | `src/content/landing/index.mdx`               | ≤ 260 lines |
 | `src/content/tools/pulse.mdx`                 | ≤ 230 lines |
 | `src/content/tools/*.mdx`                     | ≤ 230 lines |
-| `src/content/phases/*.mdx`                    | ≤ 80 lines  |
+| `src/content/phases/*.mdx`                    | ≤ 160 lines |
 | `src/content/docs/docs/index.mdx`             | ≤ 40 lines  |
 | `src/content/docs/docs/pulse/architecture.md` | ≤ 150 lines |
 | `src/content/docs/docs/pulse/developer.md`    | ≤ 80 lines  |

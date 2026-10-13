@@ -1,5 +1,5 @@
 /*
- * Pages in the Starlight layout only, the docs and the phase pages
+ * The docs pages only, in the Starlight layout
  * (Starlight customCss, after tokens.css): sidebar and LinkButton overrides,
  * the page text as on the VitePress site, Mermaid in the CI colours, the
  * consent banner's links. Unlayered (but for the last rule), so every rule
@@ -79,8 +79,8 @@
 }
 
 /* A section starts with a divider; h3 and h4 keep VitePress' space above.
-   Docs headings come wrapped (with their anchor link), the phase pages'
-   headings bare. Not the first heading: the title panel above it already
+   Docs headings come wrapped (with their anchor link); a bare heading
+   counts too. Not the first heading: the title panel above it already
    ends in a divider (an empty anchor <span> may come first). */
 .sl-markdown-content > :is(.sl-heading-wrapper.level-h2, h2) {
   margin-top: 48px;

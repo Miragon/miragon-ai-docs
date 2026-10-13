@@ -1,6 +1,7 @@
 // The icons pages may name (frontmatter `icon:` of cards and features), and
 // the Lucide icon each one draws. The keys are the 63 of the VitePress
-// theme's landing/Icon.vue. data/schemas.ts accepts exactly these names, and
+// theme's landing/Icon.vue, plus cog (the agent, as in the landing's hero
+// and on the phase pages). data/schemas.ts accepts exactly these names, and
 // landing/Icon.astro renders them with @lucide/astro, in the CI's heavier
 // stroke (2.5).
 export const ICONS = {
@@ -18,6 +19,7 @@ export const ICONS = {
   clipboard: "ClipboardCheck",
   clock: "Clock",
   code: "Code",
+  cog: "Cog",
   container: "Container",
   database: "Database",
   external: "ExternalLink",

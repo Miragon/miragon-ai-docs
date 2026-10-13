@@ -98,10 +98,37 @@ export const landingSchema = z.strictObject({
   limits: z.array(feature),
 })
 
+/** A tool on a phase page (PhaseTools): the tool by its name in
+    data/lifecycle.ts, what it does in this phase (one paragraph per string)
+    and its status. Text may hold `code` and [links](/path/). */
+export const phaseTool = z.strictObject({
+  tool: z.string(),
+  text: z.array(z.string()).min(1),
+  status: z.string(),
+})
+/** One hand-over on a phase page (HandOver): what comes `in` (from the
+    previous phase or at the start) or goes `out`, and in which formats.
+    `label` names the direction ("From Analyse"), `link` the phase. */
+export const handOver = z.strictObject({
+  direction: z.enum(["in", "out"]),
+  label: z.string(),
+  link: href.optional(),
+  text: z.string(),
+  formats: z.array(z.string()).min(1),
+})
 /** src/content/phases/<phase>.mdx */
 export const phaseSchema = z.strictObject({
   title: z.enum(PHASE_NAMES),
   description: z.string(),
+  hero,
+  compare: z.strictObject({ before: compareSide, after: compareSide }).optional(),
+  tools: z.array(phaseTool).optional(), // Optimize has none
+  human: z.array(card).length(2),
+  handover: z.array(handOver).min(1),
+  // Phase-specific lists
+  sources: z.array(card).optional(), // analyse: CardGrid
+  questions: z.array(card).optional(), // optimize: CardGrid
+  raw: z.array(card).optional(), // optimize: CardGrid
 })
 
 /** src/content/tools/<tool>.mdx */
@@ -143,3 +170,6 @@ export type FlowExample = z.infer<typeof flowExample>
 export type Artefact = z.infer<typeof artefact>
 export type LandingPage = z.infer<typeof landingSchema>
 export type ToolPage = z.infer<typeof toolSchema>
+export type PhaseTool = z.infer<typeof phaseTool>
+export type HandOver = z.infer<typeof handOver>
+export type PhasePage = z.infer<typeof phaseSchema>

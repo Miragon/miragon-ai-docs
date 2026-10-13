@@ -1,8 +1,7 @@
 // Starlight route middleware, on every page in the Starlight layout (the
-// docs and the phase pages):
+// docs):
 // - Prev/next in the docs stay inside one tool's docs (/docs/pulse/... never
-//   links on to /docs/design-iq/...). The phase pages keep their sidebar's
-//   prev/next.
+//   links on to /docs/design-iq/...).
 // - The icons come from components/site/HeadCommon.astro on every page;
 //   Starlight's own favicon link would declare the icon a second time.
 import { defineRouteMiddleware } from "@astrojs/starlight/route-data"

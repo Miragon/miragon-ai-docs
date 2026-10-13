@@ -1,8 +1,8 @@
 ---
 // A note box in a website page's text, for what VitePress wrote as
-// `::: info Title`: the same markup role (a box, the title as its first
-// paragraph) and the look of VitePress' `.custom-block.info` on the dark
-// site. The text comes in the slot. Docs pages use Starlight's asides.
+// `::: info Title`: a box with the title as its first paragraph, in the
+// look of the band's cards. The text comes in the slot. Docs pages use
+// Starlight's asides.
 interface Props {
   title?: string
 }
@@ -20,40 +20,40 @@ const { title } = Astro.props
      with :where(), which adds no specificity; the extra class keeps them
      above the page text's element rules (.prose a, .prose ul, .prose p,
      .prose li + li in styles/website.css), which they reset. */
+  /* A card on the band, marked as a note (the CI's info status on dark: a
+     light blue edge, the ground stays dark). */
   :root .note {
-    margin: 16px 0;
-    padding: 16px 16px 8px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    background-color: var(--site-gray-soft);
-    color: var(--site-text-1);
-    font-size: 14px;
-    line-height: 24px;
+    margin: 20px 0;
+    padding: 20px 24px;
+    border: 1px solid var(--l-card-border);
+    border-left: 3px solid var(--cd-info-hell);
+    border-radius: 16px;
+    background-color: var(--l-card-bg);
+    color: var(--l-text);
+    font-size: 15.5px;
+    line-height: 1.6;
   }
-  :root .title {
+  /* The title stays in the text colour: the light blue on a lifted card
+     falls below 4.5:1 at this size. */
+  :root .note .title {
     font-weight: 600;
   }
   :root .note :global(p) {
-    margin: 8px 0;
-    line-height: 24px;
+    margin: 6px 0 0;
   }
   :root .note :global(p:first-child) {
     margin: 0;
   }
   :root .note :global(a) {
-    color: var(--site-accent);
+    color: var(--l-link);
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 2px;
-    transition: opacity 0.25s;
   }
   :root .note :global(a:hover) {
-    color: var(--site-accent);
-    opacity: 0.75;
+    text-decoration-thickness: 2px;
   }
   :root .note :global(code) {
-    color: var(--site-accent);
-    background-color: var(--site-gray-soft);
-    font-size: 13px;
+    font-size: 0.9em;
   }
 </style>
