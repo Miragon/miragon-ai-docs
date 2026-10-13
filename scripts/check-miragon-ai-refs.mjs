@@ -28,6 +28,11 @@ const known = (name) =>
 const looksLikeTool = (token) =>
   /^[a-z0-9]+(?:_[a-z0-9]+)+$/.test(token) &&
   (/^(?:camunda7|analytics)_/.test(token) || /(?:^|_)show_/.test(token) || token.endsWith("_data"))
+// Other pages also name tools of other servers (a template's example module,
+// `notes_show_notes`); there only the miragon-ai modules' prefixes count.
+const isMiragonAiTool = (ref) =>
+  looksLikeTool(ref.token) &&
+  (ref.page.startsWith(SECTION) || /^(?:camunda7|analytics)_/.test(ref.token))
 
 const ROOTS = /^(?:apps|packages|scripts|playground|engine-plugins|templates|\.claude|\.github)\//
 // Written by a build or a test run, not checked in.
@@ -63,8 +68,7 @@ function* pages(dir) {
 const errors = []
 for (const ref of [...pages(ROOT)].flatMap(backticked)) {
   const where = `${ref.page}:${ref.line} \`${ref.token}\``
-  if (looksLikeTool(ref.token) && !known(ref.token))
-    errors.push(`${where}: no such miragon-ai tool`)
+  if (isMiragonAiTool(ref) && !known(ref.token)) errors.push(`${where}: no such miragon-ai tool`)
   if (
     ref.page.startsWith(SECTION) &&
     isPath(ref.token) &&
