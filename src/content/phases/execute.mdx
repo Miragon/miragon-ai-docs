@@ -29,11 +29,13 @@ operate turns the 396 operations of the engine REST API into commands for your s
 
 Status: 0.5.0 on npm (released 2026-10-11), pre-1.0. Standalone binaries and a container image are planned for 0.6.0.
 
-Details and first steps: [operate](/tools/operate)
+Details and first steps: [operate](/tools/operate/)
 
-::: info Not Camunda 8 Operate
+<Note title="Not Camunda 8 Operate">
+
 operate has nothing to do with Operate, the Camunda 8 web app, and it does not support Camunda 8.
-:::
+
+</Note>
 
 ## Human and AI
 
@@ -41,8 +43,8 @@ The agent reads the engine state and drafts the ticket. Your team decides whethe
 
 ## Hand-over
 
-| Direction                    | What is handed over                                                                                                                                                                                                                                                                                                                                      | Format                                                     |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| From [Implement](/implement) | Models that already run on the engine or that `operate deploy` uploads, plus the engine's REST URL and credentials. Your own MCP server from the [Solution templates](/tools/solution-templates) runs the way Pulse does. Runtime figures in Pulse also need CIB seven with the metrics plugin `io.miragon.mcp:cibseven-history-metrics` and Prometheus. | `.bpmn`, `.dmn`, `.form`, `/engine-rest` URL, Docker image |
-| To [Implement](/implement)   | Ticket drafts from Pulse with title, body, labels and an optional prefilled GitHub issue URL. From operate, the root-cause line for the next fix and exit codes for your CI pipeline.                                                                                                                                                                    | Markdown with labels, JSON, exit codes                     |
-| To [Optimize](/optimize)     | Raw material only, since Optimize has no tool yet: Pulse's runtime figures (CIB seven with the metrics plugin, 30 days at most) and operate's raw history queries.                                                                                                                                                                                       | JSON and chat widgets (Pulse), JSON (operate)              |
+| Direction                     | What is handed over                                                                                                                                                                                                                                                                                                                                       | Format                                                     |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| From [Implement](/implement/) | Models that already run on the engine or that `operate deploy` uploads, plus the engine's REST URL and credentials. Your own MCP server from the [Solution templates](/tools/solution-templates/) runs the way Pulse does. Runtime figures in Pulse also need CIB seven with the metrics plugin `io.miragon.mcp:cibseven-history-metrics` and Prometheus. | `.bpmn`, `.dmn`, `.form`, `/engine-rest` URL, Docker image |
+| To [Implement](/implement/)   | Ticket drafts from Pulse with title, body, labels and an optional prefilled GitHub issue URL. From operate, the root-cause line for the next fix and exit codes for your CI pipeline.                                                                                                                                                                     | Markdown with labels, JSON, exit codes                     |
+| To [Optimize](/optimize/)     | Raw material only, since Optimize has no tool yet: Pulse's runtime figures (CIB seven with the metrics plugin, 30 days at most) and operate's raw history queries.                                                                                                                                                                                        | JSON and chat widgets (Pulse), JSON (operate)              |

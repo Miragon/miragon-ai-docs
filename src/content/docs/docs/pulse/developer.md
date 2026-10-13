@@ -3,15 +3,13 @@ title: Pulse developer guide
 description: Run Pulse (the miragon-ai stack) from source, the common pnpm tasks, and how to build your own MCP server on the published modules.
 ---
 
-# Getting Started
-
 A working development environment for Pulse (the miragon-ai MCP server) in five commands, or zero if you start with the hosted playground.
 
 ## Try it first (no install)
 
 Point any MCP client at the [playground](https://miragon-ai-playground.fly.dev/mcp)
 (`https://miragon-ai-playground.fly.dev/mcp`): a seeded engine, live traffic, and the full
-analytics stack, read-only. See [Connect your Claude in 30 seconds](/tools/pulse/#connect-your-claude). Everything below is for running your own stack.
+analytics stack, read-only. See [Connect your Claude in 30 seconds](/docs/pulse/getting-started/#connect-your-claude). Everything below is for running your own stack.
 
 ## Prerequisites
 

@@ -1,0 +1,37 @@
+---
+title: Get started with Skills
+description: "Install both plugins in Claude Code"
+---
+
+import { TabItem, Tabs } from "@astrojs/starlight/components"
+
+You need Claude Code. The `bpmn` skill needs Node.js 20 or later, `operate` needs Node.js 22.12 or later and a Camunda 7, CIB seven or Operaton engine. Add each marketplace and install its plugin in a Claude Code session:
+
+<Tabs syncKey="skills">
+<TabItem label="bpmn-cli">
+
+```text
+/plugin marketplace add Miragon/bpmn-cli
+/plugin install bpmn-cli@miragon-bpmn
+```
+
+</TabItem>
+<TabItem label="operate">
+
+```text
+/plugin marketplace add Miragon/operate
+/plugin install operate@miragon
+```
+
+</TabItem>
+</Tabs>
+
+The skills fall back to `npx` when a CLI is not on your PATH. Install both CLIs to run them yourself too. The other two lines start a local Operaton dev engine and check that operate reaches it at its default `http://localhost:8080/engine-rest`:
+
+```sh
+npm install -g @miragon/bpmn-cli @miragon/operate
+docker run -d --name engine -p 8080:8080 operaton/operaton:2.1.5
+operate ping
+```
+
+Then ask the agent for the change, and once `bpmn validate --strict` passes, for one test run. `/operate:status` gives you a read-only triage of the engine at any point.

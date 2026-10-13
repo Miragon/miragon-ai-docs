@@ -1,0 +1,47 @@
+---
+title: Get started with operate
+description: "A first triage in four commands"
+---
+
+import { TabItem, Tabs } from "@astrojs/starlight/components"
+
+You need Node.js 22.12 or later and a reachable Camunda 7 REST API. operate uses `http://localhost:8080/engine-rest` by default, so a local Operaton container needs no configuration. Give it a few seconds to start before the first command.
+
+```sh
+npm install -g @miragon/operate
+docker run -d --name engine -p 8080:8080 operaton/operaton:2.1.5
+operate ping
+operate status
+```
+
+Then point operate at your own engine with a read-only profile, or hand it to Claude Code or your CI pipeline. A profile also holds the engine's Basic auth, OAuth or bearer token settings. The Claude Code plugin calls the CLI you installed. Other agents need one line in `AGENTS.md` or `CLAUDE.md`: "Run `operate guide` before using `operate`."
+
+<Tabs syncKey="operate">
+<TabItem label="Your engine">
+
+```sh
+operate config set prod --url https://<host>/engine-rest --read-only
+operate status --profile prod
+```
+
+</TabItem>
+<TabItem label="Claude Code">
+
+```text
+/plugin marketplace add Miragon/operate
+/plugin install operate@miragon
+/operate:status
+```
+
+</TabItem>
+<TabItem label="CI">
+
+```sh
+export OPERATE_URL=https://<host>/engine-rest
+operate status --read-only --fail-on warning
+```
+
+</TabItem>
+</Tabs>
+
+In CI, `--fail-on warning` fails on any finding, an open incident included. `--fail-on critical` fails only when executable jobs are overdue, and that finding asks whether the job executor is running. The [README](https://github.com/Miragon/operate#readme) maps everyday tasks to commands and links the rest of the docs.

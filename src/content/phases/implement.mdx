@@ -19,7 +19,7 @@ Your coding agent in Claude Code combines two skills. The bpmn skill from the bp
 
 Status: early. bpmn-cli 0.6.0 and operate 0.5.0 are pre-1.0 (as of 2026-10-13). Camunda 8 files can be edited and validated, but no skill runs them. Both skills install from the public plugin marketplaces in [Miragon/bpmn-cli](https://github.com/Miragon/bpmn-cli/tree/main/plugins/bpmn-cli) and [Miragon/operate](https://github.com/Miragon/operate/blob/main/docs/agents.md).
 
-Details and first steps: [Skills](/tools/skills)
+Details and first steps: [Skills](/tools/skills/)
 
 ### Solution templates
 
@@ -27,7 +27,7 @@ Details and first steps: [Skills](/tools/skills)
 
 Status: miragon-ai-starter is MIT-licensed and pins Pulse's `@miragon-ai` packages at 0.20.0 (as of 2026-10-13). They are pre-1.0 and release about weekly, often with breaking changes. mcp-toolkit-starter builds on the Miragon MCP Toolkit 2.8.1 and has no licence yet.
 
-Details and first steps: [Solution templates](/tools/solution-templates)
+Details and first steps: [Solution templates](/tools/solution-templates/)
 
 ## Human and AI
 
@@ -35,9 +35,9 @@ Your coding agent sets and checks the engine attributes, then runs one test inst
 
 ## Hand-over
 
-| Direction                | What is handed over                                                                                                                                                           | Format                     |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| From [Design](/design)   | Models approved in Design, from designIQ, Camunda Modeler or bpmn-cli. The bpmn skill makes the BPMN executable; there is no DMN skill yet.                                   | `.bpmn`, `.dmn`            |
-| To [Execute](/execute)   | BPMN files that pass `bpmn validate --strict` and have run once on Camunda 7, CIB seven or Operaton (`operate deploy` with `--start`), plus the decisions and forms they use. | `.bpmn`, `.dmn`, `.form`   |
-| To [Execute](/execute)   | Your own MCP server, built from a Solution template, which your team runs the way it runs Pulse.                                                                              | Docker image               |
-| From [Execute](/execute) | Ticket drafts from Pulse and root-cause findings from operate, as input for the next fix.                                                                                     | Markdown with labels, JSON |
+| Direction                 | What is handed over                                                                                                                                                           | Format                     |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| From [Design](/design/)   | Models approved in Design, from designIQ, Camunda Modeler or bpmn-cli. The bpmn skill makes the BPMN executable; there is no DMN skill yet.                                   | `.bpmn`, `.dmn`            |
+| To [Execute](/execute/)   | BPMN files that pass `bpmn validate --strict` and have run once on Camunda 7, CIB seven or Operaton (`operate deploy` with `--start`), plus the decisions and forms they use. | `.bpmn`, `.dmn`, `.form`   |
+| To [Execute](/execute/)   | Your own MCP server, built from a Solution template, which your team runs the way it runs Pulse.                                                                              | Docker image               |
+| From [Execute](/execute/) | Ticket drafts from Pulse and root-cause findings from operate, as input for the next fix.                                                                                     | Markdown with labels, JSON |
