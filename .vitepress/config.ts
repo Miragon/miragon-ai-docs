@@ -6,6 +6,8 @@ export default withMermaid({
     "AI-driven process management for Camunda 7 / CIB Seven via the Model Context Protocol.",
   cleanUrls: true,
   lastUpdated: true,
+  // The site sits at the repo root: repo docs are not pages.
+  srcExclude: ["README.md", "CLAUDE.md"],
   // Shiki's VitePress default dark theme (github-dark) renders comments at
   // 3.9:1 on the dark code background; github-dark-default keeps every token
   // colour above WCAG AA. Light stays on the default github-light.
