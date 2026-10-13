@@ -1,6 +1,14 @@
 ---
-// A terminal window as a tool page's hero artefact: commands, continuation
-// lines, output (with a tone) and notes. Scaffold: plain lines.
+// A terminal session as a tool page's hero artefact: the real commands and
+// the real shape of their output, so the page starts with the tool itself.
+// Lines come from the page's frontmatter (artefact.lines), each either a
+// command (`cmd`, shown after a prompt), the continuation of a multi-line
+// command (`cont`), output (`out`) or a comment (`note`). `tone` colours
+// output: ok, warn, err or dim. Long lines wrap like in a real terminal, so
+// real output never needs rewording to fit.
+//
+// The lines come in one after the other (CSS only; with
+// prefers-reduced-motion they show at once).
 import type { TerminalLine } from "../../data/schemas"
 
 interface Props {
@@ -9,8 +17,151 @@ interface Props {
 }
 
 const { title, lines } = Astro.props
+const name = title ?? "terminal"
 ---
 
-<div class="terminal" tabindex="0" role="group" aria-label={title ?? "Terminal"}>
-  <pre>{lines.map((line) => Object.values(line)[0]).join("\n")}</pre>
-</div>
+<figure class="term">
+  <div class="bar">
+    <span class="dots" aria-hidden="true">
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
+    <span class="title">{name}</span>
+  </div>
+  <div class="body" tabindex="0" role="group" aria-label={`${name} session`}>
+    {lines.map((line, i) => {
+      const tone = "tone" in line ? line.tone : undefined
+      const classes = ["line", tone, { cmd: "cmd" in line || "cont" in line, note: "note" in line }]
+      // The lines keep their white space (pre-wrap). In this expression JSX
+      // rules apply, so the line breaks of the markup below never reach them.
+      if ("cmd" in line)
+        return (
+          <code class:list={classes} style={`--i: ${i}`}>
+            <span class="prompt" aria-hidden="true">
+              ${" "}
+            </span>
+            {line.cmd}
+          </code>
+        )
+      if ("cont" in line)
+        return (
+          <code class:list={classes} style={`--i: ${i}`}>
+            {line.cont}
+          </code>
+        )
+      if ("note" in line)
+        return <code class:list={classes} style={`--i: ${i}`}>{`# ${line.note}`}</code>
+      return (
+        <code class:list={classes} style={`--i: ${i}`}>
+          {line.out || " "}
+        </code>
+      )
+    })}
+  </div>
+</figure>
+
+<style>
+  .term {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    border: 1px solid var(--cd-kontur);
+    border-radius: var(--cd-radius-md);
+    background: var(--site-bg-alt);
+    overflow: hidden;
+    text-align: left;
+    box-shadow: var(--cd-shadow-3);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--site-divider);
+  }
+  .dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--site-gray-1);
+  }
+  .title {
+    font-family: var(--site-font-mono);
+    font-size: 11.5px;
+    color: var(--site-text-2);
+  }
+
+  .body {
+    margin: 0;
+    padding: 16px 18px 18px;
+    overflow-x: auto;
+    font-family: var(--site-font-mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--site-text-2);
+    background: transparent;
+  }
+  .body:focus-visible {
+    outline: 2px solid var(--cd-blau-hell);
+    outline-offset: -2px;
+  }
+  .line {
+    display: block;
+    min-height: 1.65em;
+    /* Wrap long lines like a terminal does; the hanging indent keeps a
+       wrapped line visibly one line. */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    padding-left: 2ch;
+    text-indent: -2ch;
+    font: inherit;
+    background: none;
+    animation: tw-line-in 0.35s ease both;
+    animation-delay: calc(var(--i) * 0.12s + 0.1s);
+  }
+  .line.cmd {
+    color: var(--site-text-1);
+  }
+  .prompt {
+    color: var(--site-accent);
+  }
+  .line.note,
+  .line.dim {
+    color: var(--site-text-3);
+  }
+  /* Status colours on dark grounds (the CI's light variants for black). */
+  .line.ok {
+    color: var(--cd-success-hell);
+  }
+  .line.warn {
+    color: var(--cd-warning-hell);
+  }
+  .line.err {
+    color: var(--cd-danger-hell);
+  }
+
+  /* Phones: a smaller size keeps typical CLI tables on one line each. */
+  @media (max-width: 480px) {
+    .body {
+      padding: 14px 14px 16px;
+      font-size: 11px;
+    }
+  }
+
+  @keyframes tw-line-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .line {
+      animation: none;
+    }
+  }
+</style>
