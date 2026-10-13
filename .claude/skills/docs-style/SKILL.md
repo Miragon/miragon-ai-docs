@@ -319,7 +319,8 @@ tool landing pages (Miragon/miragon-ai-docs#3). Follow them; changing one needs 
   backticked repo path in the Pulse docs (`src/content/docs/docs/pulse/`) or on Pulse's tool page
   (`src/content/tools/pulse.mdx`) must exist in Miragon/miragon-ai. The refs check reads both.
 - Mermaid diagrams only where they earn their place. Today there is one, on
-  `src/content/docs/docs/pulse/architecture.md`.
+  `src/content/docs/docs/pulse/architecture.md`. A page with a diagram stays `.md`: in an `.mdx`
+  file a `mermaid` code block fails the build.
 
 ## Stack
 
