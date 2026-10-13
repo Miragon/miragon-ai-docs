@@ -1,6 +1,6 @@
 ---
 name: docs-style
-description: Always-on style guide for the Miragon AI site (VitePress at the repo root, served at https://miragon.ai). Use whenever editing, reviewing or planning any page (`index.md`, the five phase pages, anything under `tools/`), `.vitepress/config.ts` or `.vitepress/lifecycle.ts`, whenever a Miragon AI tool releases or changes its getting-started steps, and proactively whenever you suspect the site has drifted from the tools. Encodes the lifecycle structure and URL scheme, the per-page line budgets, the English voice and anti-slop rules, the decisions from Miragon/miragon-ai-docs#1, the VitePress + Mermaid stack and the rule against copying tool READMEs.
+description: Always-on style guide for the Miragon AI site (VitePress at the repo root, served at https://miragon.ai). Use whenever editing, reviewing or planning any page (`index.md`, the five phase pages, the tool landing pages and the Pulse docs under `tools/`), `.vitepress/config.ts`, `.vitepress/lifecycle.ts` or the theme components, whenever a Miragon AI tool releases or changes its getting-started steps, and proactively whenever you suspect the site has drifted from the tools. Encodes the lifecycle structure and URL scheme, the tool landing page pattern and its truth rule for hero artefacts, the Pulse naming rule, the per-page line budgets, the English voice and anti-slop rules, the decisions from Miragon/miragon-ai-docs#1, the VitePress + Mermaid stack and the rule against copying tool READMEs.
 allowed-tools: Read, Edit, Write, Glob, Grep, Bash
 ---
 
@@ -21,53 +21,170 @@ has outgrown its job; never copy a README.
 
 ## Information architecture and URLs
 
-Value proposition first, then one page per phase, then one short page per tool.
+Value proposition first, then one page per phase, then one landing page per tool.
 
-| Page                                                    | URL                                                                                   | Holds                                                                                                                                                                 |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `index.md`                                              | `/`                                                                                   | The value proposition: lifecycle graphic, who it is for, what Miragon AI does per phase, human and AI, why Miragon, what we don't promise, contact form (`/#contact`) |
-| `analyse.md`, `design.md`, `implement.md`, `execute.md` | `/analyse`, `/design`, `/implement`, `/execute`                                       | One page per phase: the problem today, how the tools help, human and AI, hand-over to the next phase                                                                  |
-| `optimize.md`                                           | `/optimize`                                                                           | The phase without a tool: the problem, what the phase needs, what Execute already hands over                                                                          |
-| `tools/<tool>.md`                                       | `/tools/<tool>` for analyzr, design-iq, bpmn-cli, skills, solution-templates, operate | One short page per tool: status, why, get started, proof you can open, where it fits, links to the reference                                                          |
-| `tools/miragon-ai/index.md`                             | `/tools/miragon-ai/`                                                                  | Overview of miragon-ai, the MCP server                                                                                                                                |
-| `tools/miragon-ai/architecture.md`                      | `/tools/miragon-ai/architecture`                                                      | One-page mental model of modules and external systems                                                                                                                 |
-| `tools/miragon-ai/developer.md`                         | `/tools/miragon-ai/developer`                                                         | Clone, install, run, the common `pnpm` tasks                                                                                                                          |
-| `tools/miragon-ai/operations.md`                        | `/tools/miragon-ai/operations`                                                        | Deployment, environment variables, observability                                                                                                                      |
-| `tools/miragon-ai/usage.md`                             | `/tools/miragon-ai/usage`                                                             | Connecting an MCP host and what to ask                                                                                                                                |
+| Page                                                    | URL                                                                                   | Holds                                                                                                                                                                                                  |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `index.md`                                              | `/`                                                                                   | The value proposition: lifecycle graphic, who it is for, what Miragon AI does per phase, human and AI, why Miragon, what we don't promise, contact form (`/#contact`)                                  |
+| `analyse.md`, `design.md`, `implement.md`, `execute.md` | `/analyse`, `/design`, `/implement`, `/execute`                                       | One page per phase: the problem today, how the tools help, human and AI, hand-over to the next phase                                                                                                   |
+| `optimize.md`                                           | `/optimize`                                                                           | The phase without a tool: the problem, what the phase needs, what Execute already hands over                                                                                                           |
+| `tools/<tool>.md`                                       | `/tools/<tool>` for analyzr, design-iq, bpmn-cli, skills, solution-templates, operate | The tool's landing page (see [Tool landing pages](#tool-landing-pages)): promise and real artefact in the hero, then the problem, how it works, get started, status, proof you can open, where it fits |
+| `tools/pulse/index.md`                                  | `/tools/pulse/`                                                                       | Pulse's landing page: the chat window in the hero, the playground card, connecting your Claude (`#connect-your-claude`), links to the four doc pages                                                   |
+| `tools/pulse/architecture.md`                           | `/tools/pulse/architecture`                                                           | One-page mental model of modules and external systems                                                                                                                                                  |
+| `tools/pulse/developer.md`                              | `/tools/pulse/developer`                                                              | Clone, install, run, the common `pnpm` tasks                                                                                                                                                           |
+| `tools/pulse/operations.md`                             | `/tools/pulse/operations`                                                             | Deployment, environment variables, observability                                                                                                                                                       |
+| `tools/pulse/usage.md`                                  | `/tools/pulse/usage`                                                                  | Connecting an MCP host and what to ask                                                                                                                                                                 |
 
 - Link pages extensionless and absolute from the root, exactly as in the URL column. `pnpm build`
   fails on a dead internal link.
 - GitHub links are full https URLs.
 - Product names as displayed: analyzr, designIQ (repo Miragon/design-iq), bpmn-cli, Skills,
-  Solution templates, miragon-ai (the MCP server), operate. The umbrella is Miragon AI.
+  Solution templates, Pulse (the MCP server from the repo Miragon/miragon-ai), operate. The umbrella
+  is Miragon AI.
 - No new top-level page without the team. A new phase or tool page starts in
   `.vitepress/lifecycle.ts` and gets a row in the budget table below.
-- The miragon-ai pages used to sit at the root. `netlify.toml` redirects `/architecture`,
-  `/developer`, `/operations` and `/usage` (and their `.html` variants) with a 301. If you move a
-  page, add a redirect there.
+- The Pulse doc pages first sat at the root, then under `/tools/miragon-ai/`. `netlify.toml`
+  redirects `/architecture`, `/developer`, `/operations` and `/usage` (and their `.html` variants)
+  and everything under `/tools/miragon-ai/` to `/tools/pulse/` with a 301. If you move a page, add
+  a redirect there.
+
+## Pulse and miragon-ai
+
+Pulse is the product name of the MCP server built in the repo Miragon/miragon-ai (the owner's
+decision of 2026-10-13). Prose says Pulse. Where a reader needs the mapping, say it once per page:
+"Pulse is the MCP server from the repo Miragon/miragon-ai" or "Pulse (the miragon-ai MCP server)".
+Technical identifiers stay exact, because readers copy them:
+
+| Identifier                     | Stays as                                                                              |
+| ------------------------------ | ------------------------------------------------------------------------------------- |
+| Repo and template              | `Miragon/miragon-ai`, `Miragon/miragon-ai-starter`                                    |
+| Docker image                   | `miragon/miragon-ai-server`                                                           |
+| npm packages                   | `@miragon-ai/*`                                                                       |
+| MCP server name                | `claude mcp add --transport http miragon-ai …`, the `"miragon-ai"` key in host config |
+| Playground host                | `miragon-ai-playground.fly.dev`                                                       |
+| Environment variables, tools   | `MCP_OAUTH`, `CAMUNDA_BASE_URL` and the rest; `camunda7_*`, `analytics_*`             |
+| The refs check and its env var | `scripts/check-miragon-ai-refs.mjs`, `MIRAGON_AI_DIR`                                 |
+
+The four Pulse doc pages stay technical. Their opening line names Pulse once, for example "Pulse
+(the miragon-ai MCP server) …", and after that they speak of the miragon-ai server, its modules and
+its packages.
 
 ## One list of phases and tools
 
 `.vitepress/lifecycle.ts` exports `PHASES` (name, link, job, tools) and `TOOLS`. The lifecycle
 graphic (`theme/LifecycleMap.vue`), the nav and the sidebar (`config.ts`) are built from it. Add,
 rename or move a tool there, never in `config.ts` alone. Page copy uses the same names and stays
-consistent with the job labels. The graphic is the landing's hero; `<LifecycleMap />` also works
-inside a page.
+consistent with the job labels, and a tool landing page's `eyebrow` names the phase the tool sits in
+there. The graphic is the landing's hero; `<LifecycleMap />` also works inside a page.
+
+## Tool landing pages
+
+Every tool page is a landing page of its own, in the spirit of `index.md` and not a doc view:
+`tools/analyzr.md`, `tools/design-iq.md`, `tools/bpmn-cli.md`, `tools/skills.md`,
+`tools/solution-templates.md`, `tools/operate.md` and `tools/pulse/index.md`. The four Pulse doc
+pages stay docs. The frontmatter uses the VitePress home layout, so the page is always dark like the
+landing:
+
+```yaml
+---
+layout: home
+title: <tool name>
+description: <one sentence for search and link previews>
+eyebrow: { phase: Execute, link: /execute } # renders "MIRAGON AI · EXECUTE" above the name
+hero:
+  name: <tool name> # the hero's one green word
+  text: <the promise, a short sentence or two> # white headline
+  tagline: <one or two sentences on what it is, for whom and on which engines>
+  actions:
+    - theme: brand
+      text: Get started # or "Try the demo" / "Try the playground" with its URL
+      link: "#get-started"
+    - theme: alt
+      text: GitHub # or npm, Docs: a public URL
+      link: <public URL>
+    - theme: alt
+      text: Talk to us
+      link: /#contact
+artefact: <see the table below>
+---
+```
+
+The hero artefact (`artefact`) renders right of the hero text, and below it on mobile.
+`HeroArtefact.vue` picks the component by `type`. Start with the real artefact, never a decorative
+icon or illustration (brand rule).
+
+| `type`       | Renders           | Fields and limits                                                                                                                                                                                                                                                                               |
+| ------------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `chat`       | `PulseChat`       | No fields. Pulse only: a question, Pulse's answer with an incident widget, an input that opens the playground.                                                                                                                                                                                  |
+| `terminal`   | `TerminalWindow`  | `title` and `lines`. A line is `{ cmd }` (a command after "$ "), `{ out, tone }` (output; `tone` is optional: `ok`, `warn`, `err` or `dim`), `{ note }` (a "# " comment) or `{ out: "" }` (a blank line). About 62 characters per line (longer lines scroll inside the window), about 14 lines. |
+| `screenshot` | `ScreenshotFrame` | `src` (`/screens/<file>.jpg`, the file in `public/screens/`), `alt`, `url` (the address in the frame), `caption`. A JPEG of the real product, quality around 82, 1200 to 1400 px wide, well under 400 KB, cropped to what matters.                                                              |
+
+Quote YAML strings that contain `:`, `#` or quotes or that start with a special character. Without
+`artefact` the hero shows the lifecycle graphic, which is what the landing uses.
+
+Truth rule for artefacts: every command is real, and every output is real. Produce it by running the
+tool (against a local engine, the public analyzr demo or the tool's Docker image) or copy it
+verbatim from the tool's README or docs. Shorten output only by dropping lines, never by rewording.
+If you cannot verify an output, show only commands and notes. Never run anything that creates or
+changes something outside your machine to get an artefact (no new repos, pushes or sign-ups, no
+writes to the public playground or demo), and stop the containers you start. The numbers in
+`PulseChat.vue` mirror the public playground, which reseeds every night.
+
+The body is Markdown below the hero, with doc styles on the dark ground. The hero name is the page's
+`h1`, so the body starts at `##`. Adapt the sections to the tool:
+
+1. `## The problem`: two to four concrete sentences from the tool's canvas.
+2. `## What <tool> does` or `## How it works`: a short numbered flow or a two-column table (you and
+   the tool, or before and with the tool), in real terms.
+3. `## Get started {#get-started}`: the prerequisites in one sentence, then fenced commands, and a
+   `::: code-group` for variants. The hero's primary action links here.
+4. `## Status` or `## What it is not`: version, maturity and what is missing, with the date.
+5. `## Proof you can open`: public links only.
+6. `## Where it fits`: the phase page and the neighbouring tools' pages in one or two sentences,
+   optionally "The whole lifecycle: [Miragon AI](/)".
+
+Pulse's page also keeps `## Connect your Claude in 30 seconds {#connect-your-claude}` (the developer
+page links the anchor), `<TryItOut />` and a `## Docs` section with one line for each doc page. A
+tool landing page ends with one short line that invites contact, `[Talk to us](/#contact) about …`.
+It has no contact form of its own, no `features` cards and no icon grid.
+
+## Components
+
+All live in `.vitepress/theme/`.
+
+| Component         | Where it appears                                                                                                                                                                                  |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `HeroArtefact`    | The layout mounts it in the `home-hero-image` slot of every home-layout page. It renders `PulseChat`, `TerminalWindow` or `ScreenshotFrame` from the frontmatter `artefact`, else `LifecycleMap`. |
+| `HeroEyebrow`     | The layout mounts it in `home-hero-info-before`. It renders "Miragon AI · <phase>" from `eyebrow: { phase, link }`, and nothing without it; with it, `custom.css` turns the hero name green.      |
+| `PulseChat`       | Pulse's hero (`type: chat`). Its input opens the playground in the MCP inspector.                                                                                                                 |
+| `TerminalWindow`  | The hero of a CLI tool (`type: terminal`).                                                                                                                                                        |
+| `ScreenshotFrame` | The hero of a tool with a UI (`type: screenshot`).                                                                                                                                                |
+| `LifecycleMap`    | The landing's hero, and `<LifecycleMap />` inside any page.                                                                                                                                       |
+| `TryItOut`        | `<TryItOut />`, the Pulse playground card, on Pulse's landing page only.                                                                                                                          |
+| `BrandContact`    | `<BrandContact />`, the contact form with `id="contact"`, on the landing only.                                                                                                                    |
+| `LegalFooter`     | The layout mounts it in `layout-bottom` on every page.                                                                                                                                            |
+
+Markdown can use `LifecycleMap`, `TryItOut` and `BrandContact` (registered in `theme/index.ts`).
+The hero components come from the frontmatter only.
 
 ## Decisions
 
-Taken on 2026-10-13 in Miragon/miragon-ai-docs#1. Follow them; changing one needs the team.
+Taken on 2026-10-13 in Miragon/miragon-ai-docs#1; the last two rows came the same day with the tool
+landing pages (Miragon/miragon-ai-docs#3). Follow them; changing one needs the team.
 
 | Topic                  | Decision                                                                                                                                                                                                                    |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Language               | The site is English. Landing and phase copy adapt the agreed German value proposition in Notion (page "Value Proposition und Positionierung von Miragon.ai"). Adapt it into natural English; never translate word for word. |
-| Optimize               | Honest: no tool yet. The Optimize page describes the problem and the outlook. miragon-ai stays in Execute, and its analytics module is never presented as the Optimize answer.                                              |
+| Optimize               | Honest: no tool yet. The Optimize page describes the problem and the outlook. Pulse stays in Execute, and its analytics module is never presented as the Optimize answer.                                                   |
 | The old marketing site | This site replaces miragon-ai-website. Value proposition, lifecycle story, docs and contact live here. Redirecting or archiving the old site is a separate step.                                                            |
+| Pulse                  | The site calls the MCP server from Miragon/miragon-ai Pulse; its technical identifiers keep their names (see [Pulse and miragon-ai](#pulse-and-miragon-ai)).                                                                |
+| Tool pages             | Every tool page is a landing page of its own with the tool's real artefact in the hero. The Pulse doc pages stay docs.                                                                                                      |
 
 ## Voice
 
 - English only. Talk to the reader ("you", "your team"). Active voice, present tense, plain and
-  concrete. Docs pages are factual and precise; the landing may be bolder but never loud.
+  concrete. Docs pages are factual and precise; the landing and the tool landing pages may be bolder
+  but never loud.
 - Evidence before adjectives: versions, engines, commands, links. Date statements that age.
 - No em dash or en dash as a connector anywhere in prose. Use a period, comma, colon or
   parentheses. brand-lint fails on it (rule A2).
@@ -93,16 +210,18 @@ Taken on 2026-10-13 in Miragon/miragon-ai-docs#1. Follow them; changing one need
 
 ## Markdown conventions
 
-- Frontmatter with `title` and `description` (one sentence; search and link previews use it).
-- One `#` heading, then `##` sections. Tables for structured data. VitePress containers (`::: info`,
-  `::: tip`, `::: warning`) sparingly, `::: code-group` when a step has variants.
+- Frontmatter with `title` and `description` (one sentence; search and link previews use it). Tool
+  landing pages add the home-layout fields (see [Tool landing pages](#tool-landing-pages)).
+- One `#` heading, then `##` sections. On a home-layout page the hero name is the heading and the
+  body starts at `##`. Tables for structured data. VitePress containers (`::: info`, `::: tip`,
+  `::: warning`) sparingly, `::: code-group` when a step has variants.
 - Commands in fenced code blocks with a language.
-- A backticked snake_case token that looks like a miragon-ai tool (a `camunda7_` or `analytics_`
-  prefix, `show_` in it or a `_data` ending) must be a tool miragon-ai registers, on any page. A
-  backticked repo path in `tools/miragon-ai/` must exist in Miragon/miragon-ai. The refs check
-  reads both.
+- A backticked snake_case token that looks like a Pulse tool (a `camunda7_` or `analytics_` prefix,
+  `show_` in it or a `_data` ending) must be a tool the miragon-ai server registers, on any page. A
+  backticked repo path in `tools/pulse/` must exist in Miragon/miragon-ai. The refs check reads
+  both.
 - Mermaid diagrams only where they earn their place. Today there is one, on
-  `tools/miragon-ai/architecture.md`.
+  `tools/pulse/architecture.md`.
 
 ## Stack
 
@@ -114,10 +233,10 @@ Taken on 2026-10-13 in Miragon/miragon-ai-docs#1. Follow them; changing one need
 - Local search (`themeConfig.search.provider: "local"`).
 - Theme in `.vitepress/theme/`: the default theme without its bundled Inter font (Geist and Geist
   Mono come self-hosted via @fontsource) and `custom.css`, which maps the VitePress variables onto
-  the CI tokens. The landing is always dark; doc pages keep the light/dark toggle. Components for
-  Markdown: `LifecycleMap`, `TryItOut` (the miragon-ai playground card) and `BrandContact`. The
-  layout mounts `LifecycleMap` as the landing's hero image (`home-hero-image`
-  slot) and `LegalFooter` on every page.
+  the CI tokens. Every home-layout page (the landing and the tool landing pages) is always dark; doc
+  pages keep the light/dark toggle. The layout mounts `HeroArtefact` (`home-hero-image`),
+  `HeroEyebrow` (`home-hero-info-before`) and `LegalFooter` (`layout-bottom`); see
+  [Components](#components).
 - The CI tokens (`.vitepress/theme/cd-tokens.generated.css`) and the logos (`public/logo/`) are
   vendored verbatim from Miragon/corporate-identity and pinned by SHA-256 in
   `scripts/check-brand-assets.mjs` (miragon-brand 1.8.0). Never edit them, and never declare a
@@ -134,7 +253,8 @@ Taken on 2026-10-13 in Miragon/miragon-ai-docs#1. Follow them; changing one need
 | ----------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `LegalFooter` on every page, 404 included | `layout-bottom` slot in `theme/index.ts` | Impressum and Datenschutz must be reachable from every page; the default footer hides on sidebar pages.                                                      |
 | consentmanager scripts                    | `head` in `config.ts`                    | Cookie consent with autoblocking; third-party scripts such as the Calendly embed wait for consent.                                                           |
-| `BrandContact` with `id="contact"`        | landing page                             | Contact form on Netlify Forms plus Calendly; the nav's Contact entry links `/#contact`.                                                                      |
+| `BrandContact` with `id="contact"`        | landing page                             | Contact form on Netlify Forms plus Calendly; the nav's Contact entry and every "Talk to us" link point to `/#contact`.                                       |
+| `#connect-your-claude`                    | `tools/pulse/index.md`                   | The Pulse developer page links this anchor.                                                                                                                  |
 | Netlify settings                          | Netlify UI, documented in `netlify.toml` | Form detection on (the form needs it), Pretty URLs off (`cleanUrls` links extensionless URLs), Auto Minify off (it strips comments Vue needs for hydration). |
 
 ## Commands
@@ -150,13 +270,13 @@ pnpm check     # brand assets + page budgets
 
 ## Checks
 
-| Check                 | How                                                                   | Catches                                                                                                                                                                                     |
-| --------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Brand assets          | `pnpm check` runs `scripts/check-brand-assets.mjs`                    | Vendored tokens or logos changed, forked `--cd-*` tokens; with the miragon-brand plugin at hand (or `MIRAGON_BRAND_DIR`) also drift from the CI source.                                     |
-| Page budgets          | `pnpm check` runs `scripts/check-page-budgets.mjs`                    | A page over its budget, a page without a budget row. It reads the table below.                                                                                                              |
-| miragon-ai references | `MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs` | Tool names miragon-ai does not register (any page), repo paths in `tools/miragon-ai/` that do not exist. Skips without `MIRAGON_AI_DIR`; CI runs it on every pull request and every Monday. |
-| brand-lint            | `.miragon/brand.json` enables it                                      | Em dashes, spellings, anti-slop patterns, off-palette colours. The miragon-brand hook lints each file you write; CI runs it on the repo. Zero hard findings.                                |
-| Build                 | `pnpm build`                                                          | Dead internal links, broken Markdown or Vue.                                                                                                                                                |
+| Check            | How                                                                   | Catches                                                                                                                                                                                           |
+| ---------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Brand assets     | `pnpm check` runs `scripts/check-brand-assets.mjs`                    | Vendored tokens or logos changed, forked `--cd-*` tokens; with the miragon-brand plugin at hand (or `MIRAGON_BRAND_DIR`) also drift from the CI source.                                           |
+| Page budgets     | `pnpm check` runs `scripts/check-page-budgets.mjs`                    | A page over its budget, a page without a budget row. It reads the table below.                                                                                                                    |
+| Pulse references | `MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs` | Tool names the miragon-ai server does not register (any page), repo paths in `tools/pulse/` that do not exist. Skips without `MIRAGON_AI_DIR`; CI runs it on every pull request and every Monday. |
+| brand-lint       | `.miragon/brand.json` enables it                                      | Em dashes, spellings, anti-slop patterns, off-palette colours. The miragon-brand hook lints each file you write; CI runs it on the repo. Zero hard findings.                                      |
+| Build            | `pnpm build`                                                          | Dead internal links, broken Markdown or Vue.                                                                                                                                                      |
 
 To lint by hand, run `scripts/brand-lint.mjs` from the miragon-brand plugin in your Claude Code
 plugin cache (`node <cache>/<marketplace>/miragon-brand/1.8.0/scripts/brand-lint.mjs <files>`). It
@@ -164,18 +284,18 @@ reads `.miragon/brand.json`, which switches the German-only rules off.
 
 ## Line budgets (hard ceiling)
 
-| Page                               | Budget      |
-| ---------------------------------- | ----------- |
-| `index.md`                         | ≤ 110 lines |
-| `tools/miragon-ai/index.md`        | ≤ 80 lines  |
-| `tools/miragon-ai/architecture.md` | ≤ 150 lines |
-| `tools/miragon-ai/developer.md`    | ≤ 80 lines  |
-| `tools/miragon-ai/operations.md`   | ≤ 120 lines |
-| `tools/miragon-ai/usage.md`        | ≤ 150 lines |
-| `tools/*.md`                       | ≤ 70 lines  |
-| `*.md`                             | ≤ 80 lines  |
+| Page                          | Budget      |
+| ----------------------------- | ----------- |
+| `index.md`                    | ≤ 110 lines |
+| `tools/pulse/index.md`        | ≤ 130 lines |
+| `tools/pulse/architecture.md` | ≤ 150 lines |
+| `tools/pulse/developer.md`    | ≤ 80 lines  |
+| `tools/pulse/operations.md`   | ≤ 120 lines |
+| `tools/pulse/usage.md`        | ≤ 150 lines |
+| `tools/*.md`                  | ≤ 130 lines |
+| `*.md`                        | ≤ 80 lines  |
 
-Counted like `wc -l`. When a page approaches its budget, condense it.
+Counted like `wc -l`, frontmatter included. When a page approaches its budget, condense it.
 `scripts/check-page-budgets.mjs` reads this table and the first matching row wins, so specific
 paths stay above the globs that also cover them; `*` matches within one path segment. Every page
 needs a row or a glob that covers it.
@@ -184,16 +304,18 @@ needs a row or a glob that covers it.
 
 | Change                                                                                        | Revisit                                                                                                       |
 | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| A tool releases (version, maturity, supported engines)                                        | Its tool page, its phase page, version and maturity statements on the landing                                 |
+| A tool releases (version, maturity, supported engines)                                        | Its tool page (status and hero artefact), its phase page, version and maturity statements on the landing      |
 | Getting-started steps, install commands or URLs change (demo, playground, plugin marketplace) | The tool page and every phase page that links them                                                            |
+| A tool's commands, output or UI change                                                        | The hero artefact on its tool page (the frontmatter `artefact`, or the screenshot in `public/screens/`)       |
+| The Pulse playground's seed data changes                                                      | The numbers in `theme/PulseChat.vue`                                                                          |
 | A phase gains, loses or renames a tool                                                        | `.vitepress/lifecycle.ts` first, then the phase page, the tool page, the landing and the table in `README.md` |
 | A page moves                                                                                  | Budget row, a 301 in `netlify.toml`, every link to it                                                         |
 | A repo turns public or private                                                                | Every link to it                                                                                              |
 | The agreed value proposition changes                                                          | Landing and phase pages                                                                                       |
-| miragon-ai: new or changed environment variable                                               | `tools/miragon-ai/operations.md`                                                                              |
-| miragon-ai: new or removed tool, module or skill                                              | `tools/miragon-ai/usage.md`, `tools/miragon-ai/architecture.md`, then the refs check                          |
-| miragon-ai: ports, prerequisites, Node, pnpm or Java version                                  | `tools/miragon-ai/developer.md`, `tools/miragon-ai/operations.md`                                             |
-| miragon-ai: Docker, compose or deployment change                                              | `tools/miragon-ai/operations.md`                                                                              |
+| Pulse: new or changed environment variable                                                    | `tools/pulse/operations.md`                                                                                   |
+| Pulse: new or removed tool, module or skill                                                   | `tools/pulse/usage.md`, `tools/pulse/architecture.md`, then the refs check                                    |
+| Pulse: ports, prerequisites, Node, pnpm or Java version                                       | `tools/pulse/developer.md`, `tools/pulse/operations.md`                                                       |
+| Pulse: Docker, compose or deployment change                                                   | `tools/pulse/operations.md`                                                                                   |
 
 If one of these ships and the site stays as it was, the site is stale.
 
@@ -203,10 +325,13 @@ If one of these ships and the site stays as it was, the site is stale.
 2. Find the page the change belongs on. A new page needs a `lifecycle.ts` entry, a budget and the
    team's agreement.
 3. Distill from the source (the value proposition, the tool's README and releases) and link the
-   README for detail.
+   README for detail. For a hero artefact, run the commands yourself or copy the output verbatim
+   from the README (truth rule).
 4. Run `pnpm exec prettier --write <files>`, brand-lint on your files, `pnpm check` and
-   `pnpm build`. For the miragon-ai section, also run the refs check.
-5. Re-read the page against the voice rules; brand-lint misses the English anti-slop patterns.
+   `pnpm build`. For the Pulse section, also run the refs check.
+5. Look at a tool landing page in `pnpm dev` at desktop and phone width: the artefact stays inside
+   the page, and the page never scrolls sideways.
+6. Re-read the page against the voice rules; brand-lint misses the English anti-slop patterns.
 
 ## What stays out of the site
 
@@ -214,8 +339,9 @@ If one of these ships and the site stays as it was, the site is stale.
 - German pages or translations.
 - Savings numbers, unpublished eval numbers and internal sources.
 - Links to private repos.
-- Screenshots, unless they show what text cannot.
-- Several pages for one tool, except the miragon-ai section.
+- Screenshots, except a tool landing page's hero artefact or where they show what text cannot.
+- Decorative icons or illustrations in place of the real artefact, and `features` cards.
+- Several pages for one tool, except the Pulse section.
 
 If someone ships a tool change and has not mentioned the site, ask whether a page needs an update
 before the change lands.

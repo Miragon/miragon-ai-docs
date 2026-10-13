@@ -194,6 +194,12 @@
   --vp-home-hero-image-filter: none;
 }
 
+/* A tool's landing page (it has an eyebrow): the tool name is the hero's one
+   green word, the headline below it stays white. */
+:root:has(.VPHero .eyebrow) {
+  --vp-home-hero-name-color: var(--vp-c-brand-1);
+}
+
 /* The toggle has no effect on the forced-dark landing — hide it there. */
 :root:has(.VPHome) .VPNavBarAppearance {
   display: none;
@@ -255,6 +261,12 @@
        lifecycle graphic keeps the page gutter instead. */
     margin: 40px 0 0;
   }
+}
+
+/* Prose on home-layout pages runs the full 1152px content width; keep text
+   at a readable measure. Tables, code and components keep the full width. */
+:root:has(.VPHome) .VPHomeContent .vp-doc > :is(p, ul, ol, h2, h3, h4, blockquote) {
+  max-width: 760px;
 }
 
 /* ── Landing entrances (fade-up) ────────────────────────────────────── */

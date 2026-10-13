@@ -1,5 +1,6 @@
 // Extends the default theme with the Miragon corporate design (see
-// custom.css) and mounts the lifecycle graphic as the landing page's hero.
+// custom.css) and mounts the hero artefact of every home-layout page: the
+// lifecycle graphic on the landing, the tool's own artefact on its page.
 // theme-without-fonts drops VitePress' bundled Inter: the CI typeface is
 // Geist / Geist Mono, self-hosted through @fontsource (italic included for
 // emphasis and quotes).
@@ -7,6 +8,8 @@ import { h } from "vue"
 import type { Theme } from "vitepress"
 import DefaultTheme from "vitepress/theme-without-fonts"
 import LifecycleMap from "./LifecycleMap.vue"
+import HeroArtefact from "./HeroArtefact.vue"
+import HeroEyebrow from "./HeroEyebrow.vue"
 import TryItOut from "./TryItOut.vue"
 import BrandContact from "./BrandContact.vue"
 import LegalFooter from "./LegalFooter.vue"
@@ -22,8 +25,11 @@ export default {
   extends: DefaultTheme,
   Layout() {
     return h(DefaultTheme.Layout, null, {
-      // The hero's artefact: the BPM lifecycle with the tools of each phase.
-      "home-hero-image": () => h(LifecycleMap),
+      // The hero's artefact: the BPM lifecycle on the landing, the tool's own
+      // artefact (chat, terminal, screenshot) on a tool's landing page.
+      "home-hero-image": () => h(HeroArtefact),
+      // "Miragon AI · <phase>" above a tool landing page's name.
+      "home-hero-info-before": () => h(HeroEyebrow),
       // Legal footer (Impressum + Datenschutz) on every page, incl. 404 —
       // the default theme hides its footer on sidebar pages.
       "layout-bottom": () => h(LegalFooter),
