@@ -154,3 +154,9 @@
   /* The shared header (components/site/SiteHeader.astro) sets the height. */
   --sl-nav-height: var(--site-header-height);
 }
+
+/* Starlight declares its colours on ::backdrop too (the search dialog's
+   overlay); the same mapping there. */
+::backdrop {
+  --sl-color-backdrop-overlay: var(--site-backdrop);
+}

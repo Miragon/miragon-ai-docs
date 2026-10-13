@@ -15,11 +15,14 @@ interface Props {
   description?: string
   /** false keeps the page out of the Pagefind index (404). */
   search?: boolean
+  /** false omits <link rel="canonical"> and og:url: a page without a URL of
+      its own (the 404 answers any path). */
+  canonical?: boolean
 }
 
-const { title, description, search = true } = Astro.props
+const { title, description, search = true, canonical = true } = Astro.props
 const fullTitle = title === "Miragon AI" ? title : `${title} | Miragon AI`
-const canonical = new URL(Astro.url.pathname, Astro.site)
+const url = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <!doctype html>
@@ -29,10 +32,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
-    <link rel="canonical" href={canonical} />
+    {canonical && <link rel="canonical" href={url} />}
     <meta property="og:title" content={fullTitle} />
     {description && <meta property="og:description" content={description} />}
-    <meta property="og:url" content={canonical} />
+    {canonical && <meta property="og:url" content={url} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Miragon AI" />
     <HeadCommon />
@@ -54,6 +57,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
 </html>
 
 <style>
+  /* The footer sits at the bottom of short pages (the 404). */
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  main {
+    flex-grow: 1;
+  }
   .site-header-bar {
     position: sticky;
     top: 0;
@@ -63,21 +75,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     background: var(--site-bg);
   }
   .site-header-inner {
-    max-width: 1152px;
+    max-width: calc(1152px + 2 * 24px);
     height: 100%;
     margin: 0 auto;
     padding: 0 24px;
   }
   .skip-link {
     position: absolute;
+    top: 8px;
     left: -9999px;
+    z-index: 50;
+    padding: 8px 16px;
+    border-radius: var(--cd-radius-sm);
+    background: var(--cd-weiss);
+    color: var(--cd-schwarz);
+    font-weight: 600;
   }
   .skip-link:focus {
     left: 16px;
-    top: 16px;
-    z-index: 50;
-    padding: 8px 16px;
-    background: var(--cd-weiss);
-    color: var(--cd-schwarz);
   }
 </style>

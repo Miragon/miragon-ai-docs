@@ -1,7 +1,8 @@
 ---
 // Head tags shared by website pages (layouts/Website.astro) and docs pages
 // (components/starlight/Head.astro): consent banner, favicons,
-// theme-color, the self-hosted Geist font and its preload.
+// theme-color, the self-hosted Geist font and its preload, and the cascade
+// layer order.
 import "@fontsource-variable/geist"
 import "@fontsource-variable/geist/wght-italic.css"
 import "@fontsource-variable/geist-mono"
@@ -15,3 +16,12 @@ import { HEAD } from "../../data/head"
   <Tag {...attrs} set:html={content} />
 ))}
 <link rel="preload" href={geistLatin} as="font" type="font/woff2" crossorigin />
+{/* Cascade layer order, declared ahead of every stylesheet (Astro links
+     them at the end of <head>). A layer's rank is fixed where it first
+     appears, and the shared header's Search brings @layer starlight.core in
+     the chunk that loads first; without this, Starlight's reset would
+     outrank its components on docs pages. site-reset (styles/website.css)
+     sits below all of Starlight's layers. */}
+<style is:inline>
+  @layer site-reset, starlight.base, starlight.reset, starlight.core, starlight.content, starlight.components, starlight.utils;
+</style>
