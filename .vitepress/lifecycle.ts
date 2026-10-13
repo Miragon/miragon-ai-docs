@@ -51,7 +51,7 @@ export const PHASES: Phase[] = [
     link: "/execute",
     job: "Find what is stuck and why",
     tools: [
-      { name: "miragon-ai", link: "/tools/miragon-ai/", job: "Process operations in chat" },
+      { name: "Pulse", link: "/tools/pulse/", job: "Process operations in chat" },
       { name: "operate", link: "/tools/operate", job: "Engine state for shell, agent, CI" },
     ],
   },

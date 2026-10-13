@@ -13,7 +13,7 @@ Cockpit shows you, one engine at a time, what is running and what is failing. Qu
 
 ## No tool yet
 
-Miragon has no tool for Optimize today, and we say so on purpose. The lifecycle map on the [landing page](/) leaves this slot open. The analytics module in [miragon-ai](/tools/miragon-ai/) stays in [Execute](/execute), because calling it the Optimize answer would promise more than it delivers.
+Miragon has no tool for Optimize today, and we say so on purpose. The lifecycle map on the [landing page](/) leaves this slot open. The analytics module in [Pulse](/tools/pulse/) stays in [Execute](/execute), because calling it the Optimize answer would promise more than it delivers.
 
 ## What this phase needs
 
@@ -30,9 +30,9 @@ Each role brings its own question to operations. These are the questions an Opti
 
 ## What Execute already hands over
 
-Execute gives you raw material for some of these questions. The analytics module of miragon-ai ranks activities by execution time and incident rate, draws a heatmap on the BPMN diagram, and compares versions, time windows and engines, or the figures before and after a deployment. [operate](/tools/operate) runs history queries such as `operate historic-process-instance list` and returns the raw results as JSON, without KPIs.
+Execute gives you raw material for some of these questions. The analytics module of Pulse ranks activities by execution time and incident rate, draws a heatmap on the BPMN diagram, and compares versions, time windows and engines, or the figures before and after a deployment. [operate](/tools/operate) runs history queries such as `operate historic-process-instance list` and returns the raw results as JSON, without KPIs.
 
-The analytics module needs a CIB seven engine with the metrics plugin `io.miragon.mcp:cibseven-history-metrics`, which exports through Micrometer to Prometheus. The plugin exists for CIB seven only. The module looks back 30 days at most, and data from before you installed the plugin is missing. It shows no waiting times, paths or variants, no business data such as product or channel, and no run times per activity and version. Both Execute tools are pre-1.0 (miragon-ai v0.20.0, operate 0.5.0).
+The analytics module needs a CIB seven engine with the metrics plugin `io.miragon.mcp:cibseven-history-metrics`, which exports through Micrometer to Prometheus. The plugin exists for CIB seven only. The module looks back 30 days at most, and data from before you installed the plugin is missing. It shows no waiting times, paths or variants, no business data such as product or channel, and no run times per activity and version. Both Execute tools are pre-1.0 (Pulse v0.20.0, operate 0.5.0).
 
 ## Talk to us
 
@@ -44,7 +44,7 @@ Your team weighs the findings and decides what goes back into Analyse. An agent 
 
 ## Hand-over
 
-| Direction                | What is handed over                                                                                                                                                                                                                                                                                                                            | Format                                             |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| From [Execute](/execute) | The raw material described above: miragon-ai's activity ranking, BPMN heatmap and KPI deltas, and the raw results of operate's history queries.                                                                                                                                                                                                | JSON and chat widgets (miragon-ai), JSON (operate) |
-| To [Analyse](/analyse)   | Findings and change requests for the model, with no fixed format yet. Your team can pin one as a todo to a BPMN element in [designIQ](/tools/design-iq). Re-uploading a changed model to [analyzr](/tools/analyzr) (alpha) creates a new revision, and only models whose facts changed are analysed again. analyzr does not read runtime data. | GitHub issues, `.bpmn` files                       |
+| Direction                | What is handed over                                                                                                                                                                                                                                                                                                                            | Format                                        |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| From [Execute](/execute) | The raw material described above: Pulse's activity ranking, BPMN heatmap and KPI deltas, and the raw results of operate's history queries.                                                                                                                                                                                                     | JSON and chat widgets (Pulse), JSON (operate) |
+| To [Analyse](/analyse)   | Findings and change requests for the model, with no fixed format yet. Your team can pin one as a todo to a BPMN element in [designIQ](/tools/design-iq). Re-uploading a changed model to [analyzr](/tools/analyzr) (alpha) creates a new revision, and only models whose facts changed are analysed again. analyzr does not read runtime data. | GitHub issues, `.bpmn` files                  |

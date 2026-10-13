@@ -29,8 +29,8 @@ Miragon AI is for teams that have their own developers and run their processes o
 | Product owner   | Sign-off happens outside Git, and you review DMN changes as an XML diff.                   | [designIQ](/tools/design-iq)                                             |
 | Automation lead | The backlog of processes to automate grows, and every project wires up the engine again.   | [Skills](/tools/skills), [Solution templates](/tools/solution-templates) |
 | Lead developer  | Your coding agent writes BPMN XML by hand.                                                 | [bpmn-cli](/tools/bpmn-cli), [Skills](/tools/skills)                     |
-| Platform lead   | Every engine has its own Cockpit, and runtime questions need PromQL.                       | [miragon-ai](/tools/miragon-ai/), [operate](/tools/operate)              |
-| Head of IT      | You have a mandate to bring in AI, but no agent may reach production unchecked.            | [miragon-ai](/tools/miragon-ai/) in read-only mode                       |
+| Platform lead   | Every engine has its own Cockpit, and runtime questions need PromQL.                       | [Pulse](/tools/pulse/), [operate](/tools/operate)                        |
+| Head of IT      | You have a mandate to bring in AI, but no agent may reach production unchecked.            | [Pulse](/tools/pulse/) in read-only mode                                 |
 
 ## What Miragon AI does
 
@@ -48,7 +48,7 @@ A missing `historyTimeToLive` shows up only when the engine rejects the deployme
 
 ### [Execute](/execute)
 
-Your team pieces the state together from Cockpit tabs and stack traces, one engine at a time. [miragon-ai](/tools/miragon-ai/) shows the incidents across your engines in chat, grouped by failing activity and incident type, and drafts the ticket. [operate](/tools/operate) runs the triage in one command, in your shell and in CI.
+Your team pieces the state together from Cockpit tabs and stack traces, one engine at a time. [Pulse](/tools/pulse/) shows the incidents across your engines in chat, grouped by failing activity and incident type, and drafts the ticket. [operate](/tools/operate) runs the triage in one command, in your shell and in CI.
 
 ### [Optimize](/optimize)
 
@@ -68,19 +68,19 @@ The business flow of a process stays with people. In every phase the agent prepa
 
 ## Why Miragon
 
-- [designIQ](https://github.com/Miragon/design-iq) v5.3.0, [bpmn-cli](https://github.com/Miragon/bpmn-cli) 0.6.0, [operate](https://github.com/Miragon/operate) 0.5.0, [miragon-ai](https://github.com/Miragon/miragon-ai) v0.20.0 and the [miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter) template are public on GitHub under the MIT licence (as of 2026-10-13). For now we show analyzr as a [read-only demo](https://analyzr-demo.fly.dev).
+- [designIQ](https://github.com/Miragon/design-iq) v5.3.0, [bpmn-cli](https://github.com/Miragon/bpmn-cli) 0.6.0, [operate](https://github.com/Miragon/operate) 0.5.0, [Pulse](https://github.com/Miragon/miragon-ai) v0.20.0 (repo Miragon/miragon-ai) and the [miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter) template are public on GitHub under the MIT licence (as of 2026-10-13). For now we show analyzr as a [read-only demo](https://analyzr-demo.fly.dev).
 - On every change, [operate's CI](https://github.com/Miragon/operate/actions/workflows/ci.yml) runs its integration tests against Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0.
-- You can add the miragon-ai playground as an MCP server without a login, at `https://miragon-ai-playground.fly.dev/mcp`. It is read-only and runs against a CIB seven engine with live demo traffic.
-- You run miragon-ai on your own infrastructure. Without OAuth it starts read-only, and it needs neither a migration nor access to the engine database.
+- You can add the Pulse playground as an MCP server without a login, at `https://miragon-ai-playground.fly.dev/mcp`. It is read-only and runs against a CIB seven engine with live demo traffic.
+- You run Pulse on your own infrastructure. Without OAuth it starts read-only, and it needs neither a migration nor access to the engine database.
 - Miragon has been a consultancy for process automation since 2019 and is a Camunda partner. We introduce the tools together with your team until you run them on your own.
 
 ## What we don't promise
 
 - No process mining. analyzr reads the BPMN files you already have and does not evaluate logs.
 - No autonomous remediation. Agents carry out what your team approves.
-- No tool for Optimize. The analytics module of miragon-ai belongs to Execute, looks back 30 days at most and knows neither waiting times nor variants.
+- No tool for Optimize. The analytics module of Pulse belongs to Execute, looks back 30 days at most and knows neither waiting times nor variants.
 - No runtime support for Camunda 8, and no generated worker code.
-- Not everything is mature yet. analyzr is early alpha (0.1.0-alpha.0, private repository, interface in German only). bpmn-cli, operate and miragon-ai are pre-1.0 and still change their interfaces. The mcp-toolkit-starter template has no licence yet. The hosted designIQ service is pre-GA, with the public launch planned around mid-November 2026.
+- Not everything is mature yet. analyzr is early alpha (0.1.0-alpha.0, private repository, interface in German only). bpmn-cli, operate and Pulse are pre-1.0 and still change their interfaces. The mcp-toolkit-starter template has no licence yet. The hosted designIQ service is pre-GA, with the public launch planned around mid-November 2026.
 - No numbers on time or cost savings until we have published them.
 
 <BrandContact />

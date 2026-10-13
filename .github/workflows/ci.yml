@@ -5,7 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  # The miragon-ai section is checked against miragon-ai's main, which moves
+  # The Pulse section is checked against main of Miragon/miragon-ai, which moves
   # without a PR here: a weekly run catches drift between PRs.
   schedule:
     - cron: "0 6 * * 1"
@@ -62,7 +62,7 @@ jobs:
         with:
           node-version: 22
 
-      # Tool names on every page, repo paths in tools/miragon-ai/.
+      # Tool names on every page, repo paths in tools/pulse/.
       - run: node scripts/check-miragon-ai-refs.mjs
         env:
           MIRAGON_AI_DIR: .miragon-ai

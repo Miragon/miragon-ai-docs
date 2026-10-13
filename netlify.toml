@@ -17,44 +17,50 @@
   NODE_VERSION = "22"
 
 # miragon-ai's four pages moved from the root into its section under
-# /tools/miragon-ai/: old links and bookmarks keep working. No SPA catch-all,
+# /tools/pulse/: old links and bookmarks keep working. No SPA catch-all,
 # so unknown paths still get the site's 404 page.
 [[redirects]]
   from = "/architecture"
-  to = "/tools/miragon-ai/architecture"
+  to = "/tools/pulse/architecture"
   status = 301
 
 [[redirects]]
   from = "/architecture.html"
-  to = "/tools/miragon-ai/architecture"
+  to = "/tools/pulse/architecture"
   status = 301
 
 [[redirects]]
   from = "/developer"
-  to = "/tools/miragon-ai/developer"
+  to = "/tools/pulse/developer"
   status = 301
 
 [[redirects]]
   from = "/developer.html"
-  to = "/tools/miragon-ai/developer"
+  to = "/tools/pulse/developer"
   status = 301
 
 [[redirects]]
   from = "/operations"
-  to = "/tools/miragon-ai/operations"
+  to = "/tools/pulse/operations"
   status = 301
 
 [[redirects]]
   from = "/operations.html"
-  to = "/tools/miragon-ai/operations"
+  to = "/tools/pulse/operations"
   status = 301
 
 [[redirects]]
   from = "/usage"
-  to = "/tools/miragon-ai/usage"
+  to = "/tools/pulse/usage"
   status = 301
 
 [[redirects]]
   from = "/usage.html"
-  to = "/tools/miragon-ai/usage"
+  to = "/tools/pulse/usage"
+  status = 301
+
+# The section's first name on the way to the launch.
+[[redirects]]
+  from = "/tools/miragon-ai/*"
+  to = "/tools/pulse/:splat"
   status = 301

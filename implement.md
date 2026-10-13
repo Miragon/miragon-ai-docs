@@ -9,7 +9,7 @@ In Implement, your team makes the model from Design deployable and runs it once 
 
 ## The problem today
 
-Before Camunda 7, CIB seven or Operaton can run a model, someone adds the engine details: topics or delegates, input and output mappings, error codes and a historyTimeToLive. If the historyTimeToLive or the topic of an external task is missing, you find out only when the engine rejects the deployment. A coding agent without guidance tends to edit the BPMN XML by hand and breaks the drawing along the way. To test the deployment, it chains raw REST calls and copies ids from one call to the next. And if your AI should reach your ERP as well as the engine, you fork miragon-ai or build an MCP server from scratch.
+Before Camunda 7, CIB seven or Operaton can run a model, someone adds the engine details: topics or delegates, input and output mappings, error codes and a historyTimeToLive. If the historyTimeToLive is missing, you find out only when the engine rejects the deployment. A coding agent without guidance tends to edit the BPMN XML by hand and breaks the drawing along the way. And if your AI should reach your ERP as well as the engine, you fork Pulse or build an MCP server from scratch.
 
 ## How Miragon AI helps
 
@@ -23,9 +23,9 @@ Details and first steps: [Skills](/tools/skills)
 
 ### Solution templates
 
-[miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter) and [mcp-toolkit-starter](https://github.com/Miragon/mcp-toolkit-starter) are GitHub template repositories that start your own MCP server; neither contains process automation code such as job workers or engine setup. miragon-ai-starter combines the miragon-ai modules for Camunda 7, CIB seven and Operaton with modules for your own systems, such as your ERP, and builds a Docker image with OAuth, health checks, `/metrics` and read-only defaults. A new module starts as a copy of the example module, and guard tests report a missed wiring step. mcp-toolkit-starter is the minimal base for an MCP server with interactive widgets and no BPM modules.
+[miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter) and [mcp-toolkit-starter](https://github.com/Miragon/mcp-toolkit-starter) are GitHub template repositories that start your own MCP server; neither contains process automation code such as job workers or engine setup. miragon-ai-starter combines the Pulse modules for Camunda 7, CIB seven and Operaton with modules for your own systems, such as your ERP, and builds a Docker image with OAuth, health checks, `/metrics` and read-only defaults. A new module starts as a copy of the example module, and guard tests report a missed wiring step. mcp-toolkit-starter is the minimal base for an MCP server with interactive widgets and no BPM modules.
 
-Status: miragon-ai-starter is MIT-licensed and pins the `@miragon-ai` packages at 0.20.0 (as of 2026-10-13). They are pre-1.0 and release about weekly, often with breaking changes. mcp-toolkit-starter builds on the Miragon MCP Toolkit 2.8.1 and has no licence yet.
+Status: miragon-ai-starter is MIT-licensed and pins Pulse's `@miragon-ai` packages at 0.20.0 (as of 2026-10-13). They are pre-1.0 and release about weekly, often with breaking changes. mcp-toolkit-starter builds on the Miragon MCP Toolkit 2.8.1 and has no licence yet.
 
 Details and first steps: [Solution templates](/tools/solution-templates)
 
@@ -39,5 +39,5 @@ Your coding agent sets and checks the engine attributes, then runs one test inst
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
 | From [Design](/design)   | Models approved in Design, from designIQ, Camunda Modeler or bpmn-cli. The bpmn skill makes the BPMN executable; there is no DMN skill yet.                                   | `.bpmn`, `.dmn`            |
 | To [Execute](/execute)   | BPMN files that pass `bpmn validate --strict` and have run once on Camunda 7, CIB seven or Operaton (`operate deploy` with `--start`), plus the decisions and forms they use. | `.bpmn`, `.dmn`, `.form`   |
-| To [Execute](/execute)   | Your own MCP server, built from a Solution template, which your team runs the way it runs miragon-ai.                                                                         | Docker image               |
-| From [Execute](/execute) | Ticket drafts from miragon-ai and root-cause findings from operate, as input for the next fix.                                                                                | Markdown with labels, JSON |
+| To [Execute](/execute)   | Your own MCP server, built from a Solution template, which your team runs the way it runs Pulse.                                                                              | Docker image               |
+| From [Execute](/execute) | Ticket drafts from Pulse and root-cause findings from operate, as input for the next fix.                                                                                     | Markdown with labels, JSON |

@@ -1,9 +1,9 @@
 import { withMermaid } from "vitepress-plugin-mermaid"
 import { PHASES, TOOLS } from "./lifecycle"
 
-// miragon-ai (the MCP server) has its own section under its tool entry: an
-// overview and four more pages.
-const MIRAGON_AI = "/tools/miragon-ai/"
+// Pulse (the MCP server from Miragon/miragon-ai) has its own section under its
+// tool entry: a landing page and four doc pages.
+const PULSE = "/tools/pulse/"
 
 export default withMermaid({
   title: "Miragon AI",
@@ -81,7 +81,7 @@ export default withMermaid({
       },
       {
         text: "Tools",
-        // Also active on the miragon-ai section's subpages.
+        // Also active on the Pulse section's subpages.
         activeMatch: "^/tools/",
         items: TOOLS.map((tool) => ({ text: tool.name, link: tool.link })),
       },
@@ -100,18 +100,18 @@ export default withMermaid({
       {
         text: "Tools",
         items: TOOLS.map((tool) =>
-          tool.link === MIRAGON_AI
+          tool.link === PULSE
             ? {
                 // Collapsed until one of its pages is open (VitePress then
                 // expands the group with the active link).
                 text: tool.name,
                 collapsed: true,
                 items: [
-                  { text: "Overview", link: MIRAGON_AI },
-                  { text: "Architecture", link: `${MIRAGON_AI}architecture` },
-                  { text: "Developer", link: `${MIRAGON_AI}developer` },
-                  { text: "Operations", link: `${MIRAGON_AI}operations` },
-                  { text: "Usage", link: `${MIRAGON_AI}usage` },
+                  { text: "Overview", link: PULSE },
+                  { text: "Architecture", link: `${PULSE}architecture` },
+                  { text: "Developer", link: `${PULSE}developer` },
+                  { text: "Operations", link: `${PULSE}operations` },
+                  { text: "Usage", link: `${PULSE}usage` },
                 ],
               }
             : { text: tool.name, link: tool.link },

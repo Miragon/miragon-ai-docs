@@ -9,7 +9,7 @@ In Analyse, your team maps how your existing processes connect and where each pr
 
 ## The problem today
 
-Your as-is landscape usually lives as BPMN files in department folders, with Camunda 7 and Camunda 8 models mixed. The links between processes sit inside those files: call activities, message and signal names, end events that start the next process. Nobody has reviewed who calls whom, or which process belongs to which step of the value chain. The folders follow your departments while the value stream cuts across them, so you cannot read the map from the folder tree. A process map kept by hand goes stale with the next model change.
+Your as-is landscape usually lives as BPMN files in department folders, with Camunda 7 and Camunda 8 models mixed. The links between processes sit inside those files: call activities, message and signal names, end events that start the next process. Nobody has reviewed who calls whom, or which process belongs to which step of the value chain. The folders follow your departments while the value stream cuts across them, so you cannot read the map from the folder tree.
 
 ## How Miragon AI helps
 

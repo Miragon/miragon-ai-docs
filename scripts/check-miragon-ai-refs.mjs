@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // miragon-ai references: the pages name only tools the miragon-ai server
-// registers, and the miragon-ai section cites only repo paths that exist.
+// registers, and the Pulse section (the miragon-ai server's pages) cites only
+// repo paths that exist.
 // It took over the docs half of miragon-ai's docs-refs.test.ts when the site
 // left that monorepo (Miragon/miragon-ai-docs#1). Run it against a checkout
 // of Miragon/miragon-ai: MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs
@@ -9,7 +10,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
 import { join, relative } from "node:path"
 
 const ROOT = new URL("..", import.meta.url).pathname
-const SECTION = "tools/miragon-ai/"
+const SECTION = "tools/pulse/"
 const MIRAGON_AI = process.env.MIRAGON_AI_DIR
 
 if (!MIRAGON_AI) {

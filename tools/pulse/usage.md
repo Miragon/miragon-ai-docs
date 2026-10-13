@@ -1,11 +1,11 @@
 ---
-title: miragon-ai usage
-description: Connect Claude or another MCP client to miragon-ai, see what you can ask, and set your own preferences.
+title: Pulse usage
+description: Connect Claude or another MCP client to Pulse (the miragon-ai MCP server), see what you can ask, and set your own preferences.
 ---
 
 # How to Use It
 
-The platform is an MCP server. You use it by pointing an MCP-aware AI assistant
+You use Pulse (the miragon-ai MCP server) by pointing an MCP-aware AI assistant
 at it and asking questions in natural language.
 
 ## Connect your assistant

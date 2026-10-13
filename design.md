@@ -9,7 +9,7 @@ In Design, your team models the to-be process together and releases it as a revi
 
 ## The problem today
 
-Usually only one person can safely edit a BPMN diagram at a time, and the approval happens outside the Git workflow your developers use. Legacy documentation in Visio, Word or Confluence gets redrawn by hand. When an AI agent changes a model, it rewrites the whole XML including the diagram coordinates, moves shapes someone placed by hand and can leave references pointing nowhere. In review, a DMN change shows up as an XML diff, where a `>=` that became `>` is easy to miss.
+Usually only one person can safely edit a BPMN diagram at a time, and the approval happens outside the Git workflow your developers use. Legacy documentation in Visio, Word or Confluence gets redrawn by hand. When an AI agent changes a model, it rewrites the whole XML including the diagram coordinates, moves shapes someone placed by hand and can leave references pointing nowhere. In review, a DMN change shows up only as an XML diff, which does not tell you which answers of the decision changed.
 
 ## How Miragon AI helps
 
