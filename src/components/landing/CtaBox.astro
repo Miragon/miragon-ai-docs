@@ -71,9 +71,10 @@ const { title, text, label = "Talk to us", href = "/#contact", note } = Astro.pr
     line-height: 1.6;
     color: color-mix(in srgb, var(--cd-weiss) 92%, transparent);
   }
+  /* 90% white keeps the small note above 4.5:1 on --cd-blau (86%: 4.47:1). */
   :root .cta .note {
     margin: 16px 0 0;
     font-size: 13px;
-    color: color-mix(in srgb, var(--cd-weiss) 86%, transparent);
+    color: color-mix(in srgb, var(--cd-weiss) 90%, transparent);
   }
 </style>

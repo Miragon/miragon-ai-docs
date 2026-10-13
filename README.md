@@ -69,7 +69,7 @@ in the background and return at once; `pnpm astro dev stop` and `pnpm astro prev
 │   ├── content.config.ts        the collections and their frontmatter schemas
 │   ├── data/                    lifecycle.ts (phases and tools), nav, head, docs sidebar, schemas
 │   ├── pages/                   route templates: landing, phases, tools, 404
-│   ├── layouts/Website.astro    layout of every website page
+│   ├── layouts/Website.astro    layout of the landing, the tool pages and the 404
 │   ├── components/              hero, landing building blocks, site header and footer, Starlight
 │   │                            overrides, the Vue islands
 │   └── styles/                  vendored CI tokens, site roles, website and Starlight CSS

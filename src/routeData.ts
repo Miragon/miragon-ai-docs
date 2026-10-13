@@ -1,10 +1,19 @@
-// Starlight route middleware: prev/next stay inside one tool's docs
-// (/docs/pulse/... never links on to /docs/design-iq/...).
+// Starlight route middleware, on every page in the Starlight layout (the
+// docs and the phase pages):
+// - Prev/next in the docs stay inside one tool's docs (/docs/pulse/... never
+//   links on to /docs/design-iq/...). The phase pages keep their sidebar's
+//   prev/next.
+// - The icons come from components/site/HeadCommon.astro on every page;
+//   Starlight's own favicon link would declare the icon a second time.
 import { defineRouteMiddleware } from "@astrojs/starlight/route-data"
 
 export const onRequest = defineRouteMiddleware((context) => {
   const route = context.locals.starlightRoute
-  const tool = route.id.split("/")[1] // "docs/<tool>/..." -> "<tool>"
+  route.head = route.head.filter(
+    ({ tag, attrs }) => !(tag === "link" && attrs?.rel === "shortcut icon"),
+  )
+  const [section, tool] = route.id.split("/") // "docs/<tool>/..." -> "docs", "<tool>"
+  if (section !== "docs") return
   const sameTool = <T extends { href: string } | undefined>(link: T) =>
     tool && link?.href.startsWith(`/docs/${tool}/`) ? link : undefined
   route.pagination.prev = sameTool(route.pagination.prev)

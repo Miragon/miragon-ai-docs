@@ -14,6 +14,8 @@
 // - Docs pages below 50rem: Starlight's menu button (the docs sidebar, which
 //   ends with this nav, components/starlight/MobileMenuFooter.astro) takes
 //   the burger's place.
+// - The current page is marked, and its section underlined; a tool's docs
+//   (/docs/<tool>/...) count as the tool's section.
 // The script runs once on load: there is no ClientRouter, so astro:page-load
 // never fires.
 import Search from "@astrojs/starlight/components/Search.astro"
@@ -29,11 +31,13 @@ const { docs = false } = Astro.props
 
 const withSlash = (path: string) => (path.endsWith("/") ? path : `${path}/`)
 const here = withSlash(Astro.url.pathname)
+/** A tool's docs belong to its section: /docs/pulse/... counts as /tools/pulse/... */
+const section = here.replace(/^\/docs\/([^/]+)\//, "/tools/$1/")
 /** The exact page: aria-current="page". */
 const isPage = (url: string) => withSlash(url) === here
-/** The page or a page below it: data-current, the underline in the bar. */
+/** The page or a page below it, or the tool's docs: data-current, the underline in the bar. */
 const inSection = (urls: string[]) =>
-  urls.some((url) => url !== "/" && here.startsWith(withSlash(url)))
+  urls.some((url) => url !== "/" && section.startsWith(withSlash(url)))
 ---
 
 <div class="site-header" data-variant={docs ? "docs" : "website"}>
@@ -240,11 +244,16 @@ const inSection = (urls: string[]) =>
 </script>
 
 <style>
+  /* One 1152px row, centred, on every page: the website layout's header bar
+     and Starlight's full-width one (24px side padding in both) hold it, so
+     the wordmark and the actions stay in place between website and docs. */
   .site-header {
     display: flex;
     align-items: center;
     gap: 20px;
+    max-width: 1152px;
     height: 100%;
+    margin-inline: auto;
     font-family: var(--site-font);
     font-size: 15px;
     line-height: 24px;

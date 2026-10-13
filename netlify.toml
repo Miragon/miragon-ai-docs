@@ -125,7 +125,39 @@
   status = 301
 
 # A tool's docs folder has no page of its own: it opens on getting started.
+# One rule per tool (src/data/lifecycle.ts), not /docs/:tool, so a mistyped
+# /docs/<name>/ answers 404 instead of a 301 to a page that does not exist.
 [[redirects]]
-  from = "/docs/:tool"
-  to = "/docs/:tool/getting-started/"
+  from = "/docs/analyzr"
+  to = "/docs/analyzr/getting-started/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/design-iq"
+  to = "/docs/design-iq/getting-started/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/bpmn-cli"
+  to = "/docs/bpmn-cli/getting-started/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/skills"
+  to = "/docs/skills/getting-started/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/solution-templates"
+  to = "/docs/solution-templates/getting-started/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/pulse"
+  to = "/docs/pulse/getting-started/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/operate"
+  to = "/docs/operate/getting-started/"
   status = 301

@@ -310,10 +310,13 @@ onBeforeUnmount(() => {
   text-transform: uppercase;
   color: var(--site-text-2);
 }
+/* The agent's task runs tight (-0.04em of the 16px box, -0.64px), as it did
+   on the VitePress site, where the hero's .text rule reached this span. */
 .text {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  letter-spacing: -0.04em;
 }
 .act {
   font-size: 15px;
@@ -405,27 +408,33 @@ onBeforeUnmount(() => {
 .caption .tool:hover {
   color: var(--site-accent);
 }
+/* Each dot is 8px but a 24px target (WCAG 2.5.8): 8px of transparent
+   padding around it. The negative margins keep the row's height and its
+   right edge where the 8px dots put them. */
 .dots {
   display: inline-flex;
-  gap: 8px;
-  margin-left: auto;
+  margin: -8px -8px -8px auto;
 }
 .dots button {
-  width: 8px;
-  height: 8px;
-  padding: 0;
+  width: 24px;
+  height: 24px;
+  padding: 8px;
   border: 0;
   border-radius: 50%;
-  background: var(--flow-line);
+  background: var(--flow-line) content-box;
   cursor: pointer;
 }
 .dots button.active {
-  background: var(--flow-on);
+  background-color: var(--flow-on);
 }
 .dots button:focus-visible,
 .caption .tool:focus-visible {
   outline: 2px solid var(--cd-blau-hell);
   outline-offset: 3px;
+}
+/* The ring hugs the dot, not its target. */
+.dots button:focus-visible {
+  outline-offset: -5px;
 }
 
 /* Phones: the process runs top to bottom. */

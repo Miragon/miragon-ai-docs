@@ -41,9 +41,10 @@ export default defineConfig({
       description: DESCRIPTION,
       // Website pages own the 404 (src/pages/404.astro).
       disable404Route: true,
-      favicon: "/logo/miragon-komet-blau.svg",
+      // No `favicon`: components/site/HeadCommon.astro sets the icons on
+      // every page (src/routeData.ts drops Starlight's default link).
       lastUpdated: true,
-      customCss: ["./src/styles/tokens.css", "./src/styles/starlight.css"],
+      customCss: ["./src/styles/tokens.css", "./src/styles/code.css", "./src/styles/starlight.css"],
       // The website's header and footer on every docs page; always dark.
       // No `logo`: the header override draws the wordmark.
       components: {
@@ -57,13 +58,24 @@ export default defineConfig({
       sidebar: DOCS_SIDEBAR,
       routeMiddleware: "./src/routeData.ts",
       // Always dark: one code theme. `frames` too, or terminal frames keep
-      // Expressive Code's own background.
+      // Expressive Code's own background. The blocks look like the VitePress
+      // ones: rounded, no border or shadow, 14px code with VitePress'
+      // spacing, and no terminal title bar on shell code (`frame: "code"`).
+      // The language label in the corner is in src/styles/code.css.
       expressiveCode: {
         themes: ["github-dark-default"],
+        defaultProps: { frame: "code" },
         styleOverrides: {
+          borderRadius: "8px",
+          borderWidth: "0px",
+          codeFontSize: "14px",
+          codeLineHeight: "1.7",
+          codePaddingBlock: "20px",
+          codePaddingInline: "24px",
           codeBackground: "var(--site-bg-alt)",
           borderColor: "var(--site-divider)",
           frames: {
+            frameBoxShadowCssValue: "none",
             terminalBackground: "var(--site-bg-alt)",
             terminalTitlebarBackground: "var(--site-bg-alt)",
             terminalTitlebarBorderBottomColor: "var(--site-divider)",

@@ -1,9 +1,15 @@
 ---
-// The five phase pages (/analyse/ ...), from src/content/phases/<phase>.mdx:
-// one column of text, the page's own h1 included.
+// The five phase pages (/analyse/ ...), from src/content/phases/<phase>.mdx,
+// in the docs layout, as on the VitePress site: the sidebar with the
+// lifecycle and the tools (data/docs-sidebar.ts), "On this page" from the
+// page's headings, "Last updated" and the previous/next pager. Starlight
+// renders the frontmatter title as the page's h1, so the body starts at ##.
+// The body keeps the website components (<Note> ...).
+import { spawnSync } from "node:child_process"
 import { getCollection, render, type CollectionEntry } from "astro:content"
-import Website from "../layouts/Website.astro"
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro"
 import { WEBSITE_COMPONENTS } from "../components/landing"
+import { PHASES_SIDEBAR } from "../data/docs-sidebar"
 
 export async function getStaticPaths() {
   const phases = await getCollection("phases")
@@ -14,21 +20,28 @@ interface Props {
   entry: CollectionEntry<"phases">
 }
 
+/** The file's last commit, as Starlight dates the docs (needs the full history). */
+function lastCommit(file: string | undefined) {
+  if (!file) return undefined
+  const log = spawnSync("git", ["log", "--format=%ct", "--max-count=1", "--", file], {
+    encoding: "utf-8",
+  })
+  const seconds = Number(log.stdout?.trim())
+  return seconds ? new Date(seconds * 1000) : undefined
+}
+
 const { entry } = Astro.props
-const { Content } = await render(entry)
+const { Content, headings } = await render(entry)
 ---
 
-<Website title={entry.data.title} description={entry.data.description}>
-  <article class="prose phase">
-    <Content components={WEBSITE_COMPONENTS} />
-  </article>
-</Website>
-
-<style>
-  /* The text's 760px measure plus the page gutter. */
-  .phase {
-    max-width: calc(760px + 2 * 24px);
-    margin: 0 auto;
-    padding: 48px 24px 96px;
-  }
-</style>
+<StarlightPage
+  frontmatter={{
+    title: entry.data.title,
+    description: entry.data.description,
+    lastUpdated: lastCommit(entry.filePath),
+  }}
+  sidebar={PHASES_SIDEBAR}
+  headings={headings}
+>
+  <Content components={WEBSITE_COMPONENTS} />
+</StarlightPage>

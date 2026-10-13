@@ -1,13 +1,17 @@
 /*
- * Docs only (Starlight customCss, after tokens.css): sidebar and LinkButton
- * overrides, heading tracking, Mermaid in the CI colours. Unlayered, so
- * every rule here beats Starlight's own @layer starlight.* styles.
+ * Pages in the Starlight layout only, the docs and the phase pages
+ * (Starlight customCss, after tokens.css): sidebar and LinkButton overrides,
+ * the page text as on the VitePress site, Mermaid in the CI colours, the
+ * consent banner's links. Unlayered (but for the last rule), so every rule
+ * here beats Starlight's own @layer starlight.* styles.
  */
 
-/* The shared header brings its own padding. The phone menu button takes the
-   size of the header's burger. */
+/* The shared header brings its own padding; 24px at the sides on every
+   width, as in the website layout. The phone menu button takes the size of
+   the header's burger. */
 :root {
   --sl-nav-pad-y: 0px;
+  --sl-nav-pad-x: 24px;
   --sl-menu-button-size: 36px;
 }
 
@@ -47,13 +51,100 @@
   color: var(--cd-weiss);
 }
 
-/* Tight heading tracking, as on the VitePress docs. Starlight renders the
-   page title (h1#_top) outside the Markdown content. */
+/* ── Page text, as on the VitePress docs (vp-doc.css) ─────────────────── */
+
+/* Heading sizes and tight tracking. Starlight renders the page title
+   (h1#_top) outside the Markdown content and wraps every other heading in a
+   .sl-heading-wrapper that carries its size and spacing. */
+:root {
+  --sl-text-h1: 28px;
+  --sl-text-h2: 24px;
+  --sl-text-h3: 20px;
+  --sl-text-h4: 18px;
+}
+@media (min-width: 768px) {
+  :root {
+    --sl-text-h1: 32px;
+  }
+}
 :is(h1#_top, .sl-markdown-content h1) {
+  line-height: 40px;
   letter-spacing: -0.03em;
 }
 .sl-markdown-content h2 {
   letter-spacing: -0.02em;
+}
+.sl-markdown-content h3 {
+  letter-spacing: -0.01em;
+}
+
+/* A section starts with a divider; h3 and h4 keep VitePress' space above.
+   Docs headings come wrapped (with their anchor link), the phase pages'
+   headings bare. Not the first heading: the title panel above it already
+   ends in a divider (an empty anchor <span> may come first). */
+.sl-markdown-content > :is(.sl-heading-wrapper.level-h2, h2) {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--site-divider);
+  line-height: 32px;
+}
+.sl-markdown-content > :is(.sl-heading-wrapper.level-h3, h3) {
+  margin-top: 32px;
+  line-height: 28px;
+}
+.sl-markdown-content > :is(.sl-heading-wrapper.level-h4, h4) {
+  margin-top: 24px;
+  line-height: 24px;
+}
+.sl-markdown-content
+  > :is(.sl-heading-wrapper, h2, h3, h4):is(:first-child, span:empty:first-child + *) {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Lists indent by 1.25rem, not the browser's 40px. */
+.sl-markdown-content :is(ul, ol):not(:where(.not-content *)) {
+  padding-left: 1.25rem;
+}
+
+/* Links: green, medium weight, underlined. */
+.sl-markdown-content a:not(:where(.not-content *)) {
+  font-weight: 500;
+  text-underline-offset: 2px;
+}
+
+/* Inline code: green on a faint lift, as on the website pages. */
+.sl-markdown-content :not(pre, h1, h2, h3, h4, h5, h6) > code:not(:where(.not-content *)) {
+  color: var(--site-accent);
+  font-size: 0.875em;
+}
+.sl-markdown-content :not(pre) > code:not(:where(.not-content *)) {
+  padding: 3px 6px;
+  border-radius: 4px;
+  background-color: var(--site-gray-soft);
+}
+
+/* Tables: cell borders, a filled header row, zebra rows, 14px text. */
+.sl-markdown-content table:not(:where(.not-content *)) {
+  border-collapse: collapse;
+}
+.sl-markdown-content tr:not(:where(.not-content *)) {
+  border-top: 1px solid var(--site-divider);
+  background-color: var(--site-bg);
+}
+.sl-markdown-content tr:nth-child(2n):not(:where(.not-content *)) {
+  background-color: var(--site-bg-soft);
+}
+.sl-markdown-content :is(th, td):not(:where(.not-content *)) {
+  padding: 8px 16px;
+  border: 1px solid var(--site-divider);
+  font-size: 14px;
+  line-height: 24px;
+}
+.sl-markdown-content th:not(:where(.not-content *)) {
+  background-color: var(--site-bg-soft);
+  color: var(--site-text-2);
 }
 
 /* ── Mermaid ─────────────────────────────────────────────────────────── */
@@ -93,4 +184,17 @@
 .mermaid .edgeLabel rect {
   fill: var(--site-bg) !important;
   opacity: 1 !important;
+}
+
+/* ── Consent banner ─────────────────────────────────────────────────── */
+/* consentmanager's banner leaves its text links to the page. Website pages
+   reset links to the surrounding text (styles/website.css); without that,
+   a link here would take the browser's link colour for the dark scheme
+   (#9e9eff), which fails contrast on the banner's white. The same reset,
+   in the lowest layer, so the banner's own rules (its buttons) still win. */
+@layer site-reset {
+  #cmpbox a {
+    color: inherit;
+    text-decoration: inherit;
+  }
 }
