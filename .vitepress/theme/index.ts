@@ -13,6 +13,13 @@ import HeroEyebrow from "./HeroEyebrow.vue"
 import TryItOut from "./TryItOut.vue"
 import BrandContact from "./BrandContact.vue"
 import LegalFooter from "./LegalFooter.vue"
+import PageSection from "./landing/PageSection.vue"
+import FeatureList from "./landing/FeatureList.vue"
+import CardGrid from "./landing/CardGrid.vue"
+import StepList from "./landing/StepList.vue"
+import CompareCards from "./landing/CompareCards.vue"
+import PillButton from "./landing/PillButton.vue"
+import CtaBox from "./landing/CtaBox.vue"
 import "@fontsource-variable/geist"
 import "@fontsource-variable/geist/wght-italic.css"
 import "@fontsource-variable/geist-mono"
@@ -20,6 +27,7 @@ import "@fontsource-variable/geist-mono"
 // loaded before custom.css, which maps the VitePress variables onto them.
 import "./cd-tokens.generated.css"
 import "./custom.css"
+import "./landing.css"
 
 export default {
   extends: DefaultTheme,
@@ -40,5 +48,13 @@ export default {
     app.component("LifecycleMap", LifecycleMap)
     app.component("TryItOut", TryItOut)
     app.component("BrandContact", BrandContact)
+    // Landing page building blocks (theme/landing/, styles in landing.css)
+    app.component("PageSection", PageSection)
+    app.component("FeatureList", FeatureList)
+    app.component("CardGrid", CardGrid)
+    app.component("StepList", StepList)
+    app.component("CompareCards", CompareCards)
+    app.component("PillButton", PillButton)
+    app.component("CtaBox", CtaBox)
   },
 } satisfies Theme

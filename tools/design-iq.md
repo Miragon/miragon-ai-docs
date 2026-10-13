@@ -23,22 +23,160 @@ artefact:
   alt: The designIQ BPMN editor in the browser with the example process order-to-cash in three lanes, the modelling palette on the left and the Live, Workshop, Diagram and XML controls above the canvas.
   url: localhost:8301/r/Miragon/design-iq/f/process-documentation/processes/order-to-cash.bpmn
   caption: designIQ v5.3.0 from the Docker one-liner under Get started, with the example model order-to-cash. Taken on 2026-10-13.
+compare:
+  before:
+    title: Today
+    items:
+      - Models in a separate tool, signed off outside Git
+      - One person at a time per diagram
+      - An AI that cannot see the current model
+      - DMN changes reviewed as an XML diff
+  after:
+    title: With designIQ
+    items:
+      - Plain files in your GitHub repo, released by pull request
+      - One live version that your team edits together
+      - AI assistants work on the same live models over MCP
+      - The pull request lists every DMN test case whose answer changed
+steps:
+  - title: Point it at your repo
+    text: Your models live in a GitHub repo with a root designiq.yml that names the models folder. Each model is a plain file there, such as order-to-cash.bpmn.
+  - title: Model together
+    text: Your team edits in the browser and sees one live version of each model, with a visual modeler for six notations.
+  - title: Let the AI join
+    text: AI clients connect to the /mcp endpoint of the same server. Their saves are validated, and whoever has the model open sees the agent as a co-editor.
+  - title: Release by pull request
+    text: A release runs the validator, pushes a branch and opens a pull request. CODEOWNERS and branch protection decide who approves.
+agent:
+  - icon: monitor
+    title: The modeler inside the chat
+    text: Chat clients that support MCP Apps, such as claude.ai, Claude Desktop and ChatGPT, show the modeler inline, with a link that opens the model in designIQ.
+  - icon: users
+    title: The agent as a co-editor
+    text: Whoever has the model open sees the agent in the roster, and the elements it changed are outlined on the canvas.
+  - icon: shield
+    title: Validated saves
+    text: Every save is validated and never overwrites an edit someone made in the meantime.
+  - icon: route
+    title: Edits by element id, opt-in
+    text: With LIVE_MCP_BPMN_EDIT=1, the agent changes BPMN elements by id through bpmn-cli, and your hand-drawn layout stays.
+  - icon: ticket
+    title: Todos on BPMN elements
+    text: People and agents file todos anchored to BPMN elements. Each one is a GitHub issue and shows as a badge on the canvas.
+  - icon: eye
+    title: Read-only where you need it
+    text: LIVE_MCP_READONLY=1 removes the write tools, and npx @miragon/design-iq-mcp reads any checkout without a running host.
+notations:
+  - icon: workflow
+    title: BPMN and DMN
+    text: bpmn-js and dmn-js, with a workshop mode for sticky notes, a file history against the default branch, DMN simulation and test suites with rule coverage.
+  - icon: map
+    title: Wardley Maps, Team Topologies, Context Maps
+    text: Visual modelers for strategy, team and domain models, kept as files in the same repo as your processes.
+  - icon: users
+    title: Event Storming
+    text: A board sits next to the process with the same id, such as order-to-cash.storm next to order-to-cash.bpmn.
+status:
+  - icon: globe
+    title: Hosted service pre-GA
+    text: design.miragon.ai is pre-GA, with the public launch planned around mid-November 2026. It asks you to sign in and connect GitHub.
+  - icon: github
+    title: GitHub only
+    text: Content repos live on GitHub. GitLab support is an open issue.
+  - icon: key
+    title: Login takes your own setup
+    text: Login, private repos and release as pull request need an OIDC provider and your own GitHub App. Without a GitHub App, the repo has to be public.
+  - icon: route
+    title: Semantic BPMN editing behind a flag
+    text: Opt-in with LIVE_MCP_BPMN_EDIT=1 since v5.3.0, and off by default until an A/B benchmark has run.
+  - icon: play
+    title: No playground yet
+    text: A hosted playground is an open issue. The Docker one-liner above is the way to try designIQ.
+  - icon: book
+    title: Skills for BPMN only
+    text: The seven Claude skills in the starter repo cover BPMN. The other notations have none yet.
+proof:
+  - icon: github
+    title: Miragon/design-iq
+    text: The full platform under the MIT licence, with changelog and ADRs.
+    link: https://github.com/Miragon/design-iq
+  - icon: container
+    title: Docker image
+    text: ghcr.io/miragon/designiq-live-host for amd64 and arm64, pullable without login.
+    link: https://github.com/Miragon/design-iq/pkgs/container/designiq-live-host
+  - icon: tree
+    title: process-documentation-starter
+    text: A template content repo with BPMN processes, a DMN decision with tests, an Event Storming board and seven Claude skills for BPMN.
+    link: https://github.com/Miragon/process-documentation-starter
+  - icon: plug
+    title: "@miragon/design-iq-mcp"
+    text: The read-only MCP server on npm, at 5.3.0.
+    link: https://www.npmjs.com/package/@miragon/design-iq-mcp
+  - icon: check-circle
+    title: "@miragon/design-iq-validator"
+    text: The content repo validator on npm, at 5.3.0.
+    link: https://www.npmjs.com/package/@miragon/design-iq-validator
+  - icon: history
+    title: Releases
+    text: v5.3.0 of 13 October 2026 and every release before it, with notes.
+    link: https://github.com/Miragon/design-iq/releases
+fits:
+  - eyebrow: Phase
+    title: Design
+    text: Your team models the to-be process in designIQ and releases it by pull request.
+    link: /design
+  - eyebrow: From Analyse
+    title: analyzr
+    text: Its as-is value chain can sit in the same repo as a .vc.json file. There is no direct link yet, and the two formats have not been checked against each other.
+    link: /tools/analyzr
+  - eyebrow: Same phase
+    title: bpmn-cli
+    text: The engine behind the opt-in semantic BPMN editing, where the agent changes elements by id and your hand-drawn layout stays.
+    link: /tools/bpmn-cli
+  - eyebrow: Next phase
+    title: Implement
+    text: Your merged .bpmn and .dmn files are design models. Implement makes them executable.
+    link: /implement
+  - eyebrow: In Implement
+    title: Skills
+    text: The bpmn skill for Claude Code is one way to make a merged design model executable.
+    link: /tools/skills
+  - eyebrow: The way back
+    title: Optimize
+    text: What you learn in Execute and Optimize comes back here as a todo on the BPMN element (a GitHub issue) or through the process-feedback skill.
+    link: /optimize
+docs:
+  - icon: book
+    title: README
+    text: Run modes and the content repo contract.
+    link: https://github.com/Miragon/design-iq#readme
+  - icon: server
+    title: Self-hosting guide
+    text: Login with an OIDC provider, your own GitHub App, private repos and release as pull request.
+    link: https://github.com/Miragon/design-iq/blob/main/docs/on-prem/README.md
+  - icon: cable
+    title: MCP integration guide
+    text: Every MCP tool and the inline modeler widgets.
+    link: https://github.com/Miragon/design-iq/blob/main/docs/mcp-integration.md
 ---
 
-## The problem
+<PageSection eyebrow="The problem" title="Process models live outside the repo your team reviews in" intro="Process models usually live in a separate modelling tool, away from the repo your developers work in. One person at a time works on a diagram there, and nobody signs it off in a pull request. An AI assistant either cannot see the current model, or it rewrites the whole BPMN XML when it changes one. In review, a DMN change arrives as an XML diff, where a >= that became > is easy to miss.">
+  <CompareCards :before="$frontmatter.compare.before" :after="$frontmatter.compare.after" />
+</PageSection>
 
-Process models usually live in a separate modelling tool, away from the repo your developers work in. One person at a time works on a diagram there, and nobody signs it off in a pull request. An AI assistant either cannot see the current model, or it rewrites the whole BPMN XML when it changes one. In review, a DMN change arrives as an XML diff, where a `>=` that became `>` is easy to miss.
+<PageSection tone="tint" align="center" eyebrow="How it works" title="One live model in your repo, released by merge" intro="Your team models the to-be process and signs it off by merge. The AI drafts models and changes them on request.">
+  <StepList :items="$frontmatter.steps" />
+</PageSection>
 
-## How it works
+<PageSection eyebrow="AI in the workspace" title="Your AI works on the model your team has open" intro="AI clients use the same server as the browser. With more than 30 MCP tools they read, validate and save every notation, simulate and test DMN, file todos and open the release pull request.">
+  <FeatureList :items="$frontmatter.agent" />
+</PageSection>
 
-1. Your models live in a GitHub repo with a root `designiq.yml` that names the models folder. Each model is a plain file there, such as `order-to-cash.bpmn`.
-2. Your team edits in the browser and sees one live version of each model. BPMN, DMN, Wardley Maps, Team Topologies, Event Storming and Context Maps have visual modelers, and every file has a text view, which is how you edit Value Chains and Markdown.
-3. AI clients connect to the `/mcp` endpoint of the same server and work on the same live models. Their saves are validated, and whoever has the model open sees the agent as a co-editor. Chat clients that support MCP Apps, such as claude.ai, Claude Desktop and ChatGPT, show the modeler inline.
-4. A release runs the validator, pushes a branch and opens a pull request. CODEOWNERS and branch protection decide who approves. For a DMN change, the pull request lists every test case in `<decision>.tests.yaml` whose answer changed.
+<PageSection tone="tint" eyebrow="Notations" title="Eight notations in one content repo" intro="Next to BPMN and DMN, your strategy and architecture models can live in the same repo. Six notations have a visual modeler in the browser, and every file has a text view, which is how you edit Value Chains and Markdown.">
+  <CardGrid :items="$frontmatter.notations" />
+</PageSection>
 
-Your team models the to-be process and signs it off by merge. The AI drafts models and changes them on request.
-
-## Get started {#get-started}
+<PageSection id="get-started" eyebrow="Get started" title="Run designIQ on your machine">
 
 You need Docker. This evaluation container runs without login and serves the example models from the designIQ repo, which it clones on the first request. Anyone who reaches the port can edit every model, so keep it on your machine.
 
@@ -65,34 +203,27 @@ npx @miragon/design-iq-mcp --root ./my-content-repo
 
 For your own models, create a repo from the template [process-documentation-starter](https://github.com/Miragon/process-documentation-starter) and pass it to the container with `-e GITHUB_REPO=<owner>/<repo> -v designiq-data:/data`. Without a GitHub App the repo has to be public. Login, private repos and release as pull request need an OIDC provider and your own GitHub App, described in the [self-hosting guide](https://github.com/Miragon/design-iq/blob/main/docs/on-prem/README.md).
 
-Run modes and the content repo contract are in the [README](https://github.com/Miragon/design-iq#readme). Every MCP tool and the inline modeler widgets are described in the [MCP integration guide](https://github.com/Miragon/design-iq/blob/main/docs/mcp-integration.md).
+After model edits, `npx @miragon/design-iq-validator --root .` checks the content repo, on your machine or as a gate in CI.
 
-## Status
+</PageSection>
 
-As of 2026-10-13.
+<PageSection tone="tint" eyebrow="Status" title="Where designIQ stands on 13 October 2026" intro="The self-hosted platform is at v5.3.0, released on 13 October 2026 as the fourth release since 4 October. The repo (MIT licence) and the Docker image are public.">
+  <FeatureList :items="$frontmatter.status" />
 
-| Part                  | State                                                                                                                            |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Self-hosted platform  | v5.3.0, released 2026-10-13. The repo (MIT licence) and the Docker image are public.                                             |
-| Hosted service        | design.miragon.ai is pre-GA, with the public launch planned around mid-November 2026. It asks you to sign in and connect GitHub. |
-| Git provider          | GitHub only. GitLab support is open as [issue #5](https://github.com/Miragon/design-iq/issues/5).                                |
-| Semantic BPMN editing | Opt-in with `LIVE_MCP_BPMN_EDIT=1` since v5.3.0, off by default until an A/B benchmark has run.                                  |
-| Playground            | None yet ([issue #43](https://github.com/Miragon/design-iq/issues/43)). The Docker one-liner above is the way to try it.         |
-| Skills in the starter | BPMN only.                                                                                                                       |
+Follow GitLab support in [issue #5](https://github.com/Miragon/design-iq/issues/5) and the playground in [issue #43](https://github.com/Miragon/design-iq/issues/43).
 
-## Proof you can open
+</PageSection>
 
-- [Miragon/design-iq](https://github.com/Miragon/design-iq): the full platform, with changelog and ADRs.
-- [Docker image](https://github.com/Miragon/design-iq/pkgs/container/designiq-live-host) `ghcr.io/miragon/designiq-live-host` for amd64 and arm64, pullable without login.
-- [process-documentation-starter](https://github.com/Miragon/process-documentation-starter): a template content repo with BPMN processes, a DMN decision with tests, an Event Storming board and seven Claude skills for BPMN.
-- [@miragon/design-iq-mcp](https://www.npmjs.com/package/@miragon/design-iq-mcp) and [@miragon/design-iq-validator](https://www.npmjs.com/package/@miragon/design-iq-validator) on npm, both at 5.3.0.
+<PageSection eyebrow="Proof you can open" title="Everything here is public">
+  <CardGrid :items="$frontmatter.proof" />
+</PageSection>
 
-## Where it fits
+<PageSection tone="tint" eyebrow="Where it fits" title="designIQ in the lifecycle" intro="Models arrive as .bpmn files pushed to the content repo, or as drafts from Visio, draw.io, Word, Confluence or images through the starter's import-process skill. They leave as merged files in git, and findings from Optimize come back to them as todos.">
+  <CardGrid :items="$frontmatter.fits" />
+</PageSection>
 
-designIQ serves [Design](/design). Models arrive as `.bpmn` files pushed to the content repo, or as drafts from Visio, draw.io, Word, Confluence or images through the starter's `import-process` skill. The as-is value chain from [analyzr](/tools/analyzr) can sit in the same repo as a `.vc.json` file. There is no direct link between analyzr and designIQ yet, and the two value chain formats have not been checked against each other.
+<PageSection eyebrow="Docs" title="The reference lives in the repo">
+  <CardGrid :items="$frontmatter.docs" />
+</PageSection>
 
-[bpmn-cli](/tools/bpmn-cli) is the engine behind the opt-in semantic BPMN editing, where the agent changes elements by id and your hand-drawn layout stays. [Implement](/implement) makes the merged `.bpmn` and `.dmn` design models executable, for example with the `bpmn` skill from [Skills](/tools/skills), and CI can gate the content repo with `npx @miragon/design-iq-validator --root .`. Corrections from [Execute](/execute) come back to the same repo as todos on BPMN elements (GitHub issues) or through the `process-feedback` skill.
-
-The whole lifecycle: [Miragon AI](/)
-
-[Talk to us](/#contact) about running designIQ on your own repos.
+<CtaBox title="Run designIQ on your own repos." text="Tell us where your process models live today and who signs them off. We go through what designIQ covers for your team and what it does not cover yet." note="A 30-minute first call." />

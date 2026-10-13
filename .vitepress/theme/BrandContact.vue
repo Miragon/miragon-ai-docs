@@ -253,9 +253,6 @@ onBeforeUnmount(() => {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
   gap: 48px;
-  margin-top: 64px;
-  padding-top: 48px;
-  border-top: 1px solid var(--vp-c-divider);
 }
 @media (max-width: 900px) {
   .contact {

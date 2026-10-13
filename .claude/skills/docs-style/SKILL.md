@@ -7,9 +7,9 @@ allowed-tools: Read, Edit, Write, Glob, Grep, Bash
 # docs-style: keep the Miragon AI site honest and current
 
 This repo is the one Miragon AI site, served at https://miragon.ai. It shows how Miragon's AI tools
-support the BPM lifecycle: Analyse, Design, Implement, Execute, Optimize, and Optimize feeds back
-into Analyse. Read this skill before you touch a page, and come back to it whenever a tool changes
-in a way readers would notice.
+support the BPM lifecycle: Analyse runs once at the start, then Design, Implement, Execute and
+Optimize form the loop, and Optimize feeds back into Design. Read this skill before you touch a page,
+and come back to it whenever a tool changes in a way readers would notice.
 
 ## Goal
 
@@ -71,11 +71,12 @@ its packages.
 
 ## One list of phases and tools
 
-`.vitepress/lifecycle.ts` exports `PHASES` (name, link, job, tools) and `TOOLS`. The lifecycle
-graphic (`theme/LifecycleMap.vue`), the nav and the sidebar (`config.ts`) are built from it. Add,
-rename or move a tool there, never in `config.ts` alone. Page copy uses the same names and stays
-consistent with the job labels, and a tool landing page's `eyebrow` names the phase the tool sits in
-there. The graphic is the landing's hero; `<LifecycleMap />` also works inside a page.
+`.vitepress/lifecycle.ts` exports `PHASES` (name, link, job, tools, and `once` for Analyse, which
+runs before the loop) and `TOOLS`. The lifecycle graphic (`theme/LifecycleMap.vue`), the nav and the
+sidebar (`config.ts`) are built from it. Add, rename or move a tool there, never in `config.ts` alone.
+Page copy uses the same names and stays consistent with the job labels, and a tool landing page's
+`eyebrow` names the phase the tool sits in there. The graphic is the landing's hero;
+`<LifecycleMap />` also works inside a page.
 
 ## Tool landing pages
 
@@ -130,23 +131,26 @@ changes something outside your machine to get an artefact (no new repos, pushes 
 writes to the public playground or demo), and stop the containers you start. The numbers in
 `PulseChat.vue` mirror the public playground, which reseeds every night.
 
-The body is Markdown below the hero, with doc styles on the dark ground. The hero name is the page's
-`h1`, so the body starts at `##`. Adapt the sections to the tool:
+The body is built from the landing building blocks (see [Landing building blocks](#landing-building-blocks)), the
+way miragon.io builds its pages: full-width bands, each with a small accent eyebrow and a bold
+title, holding cards, icon lists, steps or a comparison. The hero name is the page's `h1`. A tool
+page follows this order; adapt it to the tool, and alternate `plain` and `tint` bands:
 
-1. `## The problem`: two to four concrete sentences from the tool's canvas.
-2. `## What <tool> does` or `## How it works`: a short numbered flow or a two-column table (you and
-   the tool, or before and with the tool), in real terms.
-3. `## Get started {#get-started}`: the prerequisites in one sentence, then fenced commands, and a
-   `::: code-group` for variants. The hero's primary action links here.
-4. `## Status` or `## What it is not`: version, maturity and what is missing, with the date.
-5. `## Proof you can open`: public links only.
-6. `## Where it fits`: the phase page and the neighbouring tools' pages in one or two sentences,
-   optionally "The whole lifecycle: [Miragon AI](/)".
+1. `The problem`: the pain in one line as the title, the problem paragraph as the intro, then
+   `<CompareCards>` (today against with the tool) or a `<FeatureList>`.
+2. `How it works`: three or four real steps in a centred `<StepList>`.
+3. Optionally a band for what makes the tool distinct (Pulse: its toolsets as cards).
+4. `Get started` with `id="get-started"` (the hero's primary action links here): Markdown with the
+   prerequisites in a sentence and fenced commands, a `::: code-group` for variants.
+5. `Status`: version and date in the intro, then a `<FeatureList>` of honest limits.
+6. `Proof you can open`: a `<CardGrid>` of public links only.
+7. `Where it fits`: a `<CardGrid>` with the phase page and the neighbouring tools.
+8. A `<CtaBox>` with a tool-specific title and text; the button goes to `/#contact`.
 
-Pulse's page also keeps `## Connect your Claude in 30 seconds {#connect-your-claude}` (the developer
-page links the anchor), `<TryItOut />` and a `## Docs` section with one line for each doc page. A
-tool landing page ends with one short line that invites contact, `[Talk to us](/#contact) about …`.
-It has no contact form of its own, no `features` cards and no icon grid.
+Pulse's page also keeps the band `Connect your Claude in 30 seconds` with
+`id="connect-your-claude"` (the developer page links the anchor), `<TryItOut />` and a `Docs` band
+with a card for each doc page. Only the main landing carries the contact form (`<BrandContact />`)
+in its last band; tool pages close with the `CtaBox`.
 
 ## Components
 
@@ -163,14 +167,39 @@ All live in `.vitepress/theme/`.
 | `TryItOut`        | `<TryItOut />`, the Pulse playground card, on Pulse's landing page only.                                                                                                                          |
 | `BrandContact`    | `<BrandContact />`, the contact form with `id="contact"`, on the landing only.                                                                                                                    |
 | `LegalFooter`     | The layout mounts it in `layout-bottom` on every page.                                                                                                                                            |
+| `landing/*`       | The landing building blocks below, registered globally in `theme/index.ts`, coloured through the `--l-*` variables in `landing.css`.                                                              |
 
-Markdown can use `LifecycleMap`, `TryItOut` and `BrandContact` (registered in `theme/index.ts`).
-The hero components come from the frontmatter only.
+Markdown can use `LifecycleMap`, `TryItOut`, `BrandContact` and the landing building blocks. The
+hero components come from the frontmatter only.
+
+### Landing building blocks
+
+They live in `.vitepress/theme/landing/` and follow miragon.io's components (section header, icon
+card, steps, call to action), in the always-dark style of the landing pages. Structured content
+goes into the page's frontmatter and reaches the component as `$frontmatter.<key>`.
+
+| Component        | Use                                                                                                                                                                               | Props                                                                                    |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `<PageSection>`  | Every band below the hero. Markdown inside needs a blank line after the opening and before the closing tag.                                                                       | `id`, `eyebrow`, `title`, `intro`, `tone` (`plain`, `tint`, `dark`), `align`             |
+| `<FeatureList>`  | An icon tile, a title and one or two sentences per item: problems, limits, reasons.                                                                                               | `items: [{ icon, title, text }]`, `columns` (1, 2, 3)                                    |
+| `<CardGrid>`     | Cards with an optional icon tile or a small eyebrow label; a card with `link` is one link ("Learn more" or "Open" for external links). Proof, where it fits, docs, roles, phases. | `items: [{ icon, eyebrow, title, text, link, linkText }]`, `columns` (2, 3, 4), `center` |
+| `<StepList>`     | Two to four numbered steps, centred.                                                                                                                                              | `items: [{ title, text }]`                                                               |
+| `<CompareCards>` | Today against with the tool: short, paired lines.                                                                                                                                 | `before: { title, items }`, `after: { title, items }`                                    |
+| `<CtaBox>`       | The closing box of a tool page: a blue surface, a white pill button.                                                                                                              | `title`, `text`, `label`, `href` (default `/#contact`), `note`                           |
+| `<PillButton>`   | A miragon.io pill button inside a band.                                                                                                                                           | `href`, `label`, `variant` (`dark`, `light`, `outline`)                                  |
+
+Icons are keys of `landing/Icon.vue`, a fixed set of Lucide icons (CI rule B9), drawn with the CI's
+heavier stroke. Pick the icon of the concrete function, never AI symbolism (sparkles, robots,
+brains), and only where it carries meaning. Add an icon to the set there when a page needs one.
+
+Write frontmatter lists in block style, one key per line, and quote strings that contain `: ` or
+start with `@`, `*`, `&`, `!`, `%` or a quote. Never put prose into a YAML flow map
+(`{ title: …, text: … }`): a comma inside it silently cuts the text.
 
 ## Decisions
 
-Taken on 2026-10-13 in Miragon/miragon-ai-docs#1; the last two rows came the same day with the tool
-landing pages (Miragon/miragon-ai-docs#3). Follow them; changing one needs the team.
+Taken on 2026-10-13 in Miragon/miragon-ai-docs#1; the last four rows came the same day with the
+tool landing pages (Miragon/miragon-ai-docs#3). Follow them; changing one needs the team.
 
 | Topic                  | Decision                                                                                                                                                                                                                    |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -179,6 +208,8 @@ landing pages (Miragon/miragon-ai-docs#3). Follow them; changing one needs the t
 | The old marketing site | This site replaces miragon-ai-website. Value proposition, lifecycle story, docs and contact live here. Redirecting or archiving the old site is a separate step.                                                            |
 | Pulse                  | The site calls the MCP server from Miragon/miragon-ai Pulse; its technical identifiers keep their names (see [Pulse and miragon-ai](#pulse-and-miragon-ai)).                                                                |
 | Tool pages             | Every tool page is a landing page of its own with the tool's real artefact in the hero. The Pulse doc pages stay docs.                                                                                                      |
+| Website look           | The landing pages look like a website in miragon.io's visual language (bands, cards, icon lists, steps, a closing box) and stay always dark, the hero included (no blue gradient).                                          |
+| Lifecycle loop         | Analyse runs once, at the start. Design, Implement, Execute and Optimize form the loop, and what you learn in Optimize goes back into Design.                                                                               |
 
 ## Voice
 
@@ -286,13 +317,13 @@ reads `.miragon/brand.json`, which switches the German-only rules off.
 
 | Page                          | Budget      |
 | ----------------------------- | ----------- |
-| `index.md`                    | ≤ 110 lines |
-| `tools/pulse/index.md`        | ≤ 130 lines |
+| `index.md`                    | ≤ 260 lines |
+| `tools/pulse/index.md`        | ≤ 230 lines |
 | `tools/pulse/architecture.md` | ≤ 150 lines |
 | `tools/pulse/developer.md`    | ≤ 80 lines  |
 | `tools/pulse/operations.md`   | ≤ 120 lines |
 | `tools/pulse/usage.md`        | ≤ 150 lines |
-| `tools/*.md`                  | ≤ 130 lines |
+| `tools/*.md`                  | ≤ 230 lines |
 | `*.md`                        | ≤ 80 lines  |
 
 Counted like `wc -l`, frontmatter included. When a page approaches its budget, condense it.
@@ -340,7 +371,8 @@ If one of these ships and the site stays as it was, the site is stale.
 - Savings numbers, unpublished eval numbers and internal sources.
 - Links to private repos.
 - Screenshots, except a tool landing page's hero artefact or where they show what text cannot.
-- Decorative icons or illustrations in place of the real artefact, and `features` cards.
+- Decorative icons or illustrations in place of the real artefact, VitePress `features` cards (use
+  the landing building blocks instead) and icon grids with filler text.
 - Several pages for one tool, except the Pulse section.
 
 If someone ships a tool change and has not mentioned the site, ask whether a page needs an update

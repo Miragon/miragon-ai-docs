@@ -39,29 +39,145 @@ artefact:
     - { out: "KEY            VERSIONS  INSTANCES  INCIDENTS  FAILED JOBS", tone: dim }
     - { out: "order          1         3          3          3" }
     - { out: "invoice        2         6          0          0" }
+compare:
+  before:
+    title: Today
+    items:
+      - A chain of REST requests per question
+      - Ids copied by hand between responses
+      - Agents guessing endpoints they don't know
+      - No single call that tells CI if the engine is healthy
+  after:
+    title: With operate
+    items:
+      - One command for the engine, one for a single instance
+      - The next command under every finding, ready to run
+      - Agents looking commands up in the CLI itself
+      - operate status --fail-on fails the CI job with exit code 9
+steps:
+  - title: Connect
+    text: operate talks to the engine's REST API. A profile holds the URL and the Basic auth, OAuth or bearer token settings.
+  - title: Triage
+    text: operate status reads the engine in parallel requests and groups root incidents by activity and message, each with a root-cause line from the stack trace.
+  - title: Inspect
+    text: operate inspect shows where one instance waits and why, across called sub-instances, with its incidents and variables.
+  - title: Act
+    text: Every finding names the next command to run, and --dry-run previews any write first.
+commands:
+  - icon: activity
+    eyebrow: Read
+    title: operate status
+    text: Engine triage. Root incidents by root cause, overdue jobs, external task topics with waiting tasks or expired locks, and failed batches.
+  - icon: search
+    eyebrow: Read
+    title: operate inspect
+    text: Where one instance waits and why, across called sub-instances. Select it by id, business key or the latest instance of a definition.
+  - icon: clock
+    eyebrow: Read
+    title: operate wait
+    text: Replaces sleep and poll loops. An incident ends the wait at once, with exit code 9.
+  - icon: play
+    eyebrow: Write
+    title: operate advance
+    text: Completes the user task, external task, message or timer the instance waits for. You name the instance, for example by business key, not the task.
+  - icon: refresh
+    eyebrow: Write
+    title: operate retry
+    text: Sets the retries behind open incidents. After you deploy a fix, --now runs the jobs again at once.
+  - icon: package
+    eyebrow: Write
+    title: operate deploy
+    text: Deploys only the changed .bpmn, .dmn and .form files and can start an instance right away.
+guards:
+  - icon: book
+    title: Commands an agent can look up
+    text: operate guide, operate commands --search and operate describe tell an agent which commands exist and what they take.
+  - icon: code
+    title: JSON in a pipe, a table on a terminal
+    text: Piped output is JSON that a script or an agent reads as it is. An error is one JSON line with a hint and a stable exit code.
+  - icon: lock
+    title: Read-only profiles
+    text: A profile created with --read-only refuses every command that writes, with exit code 2.
+  - icon: eye
+    title: A preview before every write
+    text: "--dry-run previews any write, and delete and bulk commands refuse to run without --yes."
+status:
+  - icon: package
+    title: npm only until 0.6.0
+    text: Standalone binaries and a container image are planned for 0.6.0 and not released yet.
+  - icon: ban
+    title: No Camunda 8
+    text: operate does not support Camunda 8 and is unrelated to Operate, the Camunda 8 web app.
+  - icon: server
+    title: No hosted playground
+    text: You try it against a local engine, such as the Operaton container above.
+  - icon: gauge
+    title: No published savings
+    text: There are no published measurements of token or time savings.
+proof:
+  - icon: play
+    title: Demo GIF
+    text: One operate advance completes the task an order process waits at.
+    link: https://github.com/Miragon/operate/blob/main/docs/assets/demo.gif
+  - icon: route
+    title: Quick start
+    text: From an empty Operaton container to a finished instance, with a sample order.bpmn.
+    link: https://github.com/Miragon/operate/blob/main/docs/quick-start.md
+  - icon: terminal
+    title: Workflow commands
+    text: The six commands on one page, with a sample inspect view.
+    link: https://github.com/Miragon/operate/blob/main/docs/workflow-commands.md
+  - icon: boxes
+    title: npm package
+    text: "@miragon/operate, latest version 0.5.0."
+    link: https://www.npmjs.com/package/@miragon/operate
+  - icon: history
+    title: Releases
+    text: Every release from 0.1.0 to 0.5.0.
+    link: https://github.com/Miragon/operate/releases
+  - icon: check-circle
+    title: CI on three engines
+    text: Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0 on every change.
+    link: https://github.com/Miragon/operate/actions/workflows/ci.yml
+fits:
+  - eyebrow: Phase
+    title: Execute
+    text: operate finds what is stuck on the engine and why.
+    link: /execute
+  - eyebrow: Same engines
+    title: Pulse
+    text: The MCP server from the repo Miragon/miragon-ai, for questions in a chat. The two share no code.
+    link: /tools/pulse/
+  - eyebrow: In Implement
+    title: Skills
+    text: The operate skill lets your coding agent deploy and run a model from bpmn-cli, designIQ or your own modeler on a dev engine.
+    link: /tools/skills
+  - eyebrow: No tool yet
+    title: Optimize
+    text: operate offers raw history queries as JSON, with no KPIs.
+    link: /optimize
 ---
 
-## The problem
+<PageSection eyebrow="The problem" title="One stuck order means a chain of REST requests" intro="To find out why order ORD-1001 stopped moving, you work through the engine's REST API one request at a time. You look up the instance by business key, list its activity instances, read its incidents and jobs and fetch the stack trace, and each answer shapes the next request. A coding agent on the same path reads every full response, copies ids by hand and guesses at endpoints it doesn't know.">
+  <CompareCards :before="$frontmatter.compare.before" :after="$frontmatter.compare.after" />
+</PageSection>
 
-To find out why order ORD-1001 stopped moving, you work through the engine's REST API one request at a time. You look up the instance by business key, list its activity instances, read its incidents and jobs, then fetch the stack trace, and each answer shapes the next request. A coding agent on the same path reads every full response, copies ids by hand and guesses at endpoints it doesn't know. No single call tells a CI job whether the engine is healthy.
+<PageSection tone="tint" align="center" eyebrow="How it works" title="From the engine's state to the next command" intro="operate runs in your shell or your pipeline and speaks the Camunda 7 REST API, which Operaton and CIB seven share.">
+  <StepList :items="$frontmatter.steps" />
+</PageSection>
 
-## What operate does
+<PageSection eyebrow="Workflow commands" title="Six commands for the questions you ask most" intro="Each one combines several REST requests into one answer and lists the commands to run next.">
+  <CardGrid :items="$frontmatter.commands" />
 
-operate turns the 396 operations of the Camunda 7 REST API into commands such as `operate task list`, and adds six workflow commands that combine several requests into one answer.
+Underneath, operate turns all 396 operations of the Camunda 7 REST API into commands such as `operate task list`, and `operate api` sends a raw request.
 
-| You want to know                    | operate answers with                                                                                                                                                                                                                    |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| What is stuck on the engine         | `operate status`: root incidents grouped by process definition, activity and message, each with a root-cause line from the stack trace, plus overdue jobs, external task topics with waiting tasks or expired locks, and failed batches |
-| Where one instance waits and why    | `operate inspect --business-key ORD-1001`: its wait states across called sub-instances, its incidents and variables                                                                                                                     |
-| What to run next                    | a ready command under every finding, such as the `operate retry … --dry-run` in the session above                                                                                                                                       |
-| How a deployed model behaves on dev | `operate deploy`, `wait`, `advance` and `retry`, without passing a single id around                                                                                                                                                     |
-| Whether a CI job should fail        | `operate status --fail-on warning`, which exits with code 9 on any finding                                                                                                                                                              |
+</PageSection>
 
-An agent looks commands up in the CLI itself (`operate guide`, `operate commands --search`, `operate describe`), so it has no reason to guess endpoints. Output is JSON when piped and a table on a terminal. Errors are one JSON line with a hint and a stable exit code.
+<PageSection tone="tint" eyebrow="Agents and safety" title="Your team decides what an agent may change" intro="The agent collects the state of the engine and proposes the next step. What it may change depends on the profile your team hands it.">
+  <FeatureList :items="$frontmatter.guards" />
+</PageSection>
 
-Your team decides what an agent may change. A profile created with `--read-only` refuses every command that writes, with exit code 2. `--dry-run` previews any write, and delete and bulk commands need `--yes`.
-
-## Get started {#get-started}
+<PageSection id="get-started" eyebrow="Get started" title="A first triage in four commands">
 
 You need Node.js 22.12 or later and a reachable Camunda 7 REST API. operate uses `http://localhost:8080/engine-rest` by default, so a local Operaton container needs no configuration. Give it a few seconds to start before the first command.
 
@@ -72,7 +188,7 @@ operate ping
 operate status
 ```
 
-Then point operate at your own engine with a look-only profile, or hand it to Claude Code or your CI pipeline. A profile also holds the engine's Basic auth, OAuth or bearer token settings. The Claude Code plugin calls the CLI you installed. Other agents need one line in `AGENTS.md` or `CLAUDE.md`: "Run `operate guide` before using `operate`."
+Then point operate at your own engine with a read-only profile, or hand it to Claude Code or your CI pipeline. A profile also holds the engine's Basic auth, OAuth or bearer token settings. The Claude Code plugin calls the CLI you installed. Other agents need one line in `AGENTS.md` or `CLAUDE.md`: "Run `operate guide` before using `operate`."
 
 ::: code-group
 
@@ -96,25 +212,18 @@ operate status --read-only --fail-on warning
 
 In CI, `--fail-on warning` fails on any finding, an open incident included. `--fail-on critical` fails only when executable jobs are overdue, and that finding asks whether the job executor is running. The [README](https://github.com/Miragon/operate#readme) maps everyday tasks to commands and links the rest of the docs.
 
-## Status
+</PageSection>
 
-As of 2026-10-13, operate is at version 0.5.0, released on 2026-10-11 to npm as `@miragon/operate`. It is pre-1.0, so commands and output can still change. The repository [Miragon/operate](https://github.com/Miragon/operate) is public under the MIT licence. Standalone binaries and a container image are planned for 0.6.0 and not released yet. There is no hosted playground, and there are no published measurements of token or time savings. operate does not support Camunda 8 and is unrelated to Operate, the Camunda 8 web app.
+<PageSection tone="tint" eyebrow="Status" title="Where operate stands on 13 October 2026" intro="operate is at version 0.5.0, released on 11 October 2026 to npm as @miragon/operate. It is pre-1.0, so commands and output can still change. The repository Miragon/operate is public under the MIT licence.">
+  <FeatureList :items="$frontmatter.status" />
+</PageSection>
 
-## Proof you can open
+<PageSection eyebrow="Proof you can open" title="Everything here is public" intro="The session at the top of this page is operate 0.5.0 against a local operaton/operaton:2.1.5 container, with three orders whose delegate class the engine cannot load.">
+  <CardGrid :items="$frontmatter.proof" />
+</PageSection>
 
-- The session at the top of this page: operate 0.5.0 against a local `operaton/operaton:2.1.5` container, with three orders whose delegate class the engine cannot load.
-- [Demo GIF](https://github.com/Miragon/operate/blob/main/docs/assets/demo.gif): one `operate advance` completes the task an order process waits at.
-- [Quick start](https://github.com/Miragon/operate/blob/main/docs/quick-start.md): from an empty Operaton container to a finished instance, with a sample `order.bpmn`.
-- [Workflow commands](https://github.com/Miragon/operate/blob/main/docs/workflow-commands.md): `status`, `inspect`, `wait`, `advance`, `retry` and `deploy`, with a sample `inspect` view.
-- [npm package](https://www.npmjs.com/package/@miragon/operate) and its [releases](https://github.com/Miragon/operate/releases) from 0.1.0 on.
-- [CI runs](https://github.com/Miragon/operate/actions/workflows/ci.yml) against Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0 on every change.
+<PageSection tone="tint" eyebrow="Where it fits" title="operate in the lifecycle" intro="Pulse reads the same engines as a server your team runs. operate needs no server and talks to one engine per call.">
+  <CardGrid :items="$frontmatter.fits" :columns="4" />
+</PageSection>
 
-## Where it fits
-
-operate serves [Execute](/execute): find what is stuck and why. [Pulse](/tools/pulse/), the MCP server from the repo Miragon/miragon-ai, reads the same engines for your operations team and product owners in a chat. operate needs no server and talks to one engine per call, and the two share no code.
-
-In [Implement](/implement), the operate skill from [Skills](/tools/skills) lets your coding agent deploy and run a model on a dev engine, whether it comes from [bpmn-cli](/tools/bpmn-cli), [designIQ](/tools/design-iq) or your own modeler. Once a fix is deployed, `operate retry --now` runs the failed jobs again. For [Optimize](/optimize), which has no tool yet, operate offers only raw history queries as JSON, with no KPIs.
-
-The whole lifecycle: [Miragon AI](/)
-
-[Talk to us](/#contact) about running operate against your own engines and pipelines.
+<CtaBox title="Point operate at your own engines." text="Tell us which engines you run and where a health check in your pipeline would help. We go through it with you and say where operate fits today." note="A 30-minute first call." />

@@ -36,27 +36,117 @@ artefact:
     - { cmd: "operate advance --business-key B-1" }
     - { cmd: "operate wait --business-key B-1 --until ended" }
     - { out: "State             COMPLETED", tone: ok }
+compare:
+  before:
+    title: Today
+    items:
+      - The agent edits the XML that also holds your drawing
+      - The engine reports a missing topic at deployment
+      - A test run chains REST calls and copies ids along
+  after:
+    title: With the skills
+    items:
+      - The agent changes elements by id, and your layout stays
+      - bpmn validate --strict names each blocker and the command that fixes it
+      - operate runs one instance by business key and checks that it ends
+steps:
+  - title: Ask
+    text: You ask in Claude Code in plain words, for example "make payment.bpmn deployable on Camunda 7, charging the card is an external task".
+  - title: Change
+    text: The bpmn skill changes the model through @miragon/bpmn-cli and addresses elements by id. The agent writes no XML, and your layout stays.
+  - title: Validate
+    text: bpmn validate --strict flags what the engine would refuse and names the command that fixes each finding.
+  - title: Run once
+    text: The operate skill deploys the file, starts one instance, completes what it waits for and checks that it ends. It finds the instance by business key, so the agent copies no ids.
+roles:
+  - icon: terminal
+    eyebrow: The agent
+    title: Makes the file deployable and runs it once
+    text: Sets the engine attributes by element id and keeps the drawing. Runs bpmn validate --strict until the file passes, then deploys to your dev engine and runs one instance to the end.
+  - icon: users
+    eyebrow: Your team
+    title: Owns the interfaces and the code behind them
+    text: Decides the topics, job types and error codes, writes the worker or delegate code they call and reviews the change before the model goes on to Execute.
+status:
+  - icon: code
+    title: Worker code is yours
+    text: No skill writes the worker or delegate code that the topics and job types point to.
+  - icon: server
+    title: Camunda 8 stops at validation
+    text: Camunda 8 gets modelling and validation only. No skill deploys to or runs on it.
+  - icon: file
+    title: No DMN skill
+    text: Decision tables get no skill of their own.
+  - icon: chart
+    title: Eval results unpublished
+    text: We have not published eval results for either plugin yet.
+  - icon: terminal
+    title: Plugins for Claude Code
+    text: Other coding agents can use both CLIs without a skill, through the guides the CLIs print (bpmn guide, operate guide).
+  - icon: play
+    title: No recorded demo
+    text: A recorded demo of both skills on a real process application does not exist yet.
+proof:
+  - icon: book
+    title: Recipes of the bpmn skill
+    text: Complete sessions, including a Camunda 7 external task and a Camunda 8 job worker. A test in the repo runs every recipe against the CLI.
+    link: https://github.com/Miragon/bpmn-cli/blob/main/plugins/bpmn-cli/skills/bpmn/reference/recipes.md
+  - icon: check-circle
+    title: Eval suite
+    text: Seven cases, each run with and without the plugin. The results are not published.
+    link: https://github.com/Miragon/bpmn-cli/blob/main/plugins/bpmn-cli/evals/README.md
+  - icon: github
+    title: The bpmn-cli plugin
+    text: What the skill does, how you install it and how it stays in step with the CLI version.
+    link: https://github.com/Miragon/bpmn-cli/tree/main/plugins/bpmn-cli
+  - icon: file-code
+    title: The operate skill
+    text: Its setup, workflow commands and safety rules.
+    link: https://github.com/Miragon/operate/blob/main/skills/operate/SKILL.md
+  - icon: package
+    title: "@miragon/bpmn-cli"
+    text: The CLI behind the bpmn skill, 0.6.0 on npm.
+    link: https://www.npmjs.com/package/@miragon/bpmn-cli
+  - icon: package
+    title: "@miragon/operate"
+    text: The CLI behind the operate skill, 0.5.0 on npm.
+    link: https://www.npmjs.com/package/@miragon/operate
+fits:
+  - eyebrow: Phase
+    title: Implement
+    text: Where your team makes the model run. What goes on to Execute has passed bpmn validate --strict and run once on a dev engine.
+    link: /implement
+  - eyebrow: From Design
+    title: designIQ
+    text: Your team draws the .bpmn file in designIQ, in Camunda Modeler or with bpmn-cli, and the skill keeps that drawing.
+    link: /tools/design-iq
+  - eyebrow: Same CLI
+    title: bpmn-cli
+    text: The CLI behind the bpmn skill. In Design it creates and changes models by command.
+    link: /tools/bpmn-cli
+  - eyebrow: In Execute
+    title: operate
+    text: The CLI behind the operate skill shows what runs and what is stuck on your engine.
+    link: /tools/operate
+  - eyebrow: In Execute
+    title: Pulse
+    text: Pulse shows grouped incidents across your engines in the chat and drafts the ticket.
+    link: /tools/pulse/
+  - eyebrow: Your own systems
+    title: Solution templates
+    text: Start there if your agent also needs your own systems next to the engine.
+    link: /tools/solution-templates
 ---
 
-## The problem
+<PageSection eyebrow="The problem" title="A model from Design is not yet a file the engine accepts" intro="A coding agent without guidance does not know which details the engine checks, so an external task without a topic shows up only when the engine rejects the deployment. The agent adds such details in XML that also holds your team's drawing, and a test run means chaining REST calls and copying ids from one response into the next.">
+  <CompareCards :before="$frontmatter.compare.before" :after="$frontmatter.compare.after" />
+</PageSection>
 
-A model from Design is not yet a file the engine accepts, and a coding agent without guidance does not know which details the engine checks. An external task without a topic shows up only when the engine rejects the deployment. The agent adds such details in XML that also holds your team's drawing, and a test run means chaining REST calls and copying ids from one response into the next.
+<PageSection tone="tint" align="center" eyebrow="How it works" title="Your agent changes the model by command and runs it once" intro="Validation covers Camunda 7, CIB seven and Operaton (W_C7_DEPLOY_* findings) and Camunda 8 (W_C8_DEPLOY_*). If the test instance runs into an incident, operate wait fails with exit code 9 and still shows where it stopped.">
+  <StepList :items="$frontmatter.steps" />
+</PageSection>
 
-## How it works
-
-1. You ask your agent in Claude Code in plain words, for example "make payment.bpmn deployable on Camunda 7, charging the card is an external task".
-2. The `bpmn` skill changes the model through `@miragon/bpmn-cli` and addresses elements by id. The agent writes no XML, and your layout stays.
-3. `bpmn validate --strict` flags what the engine would refuse (`W_C7_DEPLOY_*` for Camunda 7, CIB seven and Operaton, `W_C8_DEPLOY_*` for Camunda 8) and names the command that fixes each finding.
-4. The `operate` skill deploys the file to Camunda 7, CIB seven or Operaton, starts one instance, completes what it waits for and checks that it ends. It finds the instance by business key, so the agent copies no ids from one call to the next.
-5. If the instance runs into an incident, `operate wait` fails with exit code 9 and still shows where the instance stopped.
-
-| The agent                                                      | Your team                                                         |
-| -------------------------------------------------------------- | ----------------------------------------------------------------- |
-| Sets the engine attributes by element id and keeps the drawing | Decides the interfaces: topics, job types, error codes            |
-| Runs `bpmn validate --strict` until the file passes            | Writes the worker or delegate code that topics and job types call |
-| Deploys to your dev engine and runs one instance to the end    | Reviews the change before the model goes on to Execute            |
-
-## Get started {#get-started}
+<PageSection id="get-started" eyebrow="Get started" title="Install both plugins in Claude Code">
 
 You need Claude Code. The `bpmn` skill needs Node.js 20 or later, `operate` needs Node.js 22.12 or later and a Camunda 7, CIB seven or Operaton engine. Add each marketplace and install its plugin in a Claude Code session:
 
@@ -84,7 +174,15 @@ operate ping
 
 Then ask the agent for the change, and once `bpmn validate --strict` passes, for one test run. `/operate:status` gives you a read-only triage of the engine at any point.
 
-To give your whole team the plugins, commit both marketplaces and plugins to your repo's `.claude/settings.json`:
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Human and AI" title="Who does what">
+  <CardGrid :items="$frontmatter.roles" :columns="2" />
+</PageSection>
+
+<PageSection eyebrow="For teams" title="Give your whole team the same plugins">
+
+Commit both marketplaces and plugins to your repo's `.claude/settings.json`, so everyone who works in the repo gets them:
 
 ```json
 {
@@ -101,25 +199,21 @@ To give your whole team the plugins, commit both marketplaces and plugins to you
 
 Claude Code does not update these plugins on its own. After a release, refresh the marketplace (`miragon-bpmn` or `miragon`) and update the plugin, or turn on auto-update for both marketplaces under `/plugin` > Marketplaces. The details are in the [bpmn-cli plugin README](https://github.com/Miragon/bpmn-cli/tree/main/plugins/bpmn-cli) and in [Using operate from AI agents](https://github.com/Miragon/operate/blob/main/docs/agents.md).
 
-## Status
+</PageSection>
 
-As of 2026-10-13: `bpmn-cli` 0.6.0 (released 2026-10-12) and `operate` 0.5.0 (released 2026-10-11), both public under the MIT licence. Each plugin carries the version of its CLI on npm. Both are pre-1.0, and bpmn-cli has shipped breaking changes in minor releases.
+<PageSection tone="tint" eyebrow="Status" title="Where the skills stand on 13 October 2026" intro="bpmn-cli 0.6.0 (released 2026-10-12) and operate 0.5.0 (released 2026-10-11) are public under the MIT licence, and each plugin carries the version of its CLI on npm. Both are pre-1.0, and bpmn-cli has shipped breaking changes in minor releases.">
+  <FeatureList :items="$frontmatter.status" :columns="3" />
+</PageSection>
 
-No skill writes the worker or delegate code that the topics and job types point to. Camunda 8 gets modelling and validation only, with no skill that deploys to or runs on it, and there is no DMN skill. We have not published eval results for either plugin yet. Other coding agents can use both CLIs without a skill, through the guides the CLIs print (`bpmn guide`, `operate guide`).
+<PageSection eyebrow="Proof you can open" title="Read the skills before you install them">
+  <CardGrid :items="$frontmatter.proof" />
+</PageSection>
 
-## Proof you can open
+<PageSection tone="tint" eyebrow="Where it fits" title="Skills in the lifecycle">
+  <CardGrid :items="$frontmatter.fits" />
 
-- [Recipes of the bpmn skill](https://github.com/Miragon/bpmn-cli/blob/main/plugins/bpmn-cli/skills/bpmn/reference/recipes.md), complete sessions including a Camunda 7 external task and a Camunda 8 job worker. A test in the repo runs every recipe against the CLI.
-- [Eval suite](https://github.com/Miragon/bpmn-cli/blob/main/plugins/bpmn-cli/evals/README.md) with seven cases, each run with and without the plugin. Results are not published.
-- [The operate skill](https://github.com/Miragon/operate/blob/main/skills/operate/SKILL.md) with its setup, workflow commands and safety rules.
-- [@miragon/bpmn-cli](https://www.npmjs.com/package/@miragon/bpmn-cli) and [@miragon/operate](https://www.npmjs.com/package/@miragon/operate) on npm.
+The model comes from [Design](/design) and goes on to [Execute](/execute). [Miragon AI](/) shows the whole lifecycle.
 
-A recorded demo of both skills on a real process application does not exist yet.
+</PageSection>
 
-## Where it fits
-
-Skills serve [Implement](/implement), where your team makes the model run. The `.bpmn` file comes from [Design](/design), drawn in [designIQ](/tools/design-iq), in Camunda Modeler or with [bpmn-cli](/tools/bpmn-cli), and the skill keeps that drawing. What goes on to [Execute](/execute) is a file that passes `bpmn validate --strict` and has run once on a Camunda 7, CIB seven or Operaton dev engine. There, [operate](/tools/operate) and [Pulse](/tools/pulse/) show what runs and what is stuck. If your agent also needs your own systems next to the engine, start from the [Solution templates](/tools/solution-templates).
-
-The whole lifecycle: [Miragon AI](/)
-
-[Talk to us](/#contact) about setting up the skills for your team and your engines.
+<CtaBox title="Set up the skills for your team and your engines." text="Tell us which engines you run and how your developers use coding agents today. We go through where the two plugins fit and where your team still writes the code." note="A 30-minute first call." />

@@ -15,15 +15,18 @@
  * contrast.json for the raw tokens).
  *
  * Scoping:
- * - Dark appearance (`.dark` doc pages) and the landing page
- *   (`:root:has(.VPHome)`, always dark regardless of the toggle) share ONE
- *   mapping, the CI's rule for dark grounds: `--cd-schwarz` is the only dark
- *   surface (no dark blue), text is white, links and accent text are
- *   `--cd-gruen` (10.1:1), buttons stay `--cd-blau` with a white label, and
- *   `--cd-blau-hell` is only for blue that must stay blue (focus rings).
- * - Light appearance (doc pages) follows the CI's rule for light grounds:
- *   blue leads, green only as an accent, never as text on white. Typeface
- *   and logo are global.
+ * - Dark appearance (`.dark`) and the landing pages (`:root:has(.VPHome)`,
+ *   always dark regardless of the toggle) follow the CI's rule for dark
+ *   grounds:
+ *   `--cd-schwarz` is the only dark surface (no dark blue), text is white,
+ *   links and accent text are `--cd-gruen` (10.1:1), buttons stay
+ *   `--cd-blau` with a white label, and `--cd-blau-hell` is only for blue
+ *   that must stay blue (focus rings).
+ * - Light appearance follows the CI's rule for light grounds: blue leads,
+ *   green only as an accent, never as text on white. Typeface and logo are
+ *   global.
+ * - Landing pages (the home layout: the landing and every tool's page) are
+ *   always dark; their hero, bands and cards are in landing.css.
  */
 
 /* ── Global: typography (Geist / Geist Mono, self-hosted via @fontsource) ─ */
@@ -65,7 +68,7 @@
   --vp-button-brand-active-bg: var(--cd-blau-link);
 }
 
-/* ── Dark appearance + landing page: the CI dark theme ─────────────────── */
+/* ── Dark appearance + landing pages: the CI dark theme ─────────────── */
 
 .dark,
 :root:has(.VPHome) {
@@ -167,47 +170,23 @@
   font-weight: 600;
 }
 
-/* ── Landing page only ──────────────────────────────────────────────── */
+/* ── Landing pages: always dark, hero layout ───────────────────────── */
 /* .VPHome exists only on the home layout; :has() applies the dark mapping
-   above there independently of the light/dark toggle. What follows is what
-   only the landing needs on top of it. */
+   above there independently of the toggle. Bands, cards and the hero's
+   colours are in landing.css. */
 
 :root:has(.VPHome) {
   color-scheme: dark;
-
-  /* Ghost secondary buttons */
-  --vp-button-alt-border: var(--vp-c-border);
-  --vp-button-alt-text: var(--vp-c-text-1);
-  --vp-button-alt-bg: transparent;
-  --vp-button-alt-hover-border: var(--vp-c-text-3);
-  --vp-button-alt-hover-text: var(--vp-c-text-1);
-  --vp-button-alt-hover-bg: var(--vp-c-default-soft);
-  --vp-button-alt-active-border: var(--vp-c-text-3);
-  --vp-button-alt-active-text: var(--vp-c-text-1);
-  --vp-button-alt-active-bg: var(--vp-c-default-soft);
-
-  /* Hero: plain heading colour — the CI rules out gradient text — and no
-     ambient glow behind the hero image. */
-  --vp-home-hero-name-color: var(--vp-c-text-1);
-  --vp-home-hero-name-background: transparent;
-  --vp-home-hero-image-background-image: none;
-  --vp-home-hero-image-filter: none;
 }
 
-/* A tool's landing page (it has an eyebrow): the tool name is the hero's one
-   green word, the headline below it stays white. */
-:root:has(.VPHero .eyebrow) {
-  --vp-home-hero-name-color: var(--vp-c-brand-1);
-}
-
-/* The toggle has no effect on the forced-dark landing — hide it there. */
+/* The toggle has no effect on the always-dark landing pages: hide it. */
 :root:has(.VPHome) .VPNavBarAppearance {
   display: none;
 }
 
-/* Logo: the CI prescribes the white wordmark on dark backgrounds. VitePress
-   picks the light/dark logo by the .dark class, which the forced-dark
-   landing may not carry. */
+/* Logo: the CI prescribes the white wordmark on dark grounds. VitePress
+   picks the light/dark logo by the .dark class, which a landing page may
+   not carry. */
 :root:has(.VPHome) .VPNavBarTitle .VPImage.light {
   display: none;
 }
@@ -215,8 +194,8 @@
   display: inline-block;
 }
 
-/* Code blocks: the landing is dark in light appearance too, so it needs
-   Shiki's dark token colours (VitePress only switches them on .dark). */
+/* Code blocks: the landing pages are dark in light appearance too, so they
+   need Shiki's dark token colours (VitePress only switches them on .dark). */
 :root:has(.VPHome) .vp-code span {
   color: var(--shiki-dark, inherit);
 }

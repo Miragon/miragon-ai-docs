@@ -142,6 +142,14 @@ onMounted(() => requestAnimationFrame(() => (shown.value = true)))
   color: var(--cd-danger-hell);
 }
 
+/* Phones: a smaller size keeps typical CLI tables on one line each. */
+@media (max-width: 480px) {
+  .body {
+    padding: 14px 14px 16px;
+    font-size: 11px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .line {
     transition: none;

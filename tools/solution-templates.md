@@ -35,26 +35,146 @@ artefact:
     - note: camunda7 and analytics are in
     - note: add yours, in a second terminal
     - cmd: cp -R modules/mcp-notes modules/mcp-erp
+compare:
+  before:
+    title: From scratch
+    items:
+      - Tools written against the engine's REST API
+      - Working out how tool, widget and data fit together
+      - Wiring mistakes that show up as an empty widget
+      - A coding agent without guidance
+      - Login and permissions built by hand
+      - Dockerfile, probes and metrics endpoint by hand
+  after:
+    title: With miragon-ai-starter
+    items:
+      - camunda7_* and analytics_* tools with widgets, from Pulse's modules
+      - A copy of the example module mcp-notes, next to the engine modules
+      - Guard tests in server/test/ that fail when a wiring step is missing
+      - CLAUDE.md and four Claude Code skills, create-module among them
+      - OAuth with Keycloak or Auth0, engine tools start read-only without it
+      - A Docker image with a health check, /health/live, /health/ready and /metrics
+steps:
+  - title: Create
+    text: Use the template on GitHub or with gh repo create. Everything installs from the public npm registry, without credentials.
+  - title: Run
+    text: pnpm dev serves MCP on port 8400 with an inspector. The example widget renders without an engine or any other system.
+  - title: Add your system
+    text: Copy modules/mcp-notes into a module for your ERP. The create-module skill walks your coding agent through the wiring.
+  - title: Ship
+    text: The project builds into a Docker image with health probes, Prometheus metrics and OAuth. Without OAuth, the engine tools start read-only.
+templates:
+  - icon: workflow
+    eyebrow: Engine plus your systems
+    title: miragon-ai-starter
+    text: Pulse's modules for Camunda 7, CIB seven and Operaton, the example module mcp-notes, the guard tests, CLAUDE.md and four Claude Code skills. MIT licence.
+    link: https://github.com/Miragon/miragon-ai-starter
+  - icon: boxes
+    eyebrow: Without BPM
+    title: mcp-toolkit-starter
+    text: A plain mcp-use project with one tasks module and a widget, for systems that have nothing to do with a process engine.
+    link: https://github.com/Miragon/mcp-toolkit-starter
+skills:
+  - icon: server
+    title: setup-server
+    text: Configuring, running, branding and deploying the server.
+  - icon: puzzle
+    title: create-module
+    text: A connector module for your own API or system.
+  - icon: dashboard
+    title: add-widget
+    text: An interactive widget for a module.
+  - icon: user-check
+    title: add-settings-section
+    text: Per-user settings for your module.
+status:
+  - icon: refresh
+    title: Synced on every Pulse release
+    text: miragon-ai-starter mirrors templates/composed-server and syncs once install and tests pass against the public npm registry. Neither template repo has releases of its own.
+  - icon: package
+    title: Pre-1.0 packages
+    text: The starter pins the @miragon-ai packages at 0.20.0. They release about weekly and still bring breaking changes.
+  - icon: scale
+    title: No licence for mcp-toolkit-starter
+    text: It is public but has no licence yet, so there are no stated terms for building on it.
+  - icon: warning
+    title: Red CI on mcp-toolkit-starter
+    text: It pins the Miragon MCP Toolkit at 2.8.1, released 2026-10-13. Its own CI failed after the last two syncs, because each ran minutes before the new toolkit version reached npm.
+proof:
+  - icon: github
+    title: templates/composed-server
+    text: The source of miragon-ai-starter in Miragon/miragon-ai, where issues and pull requests go.
+    link: https://github.com/Miragon/miragon-ai/tree/main/templates/composed-server
+  - icon: github
+    title: templates/minimal-server
+    text: The source of mcp-toolkit-starter in Miragon/mcp-toolkit.
+    link: https://github.com/Miragon/mcp-toolkit/tree/main/templates/minimal-server
+  - icon: play
+    title: Pulse playground
+    text: An MCP endpoint without login, running the stock Pulse server built from the same @miragon-ai modules, read-only.
+    link: https://miragon-ai-playground.fly.dev/mcp
+  - icon: route
+    title: Toolkit playground tour
+    text: Seven stops through the toolkit's tools and widgets on a hosted server.
+    link: https://miragon.github.io/mcp-toolkit/playground/tour
+  - icon: package
+    title: camunda7-connector on npm
+    text: "@miragon-ai/camunda7-connector, the engine module the starter composes."
+    link: https://www.npmjs.com/package/@miragon-ai/camunda7-connector
+  - icon: book
+    title: MCP Toolkit docs
+    text: The guides behind mcp-toolkit-starter.
+    link: https://miragon.github.io/mcp-toolkit/
+fits:
+  - eyebrow: Phase
+    title: Implement
+    text: Solution templates connect your AI to the engine and to your own systems.
+    link: /implement
+  - eyebrow: Same phase
+    title: Skills
+    text: Skills make the model deployable. No file passes between them and the templates.
+    link: /tools/skills
+  - eyebrow: Next phase
+    title: Execute
+    text: Receives a Docker image that serves MCP on /mcp. You connect it to Claude Code, Claude Desktop, claude.ai or another MCP client.
+    link: /execute
+  - eyebrow: Stock server
+    title: Pulse
+    text: Your server has the same camunda7_* and analytics_* tools as Pulse, plus your own. You use it the way you use Pulse.
+    link: /tools/pulse/
+  - eyebrow: Same engine API
+    title: operate
+    text: Reaches the engine REST API on its own, from the shell and CI.
+    link: /tools/operate
+  - eyebrow: Lifecycle
+    title: Miragon AI
+    text: All phases of the lifecycle and the tools in each.
+    link: /
 ---
 
-## The problem
+<PageSection eyebrow="The problem" title="Reaching your ERP means forking Pulse or starting from scratch" intro="Pulse covers the engine, and its stock server has no place for your ERP or CRM without a fork. From scratch, you wire OAuth, health checks, metrics, a Docker image and a widget bundle yourself, and some wiring mistakes only show up as a widget that renders empty or hangs on “Loading…”.">
+  <CompareCards :before="$frontmatter.compare.before" :after="$frontmatter.compare.after" />
+</PageSection>
 
-[Pulse](/tools/pulse/) covers the engine. If the same assistant should also reach your ERP or CRM, you fork Pulse or build an MCP server from scratch. From scratch, you wire OAuth, health checks, metrics, a Docker image and a widget bundle yourself, and some wiring mistakes only show up as a widget that renders empty or hangs on "Loading…".
+<PageSection tone="tint" align="center" eyebrow="How it works" title="From the template to a server with your own module" intro="Shown for miragon-ai-starter. mcp-toolkit-starter brings a tasks module in place of the engine modules.">
+  <StepList :items="$frontmatter.steps" />
+</PageSection>
 
-## What miragon-ai-starter changes
+<PageSection eyebrow="Two templates" title="With the engine modules or without them">
+  <CardGrid :items="$frontmatter.templates" :columns="2" />
 
-| From scratch                                                              | With miragon-ai-starter                                                                                      |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| You write tools against the REST API of Camunda 7, CIB seven or Operaton. | Pulse's published modules bring the `camunda7_*` and `analytics_*` tools with their widgets.                 |
-| You work out how a tool, its widget and the widget's data fit together.   | You copy the example module `modules/mcp-notes` and register it next to the engine modules, on one endpoint. |
-| Wiring mistakes show up as an empty or hanging widget.                    | The guard tests in `server/test/` fail when a wiring step is missing.                                        |
-| Your coding agent starts without guidance.                                | `CLAUDE.md` and four Claude Code skills, `create-module` among them, walk it through the steps.              |
-| You build login and permissions.                                          | OAuth with Keycloak or Auth0. Without OAuth the engine and analytics tools start read-only.                  |
-| You write the Dockerfile, the probes and the metrics endpoint.            | A Docker image with a health check, `/health/live`, `/health/ready` and Prometheus `/metrics`.               |
+Both templates build on [mcp-use](https://mcp-use.com). Neither contains process automation code such as job workers or a BPMN project. Your team decides which systems the server may reach and reviews the module code.
 
-mcp-toolkit-starter is a plain [mcp-use](https://mcp-use.com) project with one `tasks` module and a widget, for systems that have nothing to do with a process engine. Neither template contains process automation code such as job workers or a BPMN project. Your team decides which systems the server may reach and reviews the module code.
+</PageSection>
 
-## Get started {#get-started}
+<PageSection tone="tint" eyebrow="Built for your coding agent" title="Four skills walk the agent through the wiring" intro="Open miragon-ai-starter in Claude Code, or any agent that reads CLAUDE.md, and describe what you want. The skills in .claude/skills/ cover the four common tasks.">
+  <CardGrid :items="$frontmatter.skills" :columns="4" />
+
+Everything also works by hand. `CLAUDE.md` is the compact architecture reference, and the guard tests in `server/test/` fail when a wiring step is missing.
+
+</PageSection>
+
+<PageSection id="get-started" eyebrow="Get started" title="Your own MCP server in five commands">
 
 You need Node.js 22.22.2 or later, pnpm (`corepack enable` picks the pinned version) and the GitHub CLI, or the "Use this template" button on GitHub. All packages come from the public npm registry, so you need no npm credentials.
 
@@ -88,27 +208,21 @@ cp -R modules/mcp-notes modules/mcp-erp
 
 Or ask Claude Code in the repo and let the `create-module` skill walk through the wiring. Configuration, deployment and other assistants are in the [README](https://github.com/Miragon/miragon-ai-starter#readme).
 
-## Status
+</PageSection>
 
-As of 2026-10-13. Pulse is the MCP server from the repo Miragon/miragon-ai. miragon-ai-starter mirrors the template folder [`templates/composed-server`](https://github.com/Miragon/miragon-ai/tree/main/templates/composed-server) there, is public under the MIT licence and is synced on every Pulse release once install and tests pass against the public npm registry. It is at Pulse v0.20.0, released 2026-10-13, and pins the `@miragon-ai` packages at 0.20.0. These are pre-1.0, release about weekly and still bring breaking changes.
+<PageSection tone="tint" eyebrow="Status" title="Where the templates stand on 13 October 2026" intro="Pulse is the MCP server from the repo Miragon/miragon-ai. miragon-ai-starter is at Pulse v0.20.0, released 2026-10-13, and public under the MIT licence.">
+  <FeatureList :items="$frontmatter.status" />
+</PageSection>
 
-mcp-toolkit-starter is public but has no licence yet, so there are no stated terms for building on it. It pins the Miragon MCP Toolkit at 2.8.1, released 2026-10-13. Its own CI failed after the last two syncs, which ran minutes before the pinned version reached npm. Neither template repo has releases of its own.
+<PageSection eyebrow="Proof you can open" title="Sources, packages and playgrounds">
+  <CardGrid :items="$frontmatter.proof" />
+</PageSection>
 
-## Proof you can open
+<PageSection tone="tint" eyebrow="Where it fits" title="Solution templates in the lifecycle">
+  <CardGrid :items="$frontmatter.fits" />
 
-- [Miragon/miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter): the template, synced from Pulse v0.20.0.
-- [Miragon/mcp-toolkit-starter](https://github.com/Miragon/mcp-toolkit-starter): the template without BPM, mirrored from [`templates/minimal-server`](https://github.com/Miragon/mcp-toolkit/tree/main/templates/minimal-server) in Miragon/mcp-toolkit.
-- [Pulse playground](https://miragon-ai-playground.fly.dev/mcp): an MCP endpoint without login, running the stock Pulse server built from the same `@miragon-ai` modules, read-only.
-- [Toolkit playground tour](https://miragon.github.io/mcp-toolkit/playground/tour): seven stops through the toolkit's tools and widgets on a hosted server.
-- [@miragon-ai/camunda7-connector](https://www.npmjs.com/package/@miragon-ai/camunda7-connector) on npm: the engine module the starter composes.
-- [MCP Toolkit docs](https://miragon.github.io/mcp-toolkit/): the guides behind mcp-toolkit-starter.
+Models from [designIQ](/tools/design-iq) or [bpmn-cli](/tools/bpmn-cli) reach the server only through the engine, where tools such as `camunda7_get_process_definition_xml` read them. With the `camunda7:admin` toolset and `CAMUNDA_ALLOW_DEPLOYMENTS=true`, the assistant can deploy BPMN and DMN itself.
 
-## Where it fits
+</PageSection>
 
-Solution templates serve [Implement](/implement), next to [Skills](/tools/skills). Skills make the model deployable, and the templates connect your AI to the engine and your own systems. Models from [designIQ](/tools/design-iq) or [bpmn-cli](/tools/bpmn-cli) reach the server only through the engine, where tools such as `camunda7_get_process_definition_xml` read them. With the `camunda7:admin` toolset and `CAMUNDA_ALLOW_DEPLOYMENTS=true`, the assistant can deploy BPMN and DMN itself.
-
-[Execute](/execute) receives a Docker image that serves MCP on `/mcp`, with the same `camunda7_*` and `analytics_*` tools as Pulse plus those of your own modules. You connect it to Claude Code, Claude Desktop, claude.ai or another MCP client and use it the way you use Pulse. [operate](/tools/operate) reaches the same engine REST API on its own, from the shell and CI.
-
-The whole lifecycle: [Miragon AI](/)
-
-[Talk to us](/#contact) about the systems your assistant should reach next to the engine.
+<CtaBox title="Bring your own systems next to the engine." text="Tell us which systems your assistant should reach besides Camunda 7, CIB seven or Operaton. You get an honest assessment of whether miragon-ai-starter is the right start." note="A 30-minute first call." />
