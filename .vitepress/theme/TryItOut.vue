@@ -19,7 +19,7 @@ const INSPECTOR_URL =
       <h2 class="title">Talk to your processes.</h2>
       <p class="desc">
         No install, no login. Open the hosted playground in an MCP chat, connected to a live, seeded
-        CIB Seven engine — ask a question and watch the interactive widgets render.
+        CIB seven engine. Ask a question and watch the interactive widgets render.
       </p>
 
       <a class="cta" :href="INSPECTOR_URL" target="_blank" rel="noopener noreferrer">

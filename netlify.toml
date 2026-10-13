@@ -1,5 +1,5 @@
 # Netlify deployment of the site (VitePress at the repo root). It serves
-# https://miragon.ai; until 2026-10 the same Netlify site built from
+# https://miragon.ai; before this repo existed the same site built from
 # Miragon/miragon-ai (docs/).
 #
 # One-time site setup in the Netlify UI:
@@ -15,3 +15,46 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# miragon-ai's four pages moved from the root into its section under
+# /tools/miragon-ai/: old links and bookmarks keep working. No SPA catch-all,
+# so unknown paths still get the site's 404 page.
+[[redirects]]
+  from = "/architecture"
+  to = "/tools/miragon-ai/architecture"
+  status = 301
+
+[[redirects]]
+  from = "/architecture.html"
+  to = "/tools/miragon-ai/architecture"
+  status = 301
+
+[[redirects]]
+  from = "/developer"
+  to = "/tools/miragon-ai/developer"
+  status = 301
+
+[[redirects]]
+  from = "/developer.html"
+  to = "/tools/miragon-ai/developer"
+  status = 301
+
+[[redirects]]
+  from = "/operations"
+  to = "/tools/miragon-ai/operations"
+  status = 301
+
+[[redirects]]
+  from = "/operations.html"
+  to = "/tools/miragon-ai/operations"
+  status = 301
+
+[[redirects]]
+  from = "/usage"
+  to = "/tools/miragon-ai/usage"
+  status = 301
+
+[[redirects]]
+  from = "/usage.html"
+  to = "/tools/miragon-ai/usage"
+  status = 301
