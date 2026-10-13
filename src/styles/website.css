@@ -1,8 +1,9 @@
 /*
  * Website pages only (layouts/Website.astro), after tokens.css: reset,
- * base, .prose (the page text), the hero's fade-up and what Starlight's
- * Search needs outside Starlight. Docs pages get none of this; Starlight
- * brings its own reset.
+ * base, .prose (the page text) and what Starlight's Search needs outside
+ * Starlight. Docs pages get none of this; Starlight brings its own reset.
+ * Band rules live in components/landing/PageSection.astro, the hero's
+ * fade-up in components/hero/Hero.astro.
  *
  * The reset and .prose are ports of VitePress' base.css and vp-doc.css
  * (1.6.4) with --vp-* renamed to the site roles: the landing building
@@ -372,40 +373,6 @@ body {
    tables, code and components keep it. */
 :where(.prose) > :is(p, ul, ol, h2, h3, h4, blockquote) {
   max-width: 760px;
-}
-
-/* ── Landing bands ────────────────────────────────────────────────────── */
-
-/* The lifecycle graphic as the landing's first band, centred. */
-.lifecycle-band {
-  display: flex;
-  justify-content: center;
-}
-
-/* Code blocks keep their box on a tint band (components/landing/
-   PageSection.astro): their default background is the band's own lift, so
-   there they take the plain ground. Expressive Code resolves its colours on
-   :root, so the band sets its variables, not --site-bg-alt. */
-.page-section.tone-tint {
-  --ec-codeBg: var(--l-band-plain);
-  --ec-frm-edBg: var(--l-band-plain);
-  --ec-frm-edTabBarBg: var(--l-band-plain);
-  --ec-frm-edActTabBg: var(--l-band-plain);
-  --ec-frm-trmBg: var(--l-band-plain);
-  --ec-frm-trmTtbBg: var(--l-band-plain);
-}
-
-/* ── Hero entrance (fade-up); the reduced-motion rule above stops it ─── */
-
-@keyframes mgn-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* ── Starlight's Search outside Starlight ────────────────────────────── */
