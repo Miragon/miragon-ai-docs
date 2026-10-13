@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+
+jobs:
+  site:
+    name: Build + checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          # Full history: VitePress lastUpdated reads each page's last commit.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6.1.0
+
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm format:check
+
+      # Vendored CI tokens and logos pinned, no forked --cd-* tokens, page budgets.
+      - run: pnpm check
+
+      # Also the content gate: vitepress build fails on dead internal links.
+      - run: pnpm build
+
+      - uses: Miragon/pin-npm-dependencies@v1.2.2
+
+  brand:
+    name: Brand (CI source + brand-lint)
+    runs-on: ubuntu-latest
+    env:
+      # Read access to the private Miragon/corporate-identity. Without the
+      # secret (e.g. on fork PRs) the job only leaves a notice; the pinned
+      # hashes in the site job still hold.
+      CI_SOURCE_TOKEN: ${{ secrets.CORPORATE_IDENTITY_READ_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: No access to Miragon/corporate-identity
+        if: env.CI_SOURCE_TOKEN == ''
+        run: echo "::notice::CORPORATE_IDENTITY_READ_TOKEN is not set, brand checks against the CI source skipped"
+
+      # Keep ref on the release pinned as BRAND.version in scripts/check-brand-assets.mjs.
+      - uses: actions/checkout@v7.0.1
+        if: env.CI_SOURCE_TOKEN != ''
+        with:
+          repository: Miragon/corporate-identity
+          ref: v1.8.0
+          token: ${{ env.CI_SOURCE_TOKEN }}
+          path: .ci-source
+          sparse-checkout: plugins/miragon-brand
+
+      - uses: actions/setup-node@v7.0.0
+        if: env.CI_SOURCE_TOKEN != ''
+        with:
+          node-version: 22
+
+      - name: Vendored tokens and logos equal the CI source
+        if: env.CI_SOURCE_TOKEN != ''
+        run: node scripts/check-brand-assets.mjs
+        env:
+          MIRAGON_BRAND_DIR: .ci-source/plugins/miragon-brand
+
+      # Rules and exceptions come from .miragon/brand.json.
+      - name: brand-lint
+        if: env.CI_SOURCE_TOKEN != ''
+        run: node .ci-source/plugins/miragon-brand/scripts/brand-lint.mjs --nur-hart .

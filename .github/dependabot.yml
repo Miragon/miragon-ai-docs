@@ -1,0 +1,37 @@
+# Grouping rule (as in Miragon/miragon-ai): patch + minor updates travel
+# together per ecosystem, major updates get their own pull request.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "fix"
+      prefix-development: "chore"
+    reviewers:
+      - "dominikhorn93"
+      - "emaarco"
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "dominikhorn93"
+      - "emaarco"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
