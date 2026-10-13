@@ -1,0 +1,206 @@
+[
+  { "old": "/", "new": "/", "why": "live: the landing" },
+  { "old": "/index.html", "new": "/", "why": "live: the landing's file" },
+  {
+    "old": "/architecture",
+    "new": "/docs/pulse/architecture/",
+    "why": "live: Pulse reference page, 301 to the docs"
+  },
+  {
+    "old": "/architecture.html",
+    "new": "/docs/pulse/architecture/",
+    "why": "live: .html variant, 301"
+  },
+  {
+    "old": "/developer",
+    "new": "/docs/pulse/developer/",
+    "why": "live: Pulse reference page, 301 to the docs"
+  },
+  { "old": "/developer.html", "new": "/docs/pulse/developer/", "why": "live: .html variant, 301" },
+  {
+    "old": "/operations",
+    "new": "/docs/pulse/operations/",
+    "why": "live: Pulse reference page, 301 to the docs"
+  },
+  {
+    "old": "/operations.html",
+    "new": "/docs/pulse/operations/",
+    "why": "live: .html variant, 301"
+  },
+  {
+    "old": "/operations#ci-cd",
+    "new": "/docs/pulse/operations/#ci-cd",
+    "why": "live anchor: Starlight slugs `## CI/CD` as #cicd, a span keeps #ci-cd"
+  },
+  {
+    "old": "/usage",
+    "new": "/docs/pulse/usage/",
+    "why": "live: Pulse reference page, 301 to the docs"
+  },
+  { "old": "/usage.html", "new": "/docs/pulse/usage/", "why": "live: .html variant, 301" },
+  {
+    "old": "/usage#connect-your-assistant",
+    "new": "/docs/pulse/usage/#connect-your-assistant",
+    "why": "live anchor"
+  },
+  {
+    "old": "/#contact",
+    "new": "/#contact",
+    "why": "contact block, the target of every Talk to us"
+  },
+  { "old": "/#lifecycle", "new": "/#lifecycle", "why": "the landing's lifecycle band" },
+  { "old": "/analyse", "new": "/analyse/", "why": "phase page, same file" },
+  { "old": "/design", "new": "/design/", "why": "phase page, same file" },
+  { "old": "/implement", "new": "/implement/", "why": "phase page, same file" },
+  { "old": "/execute", "new": "/execute/", "why": "phase page, same file" },
+  { "old": "/optimize", "new": "/optimize/", "why": "phase page, same file" },
+  { "old": "/tools/analyzr", "new": "/tools/analyzr/", "why": "tool page, same file" },
+  { "old": "/tools/design-iq", "new": "/tools/design-iq/", "why": "tool page, same file" },
+  { "old": "/tools/bpmn-cli", "new": "/tools/bpmn-cli/", "why": "tool page, same file" },
+  { "old": "/tools/skills", "new": "/tools/skills/", "why": "tool page, same file" },
+  {
+    "old": "/tools/solution-templates",
+    "new": "/tools/solution-templates/",
+    "why": "tool page, same file"
+  },
+  { "old": "/tools/operate", "new": "/tools/operate/", "why": "tool page, same file" },
+  { "old": "/tools/pulse", "new": "/tools/pulse/", "why": "tool page, same file" },
+  { "old": "/tools/pulse/", "new": "/tools/pulse/", "why": "tool page, same URL" },
+  {
+    "old": "/tools/pulse/index.html",
+    "new": "/tools/pulse/",
+    "why": "tool page's file, no rule needed"
+  },
+  {
+    "old": "/tools/analyzr#get-started",
+    "new": "/tools/analyzr/#get-started",
+    "why": "Get started band, now a link to the docs"
+  },
+  {
+    "old": "/tools/design-iq#get-started",
+    "new": "/tools/design-iq/#get-started",
+    "why": "Get started band, now a link to the docs"
+  },
+  {
+    "old": "/tools/bpmn-cli#get-started",
+    "new": "/tools/bpmn-cli/#get-started",
+    "why": "Get started band, now a link to the docs"
+  },
+  {
+    "old": "/tools/skills#get-started",
+    "new": "/tools/skills/#get-started",
+    "why": "Get started band, now a link to the docs"
+  },
+  {
+    "old": "/tools/solution-templates#get-started",
+    "new": "/tools/solution-templates/#get-started",
+    "why": "Get started band, now a link to the docs"
+  },
+  {
+    "old": "/tools/operate#get-started",
+    "new": "/tools/operate/#get-started",
+    "why": "Get started band, now a link to the docs"
+  },
+  {
+    "old": "/tools/pulse/#get-started",
+    "new": "/tools/pulse/#get-started",
+    "why": "Get started band, now a link to the docs"
+  },
+  {
+    "old": "/tools/pulse/#connect-your-claude",
+    "new": "/tools/pulse/#connect-your-claude",
+    "why": "Connect band, now a link to the docs"
+  },
+  {
+    "old": "/tools/pulse/architecture",
+    "new": "/docs/pulse/architecture/",
+    "why": "Pulse reference page moved into the docs, 301"
+  },
+  {
+    "old": "/tools/pulse/architecture/",
+    "new": "/docs/pulse/architecture/",
+    "why": "Netlify matches a source with and without its trailing slash"
+  },
+  {
+    "old": "/tools/pulse/developer",
+    "new": "/docs/pulse/developer/",
+    "why": "Pulse reference page moved into the docs, 301"
+  },
+  {
+    "old": "/tools/pulse/operations",
+    "new": "/docs/pulse/operations/",
+    "why": "Pulse reference page moved into the docs, 301"
+  },
+  {
+    "old": "/tools/pulse/usage",
+    "new": "/docs/pulse/usage/",
+    "why": "Pulse reference page moved into the docs, 301"
+  },
+  {
+    "old": "/tools/pulse/usage#connect-your-assistant",
+    "new": "/docs/pulse/usage/#connect-your-assistant",
+    "why": "the Pulse page's link to it before the move"
+  },
+  {
+    "old": "/tools/miragon-ai/architecture",
+    "new": "/docs/pulse/architecture/",
+    "why": "the section's first name, 301 in one hop"
+  },
+  {
+    "old": "/tools/miragon-ai/developer",
+    "new": "/docs/pulse/developer/",
+    "why": "the section's first name, 301 in one hop"
+  },
+  {
+    "old": "/tools/miragon-ai/operations",
+    "new": "/docs/pulse/operations/",
+    "why": "the section's first name, 301 in one hop"
+  },
+  {
+    "old": "/tools/miragon-ai/usage",
+    "new": "/docs/pulse/usage/",
+    "why": "the section's first name, 301 in one hop"
+  },
+  {
+    "old": "/tools/miragon-ai/",
+    "new": "/tools/pulse/",
+    "why": "the section's first name, the rest of it"
+  },
+  { "old": "/docs", "new": "/docs/", "why": "new: docs index, same file" },
+  { "old": "/docs/", "new": "/docs/", "why": "new: docs index" },
+  {
+    "old": "/docs/analyzr/",
+    "new": "/docs/analyzr/getting-started/",
+    "why": "new: a tool's docs folder opens on getting started, 301"
+  },
+  {
+    "old": "/docs/design-iq/",
+    "new": "/docs/design-iq/getting-started/",
+    "why": "new: a tool's docs folder opens on getting started, 301"
+  },
+  {
+    "old": "/docs/bpmn-cli/",
+    "new": "/docs/bpmn-cli/getting-started/",
+    "why": "new: a tool's docs folder opens on getting started, 301"
+  },
+  {
+    "old": "/docs/skills/",
+    "new": "/docs/skills/getting-started/",
+    "why": "new: a tool's docs folder opens on getting started, 301"
+  },
+  {
+    "old": "/docs/solution-templates/",
+    "new": "/docs/solution-templates/getting-started/",
+    "why": "new: a tool's docs folder opens on getting started, 301"
+  },
+  {
+    "old": "/docs/operate/",
+    "new": "/docs/operate/getting-started/",
+    "why": "new: a tool's docs folder opens on getting started, 301"
+  },
+  {
+    "old": "/docs/pulse/",
+    "new": "/docs/pulse/getting-started/",
+    "why": "new: a tool's docs folder opens on getting started, 301"
+  }
+]

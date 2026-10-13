@@ -1,16 +1,20 @@
 #!/usr/bin/env node
 // miragon-ai references: the pages name only tools the miragon-ai server
-// registers, and the Pulse section (the miragon-ai server's pages) cites only
-// repo paths that exist.
+// registers, and the Pulse section (the miragon-ai server's pages: its tool
+// page and its docs) cites only repo paths that exist.
 // It took over the docs half of miragon-ai's docs-refs.test.ts when the site
 // left that monorepo (Miragon/miragon-ai-docs#1). Run it against a checkout
 // of Miragon/miragon-ai: MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs
-// CI checks out the public repo for it; without MIRAGON_AI_DIR it skips.
+// CI checks out the public repo for it, and runs it without `pnpm install`,
+// so it uses no npm package. Without MIRAGON_AI_DIR it skips.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
 import { join, relative } from "node:path"
 
 const ROOT = new URL("..", import.meta.url).pathname
-const SECTION = "tools/pulse/"
+// The Pulse section: a folder (trailing slash) or a single page.
+const SECTION = ["src/content/docs/docs/pulse/", "src/content/tools/pulse.mdx"]
+const inSection = (page) =>
+  SECTION.some((entry) => (entry.endsWith("/") ? page.startsWith(entry) : page === entry))
 const MIRAGON_AI = process.env.MIRAGON_AI_DIR
 
 if (!MIRAGON_AI) {
@@ -32,8 +36,7 @@ const looksLikeTool = (token) =>
 // Other pages also name tools of other servers (a template's example module,
 // `notes_show_notes`); there only the miragon-ai modules' prefixes count.
 const isMiragonAiTool = (ref) =>
-  looksLikeTool(ref.token) &&
-  (ref.page.startsWith(SECTION) || /^(?:camunda7|analytics)_/.test(ref.token))
+  looksLikeTool(ref.token) && (inSection(ref.page) || /^(?:camunda7|analytics)_/.test(ref.token))
 
 const ROOTS = /^(?:apps|packages|scripts|playground|engine-plugins|templates|\.claude|\.github)\//
 // Written by a build or a test run, not checked in.
@@ -59,10 +62,10 @@ function backticked(page) {
 
 function* pages(dir) {
   for (const entry of readdirSync(dir)) {
-    if (entry === "node_modules" || entry.startsWith(".")) continue
+    if (entry === "node_modules" || entry === "dist" || entry.startsWith(".")) continue
     const path = join(dir, entry)
     if (statSync(path).isDirectory()) yield* pages(path)
-    else if (entry.endsWith(".md")) yield relative(ROOT, path)
+    else if (/\.mdx?$/.test(entry)) yield relative(ROOT, path)
   }
 }
 
@@ -70,11 +73,7 @@ const errors = []
 for (const ref of [...pages(ROOT)].flatMap(backticked)) {
   const where = `${ref.page}:${ref.line} \`${ref.token}\``
   if (isMiragonAiTool(ref) && !known(ref.token)) errors.push(`${where}: no such miragon-ai tool`)
-  if (
-    ref.page.startsWith(SECTION) &&
-    isPath(ref.token) &&
-    !existsSync(join(MIRAGON_AI, pathOf(ref.token)))
-  )
+  if (inSection(ref.page) && isPath(ref.token) && !existsSync(join(MIRAGON_AI, pathOf(ref.token))))
     errors.push(`${where}: no such path in Miragon/miragon-ai`)
 }
 
@@ -82,4 +81,6 @@ if (errors.length) {
   console.error(`miragon-ai refs: ${errors.length} stale reference(s)\n- ${errors.join("\n- ")}`)
   process.exit(1)
 }
-console.log(`miragon-ai refs: tool names and ${SECTION} paths match ${MIRAGON_AI}`)
+console.log(
+  `miragon-ai refs: tool names and the paths in ${SECTION.join(", ")} match ${MIRAGON_AI}`,
+)
