@@ -5,6 +5,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  # The miragon-ai section is checked against miragon-ai's main, which moves
+  # without a PR here: a weekly run catches drift between PRs.
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -41,6 +46,26 @@ jobs:
       - run: pnpm build
 
       - uses: Miragon/pin-npm-dependencies@v1.2.2
+
+  miragon-ai-refs:
+    name: miragon-ai references
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: actions/checkout@v7.0.1
+        with:
+          repository: Miragon/miragon-ai
+          path: .miragon-ai
+
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 22
+
+      # Tool names on every page, repo paths in tools/miragon-ai/.
+      - run: node scripts/check-miragon-ai-refs.mjs
+        env:
+          MIRAGON_AI_DIR: .miragon-ai
 
   brand:
     name: Brand (CI source + brand-lint)
