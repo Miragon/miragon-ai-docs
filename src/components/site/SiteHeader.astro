@@ -1,8 +1,8 @@
 ---
 // The one header of the site: website pages (layouts/Website.astro) and docs
-// pages (the Starlight Header override) render this component. The wordmark,
-// the website nav from data/nav.ts, Starlight's own Search (one Pagefind
-// index for website and docs), "Talk to us" and GitHub.
+// pages (the Starlight Header override) render this component. The wordmark
+// with "AI" beside it, the website nav from data/nav.ts, Starlight's own
+// Search (one Pagefind index for website and docs), "Talk to us" and GitHub.
 //
 // Behaviour (the dropdown script of miragon.io's header, ported):
 // - From 64rem the nav sits in the bar. Hover opens a dropdown, a click or
@@ -42,7 +42,10 @@ const inSection = (urls: string[]) =>
 
 <div class="site-header" data-variant={docs ? "docs" : "website"}>
   <a class="brand" href="/" aria-label="Miragon AI, home">
-    <img src="/logo/miragon-logo-weiss.svg" alt="Miragon" width="157" height="24" />
+    <img src="/logo/miragon-logo-weiss.svg" alt="" width="157" height="24" />
+    <span class="brand-product" aria-hidden="true">
+      AI
+    </span>
   </a>
 
   {/* Before the nav, so Tab moves from the burger into its menu; CSS places
@@ -268,11 +271,25 @@ const inSection = (urls: string[]) =>
     flex: none;
     align-items: center;
     border-radius: var(--cd-radius-sm);
+    /* Starlight underlines links; the "AI" beside the wordmark is no link text. */
+    text-decoration: none;
   }
   .brand img {
     display: block;
     width: auto;
     height: 24px;
+  }
+  /* The product's name beside the wordmark, in Geist (CI: products show the
+     wordmark and write their name next to it), green as the header's one
+     accent. Cap height matched to the wordmark. */
+  .brand-product {
+    margin-left: 8px;
+    font-family: var(--site-font);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: var(--cd-gruen);
   }
 
   /* Top-level entries: text-1, green on hover, the current page or section
