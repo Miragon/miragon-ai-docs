@@ -18,7 +18,7 @@ hero:
       link: /#contact
 artefact:
   type: terminal
-  title: bpmn-cli 0.6.0
+  title: bpmn-cli 0.7.0
   lines:
     - { cmd: 'bpmn new order.bpmn --name "Order handling" --target camunda7' }
     - { out: 'created process Process_OrderHandling "Order handling"' }
@@ -59,7 +59,7 @@ steps:
   - title: Look
     text: bpmn render draws a PNG without a browser. With --problems it numbers the layout problems in the image.
   - title: Check
-    text: bpmn validate --strict checks the deploy rules and exits with code 5 on any warning, so a pipeline stops.
+    text: bpmn validate --strict checks the deploy rules and your project's .bpmnlintrc, and exits with code 5 on any warning, so a pipeline stops.
 result:
   - icon: file
     title: Opens where you model
@@ -72,7 +72,7 @@ result:
     text: Elements a change did not touch keep their exact text.
   - icon: tree
     title: Descriptive ids
-    text: New elements get ids such as Activity_ReserveStock, never hashes or running numbers.
+    text: New elements get ids such as Activity_ReserveStock, never hashes or running numbers. An id convention in your .bpmnlintrc sets their prefixes and case.
   - icon: clipboard
     title: Requirements on the step
     text: 'With bpmn set <file> <id> doc="...", the agent keeps the requirement text on the step.'
@@ -95,7 +95,7 @@ status:
 proof:
   - icon: package
     title: "@miragon/bpmn-cli on npm"
-    text: Version 0.6.0, with the command bpmn, for Node.js 20 or later.
+    text: Version 0.7.0, with the command bpmn, for Node.js 22.12 or later.
     link: https://www.npmjs.com/package/@miragon/bpmn-cli
   - icon: play
     title: Demo GIF
@@ -186,7 +186,7 @@ bpmn validate order.bpmn --strict   # valid, 0 warning(s)
   <PillButton href="https://miragon.github.io/bpmn-cli/getting-started" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where bpmn-cli stands on 13 October 2026" intro="bpmn-cli is at 0.6.0, released to npm on 12 October 2026. It is pre-1.0, and minor versions still bring breaking changes (0.3.0, 0.4.0 and 0.5.0 did), so pin the version you run. The repository is public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where bpmn-cli stands on 14 October 2026" intro="bpmn-cli is at 0.7.0, released to npm on 14 October 2026. It is pre-1.0, and minor versions still bring breaking changes (0.3.0, 0.4.0, 0.5.0 and 0.7.0 did), so pin the version you run. The repository is public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 

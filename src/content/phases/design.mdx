@@ -38,8 +38,8 @@ tools:
   - tool: bpmn-cli
     text:
       - With bpmn-cli, an agent names the element and the operation, for example `bpmn add order.bpmn userTask "Check invoice" --after Event_OrderReceived`, and the tool writes the XML. bpmn-cli refuses a change that would add a structural error and keeps a hand-drawn layout in place. `bpmn render` draws the result as an image, so the agent can look at what it did. What comes out is a plain `.bpmn` file with readable ids such as `Activity_CheckInvoice` and small Git diffs, and it opens in Camunda Modeler.
-      - Inside designIQ, bpmn-cli is the engine behind the opt-in semantic BPMN editing (since designIQ v5.3.0, off by default until an A/B benchmark has run). On its own, bpmn-cli runs in any shell or as a Claude Code plugin. Its `bpmn validate` checks the deploy rules of Camunda 7, CIB seven, Operaton or Camunda 8, and `--strict` stops a pipeline when a rule fails, so the tool reaches into [Implement](/implement/) too.
-    status: 0.6.0 on npm (released 2026-10-12), pre-1.0. Minor versions can still bring breaking changes.
+      - Inside designIQ, bpmn-cli is the engine behind the opt-in semantic BPMN editing (since designIQ v5.3.0, off by default until an A/B benchmark has run). On its own, bpmn-cli runs in any shell or as a Claude Code plugin. Its `bpmn validate` checks the deploy rules of Camunda 7, CIB seven, Operaton or Camunda 8 and runs your project's `.bpmnlintrc`, and `--strict` stops a pipeline when a rule fails, so the tool reaches into [Implement](/implement/) too.
+    status: 0.7.0 on npm (released 2026-10-14), pre-1.0. Minor versions can still bring breaking changes, as 0.7.0 did.
 human:
   - icon: cog
     title: The agent
