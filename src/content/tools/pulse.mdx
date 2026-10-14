@@ -121,43 +121,43 @@ docs:
     link: /docs/pulse/usage/
 ---
 
-<PageSection eyebrow="The problem" title="Every question about a running process waits for a developer" intro="When a process gets stuck, the people who hear about it first, such as operations staff, support or a product owner, usually cannot see why. They ask a developer, so every question waits for the few people who know each engine's Cockpit and PromQL.">
+<PageSection tone="tint" eyebrow="The problem" title="Every question about a running process waits for a developer" intro="When a process gets stuck, the people who hear about it first, such as operations staff, support or a product owner, usually cannot see why. They ask a developer, so every question waits for the few people who know each engine's Cockpit and PromQL.">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection tone="tint" align="center" eyebrow="How it works" title="Ask in the chat, get the engine's answer as a widget" intro="The runtime figures need CIB seven with the metrics plugin. Everything else works on Camunda 7, CIB seven and Operaton.">
+<PageSection align="center" eyebrow="How it works" title="Ask in the chat, get the engine's answer as a widget" intro="The runtime figures need CIB seven with the metrics plugin. Everything else works on Camunda 7, CIB seven and Operaton.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection id="connect-your-claude" eyebrow="Try it" title="Connect your Claude in 30 seconds">
+<PageSection tone="tint" id="connect-your-claude" eyebrow="Try it" title="Connect your Claude in 30 seconds">
   <PillButton href="/docs/pulse/getting-started/#connect-your-claude" label="Get started" variant="light" />
   <TryItOut />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Safety" title="Read-only until your team decides otherwise" intro="The AI collects the state of your engines and proposes the next step. Whether it may change anything depends on the toolset the server runs with, and widgets hide the buttons for actions the toolset does not allow.">
+<PageSection eyebrow="Safety" title="Read-only until your team decides otherwise" intro="The AI collects the state of your engines and proposes the next step. Whether it may change anything depends on the toolset the server runs with, and widgets hide the buttons for actions the toolset does not allow.">
   <CardGrid items={frontmatter.toolsets} />
 
 Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the default cannot change an engine, you can hand Pulse to a wider group, such as support or product owners.
 
 </PageSection>
 
-<PageSection id="get-started" eyebrow="Get started" title="Run it on your own engine">
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Run it on your own engine">
   <PillButton href="/docs/pulse/getting-started/#run-it-on-your-own-engine" label="Get started" variant="light" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Status" title="Where Pulse stands on 13 October 2026" intro="Pulse is at v0.20.0 and pre-1.0. The last three minor releases each list breaking changes, such as renamed tools and result fields, so pin the image tag you run. The public playground runs the same version.">
+<PageSection eyebrow="Status" title="Where Pulse stands on 13 October 2026" intro="Pulse is at v0.20.0 and pre-1.0. The last three minor releases each list breaking changes, such as renamed tools and result fields, so pin the image tag you run. The public playground runs the same version.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Everything here is public">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Where it fits" title="Pulse in the lifecycle">
+<PageSection eyebrow="Where it fits" title="Pulse in the lifecycle">
   <CardGrid items={frontmatter.fits} />
 </PageSection>
 
-<PageSection eyebrow="Docs" title="Go deeper">
+<PageSection tone="tint" eyebrow="Docs" title="Go deeper">
   <CardGrid items={frontmatter.docs} columns={4} />
 
 The [README](https://github.com/Miragon/miragon-ai#readme) is the full reference for every tool, toolset and environment variable.

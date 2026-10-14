@@ -201,7 +201,8 @@ writes to the public playground or demo), and stop the containers you start. The
 The body is built from the landing building blocks (see [Landing building blocks](#landing-building-blocks)), the
 way miragon.io builds its pages: full-width bands, each with a small accent eyebrow and a bold
 title, holding cards, icon lists, steps or a comparison. The hero name is the page's `h1`. A tool
-page follows this order; adapt it to the tool, and alternate `plain` and `tint` bands:
+page follows this order; adapt it to the tool. Bands alternate `tint` and `plain`, starting with
+`tint` right below the black hero, so the hero stands apart:
 
 1. `The problem`: the pain in one line as the title, the problem paragraph as the intro, then
    `<CompareCards>` (today against with the tool) or a `<FeatureList>`.
@@ -286,7 +287,7 @@ was VitePress.
 
 | Component        | Use                                                                                                                                                                               | Props                                                                                    |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `<PageSection>`  | Every band below the hero. Markdown inside needs a blank line after the opening and before the closing tag.                                                                       | `id`, `eyebrow`, `title`, `intro`, `tone` (`plain`, `tint`, `dark`), `align`             |
+| `<PageSection>`  | Every band below the hero, alternating `tint` (the first) and `plain`. Markdown inside needs a blank line after the opening and before the closing tag.                           | `id`, `eyebrow`, `title`, `intro`, `tone` (`plain`, `tint`, `dark`), `align`             |
 | `<FeatureList>`  | An icon tile, a title and one or two sentences per item: problems, limits, reasons.                                                                                               | `items: [{ icon, title, text }]`, `columns` (1, 2, 3)                                    |
 | `<CardGrid>`     | Cards with an optional icon tile or a small eyebrow label; a card with `link` is one link ("Learn more" or "Open" for external links). Proof, where it fits, docs, roles, phases. | `items: [{ icon, eyebrow, title, text, link, linkText }]`, `columns` (2, 3, 4), `center` |
 | `<StepList>`     | Two to four numbered steps, centred.                                                                                                                                              | `items: [{ title, text }]`                                                               |

@@ -61,7 +61,7 @@ handover:
       - GitHub issues
 ---
 
-<PageSection eyebrow="The problem today" title="There is no fixed way back from operations to the model">
+<PageSection tone="tint" eyebrow="The problem today" title="There is no fixed way back from operations to the model">
 
 Cockpit shows you, one engine at a time, what is running and what is failing. Questions such as "Where do instances spend their time?" or "Did the last deployment make things worse?" usually need someone who writes PromQL against Prometheus or queries the engine's history API. When a number stands out, someone carries it by hand to the team that changes the model.
 
@@ -73,22 +73,22 @@ Miragon has no tool for Optimize today, and we say so on purpose. The lifecycle 
 
 </PageSection>
 
-<PageSection tone="tint" eyebrow="What this phase needs" title="The questions an Optimize tool would have to answer" intro="Each role brings its own question to operations.">
+<PageSection eyebrow="What this phase needs" title="The questions an Optimize tool would have to answer" intro="Each role brings its own question to operations.">
   <CardGrid items={frontmatter.questions} />
 </PageSection>
 
-<PageSection id="from-execute" eyebrow="What Execute already hands over" title="Raw material for some of these questions">
+<PageSection tone="tint" id="from-execute" eyebrow="What Execute already hands over" title="Raw material for some of these questions">
   <CardGrid items={frontmatter.raw} columns={2} />
 
 The analytics module needs a CIB seven engine with the metrics plugin `io.miragon.mcp:cibseven-history-metrics`, which exports through Micrometer to Prometheus. The plugin exists for CIB seven only. The module looks back 30 days at most, and data from before you installed the plugin is missing. It shows no waiting times, paths or variants, no business data such as product or channel, and no run times per activity and version. Both Execute tools are pre-1.0 (Pulse v0.20.0, operate 0.5.0).
 
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Human and AI" title="Your team weighs the findings">
+<PageSection eyebrow="Human and AI" title="Your team weighs the findings">
   <CardGrid items={frontmatter.human} columns={2} />
 </PageSection>
 
-<PageSection eyebrow="Hand-over" title="From raw figures to a change in Design">
+<PageSection tone="tint" eyebrow="Hand-over" title="From raw figures to a change in Design">
   <HandOver items={frontmatter.handover} />
 </PageSection>
 

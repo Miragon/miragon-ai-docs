@@ -82,19 +82,19 @@ handover:
       - <decision>.tests.yaml
 ---
 
-<PageSection eyebrow="The problem today" title="One editor at a time, and the approval outside Git">
+<PageSection tone="tint" eyebrow="The problem today" title="One editor at a time, and the approval outside Git">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection id="tools" tone="tint" eyebrow="How Miragon AI helps" title="Two tools, one reviewed file in Git" intro="designIQ is the workspace where your team models together. bpmn-cli lets an agent change BPMN by command without touching the layout you drew.">
+<PageSection id="tools" eyebrow="How Miragon AI helps" title="Two tools, one reviewed file in Git" intro="designIQ is the workspace where your team models together. bpmn-cli lets an agent change BPMN by command without touching the layout you drew.">
   <PhaseTools items={frontmatter.tools} />
 </PageSection>
 
-<PageSection eyebrow="Human and AI" title="The agent drafts, your team approves by merge">
+<PageSection tone="tint" eyebrow="Human and AI" title="The agent drafts, your team approves by merge">
   <CardGrid items={frontmatter.human} columns={2} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Hand-over" title="What comes in and what goes on to Implement" intro="Models arrive from Analyse and, later in the loop, findings come back from Optimize. What leaves is a merged model in your default branch.">
+<PageSection eyebrow="Hand-over" title="What comes in and what goes on to Implement" intro="Models arrive from Analyse and, later in the loop, findings come back from Optimize. What leaves is a merged model in your default branch.">
   <HandOver items={frontmatter.handover} />
 </PageSection>
 

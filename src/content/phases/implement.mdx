@@ -76,19 +76,19 @@ handover:
       - Docker image
 ---
 
-<PageSection eyebrow="The problem today" title="The engine finds the gaps only at deployment">
+<PageSection tone="tint" eyebrow="The problem today" title="The engine finds the gaps only at deployment">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection id="tools" tone="tint" eyebrow="How Miragon AI helps" title="Skills for the model, templates for your own systems" intro="The Skills get a model from Design running on your dev engine. The Solution templates start your own MCP server next to the engine.">
+<PageSection id="tools" eyebrow="How Miragon AI helps" title="Skills for the model, templates for your own systems" intro="The Skills get a model from Design running on your dev engine. The Solution templates start your own MCP server next to the engine.">
   <PhaseTools items={frontmatter.tools} />
 </PageSection>
 
-<PageSection eyebrow="Human and AI" title="The agent sets and checks, your team owns the code">
+<PageSection tone="tint" eyebrow="Human and AI" title="The agent sets and checks, your team owns the code">
   <CardGrid items={frontmatter.human} columns={2} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Hand-over" title="From an approved model to one that has run" intro="Models come from Design, and tickets come back from Execute for the next fix. What goes on to Execute has passed validation and run once.">
+<PageSection eyebrow="Hand-over" title="From an approved model to one that has run" intro="Models come from Design, and tickets come back from Execute for the next fix. What goes on to Execute has passed validation and run once.">
   <HandOver items={frontmatter.handover} />
 </PageSection>
 

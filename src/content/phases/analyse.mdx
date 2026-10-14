@@ -82,11 +82,11 @@ handover:
       - .vc.json via analyzr value-chain pull
 ---
 
-<PageSection eyebrow="The problem today" title="Every change starts with a guess about what it affects">
+<PageSection tone="tint" eyebrow="The problem today" title="Every change starts with a guess about what it affects">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection id="tools" tone="tint" eyebrow="How Miragon AI helps" title="One reviewed map of your processes">
+<PageSection id="tools" eyebrow="How Miragon AI helps" title="One reviewed map of your processes">
   <PhaseTools items={frontmatter.tools} />
 
 <Note title="What analyzr does not do">
@@ -97,15 +97,15 @@ analyzr reads BPMN models that already exist. It does not mine logs, read runtim
 
 </PageSection>
 
-<PageSection id="sources" eyebrow="Sources" title="Where the models come from, and what works today" intro="The BPMN export is the common ground. Models from engines work today, and the other sources come in through designIQ or are planned.">
+<PageSection tone="tint" id="sources" eyebrow="Sources" title="Where the models come from, and what works today" intro="The BPMN export is the common ground. Models from engines work today, and the other sources come in through designIQ or are planned.">
   <CardGrid items={frontmatter.sources} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Human and AI" title="Agents propose, your team decides">
+<PageSection eyebrow="Human and AI" title="Agents propose, your team decides">
   <CardGrid items={frontmatter.human} columns={2} />
 </PageSection>
 
-<PageSection eyebrow="Hand-over" title="From your existing models to a reviewed landscape for Design">
+<PageSection tone="tint" eyebrow="Hand-over" title="From your existing models to a reviewed landscape for Design">
   <HandOver items={frontmatter.handover} />
 </PageSection>
 

@@ -137,23 +137,23 @@ fits:
     link: /tools/solution-templates/
 ---
 
-<PageSection eyebrow="The problem" title="A model from Design is not yet a file the engine accepts" intro="A coding agent without guidance does not know which details the engine checks, so an external task without a topic shows up only when the engine rejects the deployment. The agent adds such details in XML that also holds your team's drawing, and a test run means chaining REST calls and copying ids from one response into the next.">
+<PageSection tone="tint" eyebrow="The problem" title="A model from Design is not yet a file the engine accepts" intro="A coding agent without guidance does not know which details the engine checks, so an external task without a topic shows up only when the engine rejects the deployment. The agent adds such details in XML that also holds your team's drawing, and a test run means chaining REST calls and copying ids from one response into the next.">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection tone="tint" align="center" eyebrow="How it works" title="Your agent changes the model by command and runs it once" intro="Validation covers Camunda 7, CIB seven and Operaton (W_C7_DEPLOY_* findings) and Camunda 8 (W_C8_DEPLOY_*). If the test instance runs into an incident, operate wait fails with exit code 9 and still shows where it stopped.">
+<PageSection align="center" eyebrow="How it works" title="Your agent changes the model by command and runs it once" intro="Validation covers Camunda 7, CIB seven and Operaton (W_C7_DEPLOY_* findings) and Camunda 8 (W_C8_DEPLOY_*). If the test instance runs into an incident, operate wait fails with exit code 9 and still shows where it stopped.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection id="get-started" eyebrow="Get started" title="Install both plugins in Claude Code">
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Install both plugins in Claude Code">
   <PillButton href="/docs/skills/getting-started/" label="Get started" variant="light" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Human and AI" title="Who does what">
+<PageSection eyebrow="Human and AI" title="Who does what">
   <CardGrid items={frontmatter.roles} columns={2} />
 </PageSection>
 
-<PageSection eyebrow="For teams" title="Give your whole team the same plugins">
+<PageSection tone="tint" eyebrow="For teams" title="Give your whole team the same plugins">
 
 Commit both marketplaces and plugins to your repo's `.claude/settings.json`, so everyone who works in the repo gets them:
 
@@ -174,15 +174,15 @@ Claude Code does not update these plugins on its own. After a release, refresh t
 
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Status" title="Where the skills stand on 13 October 2026" intro="bpmn-cli 0.6.0 (released 2026-10-12) and operate 0.5.0 (released 2026-10-11) are public under the MIT licence, and each plugin carries the version of its CLI on npm. Both are pre-1.0, and bpmn-cli has shipped breaking changes in minor releases.">
+<PageSection eyebrow="Status" title="Where the skills stand on 13 October 2026" intro="bpmn-cli 0.6.0 (released 2026-10-12) and operate 0.5.0 (released 2026-10-11) are public under the MIT licence, and each plugin carries the version of its CLI on npm. Both are pre-1.0, and bpmn-cli has shipped breaking changes in minor releases.">
   <FeatureList items={frontmatter.status} columns={3} />
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Read the skills before you install them">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Read the skills before you install them">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Where it fits" title="Skills in the lifecycle">
+<PageSection eyebrow="Where it fits" title="Skills in the lifecycle">
   <CardGrid items={frontmatter.fits} />
 
 The model comes from [Design](/design/) and goes on to [Execute](/execute/). [Miragon AI](/) shows the whole lifecycle.

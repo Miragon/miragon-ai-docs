@@ -159,42 +159,42 @@ docs:
     link: https://github.com/Miragon/design-iq/blob/main/docs/mcp-integration.md
 ---
 
-<PageSection eyebrow="The problem" title="Process models live outside the repo your team reviews in" intro="Process models usually live in a separate modelling tool, away from the repo your developers work in. One person at a time works on a diagram there, and nobody signs it off in a pull request. An AI assistant either cannot see the current model, or it rewrites the whole BPMN XML when it changes one. In review, a DMN change arrives as an XML diff, where a >= that became > is easy to miss.">
+<PageSection tone="tint" eyebrow="The problem" title="Process models live outside the repo your team reviews in" intro="Process models usually live in a separate modelling tool, away from the repo your developers work in. One person at a time works on a diagram there, and nobody signs it off in a pull request. An AI assistant either cannot see the current model, or it rewrites the whole BPMN XML when it changes one. In review, a DMN change arrives as an XML diff, where a >= that became > is easy to miss.">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection tone="tint" align="center" eyebrow="How it works" title="One live model in your repo, released by merge" intro="Your team models the to-be process and signs it off by merge. The AI drafts models and changes them on request.">
+<PageSection align="center" eyebrow="How it works" title="One live model in your repo, released by merge" intro="Your team models the to-be process and signs it off by merge. The AI drafts models and changes them on request.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection eyebrow="AI in the workspace" title="Your AI works on the model your team has open" intro="AI clients use the same server as the browser. With more than 30 MCP tools they read, validate and save every notation, simulate and test DMN, file todos and open the release pull request.">
+<PageSection tone="tint" eyebrow="AI in the workspace" title="Your AI works on the model your team has open" intro="AI clients use the same server as the browser. With more than 30 MCP tools they read, validate and save every notation, simulate and test DMN, file todos and open the release pull request.">
   <FeatureList items={frontmatter.agent} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Notations" title="Eight notations in one content repo" intro="Next to BPMN and DMN, your strategy and architecture models can live in the same repo. Six notations have a visual modeler in the browser, and every file has a text view, which is how you edit Value Chains and Markdown.">
+<PageSection eyebrow="Notations" title="Eight notations in one content repo" intro="Next to BPMN and DMN, your strategy and architecture models can live in the same repo. Six notations have a visual modeler in the browser, and every file has a text view, which is how you edit Value Chains and Markdown.">
   <CardGrid items={frontmatter.notations} />
 </PageSection>
 
-<PageSection id="get-started" eyebrow="Get started" title="Run designIQ on your machine">
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Run designIQ on your machine">
   <PillButton href="/docs/design-iq/getting-started/" label="Get started" variant="light" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Status" title="Where designIQ stands on 13 October 2026" intro="The self-hosted platform is at v5.3.0, released on 13 October 2026 as the fourth release since 4 October. The repo (MIT licence) and the Docker image are public.">
+<PageSection eyebrow="Status" title="Where designIQ stands on 13 October 2026" intro="The self-hosted platform is at v5.3.0, released on 13 October 2026 as the fourth release since 4 October. The repo (MIT licence) and the Docker image are public.">
   <FeatureList items={frontmatter.status} />
 
 Follow GitLab support in [issue #5](https://github.com/Miragon/design-iq/issues/5) and the playground in [issue #43](https://github.com/Miragon/design-iq/issues/43).
 
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Everything here is public">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Where it fits" title="designIQ in the lifecycle" intro="Models arrive as .bpmn files pushed to the content repo, or as drafts from Visio, draw.io, Word, Confluence or images through the starter's import-process skill. They leave as merged files in git, and findings from Optimize come back to them as todos.">
+<PageSection eyebrow="Where it fits" title="designIQ in the lifecycle" intro="Models arrive as .bpmn files pushed to the content repo, or as drafts from Visio, draw.io, Word, Confluence or images through the starter's import-process skill. They leave as merged files in git, and findings from Optimize come back to them as todos.">
   <CardGrid items={frontmatter.fits} />
 </PageSection>
 
-<PageSection eyebrow="Docs" title="The reference lives in the repo">
+<PageSection tone="tint" eyebrow="Docs" title="The reference lives in the repo">
   <CardGrid items={frontmatter.docs} />
 </PageSection>
 

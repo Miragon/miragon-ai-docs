@@ -152,38 +152,38 @@ fits:
     link: /optimize/
 ---
 
-<PageSection eyebrow="The problem" title="One stuck order means a chain of REST requests" intro="To find out why order ORD-1001 stopped moving, you work through the engine's REST API one request at a time. You look up the instance by business key, list its activity instances, read its incidents and jobs and fetch the stack trace, and each answer shapes the next request. A coding agent on the same path reads every full response, copies ids by hand and guesses at endpoints it doesn't know.">
+<PageSection tone="tint" eyebrow="The problem" title="One stuck order means a chain of REST requests" intro="To find out why order ORD-1001 stopped moving, you work through the engine's REST API one request at a time. You look up the instance by business key, list its activity instances, read its incidents and jobs and fetch the stack trace, and each answer shapes the next request. A coding agent on the same path reads every full response, copies ids by hand and guesses at endpoints it doesn't know.">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection tone="tint" align="center" eyebrow="How it works" title="From the engine's state to the next command" intro="operate runs in your shell or your pipeline and speaks the Camunda 7 REST API, which Operaton and CIB seven share.">
+<PageSection align="center" eyebrow="How it works" title="From the engine's state to the next command" intro="operate runs in your shell or your pipeline and speaks the Camunda 7 REST API, which Operaton and CIB seven share.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection eyebrow="Workflow commands" title="Six commands for the questions you ask most" intro="Each one combines several REST requests into one answer and lists the commands to run next.">
+<PageSection tone="tint" eyebrow="Workflow commands" title="Six commands for the questions you ask most" intro="Each one combines several REST requests into one answer and lists the commands to run next.">
   <CardGrid items={frontmatter.commands} />
 
 Underneath, operate turns all 396 operations of the Camunda 7 REST API into commands such as `operate task list`, and `operate api` sends a raw request.
 
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Agents and safety" title="Your team decides what an agent may change" intro="The agent collects the state of the engine and proposes the next step. What it may change depends on the profile your team hands it.">
+<PageSection eyebrow="Agents and safety" title="Your team decides what an agent may change" intro="The agent collects the state of the engine and proposes the next step. What it may change depends on the profile your team hands it.">
   <FeatureList items={frontmatter.guards} />
 </PageSection>
 
-<PageSection id="get-started" eyebrow="Get started" title="A first triage in four commands">
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="A first triage in four commands">
   <PillButton href="/docs/operate/getting-started/" label="Get started" variant="light" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Status" title="Where operate stands on 13 October 2026" intro="operate is at version 0.5.0, released on 11 October 2026 to npm as @miragon/operate. It is pre-1.0, so commands and output can still change. The repository Miragon/operate is public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where operate stands on 13 October 2026" intro="operate is at version 0.5.0, released on 11 October 2026 to npm as @miragon/operate. It is pre-1.0, so commands and output can still change. The repository Miragon/operate is public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Everything here is public" intro="The session at the top of this page is operate 0.5.0 against a local operaton/operaton:2.1.5 container, with three orders whose delegate class the engine cannot load.">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public" intro="The session at the top of this page is operate 0.5.0 against a local operaton/operaton:2.1.5 container, with three orders whose delegate class the engine cannot load.">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Where it fits" title="operate in the lifecycle" intro="Pulse reads the same engines as a server your team runs. operate needs no server and talks to one engine per call.">
+<PageSection eyebrow="Where it fits" title="operate in the lifecycle" intro="Pulse reads the same engines as a server your team runs. operate needs no server and talks to one engine per call.">
   <CardGrid items={frontmatter.fits} columns={4} />
 </PageSection>
 

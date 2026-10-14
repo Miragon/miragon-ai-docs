@@ -161,15 +161,15 @@ docs:
     link: https://github.com/Miragon/bpmn-cli#readme
 ---
 
-<PageSection eyebrow="The problem" title="Most of the BPMN XML an agent writes is diagram coordinates" intro="When an agent models or changes a process today, it writes the BPMN XML itself. Every coordinate costs tokens and is a chance to break the file, and shapes your team placed by hand in Camunda Modeler get moved. Read as raw XML, a large model no longer fits into the agent's context.">
+<PageSection tone="tint" eyebrow="The problem" title="Most of the BPMN XML an agent writes is diagram coordinates" intro="When an agent models or changes a process today, it writes the BPMN XML itself. Every coordinate costs tokens and is a chance to break the file, and shapes your team placed by hand in Camunda Modeler get moved. Read as raw XML, a large model no longer fits into the agent's context.">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection tone="tint" align="center" eyebrow="How it works" title="Four steps, every element addressed by its id" intro="The agent never touches a coordinate. bpmn-cli draws a new file and keeps an existing drawing.">
+<PageSection align="center" eyebrow="How it works" title="Four steps, every element addressed by its id" intro="The agent never touches a coordinate. bpmn-cli draws a new file and keeps an existing drawing.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection eyebrow="Findings" title="Each finding names the command that fixes it" intro="For the session at the top of this page, one bpmn set gives the service task an external topic, and the next check passes.">
+<PageSection tone="tint" eyebrow="Findings" title="Each finding names the command that fixes it" intro="For the session at the top of this page, one bpmn set gives the service task an external topic, and the next check passes.">
 
 ```sh
 bpmn set order.bpmn Activity_ReserveStock camunda:type=external camunda:topic=reserve-stock
@@ -178,27 +178,27 @@ bpmn validate order.bpmn --strict   # valid, 0 warning(s)
 
 </PageSection>
 
-<PageSection tone="tint" eyebrow="What you get" title="An ordinary BPMN file, checked before the engine sees it" intro="Every change runs one pipeline: load, apply, validate, lay out, then write. The result opens in the tools your team already uses.">
+<PageSection eyebrow="What you get" title="An ordinary BPMN file, checked before the engine sees it" intro="Every change runs one pipeline: load, apply, validate, lay out, then write. The result opens in the tools your team already uses.">
   <FeatureList items={frontmatter.result} columns={3} />
 </PageSection>
 
-<PageSection id="get-started" eyebrow="Get started" title="Start in Claude Code or at the shell">
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Start in Claude Code or at the shell">
   <PillButton href="/docs/bpmn-cli/getting-started/" label="Get started" variant="light" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Status" title="Where bpmn-cli stands on 13 October 2026" intro="bpmn-cli is at 0.6.0, released to npm on 12 October 2026. It is pre-1.0, and minor versions still bring breaking changes (0.3.0, 0.4.0 and 0.5.0 did), so pin the version you run. The repository is public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where bpmn-cli stands on 13 October 2026" intro="bpmn-cli is at 0.6.0, released to npm on 12 October 2026. It is pre-1.0, and minor versions still bring breaking changes (0.3.0, 0.4.0 and 0.5.0 did), so pin the version you run. The repository is public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Everything here is public">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Where it fits" title="bpmn-cli in the lifecycle" intro="bpmn-cli serves Design, and its deploy checks reach into Implement. It starts from a description in the conversation or from an existing .bpmn file from Camunda Modeler, bpmn-js or a designIQ content repository.">
+<PageSection eyebrow="Where it fits" title="bpmn-cli in the lifecycle" intro="bpmn-cli serves Design, and its deploy checks reach into Implement. It starts from a description in the conversation or from an existing .bpmn file from Camunda Modeler, bpmn-js or a designIQ content repository.">
   <CardGrid items={frontmatter.fits} />
 </PageSection>
 
-<PageSection eyebrow="Docs" title="The reference lives in the repo">
+<PageSection tone="tint" eyebrow="Docs" title="The reference lives in the repo">
   <CardGrid items={frontmatter.docs} columns={4} />
 </PageSection>
 

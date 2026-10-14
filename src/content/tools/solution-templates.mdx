@@ -151,41 +151,41 @@ fits:
     link: /
 ---
 
-<PageSection eyebrow="The problem" title="Reaching your ERP means forking Pulse or starting from scratch" intro="Pulse covers the engine, and its stock server has no place for your ERP or CRM without a fork. From scratch, you wire OAuth, health checks, metrics, a Docker image and a widget bundle yourself, and some wiring mistakes only show up as a widget that renders empty or hangs on “Loading…”.">
+<PageSection tone="tint" eyebrow="The problem" title="Reaching your ERP means forking Pulse or starting from scratch" intro="Pulse covers the engine, and its stock server has no place for your ERP or CRM without a fork. From scratch, you wire OAuth, health checks, metrics, a Docker image and a widget bundle yourself, and some wiring mistakes only show up as a widget that renders empty or hangs on “Loading…”.">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection tone="tint" align="center" eyebrow="How it works" title="From the template to a server with your own module" intro="Shown for miragon-ai-starter. mcp-toolkit-starter brings a tasks module in place of the engine modules.">
+<PageSection align="center" eyebrow="How it works" title="From the template to a server with your own module" intro="Shown for miragon-ai-starter. mcp-toolkit-starter brings a tasks module in place of the engine modules.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection eyebrow="Two templates" title="With the engine modules or without them">
+<PageSection tone="tint" eyebrow="Two templates" title="With the engine modules or without them">
   <CardGrid items={frontmatter.templates} columns={2} />
 
 Both templates build on [mcp-use](https://mcp-use.com). Neither contains process automation code such as job workers or a BPMN project. Your team decides which systems the server may reach and reviews the module code.
 
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Built for your coding agent" title="Four skills walk the agent through the wiring" intro="Open miragon-ai-starter in Claude Code, or any agent that reads CLAUDE.md, and describe what you want. The skills in .claude/skills/ cover the four common tasks.">
+<PageSection eyebrow="Built for your coding agent" title="Four skills walk the agent through the wiring" intro="Open miragon-ai-starter in Claude Code, or any agent that reads CLAUDE.md, and describe what you want. The skills in .claude/skills/ cover the four common tasks.">
   <CardGrid items={frontmatter.skills} columns={4} />
 
 Everything also works by hand. `CLAUDE.md` is the compact architecture reference, and the guard tests in `server/test/` fail when a wiring step is missing.
 
 </PageSection>
 
-<PageSection id="get-started" eyebrow="Get started" title="Your own MCP server in five commands">
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Your own MCP server in five commands">
   <PillButton href="/docs/solution-templates/getting-started/" label="Get started" variant="light" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Status" title="Where the templates stand on 13 October 2026" intro="Pulse is the MCP server from the repo Miragon/miragon-ai. miragon-ai-starter is at Pulse v0.20.0, released 2026-10-13, and public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where the templates stand on 13 October 2026" intro="Pulse is the MCP server from the repo Miragon/miragon-ai. miragon-ai-starter is at Pulse v0.20.0, released 2026-10-13, and public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Sources, packages and playgrounds">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Sources, packages and playgrounds">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Where it fits" title="Solution templates in the lifecycle">
+<PageSection eyebrow="Where it fits" title="Solution templates in the lifecycle">
   <CardGrid items={frontmatter.fits} />
 
 Models from [designIQ](/tools/design-iq/) or [bpmn-cli](/tools/bpmn-cli/) reach the server only through the engine, where tools such as `camunda7_get_process_definition_xml` read them. With the `camunda7:admin` toolset and `CAMUNDA_ALLOW_DEPLOYMENTS=true`, the assistant can deploy BPMN and DMN itself.

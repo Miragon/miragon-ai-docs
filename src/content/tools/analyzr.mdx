@@ -153,39 +153,39 @@ fits:
     link: /tools/operate/
 ---
 
-<PageSection eyebrow="The problem" title="Your processes live everywhere, their links nowhere" intro="Process models sit in engines, BPM suites, Visio files and in people's heads. Nobody has a reviewed picture of which process calls, messages or starts which, so every change and every migration starts with a guess about what it affects.">
+<PageSection tone="tint" eyebrow="The problem" title="Your processes live everywhere, their links nowhere" intro="Process models sit in engines, BPM suites, Visio files and in people's heads. Nobody has a reviewed picture of which process calls, messages or starts which, so every change and every migration starts with a guess about what it affects.">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Where your processes come from" title="Import from wherever your processes live" intro="analyzr reads the links standard BPMN 2.0 carries: call activities, messages and signals. Whatever exports BPMN can feed it. Today it is tested on models for Camunda 7 and Camunda 8.">
+<PageSection eyebrow="Where your processes come from" title="Import from wherever your processes live" intro="analyzr reads the links standard BPMN 2.0 carries: call activities, messages and signals. Whatever exports BPMN can feed it. Today it is tested on models for Camunda 7 and Camunda 8.">
   <CardGrid items={frontmatter.sources} />
 </PageSection>
 
-<PageSection align="center" eyebrow="How it works" title="From scattered models to a reviewed map" intro="analyzr reads models that already exist. It does not mine event logs, read runtime data from your engines or generate BPMN.">
+<PageSection tone="tint" align="center" eyebrow="How it works" title="From scattered models to a reviewed map" intro="analyzr reads models that already exist. It does not mine event logs, read runtime data from your engines or generate BPMN.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="What your team gets" title="See what a change affects before you make it" intro="The reviewed landscape shows which processes a change touches, which ones a migration has to move together and which steps of your value chain have no process yet. Every relation and placement records who proposed it, with confidence and rationale, and who decided.">
+<PageSection eyebrow="What your team gets" title="See what a change affects before you make it" intro="The reviewed landscape shows which processes a change touches, which ones a migration has to move together and which steps of your value chain have no process yet. Every relation and placement records who proposed it, with confidence and rationale, and who decided.">
   <CardGrid items={frontmatter.landscape} />
 </PageSection>
 
-<PageSection eyebrow="Human and AI" title="Agents propose, your team decides" intro="A rule settles what it can without an LLM. Agents propose the rest, and each proposal waits for your team or for an auto-accept rule the project owner set.">
+<PageSection tone="tint" eyebrow="Human and AI" title="Agents propose, your team decides" intro="A rule settles what it can without an LLM. Agents propose the rest, and each proposal waits for your team or for an auto-accept rule the project owner set.">
   <FeatureList items={frontmatter.roles} />
 </PageSection>
 
-<PageSection id="get-started" tone="tint" eyebrow="Get started" title="Open the demo in your browser">
+<PageSection id="get-started" eyebrow="Get started" title="Open the demo in your browser">
   <PillButton href="/docs/analyzr/getting-started/" label="Get started" variant="light" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where analyzr stands on 13 October 2026" intro="analyzr 0.1.0-alpha.0 is an early alpha, and the public demo runs the same version.">
+<PageSection tone="tint" eyebrow="Status" title="Where analyzr stands on 13 October 2026" intro="analyzr 0.1.0-alpha.0 is an early alpha, and the public demo runs the same version.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Proof you can open" title="The demo is public, the source not yet">
+<PageSection eyebrow="Proof you can open" title="The demo is public, the source not yet">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 
-<PageSection eyebrow="Where it fits" title="analyzr in the lifecycle" intro="analyzr captures your as-is landscape once, at the start. The loop then runs from Design to Optimize, and what your team learns in Optimize goes back into Design.">
+<PageSection tone="tint" eyebrow="Where it fits" title="analyzr in the lifecycle" intro="analyzr captures your as-is landscape once, at the start. The loop then runs from Design to Optimize, and what your team learns in Optimize goes back into Design.">
   <CardGrid items={frontmatter.fits} />
 </PageSection>
 

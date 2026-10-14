@@ -73,11 +73,11 @@ handover:
       - JSON (operate)
 ---
 
-<PageSection eyebrow="The problem today" title="What hangs is spread across Cockpit tabs and stack traces">
+<PageSection tone="tint" eyebrow="The problem today" title="What hangs is spread across Cockpit tabs and stack traces">
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection id="tools" tone="tint" eyebrow="How Miragon AI helps" title="Pulse in chat, operate in the shell" intro="Both tools read the same engines through their REST API. Pulse is a self-hosted MCP server (the repo Miragon/miragon-ai) that your team runs and asks in chat. operate is a CLI without a server for developers, coding agents and CI.">
+<PageSection id="tools" eyebrow="How Miragon AI helps" title="Pulse in chat, operate in the shell" intro="Both tools read the same engines through their REST API. Pulse is a self-hosted MCP server (the repo Miragon/miragon-ai) that your team runs and asks in chat. operate is a CLI without a server for developers, coding agents and CI.">
   <PhaseTools items={frontmatter.tools} />
 
 <Note title="Not Camunda 8 Operate">
@@ -88,11 +88,11 @@ operate has nothing to do with Operate, the Camunda 8 web app, and it does not s
 
 </PageSection>
 
-<PageSection eyebrow="Human and AI" title="The agent reads, your team decides what changes">
+<PageSection tone="tint" eyebrow="Human and AI" title="The agent reads, your team decides what changes">
   <CardGrid items={frontmatter.human} columns={2} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Hand-over" title="From a deployed model to tickets and raw figures" intro="Models arrive from Implement. Tickets go back to Implement for the next fix, and raw figures go on to Optimize.">
+<PageSection eyebrow="Hand-over" title="From a deployed model to tickets and raw figures" intro="Models arrive from Implement. Tickets go back to Implement for the next fix, and raw figures go on to Optimize.">
   <HandOver items={frontmatter.handover} />
 </PageSection>
 
