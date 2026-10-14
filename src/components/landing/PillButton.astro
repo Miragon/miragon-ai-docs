@@ -1,18 +1,17 @@
 ---
-// The miragon.io button: a pill with the label and a green circle carrying
-// an arrow. `blue` is the CI button of the header's "Talk to us" (blue, a
-// white label, the arrow without a circle), the primary action in a band.
-// `light` on blue grounds (the CtaBox), `dark` on light grounds, `outline`
-// as the quieter second action. External links open in a new tab.
+// The site's button, as the header's "Talk to us": a pill with the label
+// and an arrow, the arrow slides on hover. `blue` (the default) is the CI
+// button for a band's primary action; `black` sits on blue surfaces such as
+// the CtaBox. External links open in a new tab.
 import Icon from "./Icon.astro"
 
 interface Props {
   href: string
   label: string
-  variant?: "blue" | "dark" | "light" | "outline"
+  variant?: "blue" | "black"
 }
 
-const { href, label, variant = "dark" } = Astro.props
+const { href, label, variant = "blue" } = Astro.props
 const external = /^https?:\/\//.test(href)
 ---
 
@@ -22,10 +21,8 @@ const external = /^https?:\/\//.test(href)
   target={external ? "_blank" : undefined}
   rel={external ? "noopener" : undefined}
 >
-  <span class="label">{label}</span>
-  <span class="circle">
-    <Icon name="arrow" size={18} />
-  </span>
+  {label}
+  <Icon name="arrow" size={18} />
 </a>
 
 <style>
@@ -36,84 +33,41 @@ const external = /^https?:\/\//.test(href)
   :root .pill {
     display: inline-flex;
     align-items: center;
-    gap: 14px;
-    padding: 5px 5px 5px 24px;
-    border: 1px solid transparent;
+    gap: 8px;
+    padding: 12px 18px 12px 24px;
     border-radius: var(--cd-radius-pill);
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.2;
     text-decoration: none;
     white-space: nowrap;
-    transition:
-      background-color var(--cd-motion-base) var(--cd-ease),
-      border-color var(--cd-motion-base) var(--cd-ease),
-      color var(--cd-motion-base) var(--cd-ease);
+    transition: background-color var(--cd-motion-base) var(--cd-ease);
   }
-  :root .circle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--cd-gruen);
-    color: var(--cd-schwarz);
+  :root .pill :global(svg) {
+    flex: none;
     transition: transform var(--cd-motion-base) var(--cd-ease);
   }
-  :root .pill:hover .circle {
+  :root .pill:hover :global(svg) {
     transform: translateX(3px);
   }
   :root .pill:focus-visible {
-    outline: 2px solid var(--cd-blau-hell);
+    outline: 2px solid var(--cd-weiss);
     outline-offset: 3px;
   }
-  :root .dark {
-    background: var(--cd-schwarz);
-    color: var(--cd-weiss);
-  }
-  :root .dark:hover {
-    background: var(--cd-blau);
-  }
-  :root .light {
-    background: var(--cd-weiss);
-    color: var(--cd-schwarz);
-  }
-  :root .light:hover {
-    background: var(--cd-gruen);
-  }
-  :root .light:hover .circle {
-    background: var(--cd-schwarz);
-    color: var(--cd-weiss);
-  }
   :root .blue {
-    gap: 8px;
-    padding: 12px 18px 12px 24px;
     background: var(--site-button-bg);
     color: var(--site-button-text);
-    font-weight: 600;
-  }
-  :root .blue .circle {
-    width: auto;
-    height: auto;
-    background: none;
-    color: inherit;
   }
   :root .blue:hover {
     background: var(--site-button-bg-hover);
+    color: var(--site-button-text);
   }
-  :root .outline {
-    border-color: var(--l-card-border);
-    background: transparent;
-    color: var(--l-text);
+  :root .black {
+    background: var(--cd-schwarz);
+    color: var(--cd-weiss);
   }
-  :root .outline .circle {
-    background: var(--l-tile-muted-bg);
-    color: var(--l-text);
-  }
-  :root .outline:hover {
-    border-color: var(--cd-gruen);
-    background: var(--cd-gruen);
-    color: var(--cd-schwarz);
+  :root .black:hover {
+    background: color-mix(in srgb, var(--cd-weiss) 16%, var(--cd-schwarz));
+    color: var(--cd-weiss);
   }
 </style>
