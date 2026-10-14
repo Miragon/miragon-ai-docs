@@ -281,13 +281,14 @@ const inSection = (urls: string[]) =>
   }
   /* The product's name beside the wordmark, in Geist (CI: products show the
      wordmark and write their name next to it), green as the header's one
-     accent. Cap height matched to the wordmark. */
+     accent. Raised like an exponent: its top a little above the wordmark's. */
   .brand-product {
-    margin-left: 8px;
+    align-self: flex-start;
+    margin: -3px 0 0 5px;
     font-family: var(--site-font);
-    font-size: 30px;
+    font-size: 19px;
     font-weight: 700;
-    line-height: 24px;
+    line-height: 1;
     letter-spacing: -0.02em;
     color: var(--cd-gruen);
   }
