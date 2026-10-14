@@ -53,7 +53,7 @@ const isExternal = (link: string) => /^https?:\/\//.test(link)
 </ul>
 
 <style>
-  /* Each rule starts with :root. Starlight makes Astro scope these styles
+  /* Each rule starts with :root. astro.config.mjs makes Astro scope these styles
      with :where(), which adds no specificity; the extra class keeps them
      above the page text's element rules (.prose a, .prose ul, .prose p,
      .prose li + li in styles/website.css), which they reset. */

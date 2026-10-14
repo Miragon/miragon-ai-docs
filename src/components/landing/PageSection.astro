@@ -38,7 +38,7 @@ const { id, eyebrow, title, intro, tone = "plain", align = "left" } = Astro.prop
 </section>
 
 <style>
-  /* Each rule starts with :root. Starlight makes Astro scope these styles
+  /* Each rule starts with :root. astro.config.mjs makes Astro scope these styles
      with :where(), which adds no specificity; the extra class keeps them
      above the page text's element rules (.prose a, .prose ul, .prose p,
      .prose li + li in styles/website.css), which they reset. */
@@ -148,6 +148,14 @@ const { id, eyebrow, title, intro, tone = "plain", align = "left" } = Astro.prop
   /* Text after a list, cards or steps keeps its distance from them. */
   :root .content > :global(:is(.cards, .features, .steps, .compare) + *) {
     margin-top: 32px;
+  }
+
+  /* Several PillButtons side by side, in <div class="pills">: a band with
+     more than one place to start. */
+  :root .content :global(.pills) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   /* The lifecycle graphic as the landing's first band, centred. */

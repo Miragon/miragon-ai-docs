@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: /docs/skills/getting-started/
+      link: "#get-started"
     - theme: alt
       text: Recipes on GitHub
       link: https://github.com/Miragon/bpmn-cli/blob/main/plugins/bpmn-cli/skills/bpmn/reference/recipes.md
@@ -145,8 +145,11 @@ fits:
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Install both plugins in Claude Code">
-  <PillButton href="/docs/skills/getting-started/" label="Get started" />
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Install both plugins in Claude Code" intro="Each plugin installs from the marketplace in its tool's repo, and each repo describes the install.">
+  <div class="pills">
+    <PillButton href="https://github.com/Miragon/bpmn-cli/tree/main/plugins/bpmn-cli" label="The bpmn-cli plugin" />
+    <PillButton href="https://github.com/Miragon/operate/blob/main/docs/agents.md#claude-code-plugin" label="The operate plugin" />
+  </div>
 </PageSection>
 
 <PageSection eyebrow="Human and AI" title="Who does what">

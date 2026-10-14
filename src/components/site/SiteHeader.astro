@@ -1,8 +1,7 @@
 ---
-// The one header of the site: website pages (layouts/Website.astro) and docs
-// pages (the Starlight Header override) render this component. The wordmark
-// with "AI" beside it, the website nav from data/nav.ts, Starlight's own
-// Search (one Pagefind index for website and docs), "Talk to us" and GitHub.
+// The one header of the site, on every page (layouts/Website.astro): the
+// wordmark with "AI" beside it, the website nav from data/nav.ts, "Talk to
+// us" and GitHub.
 //
 // Behaviour (the dropdown script of miragon.io's header, ported):
 // - From 64rem the nav sits in the bar. Hover opens a dropdown, a click or
@@ -11,36 +10,21 @@
 //   dropdowns on hover and focus.
 // - Below 64rem the nav folds into the burger's menu, the dropdowns become
 //   sections that open in place.
-// - Docs pages below 50rem: Starlight's menu button (the docs sidebar, which
-//   ends with this nav, components/starlight/MobileMenuFooter.astro) takes
-//   the burger's place.
-// - The current page is marked, and its section underlined; a tool's docs
-//   (/docs/<tool>/...) count as the tool's section.
+// - The current page is marked, and its section underlined.
 // The script runs once on load: there is no ClientRouter, so astro:page-load
 // never fires.
-import Search from "@astrojs/starlight/components/Search.astro"
 import { CTA, GITHUB, NAV } from "../../data/nav"
-
-interface Props {
-  /** On docs pages: below 50rem the burger is hidden, the nav moves into
-      Starlight's phone menu (components/starlight/MobileMenuFooter.astro). */
-  docs?: boolean
-}
-
-const { docs = false } = Astro.props
 
 const withSlash = (path: string) => (path.endsWith("/") ? path : `${path}/`)
 const here = withSlash(Astro.url.pathname)
-/** A tool's docs belong to its section: /docs/pulse/... counts as /tools/pulse/... */
-const section = here.replace(/^\/docs\/([^/]+)\//, "/tools/$1/")
 /** The exact page: aria-current="page". */
 const isPage = (url: string) => withSlash(url) === here
-/** The page or a page below it, or the tool's docs: data-current, the underline in the bar. */
+/** The page or a page below it: data-current, the underline in the bar. */
 const inSection = (urls: string[]) =>
-  urls.some((url) => url !== "/" && section.startsWith(withSlash(url)))
+  urls.some((url) => url !== "/" && here.startsWith(withSlash(url)))
 ---
 
-<div class="site-header" data-variant={docs ? "docs" : "website"}>
+<div class="site-header">
   <a class="brand" href="/" aria-label="Miragon AI, home">
     <img src="/logo/miragon-logo-weiss.svg" alt="" width="157" height="24" />
     <span class="brand-product" aria-hidden="true">
@@ -144,7 +128,6 @@ const inSection = (urls: string[]) =>
   </nav>
 
   <div class="actions">
-    <Search />
     <a class="pill" href={CTA.url}>
       {CTA.name}
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -247,9 +230,8 @@ const inSection = (urls: string[]) =>
 </script>
 
 <style>
-  /* One 1152px row, centred, on every page: the website layout's header bar
-     and Starlight's full-width one (24px side padding in both) hold it, so
-     the wordmark and the actions stay in place between website and docs. */
+  /* One 1152px row, centred, on every page, in the layout's header bar
+     (24px side padding). */
   .site-header {
     display: flex;
     align-items: center;
@@ -271,7 +253,6 @@ const inSection = (urls: string[]) =>
     flex: none;
     align-items: center;
     border-radius: var(--cd-radius-sm);
-    /* Starlight underlines links; the "AI" beside the wordmark is no link text. */
     text-decoration: none;
   }
   .brand img {
@@ -475,8 +456,7 @@ const inSection = (urls: string[]) =>
   }
 
   /* Below 64rem the nav folds into the burger's menu: a full-width sheet
-     under the bar (the bar is the positioned ancestor: sticky on website
-     pages, fixed in Starlight). */
+     under the bar (the sticky bar is the positioned ancestor). */
   @media (max-width: 63.999rem) {
     .burger {
       display: flex;
@@ -542,13 +522,8 @@ const inSection = (urls: string[]) =>
     }
   }
 
-  /* Docs on phones: Starlight's own menu button (sidebar plus
-     MobileMenuFooter with this nav) takes the burger's place. */
+  /* Phones: the bar holds the wordmark and the burger only. */
   @media (max-width: 49.999rem) {
-    [data-variant="docs"] .burger,
-    [data-variant="docs"] .menu {
-      display: none;
-    }
     .github {
       display: none;
     }
@@ -561,16 +536,5 @@ const inSection = (urls: string[]) =>
     .github {
       transition: none;
     }
-  }
-
-  /* Search results: Starlight draws every result as a card with its
-     headings nested inside. A website page without headings that carry an
-     id has no nested results, and Pagefind puts its excerpt straight under
-     the title: the same card for it. */
-  :global(#starlight__search .pagefind-ui__result-inner > .pagefind-ui__result-excerpt) {
-    margin: 0;
-    padding: var(--sl-search-result-nested-pad-block) var(--sl-search-result-pad-inline-end);
-    padding-inline-start: var(--sl-search-result-pad-inline-start);
-    background-color: var(--sl-color-black);
   }
 </style>

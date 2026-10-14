@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Dead-link and invariant gate over the whole build, run after `astro build`
 // (`pnpm build`), or alone on an existing build: node scripts/check-dist.mjs
-// [dist-dir]. starlight-links-validator checks Markdown and MDX only; this
-// also covers the website pages, the .astro components and Starlight's own
-// markup. Every check reads dist/ the way Netlify serves it: a file wins over
-// every netlify.toml rule, /x is served from x/index.html or x.html.
+// [dist-dir]. It checks the built pages, so the links of the MDX pages and
+// of the .astro components alike. Every check reads dist/ the way Netlify
+// serves it: a file wins over every netlify.toml rule, /x is served from
+// x/index.html or x.html.
 //
 // 1. Links: every internal link (<a>/<area> href, also absolute
 //    https://miragon.ai/... and relative ones) lands on a page directly, in
@@ -13,14 +13,15 @@
 //    Assets (src, srcset, <link href>) exist, /_astro/ included (a stale
 //    Expressive Code stylesheet link shows up here).
 // 2. Redirects (netlify.toml, and no _redirects file): 301s, none forced; no
-//    page sits at a source (it would shadow the rule), every target is a page
-//    in canonical form (no chains), and at least one url-map.json entry
-//    exercises every rule.
+//    page sits at a source (it would shadow the rule), every target on this
+//    site is a page in canonical form (no chains), and at least one
+//    url-map.json entry exercises every rule.
 // 3. URL map (scripts/url-map.json): every old URL lands on its new URL in at
 //    most one hop, and the new URL is canonical. Netlify serving /x from
 //    x/index.html, or answering it with a 301 to /x/, counts as the same page.
 //    A #fragment cannot be redirected, so old and new carry the same one,
-//    and it must exist on the page.
+//    and it must exist on the page. A new URL on another site (a tool's docs
+//    in its repo) must be the rule's target; its page is not checked.
 // 4. Every page: both legal links (Datenschutz, Impressum); the consent
 //    scripts first in <head>, as classic scripts: window.cmp_setlang, then
 //    the consentmanager autoblocker, before any other script and stylesheet.
@@ -85,10 +86,8 @@ const markup = (html) =>
 function* htmlFiles(dir) {
   for (const entry of readdirSync(dir)) {
     const path = join(dir, entry)
-    if (statSync(path).isDirectory()) {
-      // Pagefind's UI fragments are not pages.
-      if (path !== join(DIST, "pagefind")) yield* htmlFiles(path)
-    } else if (entry.endsWith(".html")) yield path
+    if (statSync(path).isDirectory()) yield* htmlFiles(path)
+    else if (entry.endsWith(".html")) yield path
   }
 }
 
@@ -159,7 +158,8 @@ const target = (rule, path) => {
 /**
  * Follow a path like Netlify: a file shadows every rule, else the first
  * matching rule redirects. Returns the file it lands on (or null), the
- * number of redirects on the way, the final path and the rules it took.
+ * number of redirects on the way, the final path (a full URL when a rule
+ * leaves the site) and the rules it took.
  */
 function serve(path) {
   const rules = []
@@ -172,7 +172,9 @@ function serve(path) {
     if (!rule || seen.has(path)) return { file: null, hops: rules.length, final: path, rules }
     seen.add(path)
     rules.push(rule)
-    path = new URL(target(rule, path), SITE).pathname
+    const to = new URL(target(rule, path), SITE)
+    if (to.origin !== SITE) return { file: null, hops: rules.length, final: to.href, rules }
+    path = to.pathname
   }
 }
 
@@ -260,7 +262,9 @@ for (const page of pages) {
     }
     links++
     const { file, hops, final } = serve(path)
-    if (!file)
+    if (!file && hops > 0 && !final.startsWith("/"))
+      errors.push(`${at}: an old URL (redirects to ${final}); link ${final}${url.hash} instead`)
+    else if (!file)
       errors.push(
         `${at}: no page${final !== path ? ` (redirects to ${final}, which has none)` : ""}`,
       )
@@ -397,12 +401,18 @@ for (const { old, new: next } of map) {
   const at = `url map: ${old}`
   const { file, hops, final, rules } = serve(from.pathname)
   for (const rule of rules) rule.exercised = true
-  const want = fileFor(to.pathname)
+  const want = to.origin === SITE ? fileFor(to.pathname) : null
   if (from.hash !== to.hash)
     errors.push(
       `${at}: a #fragment cannot be redirected, ${next} must carry ${from.hash || "none"}`,
     )
-  else if (!want) errors.push(`${at}: the new URL ${next} has no page`)
+  else if (to.origin !== SITE) {
+    to.hash = ""
+    if (file) errors.push(`${at}: lands on ${urlOf(file)}, expected ${next}`)
+    else if (final !== to.href)
+      errors.push(`${at}: ${hops ? `redirects to ${final}` : "answers 404"}, expected ${next}`)
+    else if (hops > 1) errors.push(`${at}: takes ${hops} hops to ${next}`)
+  } else if (!want) errors.push(`${at}: the new URL ${next} has no page`)
   else if (canonical(to.pathname, want) !== to.pathname)
     errors.push(`${at}: the new URL ${next} is not canonical, use ${canonical(to.pathname, want)}`)
   else if (!file)

@@ -1,7 +1,6 @@
 /*
- * Code blocks (Expressive Code) on every page, website and docs alike:
- * imported by the website layout (layouts/Website.astro) and listed in
- * Starlight's customCss. Their look is set in astro.config.mjs
+ * Code blocks (Expressive Code), imported by the website layout
+ * (layouts/Website.astro). Their look is set in astro.config.mjs
  * (expressiveCode.styleOverrides); this file adds what the options cannot.
  */
 

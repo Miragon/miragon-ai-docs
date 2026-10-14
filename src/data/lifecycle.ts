@@ -1,19 +1,25 @@
 // The BPM lifecycle and the Miragon AI tools in it: the one list the
 // lifecycle graphic (components/vue/LifecycleMap.vue), the website nav
-// (data/nav.ts), the docs sidebar (data/docs-sidebar.ts) and the site footer
-// (components/site/SiteFooter.astro) are built from. Source: the agreed value
-// proposition.
+// (data/nav.ts), the phase pages' tool cards (components/landing/PhaseTools.astro)
+// and the site footer (components/site/SiteFooter.astro) are built from.
+// Source: the agreed value proposition.
 //
-// Every link is in its canonical form, with the trailing slash: pages are
-// built as <path>/index.html (astro.config.mjs, build.format "directory").
+// Every link to a page of this site is in its canonical form, with the
+// trailing slash: pages are built as <path>/index.html (astro.config.mjs,
+// build.format "directory"). Docs and getting started live in each tool's
+// repo; `start` links there.
 
 export interface Tool {
   name: string
-  /** The tool's folder under /tools/ and /docs/ (src/content/tools/<slug>.mdx). */
+  /** The tool's folder under /tools/ (src/content/tools/<slug>.mdx). */
   slug: string
   link: string
   /** The tool's job in its phase, a few words. */
   job: string
+  /** Where a reader starts: the getting-started section in the tool's own
+      repo, a public demo, or the Get started band of its page when there is
+      more than one place to start. */
+  start: string
 }
 
 export interface Phase {
@@ -38,6 +44,8 @@ export const PHASES: Phase[] = [
         slug: "analyzr",
         link: "/tools/analyzr/",
         job: "Map how your processes connect",
+        // The repo is private: the public demo is the start.
+        start: "https://analyzr-demo.fly.dev/projects/nordwind-handel/review",
       },
     ],
   },
@@ -51,12 +59,14 @@ export const PHASES: Phase[] = [
         slug: "design-iq",
         link: "/tools/design-iq/",
         job: "Model together, release by PR",
+        start: "https://github.com/Miragon/design-iq#run-it-in-5-minutes",
       },
       {
         name: "bpmn-cli",
         slug: "bpmn-cli",
         link: "/tools/bpmn-cli/",
         job: "Agents edit BPMN by command",
+        start: "https://github.com/Miragon/bpmn-cli#install",
       },
     ],
   },
@@ -65,12 +75,20 @@ export const PHASES: Phase[] = [
     link: "/implement/",
     job: "Make the model run",
     tools: [
-      { name: "Skills", slug: "skills", link: "/tools/skills/", job: "Make the model deployable" },
+      {
+        name: "Skills",
+        slug: "skills",
+        link: "/tools/skills/",
+        job: "Make the model deployable",
+        // Two plugins from two repos: the band links both.
+        start: "/tools/skills/#get-started",
+      },
       {
         name: "Solution templates",
         slug: "solution-templates",
         link: "/tools/solution-templates/",
         job: "Connect your own systems",
+        start: "https://github.com/Miragon/miragon-ai-starter#quickstart",
       },
     ],
   },
@@ -79,12 +97,19 @@ export const PHASES: Phase[] = [
     link: "/execute/",
     job: "Find what is stuck and why",
     tools: [
-      { name: "Pulse", slug: "pulse", link: "/tools/pulse/", job: "Process operations in chat" },
+      {
+        name: "Pulse",
+        slug: "pulse",
+        link: "/tools/pulse/",
+        job: "Process operations in chat",
+        start: "https://github.com/Miragon/miragon-ai/blob/main/docs/getting-started.md",
+      },
       {
         name: "operate",
         slug: "operate",
         link: "/tools/operate/",
         job: "Engine state for shell, agent, CI",
+        start: "https://github.com/Miragon/operate#quick-start",
       },
     ],
   },
@@ -97,14 +122,3 @@ export const PHASES: Phase[] = [
 ]
 
 export const TOOLS: Tool[] = PHASES.flatMap((phase) => phase.tools)
-
-/** Pulse's reference pages under /docs/pulse/, after its getting-started page. */
-export const PULSE_DOCS = [
-  { slug: "architecture", label: "Architecture" },
-  { slug: "developer", label: "Developer" },
-  { slug: "operations", label: "Operations" },
-  { slug: "usage", label: "Usage" },
-] as const
-
-/** A tool's getting-started page in the docs. */
-export const docsLink = (tool: Tool) => `/docs/${tool.slug}/getting-started/`

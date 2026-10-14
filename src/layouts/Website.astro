@@ -1,12 +1,7 @@
 ---
-// Layout of the website pages (the landing, the phase pages, the tool pages,
-// the 404): always dark, the shared head, header and footer.
+// Layout of every page (the landing, the phase pages, the tool pages, the
+// 404): always dark, the shared head, header and footer.
 // - <html data-theme="dark">: Expressive Code picks its code theme by it.
-// - <main data-pagefind-body>: website pages join the docs in the site
-//   search (once any page carries it, Pagefind indexes only those pages).
-//   data-pagefind-meta names the result after the page title: by default
-//   Pagefind takes the first h1, the hero's, whose name and headline run
-//   together ("PulseAsk your engines ...").
 import HeadCommon from "../components/site/HeadCommon.astro"
 import SiteHeader from "../components/site/SiteHeader.astro"
 import SiteFooter from "../components/site/SiteFooter.astro"
@@ -17,14 +12,12 @@ import "../styles/website.css"
 interface Props {
   title: string
   description?: string
-  /** false keeps the page out of the Pagefind index (404). */
-  search?: boolean
   /** false omits <link rel="canonical"> and og:url: a page without a URL of
       its own (the 404 answers any path). */
   canonical?: boolean
 }
 
-const { title, description, search = true, canonical = true } = Astro.props
+const { title, description, canonical = true } = Astro.props
 const fullTitle = title === "Miragon AI" ? title : `${title} | Miragon AI`
 const url = new URL(Astro.url.pathname, Astro.site)
 ---
@@ -53,11 +46,7 @@ const url = new URL(Astro.url.pathname, Astro.site)
         <SiteHeader />
       </div>
     </header>
-    <main
-      id="main"
-      data-pagefind-body={search ? "" : undefined}
-      data-pagefind-meta={search ? `title:${title}` : undefined}
-    >
+    <main id="main">
       <slot />
     </main>
     <SiteFooter />
@@ -82,7 +71,7 @@ const url = new URL(Astro.url.pathname, Astro.site)
     border-bottom: 1px solid var(--site-divider);
     background: var(--site-bg);
   }
-  /* The header row centres itself at 1152px (SiteHeader), in docs too. */
+  /* The header row centres itself at 1152px (SiteHeader). */
   .site-header-inner {
     height: 100%;
     padding: 0 24px;

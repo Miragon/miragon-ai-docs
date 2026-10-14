@@ -1,6 +1,5 @@
-// Tags every page carries in <head>, website and docs alike. Rendered by
-// components/site/HeadCommon.astro, which the website layout and the
-// Starlight Head override both include.
+// Tags every page carries in <head>. Rendered by
+// components/site/HeadCommon.astro, which the website layout includes.
 export interface HeadTag {
   tag: "script" | "link" | "meta"
   attrs: Record<string, string | boolean>

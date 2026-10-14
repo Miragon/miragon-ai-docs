@@ -1,16 +1,15 @@
 /*
- * Miragon corporate design for the whole site, website pages and docs alike.
- * Imported by the website layout (layouts/Website.astro) and listed first in
- * Starlight's customCss (astro.config.mjs).
+ * Miragon corporate design for the whole site. Imported by the website
+ * layout (layouts/Website.astro).
  *
  * Token source: the Miragon corporate identity (CI) at ci.miragon.io (move
  * planned; until then corporate-identity.netlify.app), source of truth
  * `brand/tokens.json` in Miragon/corporate-identity. Its generated token set
  * (`--cd-*`) is vendored verbatim in cd-tokens.generated.css; this file only
- * MAPS the site's roles (--site-*), the landing building blocks' colours
- * (--l-*) and Starlight's variables (--sl-*) onto it. A CI change means
- * re-copying that one file and updating the pin in
- * scripts/check-brand-assets.mjs; never declare a --cd-* token here.
+ * MAPS the site's roles (--site-*) and the landing building blocks' colours
+ * (--l-*) onto it. A CI change means re-copying that one file and updating
+ * the pin in scripts/check-brand-assets.mjs; never declare a --cd-* token
+ * here.
  *
  * The site is always dark and follows the CI's rule for dark grounds:
  * `--cd-schwarz` is the only dark surface (no dark blue), text is white,
@@ -19,9 +18,6 @@
  * blue (focus rings). Every value is a `--cd-*` token or a color-mix() of
  * tokens (white lifts of `--cd-schwarz` for surfaces, text and lines).
  * Text/background pairs reach WCAG AA (CI contrast.json for the raw tokens).
- *
- * The :root block is unlayered on purpose: unlayered rules beat Starlight's
- * own @layer starlight.* defaults.
  */
 @import "./cd-tokens.generated.css";
 
@@ -30,8 +26,8 @@
 
   /* ── Site roles ─────────────────────────────────────────────────────── */
 
-  /* Surfaces: --cd-schwarz plus white lifts of it (alt: sidebar, code
-     blocks; soft: tables, cards; elv: popovers, dialogs). */
+  /* Surfaces: --cd-schwarz plus white lifts of it (alt: code blocks; soft:
+     tables, cards; elv: popovers, dialogs). */
   --site-bg: var(--cd-schwarz);
   --site-bg-alt: color-mix(in srgb, var(--cd-weiss) 3%, var(--cd-schwarz));
   --site-bg-soft: color-mix(in srgb, var(--cd-weiss) 5%, var(--cd-schwarz));
@@ -62,9 +58,6 @@
 
   /* Form fields: the CI's --cd-kontur role (input borders, ≥ 3:1). */
   --site-input-border: var(--cd-kontur);
-
-  /* Overlays: the CI's --cd-schwarz backdrop with opacity */
-  --site-backdrop: color-mix(in srgb, var(--cd-schwarz) 60%, transparent);
 
   /* Typography: Geist / Geist Mono, self-hosted via @fontsource
      (components/site/HeadCommon.astro). */
@@ -97,66 +90,4 @@
   --l-tile-muted-bg: color-mix(in srgb, var(--cd-weiss) 10%, transparent);
   /* Blue as a calm surface (CI): the one coloured box on the black page. */
   --l-cta-bg: var(--cd-blau);
-
-  /* ── Starlight ──────────────────────────────────────────────────────── */
-  /* Starlight's colour roles on the same tokens. Website pages need them
-     too: they render Starlight's Search in the shared header. */
-
-  --sl-font: var(--site-font);
-  --sl-font-mono: var(--site-font-mono);
-
-  --sl-color-white: var(--cd-weiss);
-  --sl-color-gray-1: var(--site-text-1);
-  --sl-color-gray-2: var(--site-text-2);
-  --sl-color-gray-3: var(--site-text-3);
-  --sl-color-gray-4: var(--site-gray-1);
-  --sl-color-gray-5: var(--site-border);
-  --sl-color-gray-6: var(--site-bg-elv);
-  --sl-color-black: var(--site-bg);
-  --sl-color-bg: var(--site-bg);
-
-  /* Body text is text-1, as on the VitePress docs. */
-  --sl-color-text: var(--site-text-1);
-  --sl-color-text-accent: var(--cd-gruen);
-  --sl-color-text-invert: var(--cd-schwarz);
-  --sl-color-accent-low: color-mix(in srgb, var(--cd-gruen) 14%, var(--cd-schwarz));
-  --sl-color-accent: var(--cd-blau);
-  --sl-color-accent-high: var(--cd-gruen);
-
-  --sl-color-bg-nav: var(--site-bg);
-  /* The sidebar is a slight lift, as on the VitePress docs. */
-  --sl-color-bg-sidebar: var(--site-bg-alt);
-  --sl-color-bg-inline-code: var(--site-bg-elv);
-  --sl-color-hairline: var(--site-divider);
-  --sl-color-hairline-shade: var(--site-divider);
-  --sl-color-hairline-light: var(--site-divider);
-  --sl-color-backdrop-overlay: var(--site-backdrop);
-
-  /* Asides (note, tip, caution, danger) and badges: CI status colours
-     instead of Starlight's hues. Starlight has no CI-free purple: tip uses
-     green, the success role. */
-  --sl-color-blue-low: color-mix(in srgb, var(--cd-blau) 22%, var(--cd-schwarz));
-  --sl-color-blue: var(--cd-blau-hell);
-  --sl-color-blue-high: var(--cd-weiss);
-  --sl-color-purple-low: color-mix(in srgb, var(--cd-gruen) 14%, var(--cd-schwarz));
-  --sl-color-purple: var(--cd-gruen);
-  --sl-color-purple-high: var(--cd-weiss);
-  --sl-color-green-low: color-mix(in srgb, var(--cd-gruen) 14%, var(--cd-schwarz));
-  --sl-color-green: var(--cd-success-hell);
-  --sl-color-green-high: var(--cd-weiss);
-  --sl-color-orange-low: color-mix(in srgb, var(--cd-warning) 16%, var(--cd-schwarz));
-  --sl-color-orange: var(--cd-warning-hell);
-  --sl-color-orange-high: var(--cd-weiss);
-  --sl-color-red-low: color-mix(in srgb, var(--cd-danger) 22%, var(--cd-schwarz));
-  --sl-color-red: var(--cd-danger-hell);
-  --sl-color-red-high: var(--cd-weiss);
-
-  /* The shared header (components/site/SiteHeader.astro) sets the height. */
-  --sl-nav-height: var(--site-header-height);
-}
-
-/* Starlight declares its colours on ::backdrop too (the search dialog's
-   overlay); the same mapping there. */
-::backdrop {
-  --sl-color-backdrop-overlay: var(--site-backdrop);
 }

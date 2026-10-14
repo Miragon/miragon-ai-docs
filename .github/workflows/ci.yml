@@ -24,9 +24,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
-        with:
-          # Full history: Starlight lastUpdated reads each page's last commit.
-          fetch-depth: 0
 
       - uses: pnpm/action-setup@v6.1.0
 
@@ -42,9 +39,8 @@ jobs:
       # Vendored CI tokens and logos pinned, no forked --cd-* tokens, page budgets.
       - run: pnpm check
 
-      # Also the content gate, failing on dead links: starlight-links-validator
-      # (Markdown/MDX) and scripts/check-dist.mjs (all of dist, redirects, URL
-      # map, legal/consent/form invariants).
+      # Also the content gate, failing on dead links: scripts/check-dist.mjs
+      # (all of dist, redirects, URL map, legal/consent/form invariants).
       - run: pnpm build
 
       - uses: Miragon/pin-npm-dependencies@v1.2.2
@@ -64,8 +60,7 @@ jobs:
         with:
           node-version: 22
 
-      # Tool names on every page, repo paths in src/content/docs/docs/pulse/
-      # and src/content/tools/pulse.mdx.
+      # Tool names on every page, repo paths in src/content/tools/pulse.mdx.
       - run: node scripts/check-miragon-ai-refs.mjs
         env:
           MIRAGON_AI_DIR: .miragon-ai

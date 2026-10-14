@@ -1,8 +1,6 @@
 /*
- * Website pages only (layouts/Website.astro), after tokens.css: reset,
- * base, .prose (the page text) and what Starlight's Search needs outside
- * Starlight. Docs pages get none of this; Starlight brings its own reset.
- * Band rules live in components/landing/PageSection.astro, the hero's
+ * Every page (layouts/Website.astro), after tokens.css: reset, base and
+ * .prose (the page text). Band rules live in components/landing/PageSection.astro, the hero's
  * fade-up in components/hero/Hero.astro.
  *
  * The reset and .prose are ports of VitePress' base.css and vp-doc.css
@@ -11,13 +9,13 @@
  * scoped styles are copied verbatim.
  */
 
-/* Cascade layers. The reset sits in the lowest layer: Starlight's Search in
-   the header brings its own layered styles (button, kbd, dialog), which an
-   unlayered reset would beat. Every unlayered rule (scoped component styles,
-   .prose) still beats the reset. components/site/HeadCommon.astro repeats
-   this statement in an inline <style> ahead of every stylesheet, so the
-   order holds whichever stylesheet loads first. */
-@layer site-reset, starlight.base, starlight.reset, starlight.core, starlight.content, starlight.components, starlight.utils;
+/* Cascade layers. The reset sits in the lowest layer, Expressive Code's
+   code blocks (astro.config.mjs) in the next, and every unlayered rule
+   (scoped component styles, .prose) beats both.
+   components/site/HeadCommon.astro repeats this statement in an inline
+   <style> ahead of every stylesheet, so the order holds whichever
+   stylesheet loads first. */
+@layer site-reset, expressive-code;
 
 /* ── Reset (VitePress base.css) ──────────────────────────────────────── */
 
@@ -206,8 +204,8 @@ body {
 }
 
 /* ── Page text (VitePress vp-doc.css as .prose) ──────────────────────── */
-/* :where(.prose) keeps these rules at element weight. Starlight makes Astro
-   scope component styles with :where() (scopedStyleStrategy "where"), so a
+/* :where(.prose) keeps these rules at element weight. astro.config.mjs makes
+   Astro scope component styles with :where() (scopedStyleStrategy "where"), so a
    ported component's `.card` no longer carries the extra attribute weight
    Vue's scoping gave it; at element weight .prose still loses to it, as
    .vp-doc did. */
@@ -373,41 +371,4 @@ body {
    tables, code and components keep it. */
 :where(.prose) > :is(p, ul, ol, h2, h3, h4, blockquote) {
   max-width: 760px;
-}
-
-/* ── Starlight's Search outside Starlight ────────────────────────────── */
-/* The shared header renders Starlight's Search on website pages too, where
-   Starlight's props.css and util.css are not loaded: the few non-colour
-   props and the utility classes it reads (the layer order is at the top). */
-
-:root {
-  --__sl-font: var(--site-font);
-  --__sl-font-mono: var(--site-font-mono);
-  --sl-text-2xs: 0.75rem;
-  --sl-text-sm: 0.875rem;
-  --sl-text-xl: 1.25rem;
-  --sl-shadow-lg: var(--cd-shadow-3);
-}
-
-@layer starlight.utils {
-  .sl-hidden {
-    display: none;
-  }
-  .sl-flex {
-    display: flex;
-  }
-  .sl-block {
-    display: block;
-  }
-  @media (min-width: 50rem) {
-    .md\:sl-hidden {
-      display: none;
-    }
-    .md\:sl-flex {
-      display: flex;
-    }
-    .md\:sl-block {
-      display: block;
-    }
-  }
 }
