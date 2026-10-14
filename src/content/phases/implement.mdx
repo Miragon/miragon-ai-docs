@@ -32,7 +32,7 @@ tools:
     text:
       - Your coding agent in Claude Code combines two skills. The bpmn skill from the bpmn-cli plugin sets Camunda 7 or Camunda 8 attributes by element id and keeps the drawn layout, and `bpmn validate --strict` reports each deploy blocker with the command that fixes it before the file reaches the engine.
       - The operate skill then deploys the model to Camunda 7, CIB seven or Operaton and runs one test instance to the end. If it hits an incident, `operate wait` stops with exit code 9. No skill generates worker or delegate code yet.
-    status: Early. bpmn-cli 0.6.0 and operate 0.5.0 are pre-1.0 (as of 2026-10-13). Camunda 8 files can be edited and validated, but no skill runs them. Both skills install from the public plugin marketplaces in [Miragon/bpmn-cli](https://github.com/Miragon/bpmn-cli/tree/main/plugins/bpmn-cli) and [Miragon/operate](https://github.com/Miragon/operate/blob/main/docs/agents.md).
+    status: Early. bpmn-cli 0.6.0 and operate 0.5.0 are pre-1.0 (as of 2026-10-13). Camunda 8 files can be edited and validated, but no skill runs them. Both skills install from the public plugin marketplaces in [Miragon/bpmn-cli](https://miragon.github.io/bpmn-cli/claude-code-plugin) and [Miragon/operate](https://miragon.github.io/operate/agents#claude-code-plugin).
   - tool: Solution templates
     text:
       - "[miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter) and [mcp-toolkit-starter](https://github.com/Miragon/mcp-toolkit-starter) are GitHub template repositories that start your own MCP server. Neither contains process automation code such as job workers or engine setup."

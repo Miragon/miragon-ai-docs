@@ -1,8 +1,8 @@
 # CLAUDE.md
 
 This repo is the Miragon AI site (Astro), served at https://miragon.ai. For now it is landing pages
-only: docs and getting started live in each tool's repo. `README.md` covers setup, CI and
-deployment.
+only: docs and getting started live in each tool's repo, as a VitePress site in one shared style
+(the theme of Miragon/mcp-toolkit) on GitHub Pages. `README.md` covers setup, CI and deployment.
 
 - Load the `docs-style` skill (`.claude/skills/docs-style/SKILL.md`) before you edit, review or plan
   any page. It holds the URL scheme, the voice rules, the decisions and the line budget per page.
@@ -16,12 +16,12 @@ deployment.
   (`src/components/site/SiteFooter.astro`) are built from it, so add, rename or move a tool there
   and not in one of them. Each tool's `start` is its getting-started link.
 - Pulse is the MCP server from the repo Miragon/miragon-ai. Its landing page is
-  `src/content/tools/pulse.mdx`, its docs are Markdown in `docs/` of Miragon/miragon-ai. Say
+  `src/content/tools/pulse.mdx`, its docs are the VitePress site in `docs/` of Miragon/miragon-ai (https://miragon.github.io/miragon-ai/). Say
   "Pulse" in prose and keep the technical identifiers exact (repo, Docker image, `@miragon-ai/*`
   packages, MCP server name, playground host, tool names).
 - Every tool page is a landing page (an entry of the `tools` collection, no `layout: home`: eyebrow,
   hero with the tool's real artefact, then a short body). Its Get started band links to the place
-  in the tool's repo that holds the commands. The skill describes the pattern and its truth rule
+  in the tool's docs site that holds the commands. The skill describes the pattern and its truth rule
   for artefacts.
 - Never edit `src/styles/cd-tokens.generated.css` or the logos in `public/logo/`. They are vendored
   from Miragon/corporate-identity and pinned in `scripts/check-brand-assets.mjs`. No other file

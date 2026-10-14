@@ -33,43 +33,44 @@
 # pages that shadow these rules.
 
 # Pulse's four reference pages, live at the root until this site replaced
-# the old one. Their Markdown lives in the docs of Miragon/miragon-ai.
+# the old one. They live in Pulse's docs site, built from docs/ of
+# Miragon/miragon-ai and served on GitHub Pages.
 [[redirects]]
   from = "/architecture"
-  to = "https://github.com/Miragon/miragon-ai/blob/main/docs/architecture.md"
+  to = "https://miragon.github.io/miragon-ai/architecture"
   status = 301
 
 [[redirects]]
   from = "/architecture.html"
-  to = "https://github.com/Miragon/miragon-ai/blob/main/docs/architecture.md"
+  to = "https://miragon.github.io/miragon-ai/architecture"
   status = 301
 
 [[redirects]]
   from = "/developer"
-  to = "https://github.com/Miragon/miragon-ai/blob/main/docs/developer.md"
+  to = "https://miragon.github.io/miragon-ai/developer"
   status = 301
 
 [[redirects]]
   from = "/developer.html"
-  to = "https://github.com/Miragon/miragon-ai/blob/main/docs/developer.md"
+  to = "https://miragon.github.io/miragon-ai/developer"
   status = 301
 
 [[redirects]]
   from = "/operations"
-  to = "https://github.com/Miragon/miragon-ai/blob/main/docs/operations.md"
+  to = "https://miragon.github.io/miragon-ai/operations"
   status = 301
 
 [[redirects]]
   from = "/operations.html"
-  to = "https://github.com/Miragon/miragon-ai/blob/main/docs/operations.md"
+  to = "https://miragon.github.io/miragon-ai/operations"
   status = 301
 
 [[redirects]]
   from = "/usage"
-  to = "https://github.com/Miragon/miragon-ai/blob/main/docs/usage.md"
+  to = "https://miragon.github.io/miragon-ai/usage"
   status = 301
 
 [[redirects]]
   from = "/usage.html"
-  to = "https://github.com/Miragon/miragon-ai/blob/main/docs/usage.md"
+  to = "https://miragon.github.io/miragon-ai/usage"
   status = 301

@@ -1,6 +1,6 @@
 ---
 name: docs-style
-description: Always-on style guide for the Miragon AI site (Astro, served at https://miragon.ai, landing pages only). Use whenever editing, reviewing or planning any page (the landing, the five phase pages and the tool landing pages in `src/content/`), `src/data/lifecycle.ts`, `astro.config.mjs` or the components in `src/components/`, whenever a Miragon AI tool releases or moves its getting-started steps, and proactively whenever you suspect the site has drifted from the tools. Encodes the lifecycle structure and URL scheme, the tool landing page pattern and its truth rule for hero artefacts, where getting started and docs live (each tool's repo), the Pulse naming rule, the per-page line budgets, the English voice and anti-slop rules, the decisions from Miragon/miragon-ai-docs#1, the Astro stack and the rule against copying tool READMEs.
+description: Always-on style guide for the Miragon AI site (Astro, served at https://miragon.ai, landing pages only). Use whenever editing, reviewing or planning any page (the landing, the five phase pages and the tool landing pages in `src/content/`), `src/data/lifecycle.ts`, `astro.config.mjs` or the components in `src/components/`, whenever a Miragon AI tool releases or moves its getting-started steps, and proactively whenever you suspect the site has drifted from the tools. Encodes the lifecycle structure and URL scheme, the tool landing page pattern and its truth rule for hero artefacts, where getting started and docs live (a VitePress site in each tool's repo), the Pulse naming rule, the per-page line budgets, the English voice and anti-slop rules, the decisions from Miragon/miragon-ai-docs#1, the Astro stack and the rule against copying tool READMEs.
 allowed-tools: Read, Edit, Write, Glob, Grep, Bash
 ---
 
@@ -20,8 +20,9 @@ each tool's own README, and the page links to it. A tool page that starts to rea
 has outgrown its job; never copy a README.
 
 For now the site is landing pages only (the owner's decision of 2026-10-14). Docs and getting
-started live in each tool's repo, Pulse's in `docs/` of Miragon/miragon-ai, and the tool pages link
-there. The site held docs under `/docs/` (Starlight) from 2026-10-13 to 2026-10-14; bringing docs
+started live in each tool's repo as a VitePress site in one style: `docs/` with the theme of
+Miragon/mcp-toolkit (copied unchanged), deployed to GitHub Pages at `https://miragon.github.io/<repo>/`.
+The tool pages link there. The site held docs under `/docs/` (Starlight) from 2026-10-13 to 2026-10-14; bringing docs
 back needs the team.
 
 ## Information architecture and URLs
@@ -34,7 +35,7 @@ the 404 lives in `src/content/`; the table gives the paths below it.
 | `landing/index.mdx`                             | `/`                                                                                    | The value proposition: lifecycle graphic, who it is for, what Miragon AI does per phase, human and AI, why Miragon, what we don't promise, contact form (`/#contact`)                                                              |
 | `phases/{analyse,design,implement,execute}.mdx` | `/analyse/`, `/design/`, `/implement/`, `/execute/`                                    | One page per phase: the problem today, how the tools help, human and AI, hand-over to the next phase                                                                                                                               |
 | `phases/optimize.mdx`                           | `/optimize/`                                                                           | The phase without a tool: the problem, what the phase needs, what Execute already hands over                                                                                                                                       |
-| `tools/<tool>.mdx`                              | `/tools/<tool>/` for analyzr, design-iq, bpmn-cli, skills, solution-templates, operate | The tool's landing page (see [Tool landing pages](#tool-landing-pages)): promise and real artefact in the hero, then the problem, how it works, get started (a link to the tool's repo), status, proof you can open, where it fits |
+| `tools/<tool>.mdx`                              | `/tools/<tool>/` for analyzr, design-iq, bpmn-cli, skills, solution-templates, operate | The tool's landing page (see [Tool landing pages](#tool-landing-pages)): promise and real artefact in the hero, then the problem, how it works, get started (a link to the tool's docs), status, proof you can open, where it fits |
 | `tools/pulse.mdx`                               | `/tools/pulse/`                                                                        | Pulse's landing page: the chat window in the hero, the playground card, connecting your Claude (`#connect-your-claude`), links to the docs in Miragon/miragon-ai                                                                   |
 
 - Link pages absolute from the root and with the trailing slash, exactly as in the URL column
@@ -50,16 +51,17 @@ the 404 lives in `src/content/`; the table gives the paths below it.
   `start` there: the getting-started section in its own repo.
 - The Pulse doc pages of the old site sat at the root. `netlify.toml` redirects `/architecture`,
   `/developer`, `/operations` and `/usage` (and their `.html` variants) with a 301 to their
-  Markdown in Miragon/miragon-ai (`https://github.com/Miragon/miragon-ai/blob/main/docs/<page>.md`).
+  pages in Pulse's docs site (`https://miragon.github.io/miragon-ai/<page>`).
   `scripts/url-map.json` lists every old URL and its target, and the build checks that each lands
   there in one hop. If you move a page, add a redirect and a URL map entry.
 
 ## Pulse and miragon-ai
 
 Pulse is the product name of the MCP server built in the repo Miragon/miragon-ai (the owner's
-decision of 2026-10-13). Its docs are Markdown in `docs/` of that repo: `getting-started.md` (with
-`#connect-your-claude-in-30-seconds` and `#run-it-on-your-own-engine`), `architecture.md`,
-`developer.md`, `operations.md` and `usage.md`. Prose says Pulse. Where a reader needs the mapping,
+decision of 2026-10-13). Its docs are the VitePress site in `docs/` of that repo,
+https://miragon.github.io/miragon-ai/: `getting-started` (with
+`#connect-your-claude-in-30-seconds` and `#run-it-on-your-own-engine`), `architecture`,
+`developer`, `operations` and `usage`. Prose says Pulse. Where a reader needs the mapping,
 say it once per page:
 "Pulse is the MCP server from the repo Miragon/miragon-ai" or "Pulse (the miragon-ai MCP server)".
 Technical identifiers stay exact, because readers copy them:
@@ -214,7 +216,7 @@ page follows this order; adapt it to the tool. Bands alternate `tint` and `plain
 8. A `<CtaBox>` with a tool-specific title and text; the button goes to `/#contact`.
 
 Pulse's page also keeps the band `Connect your Claude in 30 seconds` with
-`id="connect-your-claude"`, `<TryItOut />` and a pill to `getting-started.md#connect-your-claude-in-30-seconds`
+`id="connect-your-claude"`, `<TryItOut />` and a pill to `getting-started#connect-your-claude-in-30-seconds`
 in Miragon/miragon-ai, and a `Docs` band with a card for each of its reference pages there. Only the main landing carries the contact form (`<BrandContact />`) in its last band; tool
 pages close with the `CtaBox`.
 
@@ -264,7 +266,7 @@ was VitePress.
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `<PageSection>`  | Every band below the hero, alternating `tint` (the first) and `plain`. Markdown inside needs a blank line after the opening and before the closing tag.                                                                   | `id`, `eyebrow`, `title`, `intro`, `tone` (`plain`, `tint`, `dark`), `align`             |
 | `<FeatureList>`  | An icon tile, a title and one or two sentences per item: problems, limits, reasons.                                                                                                                                       | `items: [{ icon, title, text }]`, `columns` (1, 2, 3)                                    |
-| `<CardGrid>`     | Cards with an optional icon tile or a small eyebrow label; a card with `link` is one link ("Learn more" or "Open" for external links). Proof, where it fits, the docs in a tool's repo, roles, phases.                    | `items: [{ icon, eyebrow, title, text, link, linkText }]`, `columns` (2, 3, 4), `center` |
+| `<CardGrid>`     | Cards with an optional icon tile or a small eyebrow label; a card with `link` is one link ("Learn more" or "Open" for external links). Proof, where it fits, a tool's docs, roles, phases.                                | `items: [{ icon, eyebrow, title, text, link, linkText }]`, `columns` (2, 3, 4), `center` |
 | `<StepList>`     | Two to four numbered steps, centred.                                                                                                                                                                                      | `items: [{ title, text }]`                                                               |
 | `<CompareCards>` | Today against with the tool: short, paired lines.                                                                                                                                                                         | `before: { title, items }`, `after: { title, items }`                                    |
 | `<CtaBox>`       | The closing box of a tool or phase page: a blue surface, a black pill button.                                                                                                                                             | `title`, `text`, `label`, `href` (default `/#contact`), `note`                           |
@@ -297,7 +299,7 @@ decision of 2026-10-14. Follow them; changing one needs the team.
 | Tool pages             | Every tool page is a landing page of its own with the tool's real artefact in the hero.                                                                                                                                     |
 | Website look           | The landing pages look like a website in miragon.io's visual language (bands, cards, icon lists, steps, a closing box) and stay always dark, the hero included (no blue gradient).                                          |
 | Lifecycle loop         | Analyse runs once, at the start. Design, Implement, Execute and Optimize form the loop, and what you learn in Optimize goes back into Design.                                                                               |
-| Landing pages only     | For now the site has no docs. Docs and getting started live in each tool's repo, Pulse's in `docs/` of Miragon/miragon-ai; the tool pages link there.                                                                       |
+| Landing pages only     | For now the site has no docs. Docs and getting started live in each tool's repo as a VitePress site in the style of Miragon/mcp-toolkit, on GitHub Pages; the tool pages link there.                                        |
 
 ## Voice
 
@@ -384,7 +386,7 @@ decision of 2026-10-14. Follow them; changing one needs the team.
 | consentmanager scripts                | `src/data/head.ts`, rendered by `src/components/site/HeadCommon.astro` | Cookie consent with autoblocking; third-party scripts such as the Calendly embed wait for consent. They stay classic scripts ahead of every stylesheet and module script, and the build checks that order. |
 | `BrandContact` with `id="contact"`    | landing page, an island whose form is in the built HTML                | Contact form on Netlify Forms plus Calendly; the header's "Talk to us" and every other "Talk to us" link point to `/#contact`. The build checks the form in `dist/index.html`.                             |
 | `#connect-your-claude`                | the band on `src/content/tools/pulse.mdx`                              | Older links land on the band, which links on to Pulse's getting started in Miragon/miragon-ai.                                                                                                             |
-| `#get-started`                        | the band on every tool page                                            | Older links to the band still land on the tool page, which links on to the tool's repo.                                                                                                                    |
+| `#get-started`                        | the band on every tool page                                            | Older links to the band still land on the tool page, which links on to the tool's docs.                                                                                                                    |
 | Netlify settings                      | Netlify UI, documented in `README.md`                                  | Form detection on (the form needs it); Pretty URLs and Auto Minify off, so Netlify serves the HTML the build checked (Auto Minify would also strip the comments the Vue islands need for hydration).       |
 
 ## Commands
@@ -409,7 +411,7 @@ stop them with `pnpm astro dev stop` and `pnpm astro preview stop`.
 | Page budgets     | `pnpm check` runs `scripts/check-page-budgets.mjs`                                                        | A page over its budget, a page without a budget row. It reads the table below.                                                                                                                                                                                                                                                                                                                                                        |
 | Pulse references | `MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs`                                     | Tool names the miragon-ai server does not register (any page), repo paths on Pulse's tool page that do not exist. Skips without `MIRAGON_AI_DIR`; CI runs it on every pull request and every Monday. The Pulse docs are checked in Miragon/miragon-ai (`docs-refs.test.ts`).                                                                                                                                                          |
 | brand-lint       | `.miragon/brand.json` enables it                                                                          | Em dashes, spellings, anti-slop patterns, off-palette colours. The miragon-brand hook lints each file you write; CI runs it on the repo. Zero hard findings.                                                                                                                                                                                                                                                                          |
-| Built site       | `pnpm build` runs `scripts/check-dist.mjs` after `astro build`; it also runs alone on an existing `dist/` | Over all of `dist/`: a dead internal link or `#anchor` (MDX and components alike), a page link without its trailing slash, a redirect in `netlify.toml` that a file shadows or that leads nowhere, an old URL in `scripts/url-map.json` that does not land on its target in one hop (on this site or in a tool's repo), a page without both legal links or with the consent scripts out of order, a landing without the contact form. |
+| Built site       | `pnpm build` runs `scripts/check-dist.mjs` after `astro build`; it also runs alone on an existing `dist/` | Over all of `dist/`: a dead internal link or `#anchor` (MDX and components alike), a page link without its trailing slash, a redirect in `netlify.toml` that a file shadows or that leads nowhere, an old URL in `scripts/url-map.json` that does not land on its target in one hop (on this site or in a tool's docs), a page without both legal links or with the consent scripts out of order, a landing without the contact form. |
 | Build            | `pnpm build`                                                                                              | Broken Markdown, MDX or components, frontmatter the schemas reject.                                                                                                                                                                                                                                                                                                                                                                   |
 
 To lint by hand, run `scripts/brand-lint.mjs` from the miragon-brand plugin in your Claude Code
@@ -433,18 +435,18 @@ within one path segment. Every page needs a row or a glob that covers it.
 
 ## When to refresh
 
-| Change                                                                                        | Revisit                                                                                                                                  |
-| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| A tool releases (version, maturity, supported engines)                                        | Its tool page (status and hero artefact), its phase page, version and maturity statements on the landing                                 |
-| Getting-started steps, install commands or URLs change (demo, playground, plugin marketplace) | The tool's `start` in `src/data/lifecycle.ts`, the hero action and the Get started band of its tool page                                 |
-| A tool's commands, output or UI change                                                        | The hero artefact on its tool page (the frontmatter `artefact`, or the screenshot in `public/screens/`)                                  |
-| The Pulse playground's seed data changes                                                      | The numbers in `src/components/hero/PulseChat.astro`                                                                                     |
-| A phase gains, loses or renames a tool                                                        | `src/data/lifecycle.ts` first, then the phase page, the tool page, the landing and the table in `README.md`                              |
-| A page moves                                                                                  | Budget row, a 301 in `netlify.toml`, an entry in `scripts/url-map.json`, every link to it                                                |
-| A repo turns public or private                                                                | Every link to it                                                                                                                         |
-| The agreed value proposition changes                                                          | Landing and phase pages                                                                                                                  |
-| Pulse: new or removed tool, module or skill                                                   | Pulse's tool page, then the refs check                                                                                                   |
-| Pulse: docs pages added, renamed or anchors changed in `docs/` of Miragon/miragon-ai          | The `docs` cards and the two Get started pills on Pulse's tool page, `start` in `src/data/lifecycle.ts`, the redirects in `netlify.toml` |
+| Change                                                                                        | Revisit                                                                                                                                                                            |
+| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A tool releases (version, maturity, supported engines)                                        | Its tool page (status and hero artefact), its phase page, version and maturity statements on the landing                                                                           |
+| Getting-started steps, install commands or URLs change (demo, playground, plugin marketplace) | The tool's `start` in `src/data/lifecycle.ts`, the hero action and the Get started band of its tool page                                                                           |
+| A tool's commands, output or UI change                                                        | The hero artefact on its tool page (the frontmatter `artefact`, or the screenshot in `public/screens/`)                                                                            |
+| The Pulse playground's seed data changes                                                      | The numbers in `src/components/hero/PulseChat.astro`                                                                                                                               |
+| A phase gains, loses or renames a tool                                                        | `src/data/lifecycle.ts` first, then the phase page, the tool page, the landing and the table in `README.md`                                                                        |
+| A page moves                                                                                  | Budget row, a 301 in `netlify.toml`, an entry in `scripts/url-map.json`, every link to it                                                                                          |
+| A repo turns public or private                                                                | Every link to it                                                                                                                                                                   |
+| The agreed value proposition changes                                                          | Landing and phase pages                                                                                                                                                            |
+| Pulse: new or removed tool, module or skill                                                   | Pulse's tool page, then the refs check                                                                                                                                             |
+| A tool's docs site adds, renames or moves pages or anchors                                    | `start` in `src/data/lifecycle.ts`, the tool page's hero action, Get started band and `docs` cards, every phase page that links it, for Pulse also the redirects in `netlify.toml` |
 
 If one of these ships and the site stays as it was, the site is stale.
 
@@ -471,7 +473,7 @@ If one of these ships and the site stays as it was, the site is stale.
 - Screenshots, except a tool landing page's hero artefact or where they show what text cannot.
 - Decorative icons or illustrations in place of the real artefact, generic feature cards on website
   pages (use the landing building blocks instead) and icon grids with filler text.
-- Docs and getting-started pages: they live in each tool's repo, and the tool page links there.
+- Docs and getting-started pages: they live in each tool's docs site, and the tool page links there.
 
 If someone ships a tool change and has not mentioned the site, ask whether a page needs an update
 before the change lands.

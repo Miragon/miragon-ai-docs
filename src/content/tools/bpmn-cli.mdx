@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: https://github.com/Miragon/bpmn-cli#install
+      link: https://miragon.github.io/bpmn-cli/getting-started
     - theme: alt
       text: GitHub
       link: https://github.com/Miragon/bpmn-cli
@@ -104,7 +104,7 @@ proof:
   - icon: route
     title: Walkthrough
     text: One session from an empty file to a validated Camunda 8 model with two pools, with real CLI output.
-    link: https://github.com/Miragon/bpmn-cli/blob/main/docs/walkthrough.md
+    link: https://miragon.github.io/bpmn-cli/walkthrough
   - icon: puzzle
     title: Claude Code plugin
     text: The skill bpmn and seven eval cases. Their results are not published yet.
@@ -112,7 +112,7 @@ proof:
   - icon: file
     title: designIQ ADR 0009
     text: The decision record on why designIQ edits BPMN through bpmn-cli.
-    link: https://github.com/Miragon/design-iq/blob/main/docs/adr/0009-bpmn-editing-through-bpmn-cli.md
+    link: https://miragon.github.io/design-iq/adr/0009-bpmn-editing-through-bpmn-cli
   - icon: github
     title: Miragon/bpmn-cli
     text: The source under the MIT licence, with the README and changelog.
@@ -146,19 +146,19 @@ docs:
   - icon: list
     title: Command reference
     text: Every command with its options.
-    link: https://github.com/Miragon/bpmn-cli/blob/main/docs/commands.md
+    link: https://miragon.github.io/bpmn-cli/commands
   - icon: server
     title: Camunda 7 and Camunda 8
     text: Platform settings with worked examples.
-    link: https://github.com/Miragon/bpmn-cli/blob/main/docs/camunda.md
+    link: https://miragon.github.io/bpmn-cli/camunda
   - icon: map
     title: Layout and formatting
     text: Layout modes and the commands that change only the diagram.
-    link: https://github.com/Miragon/bpmn-cli/blob/main/docs/layout.md
+    link: https://miragon.github.io/bpmn-cli/layout
   - icon: book
-    title: README
-    text: The index of every docs page, from the batch format of bpmn apply to the contract and its limits.
-    link: https://github.com/Miragon/bpmn-cli#readme
+    title: All docs
+    text: Every docs page, from the batch format of bpmn apply to the contract and its limits.
+    link: https://miragon.github.io/bpmn-cli/
 ---
 
 <PageSection tone="tint" eyebrow="The problem" title="Most of the BPMN XML an agent writes is diagram coordinates" intro="When an agent models or changes a process today, it writes the BPMN XML itself. Every coordinate costs tokens and is a chance to break the file, and shapes your team placed by hand in Camunda Modeler get moved. Read as raw XML, a large model no longer fits into the agent's context.">
@@ -182,8 +182,8 @@ bpmn validate order.bpmn --strict   # valid, 0 warning(s)
   <FeatureList items={frontmatter.result} columns={3} />
 </PageSection>
 
-<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Start in Claude Code or at the shell" intro="Install the CLI and build a first model, or add the Claude Code plugin. The README of Miragon/bpmn-cli has both.">
-  <PillButton href="https://github.com/Miragon/bpmn-cli#install" label="Get started" />
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Start in Claude Code or at the shell" intro="Install the CLI and build a first model, or add the Claude Code plugin. The bpmn-cli docs have both.">
+  <PillButton href="https://miragon.github.io/bpmn-cli/getting-started" label="Get started" />
 </PageSection>
 
 <PageSection eyebrow="Status" title="Where bpmn-cli stands on 13 October 2026" intro="bpmn-cli is at 0.6.0, released to npm on 12 October 2026. It is pre-1.0, and minor versions still bring breaking changes (0.3.0, 0.4.0 and 0.5.0 did), so pin the version you run. The repository is public under the MIT licence.">
@@ -198,7 +198,7 @@ bpmn validate order.bpmn --strict   # valid, 0 warning(s)
   <CardGrid items={frontmatter.fits} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Docs" title="The reference lives in the repo">
+<PageSection tone="tint" eyebrow="Docs" title="The full reference is in the docs">
   <CardGrid items={frontmatter.docs} columns={4} />
 </PageSection>
 

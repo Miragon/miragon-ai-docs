@@ -13,20 +13,20 @@ the phase pages and the tool pages are MDX files with a frontmatter schema each.
 Analyse runs once, at the start. Then Design, Implement, Execute and Optimize form a loop, and
 Optimize feeds back into Design.
 
-| Phase                                         | Tool               | Page                                                                     | Getting started                                                                                                                                                                     |
-| --------------------------------------------- | ------------------ | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Analyse](src/content/phases/analyse.mdx)     | analyzr            | [`/tools/analyzr/`](src/content/tools/analyzr.mdx)                       | [the public demo](https://analyzr-demo.fly.dev/projects/nordwind-handel/review)                                                                                                     |
-| [Design](src/content/phases/design.mdx)       | designIQ           | [`/tools/design-iq/`](src/content/tools/design-iq.mdx)                   | [README of Miragon/design-iq](https://github.com/Miragon/design-iq#run-it-in-5-minutes)                                                                                             |
-| [Design](src/content/phases/design.mdx)       | bpmn-cli           | [`/tools/bpmn-cli/`](src/content/tools/bpmn-cli.mdx)                     | [README of Miragon/bpmn-cli](https://github.com/Miragon/bpmn-cli#install)                                                                                                           |
-| [Implement](src/content/phases/implement.mdx) | Skills             | [`/tools/skills/`](src/content/tools/skills.mdx)                         | [bpmn-cli plugin](https://github.com/Miragon/bpmn-cli/tree/main/plugins/bpmn-cli), [operate plugin](https://github.com/Miragon/operate/blob/main/docs/agents.md#claude-code-plugin) |
-| [Implement](src/content/phases/implement.mdx) | Solution templates | [`/tools/solution-templates/`](src/content/tools/solution-templates.mdx) | [README of Miragon/miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter#quickstart)                                                                                    |
-| [Execute](src/content/phases/execute.mdx)     | Pulse              | [`/tools/pulse/`](src/content/tools/pulse.mdx)                           | [docs of Miragon/miragon-ai](https://github.com/Miragon/miragon-ai/blob/main/docs/getting-started.md)                                                                               |
-| [Execute](src/content/phases/execute.mdx)     | operate            | [`/tools/operate/`](src/content/tools/operate.mdx)                       | [README of Miragon/operate](https://github.com/Miragon/operate#quick-start)                                                                                                         |
-| [Optimize](src/content/phases/optimize.mdx)   | no tool yet        | [`/optimize/`](src/content/phases/optimize.mdx)                          |                                                                                                                                                                                     |
+| Phase                                         | Tool               | Page                                                                     | Getting started                                                                                                                                         |
+| --------------------------------------------- | ------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Analyse](src/content/phases/analyse.mdx)     | analyzr            | [`/tools/analyzr/`](src/content/tools/analyzr.mdx)                       | [the public demo](https://analyzr-demo.fly.dev/projects/nordwind-handel/review)                                                                         |
+| [Design](src/content/phases/design.mdx)       | designIQ           | [`/tools/design-iq/`](src/content/tools/design-iq.mdx)                   | [designIQ docs](https://miragon.github.io/design-iq/getting-started)                                                                                    |
+| [Design](src/content/phases/design.mdx)       | bpmn-cli           | [`/tools/bpmn-cli/`](src/content/tools/bpmn-cli.mdx)                     | [bpmn-cli docs](https://miragon.github.io/bpmn-cli/getting-started)                                                                                     |
+| [Implement](src/content/phases/implement.mdx) | Skills             | [`/tools/skills/`](src/content/tools/skills.mdx)                         | [bpmn-cli plugin](https://miragon.github.io/bpmn-cli/claude-code-plugin), [operate plugin](https://miragon.github.io/operate/agents#claude-code-plugin) |
+| [Implement](src/content/phases/implement.mdx) | Solution templates | [`/tools/solution-templates/`](src/content/tools/solution-templates.mdx) | [README of Miragon/miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter#quickstart)                                                        |
+| [Execute](src/content/phases/execute.mdx)     | Pulse              | [`/tools/pulse/`](src/content/tools/pulse.mdx)                           | [Pulse docs](https://miragon.github.io/miragon-ai/getting-started)                                                                                      |
+| [Execute](src/content/phases/execute.mdx)     | operate            | [`/tools/operate/`](src/content/tools/operate.mdx)                       | [operate docs](https://miragon.github.io/operate/getting-started)                                                                                       |
+| [Optimize](src/content/phases/optimize.mdx)   | no tool yet        | [`/optimize/`](src/content/phases/optimize.mdx)                          |                                                                                                                                                         |
 
 Pulse is the MCP server from the repo [Miragon/miragon-ai](https://github.com/Miragon/miragon-ai).
 Its docs, getting started and four reference pages (architecture, developer, operations, usage),
-live in that repo's `docs/`. The phases and tools above live in one list, `src/data/lifecycle.ts`,
+are a VitePress site built from that repo's `docs/` (https://miragon.github.io/miragon-ai/). The phases and tools above live in one list, `src/data/lifecycle.ts`,
 which draws the lifecycle graphic on the landing page and builds the nav, the tool cards of the
 phase pages and the site footer. Its `start` field holds each tool's getting-started link.
 
@@ -34,7 +34,7 @@ Every tool page is a landing page of its own, like the landing: a hero with the 
 artefact (Pulse's chat, a terminal session or a screenshot, picked in the frontmatter and rendered
 by `src/components/hero/HeroArtefact.astro`), then the problem, how it works, how to get started,
 its status, proof you can open and where it fits. Its Get started band links to the place in the
-tool's repo that holds the commands.
+tool's docs that holds the commands.
 
 ## Local development
 
@@ -108,7 +108,7 @@ served with an immutable cache header.
 
 `netlify.toml` also holds every redirect, all with a 301: the Pulse doc pages of the old site
 (`/architecture`, `/developer`, `/operations`, `/usage` and their `.html` variants) go to their
-Markdown in [Miragon/miragon-ai](https://github.com/Miragon/miragon-ai/tree/main/docs).
+pages in Pulse's docs site (https://miragon.github.io/miragon-ai/).
 Astro's own `redirects` stay unused: without an adapter they become pages that would shadow these
 rules. `scripts/url-map.json` lists every old URL and where it lands, and the build checks it.
 
@@ -132,7 +132,8 @@ Taken on 2026-10-13 in [Miragon/miragon-ai-docs#1](https://github.com/Miragon/mi
   contact live here; the old site gets redirected or archived in a separate step.
 
 Taken on 2026-10-14 by the owner: for now the site is landing pages only. Docs and getting started
-live in each tool's repo (Pulse's in `docs/` of Miragon/miragon-ai), and the tool pages link there.
+live in each tool's repo, as a VitePress site in `docs/` with the theme of Miragon/mcp-toolkit, served
+on GitHub Pages at `https://miragon.github.io/<repo>/`. The tool pages link there.
 
 ## Writing for the site
 

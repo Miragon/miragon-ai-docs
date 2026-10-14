@@ -7,7 +7,7 @@
 // Every link to a page of this site is in its canonical form, with the
 // trailing slash: pages are built as <path>/index.html (astro.config.mjs,
 // build.format "directory"). Docs and getting started live in each tool's
-// repo; `start` links there.
+// repo, as a VitePress site on GitHub Pages; `start` links there.
 
 export interface Tool {
   name: string
@@ -16,9 +16,10 @@ export interface Tool {
   link: string
   /** The tool's job in its phase, a few words. */
   job: string
-  /** Where a reader starts: the getting-started section in the tool's own
-      repo, a public demo, or the Get started band of its page when there is
-      more than one place to start. */
+  /** Where a reader starts: the getting-started page of the tool's docs
+      (VitePress, built from the tool's repo and served on GitHub Pages), a
+      public demo, the README of a template, or the Get started band of its
+      page when there is more than one place to start. */
   start: string
 }
 
@@ -59,14 +60,14 @@ export const PHASES: Phase[] = [
         slug: "design-iq",
         link: "/tools/design-iq/",
         job: "Model together, release by PR",
-        start: "https://github.com/Miragon/design-iq#run-it-in-5-minutes",
+        start: "https://miragon.github.io/design-iq/getting-started",
       },
       {
         name: "bpmn-cli",
         slug: "bpmn-cli",
         link: "/tools/bpmn-cli/",
         job: "Agents edit BPMN by command",
-        start: "https://github.com/Miragon/bpmn-cli#install",
+        start: "https://miragon.github.io/bpmn-cli/getting-started",
       },
     ],
   },
@@ -102,14 +103,14 @@ export const PHASES: Phase[] = [
         slug: "pulse",
         link: "/tools/pulse/",
         job: "Process operations in chat",
-        start: "https://github.com/Miragon/miragon-ai/blob/main/docs/getting-started.md",
+        start: "https://miragon.github.io/miragon-ai/getting-started",
       },
       {
         name: "operate",
         slug: "operate",
         link: "/tools/operate/",
         job: "Engine state for shell, agent, CI",
-        start: "https://github.com/Miragon/operate#quick-start",
+        start: "https://miragon.github.io/operate/getting-started",
       },
     ],
   },
