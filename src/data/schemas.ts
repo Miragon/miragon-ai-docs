@@ -57,15 +57,6 @@ export const terminalLine = z.union([
   z.strictObject({ note: z.string() }),
   z.strictObject({ out: z.string(), tone: z.enum(["ok", "warn", "err", "dim"]).optional() }),
 ])
-/** HeroFlow example: one tool's task for the agent and the team's decision. */
-export const flowExample = z.strictObject({
-  tool: z.string(),
-  phase: z.enum(PHASE_NAMES),
-  link: href,
-  agent: z.string(),
-  detail: z.string(),
-  team: z.string(),
-})
 /** The hero artefact (components/hero/HeroArtefact.astro). */
 export const artefact = z.discriminatedUnion("type", [
   z.strictObject({ type: z.literal("chat") }),
@@ -81,7 +72,7 @@ export const artefact = z.discriminatedUnion("type", [
     url: z.string().optional(),
     caption: z.string().optional(),
   }),
-  z.strictObject({ type: z.literal("flow"), examples: z.array(flowExample).min(1) }),
+  z.strictObject({ type: z.literal("orbit") }),
 ])
 
 /** src/content/landing/index.mdx */
@@ -166,7 +157,6 @@ export type HeroAction = z.infer<typeof heroAction>
 export type Hero = z.infer<typeof hero>
 export type Eyebrow = z.infer<typeof eyebrow>
 export type TerminalLine = z.infer<typeof terminalLine>
-export type FlowExample = z.infer<typeof flowExample>
 export type Artefact = z.infer<typeof artefact>
 export type LandingPage = z.infer<typeof landingSchema>
 export type ToolPage = z.infer<typeof toolSchema>

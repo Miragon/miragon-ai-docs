@@ -1,0 +1,243 @@
+---
+// The landing hero's artefact: the orbit from the old landing's "From
+// cockpit to conversation" section (OrbitalVisual, itself a port of the
+// marketing site's hero animation). A green sun with three dashed orbit
+// rings that turn at their own pace, the outer one against the others,
+// with blue and white dots on them. Flat: no glow, no gradient.
+//
+// Pure CSS, so it turns without JavaScript. Sizes are shares of the square,
+// so it scales down on phones instead of being cut off. The pause control
+// is a checkbox styled as an icon button (WCAG 2.2.2), and with
+// prefers-reduced-motion the rings stand still and the control goes.
+// Decorative: hidden from assistive technology, but for the control.
+---
+
+<div class="orbital">
+  <div class="sky" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="orbit orbit1">
+      <div class="planet p1a"></div>
+      <div class="planet p1b"></div>
+    </div>
+    <div class="orbit orbit2">
+      <div class="planet p2a"></div>
+      <div class="planet p2b"></div>
+      <div class="planet p2c"></div>
+    </div>
+    <div class="orbit orbit3">
+      <div class="planet p3a"></div>
+      <div class="planet p3b"></div>
+      <div class="planet p3c"></div>
+      <div class="planet p3d"></div>
+    </div>
+  </div>
+  <input id="orbit-pause" class="pause-input" type="checkbox" />
+  <label for="orbit-pause" class="pause" title="Pause or play">
+    <span class="visually-hidden">Pause the animation</span>
+    <!-- Lucide pause / play -->
+    <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+      <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+    </svg>
+    <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true">
+      <polygon points="6 3 20 12 6 21 6 3"></polygon>
+    </svg>
+  </label>
+</div>
+
+<style>
+  @keyframes orbit-cw {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes orbit-ccw {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  .orbital {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  /* The turning rings are square boxes: clip their corners, or a ring at
+     45 degrees would widen the page on a phone. */
+  .sky {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  /* The old 420px square, as shares: sun 52px, rings 160, 268 and 374px. */
+  .sun {
+    position: absolute;
+    z-index: 1;
+    width: 12.4%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--cd-gruen);
+  }
+  .orbit {
+    position: absolute;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: orbit-cw linear infinite;
+  }
+  .orbit1 {
+    width: 38.1%;
+    border: 1px dashed color-mix(in srgb, var(--cd-weiss) 16%, transparent);
+    animation-duration: 8s;
+  }
+  .orbit2 {
+    width: 63.8%;
+    border: 1px dashed color-mix(in srgb, var(--cd-weiss) 12%, transparent);
+    animation-duration: 18s;
+  }
+  .orbit3 {
+    width: 89%;
+    border: 1px dashed color-mix(in srgb, var(--cd-weiss) 8%, transparent);
+    animation-name: orbit-ccw;
+    animation-duration: 30s;
+  }
+
+  /* Each dot sits on its ring: left/top on the circle through the ring's box. */
+  .planet {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .p1a {
+    width: 12px;
+    height: 12px;
+    left: 85.4%;
+    top: 85.4%;
+    background: var(--cd-blau);
+  }
+  .p1b {
+    width: 8px;
+    height: 8px;
+    left: 14.6%;
+    top: 14.6%;
+    background: color-mix(in srgb, var(--cd-weiss) 65%, transparent);
+  }
+  .p2a {
+    width: 10px;
+    height: 10px;
+    left: 93.3%;
+    top: 75%;
+    background: color-mix(in srgb, var(--cd-weiss) 65%, transparent);
+  }
+  .p2b {
+    width: 14px;
+    height: 14px;
+    left: 6.7%;
+    top: 75%;
+    background: var(--cd-blau);
+  }
+  .p2c {
+    width: 9px;
+    height: 9px;
+    left: 50%;
+    top: 0%;
+    background: var(--cd-blau);
+  }
+  .p3a {
+    width: 11px;
+    height: 11px;
+    left: 98.3%;
+    top: 62.9%;
+    background: color-mix(in srgb, var(--cd-weiss) 55%, transparent);
+  }
+  .p3b {
+    width: 7px;
+    height: 7px;
+    left: 37.1%;
+    top: 98.3%;
+    background: var(--cd-blau);
+  }
+  .p3c {
+    width: 9px;
+    height: 9px;
+    left: 1.7%;
+    top: 37.1%;
+    background: color-mix(in srgb, var(--cd-blau) 70%, transparent);
+  }
+  .p3d {
+    width: 13px;
+    height: 13px;
+    left: 62.9%;
+    top: 1.7%;
+    background: color-mix(in srgb, var(--cd-weiss) 35%, transparent);
+  }
+
+  /* The pause control: a bare icon button in the bottom right corner, as
+     in the lifecycle graphic. Checked means paused. */
+  .pause-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .pause {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--cd-radius-pill);
+    color: var(--site-text-2);
+    cursor: pointer;
+    transition: color var(--cd-motion-fast) var(--cd-ease);
+  }
+  .pause:hover {
+    color: var(--site-text-1);
+  }
+  .pause-input:focus-visible + .pause {
+    outline: 2px solid var(--cd-blau-hell);
+    outline-offset: 2px;
+  }
+  .pause svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon-play,
+  .pause-input:checked + .pause .icon-pause {
+    display: none;
+  }
+  .pause-input:checked + .pause .icon-play {
+    display: block;
+  }
+  .orbital:has(.pause-input:checked) .orbit {
+    animation-play-state: paused;
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit {
+      animation: none;
+    }
+    .pause-input,
+    .pause {
+      display: none;
+    }
+  }
+</style>

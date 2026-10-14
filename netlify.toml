@@ -6,7 +6,7 @@
 # - Forms > Enable form detection (the landing-page contact form posts to
 #   Netlify Forms; detection runs during deploy post-processing)
 # - Keep post-processing HTML minification OFF: it strips the comment
-#   markers the Vue islands (LifecycleMap, BrandContact, HeroFlow) hydrate
+#   markers the Vue islands (LifecycleMap, BrandContact) hydrate
 #   from.
 
 [build]
