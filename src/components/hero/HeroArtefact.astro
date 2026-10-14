@@ -21,6 +21,16 @@ interface Props {
 }
 
 const { artefact } = Astro.props
+
+// The schema allows only these types, so another one means stale data (a
+// dev server whose content cache missed a change). Fail loudly instead of
+// falling back to the lifecycle graphic.
+const TYPES = ["chat", "terminal", "screenshot", "orbit"]
+if (artefact && !TYPES.includes(artefact.type)) {
+  throw new Error(
+    `HeroArtefact: unknown artefact type "${artefact.type}". Restart pnpm dev if the frontmatter says otherwise.`,
+  )
+}
 ---
 
 {artefact?.type === "chat" ? (
