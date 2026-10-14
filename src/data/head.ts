@@ -31,8 +31,9 @@ export const HEAD: HeadTag[] = [
     attrs: { rel: "icon", type: "image/svg+xml", href: "/logo/miragon-komet-blau.svg" },
   },
   { tag: "link", attrs: { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon.png" } },
-  // CI primary blue (--cd-blau), as on the CI site
-  { tag: "meta", attrs: { name: "theme-color", content: "#335DE5" } },
-  // Always dark: native controls and scrollbars follow.
+  // Always dark, as a fixed choice of the CI's dark mode (miragon-brand
+  // 1.9.0): theme-color is the dark ground (--cd-schwarz) and color-scheme
+  // dark until the token file sets it on <html data-cd-theme="dark">.
+  { tag: "meta", attrs: { name: "theme-color", content: "#1D1D1D" } },
   { tag: "meta", attrs: { name: "color-scheme", content: "dark" } },
 ]

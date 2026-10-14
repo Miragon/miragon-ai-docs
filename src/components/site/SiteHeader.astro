@@ -26,7 +26,24 @@ const inSection = (urls: string[]) =>
 
 <div class="site-header">
   <a class="brand" href="/" aria-label="Miragon AI, home">
-    <img src="/logo/miragon-logo-weiss.svg" alt="" width="157" height="24" />
+    {/* The wordmark per mode (CI 8.8): white on the dark screen, green in
+        print, where the CI's light roles apply. */}
+    <img
+      class="cd-nur-dunkel"
+      src="/logo/miragon-logo-weiss.svg"
+      alt=""
+      width="157"
+      height="24"
+      loading="lazy"
+    />
+    <img
+      class="cd-nur-hell"
+      src="/logo/miragon-logo-gruen.svg"
+      alt=""
+      width="157"
+      height="24"
+      loading="lazy"
+    />
     <span class="brand-product" aria-hidden="true">
       AI
     </span>

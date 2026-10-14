@@ -132,7 +132,7 @@ const isExternal = (link: string) => /^(?:[a-z]+:|\/\/)/i.test(link)
     line-height: 40px;
     letter-spacing: -0.04em;
     white-space: pre-wrap;
-    color: var(--cd-weiss);
+    color: var(--cd-ui-text);
   }
   @media (min-width: 640px) {
     .name,
@@ -170,7 +170,7 @@ const isExternal = (link: string) => /^(?:[a-z]+:|\/\/)/i.test(link)
     line-height: 28px;
     white-space: pre-wrap;
     overflow-wrap: break-word;
-    color: color-mix(in srgb, var(--cd-weiss) 84%, transparent);
+    color: color-mix(in srgb, var(--cd-ui-text) 84%, transparent);
   }
   @media (min-width: 640px) {
     .tagline {
@@ -256,14 +256,14 @@ const isExternal = (link: string) => /^(?:[a-z]+:|\/\/)/i.test(link)
     transform: translateX(3px);
   }
   .button.alt {
-    border-color: color-mix(in srgb, var(--cd-weiss) 40%, transparent);
+    border-color: color-mix(in srgb, var(--cd-ui-text) 40%, transparent);
     background-color: transparent;
-    color: var(--cd-weiss);
+    color: var(--cd-ui-text);
   }
   .button.alt:hover {
-    border-color: var(--cd-weiss);
-    background-color: color-mix(in srgb, var(--cd-weiss) 12%, transparent);
-    color: var(--cd-weiss);
+    border-color: var(--cd-ui-text);
+    background-color: color-mix(in srgb, var(--cd-ui-text) 12%, transparent);
+    color: var(--cd-ui-text);
   }
   .button:focus-visible {
     outline: 2px solid var(--cd-weiss);

@@ -24,8 +24,10 @@ only: docs and getting started live in each tool's repo, as a VitePress site in 
   in the tool's docs site that holds the commands. The skill describes the pattern and its truth rule
   for artefacts.
 - Never edit `src/styles/cd-tokens.generated.css` or the logos in `public/logo/`. They are vendored
-  from Miragon/corporate-identity and pinned in `scripts/check-brand-assets.mjs`. No other file
-  declares a `--cd-*` token.
+  from Miragon/corporate-identity (miragon-brand 1.9.0) and pinned in
+  `scripts/check-brand-assets.mjs`. No other file declares a `--cd-*` token. The site is always
+  dark through the CI's dark mode (`data-cd-theme="dark"` on `<html>`), and `src/styles/tokens.css`
+  maps the site's colours onto the CI roles `--cd-ui-*`; use a role, not a `color-mix()` lift.
 - `.miragon/brand.json` switches brand-lint on: the miragon-brand plugin lints each file you write,
   and CI lints the repo. Fix every hard finding (an em dash as a connector is one).
 - Before you finish, run `pnpm format`, `pnpm check` and `pnpm build`. The build is the link gate:

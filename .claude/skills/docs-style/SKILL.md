@@ -361,17 +361,28 @@ decision of 2026-10-14. Follow them; changing one needs the team.
   text.
 - Vue only for the islands (`@astrojs/vue`); every other component is `.astro`. Components carry
   their CSS in a scoped `<style>`. No Tailwind.
-- Always dark: `<html data-theme="dark">`, no theme toggle. Geist and Geist Mono come self-hosted
-  via @fontsource. The header and the footer are shared (see [Components](#components)).
-- Styles in `src/styles/`: `tokens.css` maps the CI tokens onto the site roles (`--site-*`) and the
-  landing colours (`--l-*`); `website.css` holds the reset, the base and the `.prose` text styles;
-  `code.css` the code blocks' language label.
-- The CI tokens (`src/styles/cd-tokens.generated.css`) and the logos (`public/logo/`) are vendored
-  verbatim from Miragon/corporate-identity and pinned by SHA-256 in
-  `scripts/check-brand-assets.mjs` (miragon-brand 1.8.0). Never edit them, and never declare a
-  `--cd-*` token anywhere else. A new CI release means copying the files from the miragon-brand
-  skills, then updating `BRAND.version`, the hashes and the `ref` in `.github/workflows/ci.yml` in
-  one commit.
+- Always dark, the CI's way (miragon-brand 1.9.0): `<html data-theme="dark" data-cd-theme="dark">`
+  and no theme toggle (a team decision). `data-cd-theme` switches the CI roles `--cd-ui-*` to dark
+  and sets `color-scheme`; `data-theme` picks the Expressive Code theme. The head carries
+  `theme-color` `#1D1D1D` and `color-scheme` `dark` (`src/data/head.ts`). Printing falls back to
+  the CI's light roles, so text, the hero and the wordmark (`cd-nur-hell`/`cd-nur-dunkel`) follow
+  roles, never a fixed white on a role surface. Geist and Geist Mono come self-hosted via
+  @fontsource. The header and the footer are shared (see [Components](#components)).
+- Styles in `src/styles/`: `tokens.css` maps the CI roles onto the site roles (`--site-*`) and the
+  landing colours (`--l-*`): the page and plain bands on `seite`, grey bands and code blocks on
+  `abschnitt`, cards on `flaeche` (on a grey band `flaeche-hoch`), popovers on `flaeche-hoch`,
+  chips and inline code on `hover`, lines on `linie`, text on `text` and `text-leise`, links on
+  `link`, the hover border of a linked card on `interaktion`, focus on `fokus`, form borders on
+  `kontur`. No white lifts via `color-mix()`. Buttons and the blue box stay on the fixed palette
+  (`--cd-blau`). The icon tile is still a tint of `--cd-blau-hell`, which 1.9.0 replaces with
+  `hover`; that change of look waits for the team. `website.css` holds the reset, the base and the
+  `.prose` text styles; `code.css` the code blocks' language label.
+- The CI tokens (`src/styles/cd-tokens.generated.css`, the web variant from the corporate-design
+  skill) and the logos (`public/logo/`) are vendored verbatim from Miragon/corporate-identity and
+  pinned by SHA-256 in `scripts/check-brand-assets.mjs` (miragon-brand 1.9.0). Never edit them,
+  and never declare a `--cd-*` token anywhere else. A new CI release means copying the files from
+  the miragon-brand skills, then updating `BRAND.version`, the hashes and the `ref` in
+  `.github/workflows/ci.yml` in one commit.
 - Redirects live in `netlify.toml` only. Astro's `redirects` stay unused: without an adapter they
   become meta-refresh pages that would shadow Netlify's 301s.
 - Dependencies are pinned exactly (`.npmrc` sets save-exact, CI checks it). Node 22 (Astro needs
@@ -410,12 +421,12 @@ stop them with `pnpm astro dev stop` and `pnpm astro preview stop`.
 | Brand assets     | `pnpm check` runs `scripts/check-brand-assets.mjs`                                                        | Vendored tokens or logos changed, forked `--cd-*` tokens; with the miragon-brand plugin at hand (or `MIRAGON_BRAND_DIR`) also drift from the CI source.                                                                                                                                                                                                                                                                               |
 | Page budgets     | `pnpm check` runs `scripts/check-page-budgets.mjs`                                                        | A page over its budget, a page without a budget row. It reads the table below.                                                                                                                                                                                                                                                                                                                                                        |
 | Pulse references | `MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs`                                     | Tool names the miragon-ai server does not register (any page), repo paths on Pulse's tool page that do not exist. Skips without `MIRAGON_AI_DIR`; CI runs it on every pull request and every Monday. The Pulse docs are checked in Miragon/miragon-ai (`docs-refs.test.ts`).                                                                                                                                                          |
-| brand-lint       | `.miragon/brand.json` enables it                                                                          | Em dashes, spellings, anti-slop patterns, off-palette colours. The miragon-brand hook lints each file you write; CI runs it on the repo. Zero hard findings.                                                                                                                                                                                                                                                                          |
+| brand-lint       | `.miragon/brand.json` enables it                                                                          | Em dashes, spellings, anti-slop patterns, off-palette colours, the dark-mode rules (C6). The miragon-brand hook lints each file you write; CI runs it on the repo. Zero hard findings.                                                                                                                                                                                                                                                |
 | Built site       | `pnpm build` runs `scripts/check-dist.mjs` after `astro build`; it also runs alone on an existing `dist/` | Over all of `dist/`: a dead internal link or `#anchor` (MDX and components alike), a page link without its trailing slash, a redirect in `netlify.toml` that a file shadows or that leads nowhere, an old URL in `scripts/url-map.json` that does not land on its target in one hop (on this site or in a tool's docs), a page without both legal links or with the consent scripts out of order, a landing without the contact form. |
 | Build            | `pnpm build`                                                                                              | Broken Markdown, MDX or components, frontmatter the schemas reject.                                                                                                                                                                                                                                                                                                                                                                   |
 
 To lint by hand, run `scripts/brand-lint.mjs` from the miragon-brand plugin in your Claude Code
-plugin cache (`node <cache>/<marketplace>/miragon-brand/1.8.0/scripts/brand-lint.mjs <files>`). It
+plugin cache (`node <cache>/<marketplace>/miragon-brand/1.9.0/scripts/brand-lint.mjs <files>`). It
 reads `.miragon/brand.json`, which switches the German-only rules off.
 
 ## Line budgets (hard ceiling)
