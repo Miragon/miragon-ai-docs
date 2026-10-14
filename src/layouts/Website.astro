@@ -1,0 +1,104 @@
+---
+// Layout of the website pages (the landing, the phase pages, the tool pages,
+// the 404): always dark, the shared head, header and footer.
+// - <html data-theme="dark">: Expressive Code picks its code theme by it.
+// - <main data-pagefind-body>: website pages join the docs in the site
+//   search (once any page carries it, Pagefind indexes only those pages).
+//   data-pagefind-meta names the result after the page title: by default
+//   Pagefind takes the first h1, the hero's, whose name and headline run
+//   together ("PulseAsk your engines ...").
+import HeadCommon from "../components/site/HeadCommon.astro"
+import SiteHeader from "../components/site/SiteHeader.astro"
+import SiteFooter from "../components/site/SiteFooter.astro"
+import "../styles/tokens.css"
+import "../styles/code.css"
+import "../styles/website.css"
+
+interface Props {
+  title: string
+  description?: string
+  /** false keeps the page out of the Pagefind index (404). */
+  search?: boolean
+  /** false omits <link rel="canonical"> and og:url: a page without a URL of
+      its own (the 404 answers any path). */
+  canonical?: boolean
+}
+
+const { title, description, search = true, canonical = true } = Astro.props
+const fullTitle = title === "Miragon AI" ? title : `${title} | Miragon AI`
+const url = new URL(Astro.url.pathname, Astro.site)
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    {canonical && <link rel="canonical" href={url} />}
+    <meta property="og:title" content={fullTitle} />
+    {description && <meta property="og:description" content={description} />}
+    {canonical && <meta property="og:url" content={url} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Miragon AI" />
+    <HeadCommon />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header-bar">
+      <div class="site-header-inner">
+        <SiteHeader />
+      </div>
+    </header>
+    <main
+      id="main"
+      data-pagefind-body={search ? "" : undefined}
+      data-pagefind-meta={search ? `title:${title}` : undefined}
+    >
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  /* The footer sits at the bottom of short pages (the 404). */
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  main {
+    flex-grow: 1;
+  }
+  .site-header-bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: var(--site-header-height);
+    border-bottom: 1px solid var(--site-divider);
+    background: var(--site-bg);
+  }
+  /* The header row centres itself at 1152px (SiteHeader), in docs too. */
+  .site-header-inner {
+    height: 100%;
+    padding: 0 24px;
+  }
+  .skip-link {
+    position: absolute;
+    top: 8px;
+    left: -9999px;
+    z-index: 50;
+    padding: 8px 16px;
+    border-radius: var(--cd-radius-sm);
+    background: var(--cd-weiss);
+    color: var(--cd-schwarz);
+    font-weight: 600;
+  }
+  .skip-link:focus {
+    left: 16px;
+  }
+</style>

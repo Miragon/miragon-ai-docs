@@ -1,0 +1,101 @@
+---
+title: Design
+description: How designIQ and bpmn-cli let your team and your AI agents model the to-be process together and release it through a reviewed pull request.
+hero:
+  name: Design
+  text: Model the to-be process together.
+  tagline: Your team and your AI agents model the to-be process and release it as a reviewed file in Git. Both tools read BPMN models for Camunda 7, CIB seven, Operaton and Camunda 8.
+  actions:
+    - theme: brand
+      text: See the tools
+      link: "#tools"
+    - theme: alt
+      text: Talk to us
+      link: /#contact
+compare:
+  before:
+    title: Today
+    items:
+      - Usually only one person can safely edit a BPMN diagram at a time
+      - The approval happens outside the Git workflow your developers use
+      - Legacy documentation in Visio, Word or Confluence gets redrawn by hand
+      - An AI agent rewrites the whole XML including the diagram coordinates, moves shapes someone placed by hand and can leave references pointing nowhere
+      - In review, a DMN change shows up only as an XML diff, which does not tell you which answers of the decision changed
+  after:
+    title: With designIQ and bpmn-cli
+    items:
+      - Your team edits models live in the browser, and AI assistants work on the same models over MCP
+      - A release opens a pull request, so merging is the approval
+      - The import-process skill drafts a model from Visio, draw.io, Word, Confluence or images, and your team checks it
+      - The agent names the element and the operation, bpmn-cli writes the XML and keeps a hand-drawn layout in place
+      - The pull request lists every DMN test case whose answer changed, next to the XML diff
+tools:
+  - tool: designIQ
+    text:
+      - designIQ is a self-hostable workspace on top of your GitHub repo. Your team edits models live in the browser while AI assistants work on the same models over MCP, in eight notations from BPMN and DMN to Event Storming, six of them with a visual modeler.
+      - A release validates the files you select and opens a pull request, so merging is the approval, and CODEOWNERS and branch protection decide who may merge. For a DMN change, the pull request lists every test case in `<decision>.tests.yaml` whose answer changed, so your reviewer sees the changed answers next to the XML diff.
+    status: v5.3.0 (released 2026-10-13), repo (MIT) and Docker image public. The hosted service is pre-GA, with a public launch planned around mid-November 2026.
+  - tool: bpmn-cli
+    text:
+      - With bpmn-cli, an agent names the element and the operation, for example `bpmn add order.bpmn userTask "Check invoice" --after Event_OrderReceived`, and the tool writes the XML. bpmn-cli refuses a change that would add a structural error and keeps a hand-drawn layout in place. `bpmn render` draws the result as an image, so the agent can look at what it did. What comes out is a plain `.bpmn` file with readable ids such as `Activity_CheckInvoice` and small Git diffs, and it opens in Camunda Modeler.
+      - Inside designIQ, bpmn-cli is the engine behind the opt-in semantic BPMN editing (since designIQ v5.3.0, off by default until an A/B benchmark has run). On its own, bpmn-cli runs in any shell or as a Claude Code plugin. Its `bpmn validate` checks the deploy rules of Camunda 7, CIB seven, Operaton or Camunda 8, and `--strict` stops a pipeline when a rule fails, so the tool reaches into [Implement](/implement/) too.
+    status: 0.6.0 on npm (released 2026-10-12), pre-1.0. Minor versions can still bring breaking changes.
+human:
+  - icon: cog
+    title: The agent
+    text: Drafts models and turns the changes you describe into valid BPMN.
+  - icon: users
+    title: Your team
+    text: Models the business flow and approves the result by merging the pull request.
+handover:
+  - direction: in
+    label: From Analyse
+    link: /analyse/
+    text: Existing models, pushed to your designIQ content repo.
+    formats:
+      - .bpmn in Git
+  - direction: in
+    label: From Analyse
+    link: /analyse/
+    text: Legacy documentation from Visio, draw.io, Word, Confluence or images, drafted into a model by the `import-process` skill of the designIQ template repo [process-documentation-starter](https://github.com/Miragon/process-documentation-starter).
+    formats:
+      - draft .bpmn
+  - direction: in
+    label: From Analyse
+    link: /analyse/
+    text: The as-is value chain from analyzr (`analyzr value-chain pull`), which designIQ can keep in the content repo. There is no direct connection between analyzr and the Design tools yet, and whether designIQ opens analyzr's version of the format is not verified.
+    formats:
+      - .vc.json
+  - direction: in
+    label: From Optimize
+    link: /optimize/
+    text: Findings from operations that call for a change to the model, with no fixed format yet. Your team pins one as a todo to a BPMN element in [designIQ](/tools/design-iq/).
+    formats:
+      - GitHub issues
+  - direction: out
+    label: To Implement
+    link: /implement/
+    text: Merged design models in your default branch, with the decision tests next to each decision. Implement makes them executable, for example with the `bpmn` skill from the bpmn-cli plugin.
+    formats:
+      - .bpmn
+      - .dmn
+      - <decision>.tests.yaml
+---
+
+<PageSection tone="tint" eyebrow="The problem today" title="One editor at a time, and the approval outside Git">
+  <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
+</PageSection>
+
+<PageSection id="tools" eyebrow="How Miragon AI helps" title="Two tools, one reviewed file in Git" intro="designIQ is the workspace where your team models together. bpmn-cli lets an agent change BPMN by command without touching the layout you drew.">
+  <PhaseTools items={frontmatter.tools} />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Human and AI" title="The agent drafts, your team approves by merge">
+  <CardGrid items={frontmatter.human} columns={2} />
+</PageSection>
+
+<PageSection eyebrow="Hand-over" title="What comes in and what goes on to Implement" intro="Models arrive from Analyse and, later in the loop, findings come back from Optimize. What leaves is a merged model in your default branch.">
+  <HandOver items={frontmatter.handover} />
+</PageSection>
+
+<CtaBox title="Model your next process with your team and your AI." text="Tell us where your process models live today and who signs them off. We go through which of the two tools fits your team first." note="A 30-minute first call." />

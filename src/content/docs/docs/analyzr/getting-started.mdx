@@ -1,0 +1,18 @@
+---
+title: Get started with analyzr
+description: "Open the demo in your browser"
+---
+
+import { LinkButton } from "@astrojs/starlight/components"
+
+Nothing to install and no login. The demo project nordwind-handel is a synthetic landscape of 31 models for Camunda 7 and Camunda 8.
+
+1. Open the [review inbox of nordwind-handel](https://analyzr-demo.fly.dev/projects/nordwind-handel/review). The demo stops when idle, so the first request can take a few seconds.
+2. Open a proposal to see both models with the agent's confidence, rationale and evidence. The models sit side by side in a window at least 1280 pixels wide, and one at a time in a narrower one.
+3. Switch to the tab "Kein Zusammenhang" for the pairs the agent judged as unrelated.
+4. Open the [value chain](https://analyzr-demo.fly.dev/projects/nordwind-handel/value-chain) to see where each process sits and which placements wait for review.
+
+{/* prettier-ignore */}
+<LinkButton href="https://analyzr-demo.fly.dev/projects/nordwind-handel/review" icon="external">Open the review inbox</LinkButton>
+
+For your own BPMN files, analyzr runs locally with Docker Compose (PostgreSQL included) and connects to your agent over MCP with a project token. While the repository is private, [ask us](/#contact) for self-hosting.

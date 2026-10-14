@@ -1,0 +1,78 @@
+---
+// The site's one 404 (Starlight's own is off: disable404Route), for website
+// and docs URLs alike. Text, title and description are VitePress' default
+// 404, which the site served before; the layout is its NotFound.vue.
+import Website from "../layouts/Website.astro"
+---
+
+<Website title="404" description="Not Found" search={false} canonical={false}>
+  <div class="not-found">
+    <p class="code">404</p>
+    <h1 class="title">PAGE NOT FOUND</h1>
+    <div class="divider"></div>
+    <blockquote class="quote">
+      But if you don't change your direction, and if you keep looking, you may end up where you are
+      heading.
+    </blockquote>
+    <div class="action">
+      <a class="link" href="/" aria-label="go to home">
+        Take me home
+      </a>
+    </div>
+  </div>
+</Website>
+
+<style>
+  .not-found {
+    padding: 64px 24px 96px;
+    text-align: center;
+  }
+  @media (min-width: 768px) {
+    .not-found {
+      padding: 96px 32px 168px;
+    }
+  }
+  .code {
+    margin: 0;
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 64px;
+  }
+  .title {
+    margin: 0;
+    padding-top: 12px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 2px;
+  }
+  .divider {
+    width: 64px;
+    height: 1px;
+    margin: 24px auto 18px;
+    background-color: var(--site-divider);
+  }
+  .quote {
+    max-width: 256px;
+    margin: 0 auto;
+    color: var(--site-text-2);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .action {
+    padding-top: 20px;
+  }
+  .link {
+    display: inline-block;
+    padding: 3px 16px;
+    border: 1px solid var(--site-accent);
+    border-radius: 16px;
+    color: var(--site-accent);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      border-color 0.25s,
+      color 0.25s;
+  }
+</style>

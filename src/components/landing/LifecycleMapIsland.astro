@@ -1,0 +1,8 @@
+---
+// The lifecycle graphic (vue/LifecycleMap.vue) as an island in a page's MDX
+// (the landing's lifecycle band): Astro renders its HTML, the browser
+// hydrates it once it scrolls into view.
+import LifecycleMap from "../vue/LifecycleMap.vue"
+---
+
+<LifecycleMap client:visible />

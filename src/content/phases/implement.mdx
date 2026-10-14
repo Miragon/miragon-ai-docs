@@ -1,0 +1,95 @@
+---
+title: Implement
+description: How Skills help your coding agent make a BPMN model deployable on Camunda 7, CIB seven or Operaton, and how Solution templates connect your AI to your own systems.
+hero:
+  name: Implement
+  text: Make the model run on your engine.
+  tagline: Your team makes the model from Design deployable and runs it once on a dev engine. This is also where you connect your AI to the engine and to your own systems.
+  actions:
+    - theme: brand
+      text: See the tools
+      link: "#tools"
+    - theme: alt
+      text: Talk to us
+      link: /#contact
+compare:
+  before:
+    title: Today
+    items:
+      - Before Camunda 7, CIB seven or Operaton can run a model, someone adds topics or delegates, input and output mappings, error codes and a historyTimeToLive
+      - If the historyTimeToLive is missing, you find out only when the engine rejects the deployment
+      - A coding agent without guidance tends to edit the BPMN XML by hand and breaks the drawing along the way
+      - If your AI should reach your ERP as well as the engine, you fork Pulse or build an MCP server from scratch
+  after:
+    title: With Skills and Solution templates
+    items:
+      - The bpmn skill sets Camunda 7 or Camunda 8 attributes by element id
+      - bpmn validate --strict reports each deploy blocker with the command that fixes it, before the file reaches the engine
+      - The agent keeps the drawn layout, and the operate skill deploys the model and runs one test instance to the end
+      - miragon-ai-starter combines the Pulse modules with modules for your own systems, such as your ERP
+tools:
+  - tool: Skills
+    text:
+      - Your coding agent in Claude Code combines two skills. The bpmn skill from the bpmn-cli plugin sets Camunda 7 or Camunda 8 attributes by element id and keeps the drawn layout, and `bpmn validate --strict` reports each deploy blocker with the command that fixes it before the file reaches the engine.
+      - The operate skill then deploys the model to Camunda 7, CIB seven or Operaton and runs one test instance to the end. If it hits an incident, `operate wait` stops with exit code 9. No skill generates worker or delegate code yet.
+    status: Early. bpmn-cli 0.6.0 and operate 0.5.0 are pre-1.0 (as of 2026-10-13). Camunda 8 files can be edited and validated, but no skill runs them. Both skills install from the public plugin marketplaces in [Miragon/bpmn-cli](https://github.com/Miragon/bpmn-cli/tree/main/plugins/bpmn-cli) and [Miragon/operate](https://github.com/Miragon/operate/blob/main/docs/agents.md).
+  - tool: Solution templates
+    text:
+      - "[miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter) and [mcp-toolkit-starter](https://github.com/Miragon/mcp-toolkit-starter) are GitHub template repositories that start your own MCP server. Neither contains process automation code such as job workers or engine setup."
+      - miragon-ai-starter combines the Pulse modules for Camunda 7, CIB seven and Operaton with modules for your own systems, such as your ERP, and builds a Docker image with OAuth, health checks, `/metrics` and read-only defaults. A new module starts as a copy of the example module, and guard tests report a missed wiring step. mcp-toolkit-starter is the minimal base for an MCP server with interactive widgets and no BPM modules.
+    status: miragon-ai-starter is MIT-licensed and pins Pulse's `@miragon-ai` packages at 0.20.0 (as of 2026-10-13). They are pre-1.0 and release about weekly, often with breaking changes. mcp-toolkit-starter builds on the Miragon MCP Toolkit 2.8.1 and has no licence yet.
+human:
+  - icon: cog
+    title: Your coding agent
+    text: Sets and checks the engine attributes, then runs one test instance on your dev engine.
+  - icon: users
+    title: Your team
+    text: Owns the interfaces and the worker code, and reviews every change the agent makes.
+handover:
+  - direction: in
+    label: From Design
+    link: /design/
+    text: Models approved in Design, from designIQ, Camunda Modeler or bpmn-cli. The bpmn skill makes the BPMN executable. There is no DMN skill yet.
+    formats:
+      - .bpmn
+      - .dmn
+  - direction: in
+    label: From Execute
+    link: /execute/
+    text: Ticket drafts from Pulse and root-cause findings from operate, as input for the next fix.
+    formats:
+      - Markdown with labels
+      - JSON
+  - direction: out
+    label: To Execute
+    link: /execute/
+    text: BPMN files that pass `bpmn validate --strict` and have run once on Camunda 7, CIB seven or Operaton (`operate deploy` with `--start`), plus the decisions and forms they use.
+    formats:
+      - .bpmn
+      - .dmn
+      - .form
+  - direction: out
+    label: To Execute
+    link: /execute/
+    text: Your own MCP server, built from a Solution template, which your team runs the way it runs Pulse.
+    formats:
+      - Docker image
+---
+
+<PageSection tone="tint" eyebrow="The problem today" title="The engine finds the gaps only at deployment">
+  <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
+</PageSection>
+
+<PageSection id="tools" eyebrow="How Miragon AI helps" title="Skills for the model, templates for your own systems" intro="The Skills get a model from Design running on your dev engine. The Solution templates start your own MCP server next to the engine.">
+  <PhaseTools items={frontmatter.tools} />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Human and AI" title="The agent sets and checks, your team owns the code">
+  <CardGrid items={frontmatter.human} columns={2} />
+</PageSection>
+
+<PageSection eyebrow="Hand-over" title="From an approved model to one that has run" intro="Models come from Design, and tickets come back from Execute for the next fix. What goes on to Execute has passed validation and run once.">
+  <HandOver items={frontmatter.handover} />
+</PageSection>
+
+<CtaBox title="Get your next model running on your engine." text="Tell us which engines you run and how your developers use coding agents today. We go through where the Skills and the Solution templates fit, and where your team still writes the code." note="A 30-minute first call." />

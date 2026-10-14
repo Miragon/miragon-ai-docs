@@ -1,0 +1,167 @@
+---
+title: Pulse
+description: Pulse is a self-hosted MCP server that lets Claude, ChatGPT or any other MCP client read and operate your Camunda 7, CIB seven and Operaton engines, with answers as widgets in the chat.
+eyebrow: { phase: Execute, link: /execute/ }
+hero:
+  name: Pulse
+  text: Ask your engines what is stuck and why.
+  tagline: Pulse is a self-hosted MCP server for Camunda 7, CIB seven and Operaton that starts read-only. Ask in Claude or ChatGPT, and the answer comes back as a widget in the chat.
+  actions:
+    - theme: brand
+      text: Try the playground
+      link: https://inspector.manufact.com/inspector?server=https%3A%2F%2Fmiragon-ai-playground.fly.dev%2Fmcp&tab=chat
+    - theme: alt
+      text: GitHub
+      link: https://github.com/Miragon/miragon-ai
+    - theme: alt
+      text: Talk to us
+      link: /#contact
+artefact: { type: chat }
+compare:
+  before:
+    title: Today
+    items:
+      - One Cockpit per engine
+      - Stack traces, job by job
+      - PromQL for runtime questions
+      - Tickets by copy and paste
+  after:
+    title: With Pulse
+    items:
+      - One question covers one or several engines
+      - Incidents grouped by failing activity and type, down to the trace
+      - Activities ranked by execution time and incident rate, BPMN heatmap
+      - A ticket draft with title, body and labels
+steps:
+  - title: Connect
+    text: Pulse reads your engines over their REST API, never the engine database, and needs no migration.
+  - title: Ask
+    text: You ask in Claude, ChatGPT or another MCP client, and the assistant calls Pulse's tools.
+  - title: See
+    text: The cockpit view, incident clusters, BPMN diagrams and dashboards come back as widgets in the chat.
+  - title: Decide
+    text: Pulse drafts the ticket with title, body and labels. Where it goes is your decision.
+toolsets:
+  - icon: eye
+    title: read-only
+    text: The default without OAuth and on the playground. Queries, widgets and ticket drafts.
+  - icon: play
+    title: operations
+    text: The default behind OAuth. Adds starting instances, completing tasks, retries and resolving incidents.
+  - icon: key
+    title: admin
+    text: Only when an operator names it. Adds deletions, modifications, suspensions, migrations and signals.
+status:
+  - icon: ticket
+    title: Drafts, never files
+    text: Pulse drafts tickets and never files one.
+  - icon: chart
+    title: Runtime figures on CIB seven
+    text: They need the metrics plugin and cover only traffic recorded after it was installed, at most 30 days back.
+  - icon: ban
+    title: No process mining
+    text: The analytics module knows neither waiting times nor variants, so it is no tool for Optimize.
+  - icon: server
+    title: Camunda 7, CIB seven, Operaton
+    text: Pulse speaks their REST API. Camunda 8 is out of scope.
+proof:
+  - icon: play
+    title: Playground
+    text: "The public MCP endpoint, pinned to camunda7:read-only,analytics:read-only."
+    link: https://miragon-ai-playground.fly.dev/mcp
+  - icon: monitor
+    title: Browser demo
+    text: The playground in a third-party MCP inspector, with nothing to install.
+    link: https://inspector.manufact.com/inspector?server=https%3A%2F%2Fmiragon-ai-playground.fly.dev%2Fmcp&tab=chat
+  - icon: github
+    title: Miragon/miragon-ai
+    text: The source under the MIT licence, with changelog and CI.
+    link: https://github.com/Miragon/miragon-ai
+  - icon: container
+    title: Docker image
+    text: miragon/miragon-ai-server for amd64 and arm64, tag 0.20.0.
+    link: https://hub.docker.com/r/miragon/miragon-ai-server
+  - icon: package
+    title: Metrics plugin
+    text: "io.miragon.mcp:cibseven-history-metrics 0.20.0 on Maven Central."
+    link: https://repo1.maven.org/maven2/io/miragon/mcp/cibseven-history-metrics/
+  - icon: boxes
+    title: npm packages
+    text: "@miragon-ai/camunda7-connector and @miragon-ai/analytics-connector, both at 0.20.0."
+    link: https://www.npmjs.com/package/@miragon-ai/camunda7-connector
+fits:
+  - eyebrow: Phase
+    title: Execute
+    text: Pulse reads the models that already run on the engine and sends ticket drafts back to Implement.
+    link: /execute/
+  - eyebrow: Same engines
+    title: operate
+    text: The CLI without a server, for developers, coding agents and CI.
+    link: /tools/operate/
+  - eyebrow: Your own systems
+    title: Solution templates
+    text: The template miragon-ai-starter mounts Pulse's modules next to your own.
+    link: /tools/solution-templates/
+docs:
+  - icon: layers
+    title: Architecture
+    text: The server, its two modules and the systems they talk to.
+    link: /docs/pulse/architecture/
+  - icon: code
+    title: Developer
+    text: Run the stack from source and build your own server on the modules.
+    link: /docs/pulse/developer/
+  - icon: server
+    title: Operations
+    text: The Docker image, security, environment variables, toolsets and health routes.
+    link: /docs/pulse/operations/
+  - icon: chat
+    title: Usage
+    text: Connect an assistant, what to ask and your own settings.
+    link: /docs/pulse/usage/
+---
+
+<PageSection tone="tint" eyebrow="The problem" title="Every question about a running process waits for a developer" intro="When a process gets stuck, the people who hear about it first, such as operations staff, support or a product owner, usually cannot see why. They ask a developer, so every question waits for the few people who know each engine's Cockpit and PromQL.">
+  <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
+</PageSection>
+
+<PageSection align="center" eyebrow="How it works" title="Ask in the chat, get the engine's answer as a widget" intro="The runtime figures need CIB seven with the metrics plugin. Everything else works on Camunda 7, CIB seven and Operaton.">
+  <StepList items={frontmatter.steps} />
+</PageSection>
+
+<PageSection tone="tint" id="connect-your-claude" eyebrow="Try it" title="Connect your Claude in 30 seconds">
+  <PillButton href="/docs/pulse/getting-started/#connect-your-claude" label="Get started" variant="light" />
+  <TryItOut />
+</PageSection>
+
+<PageSection eyebrow="Safety" title="Read-only until your team decides otherwise" intro="The AI collects the state of your engines and proposes the next step. Whether it may change anything depends on the toolset the server runs with, and widgets hide the buttons for actions the toolset does not allow.">
+  <CardGrid items={frontmatter.toolsets} />
+
+Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the default cannot change an engine, you can hand Pulse to a wider group, such as support or product owners.
+
+</PageSection>
+
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Run it on your own engine">
+  <PillButton href="/docs/pulse/getting-started/#run-it-on-your-own-engine" label="Get started" variant="light" />
+</PageSection>
+
+<PageSection eyebrow="Status" title="Where Pulse stands on 13 October 2026" intro="Pulse is at v0.20.0 and pre-1.0. The last three minor releases each list breaking changes, such as renamed tools and result fields, so pin the image tag you run. The public playground runs the same version.">
+  <FeatureList items={frontmatter.status} />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public">
+  <CardGrid items={frontmatter.proof} />
+</PageSection>
+
+<PageSection eyebrow="Where it fits" title="Pulse in the lifecycle">
+  <CardGrid items={frontmatter.fits} />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Docs" title="Go deeper">
+  <CardGrid items={frontmatter.docs} columns={4} />
+
+The [README](https://github.com/Miragon/miragon-ai#readme) is the full reference for every tool, toolset and environment variable.
+
+</PageSection>
+
+<CtaBox title="Run Pulse on your own engines." text="Tell us which engines you run and who asks about them today. You get an honest assessment of whether Pulse helps first." note="A 30-minute first call." />

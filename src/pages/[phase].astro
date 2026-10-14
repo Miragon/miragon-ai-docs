@@ -1,0 +1,35 @@
+---
+// The five phase pages (/analyse/ ...), from src/content/phases/<phase>.mdx:
+// website pages like the tool pages. The hero carries "Miragon AI ·
+// Lifecycle" and the phase's promise, with the lifecycle graphic beside it,
+// where the token runs to this phase and stays; then the bands of the body.
+import { getCollection, render, type CollectionEntry } from "astro:content"
+import Website from "../layouts/Website.astro"
+import Hero from "../components/hero/Hero.astro"
+import LifecycleMap from "../components/vue/LifecycleMap.vue"
+import { WEBSITE_COMPONENTS } from "../components/landing"
+
+export async function getStaticPaths() {
+  const phases = await getCollection("phases")
+  return phases.map((entry) => ({ params: { phase: entry.id }, props: { entry } }))
+}
+
+interface Props {
+  entry: CollectionEntry<"phases">
+}
+
+const { entry } = Astro.props
+const { data } = entry
+const { Content } = await render(entry)
+---
+
+<Website title={data.title} description={data.description}>
+  <Hero hero={data.hero} eyebrow={{ label: "Lifecycle", link: "/#lifecycle" }}>
+    <Fragment slot="artefact">
+      <LifecycleMap client:visible current={data.title} />
+    </Fragment>
+  </Hero>
+  <div class="prose">
+    <Content components={WEBSITE_COMPONENTS} />
+  </div>
+</Website>

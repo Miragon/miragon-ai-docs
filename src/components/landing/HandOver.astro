@@ -1,0 +1,136 @@
+---
+// The hand-overs of a phase page in two columns: what comes in (at the
+// start or from another phase) and what goes out. Each one is a card: the
+// direction ("From Analyse", linked to that phase), what is handed over and
+// its formats as small mono chips.
+// Items: { direction: in | out, label, link?, text, formats: string[] };
+// the text may hold `code` and [links](/path/) (inline.ts).
+import type { HandOver } from "../../data/schemas"
+import Icon from "./Icon.astro"
+import { inline } from "./inline"
+
+interface Props {
+  items: HandOver[]
+}
+
+const { items } = Astro.props
+
+const columns = [
+  { title: "Comes in", items: items.filter((item) => item.direction === "in") },
+  { title: "Goes out", items: items.filter((item) => item.direction === "out") },
+].filter((column) => column.items.length)
+---
+
+<div class="handover">
+  {columns.map((column) => (
+    <div class="column">
+      <p class="column-title">{column.title}</p>
+      <ul>
+        {column.items.map((item) => (
+          <li class="item">
+            <p class="label">
+              {item.link ? (
+                <a href={item.link}>
+                  {item.label}
+                  <Icon name="arrow" size={14} />
+                </a>
+              ) : (
+                item.label
+              )}
+            </p>
+            <p class="text" set:html={inline(item.text)} />
+            <ul class="formats" aria-label="Formats">
+              {item.formats.map((format) => (
+                <li>{format}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  :root .handover {
+    display: grid;
+    gap: 32px 20px;
+  }
+  @media (min-width: 900px) {
+    :root .handover {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+    }
+  }
+  :root .handover .column-title {
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--l-text-muted);
+  }
+  :root .handover ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  :root .handover .column > ul {
+    display: grid;
+    gap: 16px;
+  }
+  :root .handover li {
+    margin: 0;
+  }
+  :root .handover .item {
+    padding: 24px;
+    border: 1px solid var(--l-card-border);
+    border-radius: 20px;
+    background: var(--l-card-bg);
+  }
+  :root .handover .label {
+    margin: 0 0 8px;
+    font-family: var(--site-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--l-text-muted);
+  }
+  :root .handover .label a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--l-link);
+  }
+  :root .handover .label a:hover {
+    text-decoration: underline;
+  }
+  :root .handover .text {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--l-text);
+  }
+  :root .handover .text :global(code) {
+    font-size: 0.9em;
+  }
+  :root .handover .formats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  :root .handover .formats li {
+    padding: 3px 10px;
+    border: 1px solid var(--l-card-border);
+    border-radius: var(--cd-radius-pill);
+    font-family: var(--site-font-mono);
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--l-text-muted);
+  }
+</style>

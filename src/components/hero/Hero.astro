@@ -1,0 +1,331 @@
+---
+// The hero of the landing, the tool pages and the phase pages, from the
+// page's frontmatter (what VitePress' home layout rendered): name,
+// headline, tagline and buttons, with the artefact beside it (slot
+// "artefact": hero/HeroArtefact.astro, or the lifecycle graphic on a phase
+// page). Below 960px the text is centred and the
+// artefact follows it.
+//
+// A tool or phase page passes an eyebrow ("Miragon AI · <phase>",
+// "Miragon AI · Lifecycle"); its name then renders as a small green label
+// above the headline, the hero's one green word, and the headline carries
+// the promise.
+//
+// Buttons as on miragon.io: `brand` is a white pill with a green circle and
+// an arrow, `alt` a quiet outline. External links open in a new tab.
+import type { Hero } from "../../data/schemas"
+import HeroEyebrow from "./HeroEyebrow.astro"
+
+export interface HeroEyebrowLink {
+  label: string
+  link: string
+}
+
+interface Props {
+  hero: Hero
+  eyebrow?: HeroEyebrowLink
+}
+
+const { hero, eyebrow } = Astro.props
+
+/** A link with a scheme (https:, mailto:) or protocol-relative leaves the site. */
+const isExternal = (link: string) => /^(?:[a-z]+:|\/\/)/i.test(link)
+---
+
+<section class:list={["hero", { "has-eyebrow": eyebrow }]}>
+  <div class="container">
+    <div class="main">
+      {eyebrow && <HeroEyebrow eyebrow={eyebrow} />}
+      <h1 class="heading">
+        <span class="name" set:html={hero.name} />
+        <span class="text" set:html={hero.text} />
+      </h1>
+      <p class="tagline" set:html={hero.tagline} />
+      <div class="actions">
+        {hero.actions.map((action) => (
+          <div class="action">
+            <a
+              class:list={["button", action.theme]}
+              href={action.link}
+              target={isExternal(action.link) ? "_blank" : undefined}
+              rel={isExternal(action.link) ? "noreferrer" : undefined}
+            >
+              {action.text}
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="image">
+      <div class="image-container">
+        <slot name="artefact" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Sizes and layout from VitePress' VPHero, colours and the tool-page
+     variant from the old landing.css, the artefact column from custom.css.
+     The rules are measured against a 24px line. */
+  .hero {
+    padding: 48px 24px;
+    line-height: 24px;
+  }
+  @media (min-width: 640px) {
+    .hero {
+      padding: 80px 48px 48px;
+    }
+  }
+  @media (min-width: 960px) {
+    .hero {
+      padding: 80px 64px 64px;
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1152px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  /* The artefact sits level with the text. */
+  @media (min-width: 960px) {
+    .container {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+    }
+  }
+
+  .main {
+    position: relative;
+    z-index: 10;
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+  /* The text column takes 2/3 (at most 592px) and may shrink next to the
+     440px artefact, so the two never overflow below ~1100px. */
+  @media (min-width: 960px) {
+    .main {
+      flex-shrink: 1;
+      width: calc((100% / 3) * 2);
+      max-width: 592px;
+      min-width: 0;
+    }
+  }
+
+  .heading {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    overflow-wrap: break-word;
+  }
+  .name,
+  .text {
+    width: fit-content;
+    max-width: 392px;
+    margin: 0 auto;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px;
+    letter-spacing: -0.04em;
+    white-space: pre-wrap;
+    color: var(--cd-weiss);
+  }
+  @media (min-width: 640px) {
+    .name,
+    .text {
+      max-width: 576px;
+      font-size: 48px;
+      line-height: 56px;
+    }
+  }
+  @media (min-width: 960px) {
+    .name,
+    .text {
+      margin: 0;
+      font-size: 56px;
+      line-height: 64px;
+    }
+  }
+
+  /* A tool's page: the name is a green label above the headline. */
+  .has-eyebrow .name {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 22px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--cd-gruen);
+  }
+
+  .tagline {
+    max-width: 392px;
+    margin: 0 auto;
+    padding-top: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    color: color-mix(in srgb, var(--cd-weiss) 84%, transparent);
+  }
+  @media (min-width: 640px) {
+    .tagline {
+      max-width: 576px;
+      padding-top: 12px;
+      font-size: 20px;
+      line-height: 32px;
+    }
+  }
+  @media (min-width: 960px) {
+    .tagline {
+      margin: 0;
+      font-size: 24px;
+      line-height: 36px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: -6px;
+    padding-top: 24px;
+  }
+  @media (min-width: 640px) {
+    .actions {
+      padding-top: 32px;
+    }
+  }
+  @media (min-width: 960px) {
+    .actions {
+      justify-content: flex-start;
+    }
+  }
+  .action {
+    flex-shrink: 0;
+    padding: 6px;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: var(--cd-radius-pill);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 38px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color var(--cd-motion-base) var(--cd-ease),
+      border-color var(--cd-motion-base) var(--cd-ease),
+      color var(--cd-motion-base) var(--cd-ease);
+  }
+  .button.brand {
+    gap: 12px;
+    padding: 4px 4px 4px 22px;
+    border-color: var(--cd-weiss);
+    background-color: var(--cd-weiss);
+    color: var(--cd-schwarz);
+  }
+  .button.brand::after {
+    content: "";
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--cd-gruen)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231D1D1D' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E")
+      center / 17px no-repeat;
+    transition: transform var(--cd-motion-base) var(--cd-ease);
+  }
+  .button.brand:hover {
+    border-color: var(--cd-gruen);
+    background-color: var(--cd-gruen);
+    color: var(--cd-schwarz);
+  }
+  .button.brand:hover::after {
+    transform: translateX(3px);
+  }
+  .button.alt {
+    border-color: color-mix(in srgb, var(--cd-weiss) 40%, transparent);
+    background-color: transparent;
+    color: var(--cd-weiss);
+  }
+  .button.alt:hover {
+    border-color: var(--cd-weiss);
+    background-color: color-mix(in srgb, var(--cd-weiss) 12%, transparent);
+    color: var(--cd-weiss);
+  }
+  .button:focus-visible {
+    outline: 2px solid var(--cd-weiss);
+    outline-offset: 3px;
+  }
+
+  /* The artefact column: at least 440px wide beside the text; below 960px
+     it follows the text, inside the page gutter. */
+  .image {
+    margin: 40px 0 0;
+  }
+  @media (min-width: 960px) {
+    .image {
+      flex-grow: 1;
+      min-width: 440px;
+      min-height: 100%;
+      margin: 0;
+    }
+  }
+  .image-container {
+    position: relative;
+    margin: 0 auto;
+  }
+  @media (min-width: 960px) {
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  /* Entrance: the text, then the artefact, fade up. */
+  @keyframes mgn-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .name {
+    animation: mgn-fade-up 0.8s ease both;
+  }
+  .text {
+    animation: mgn-fade-up 0.8s 0.1s ease both;
+  }
+  .tagline {
+    animation: mgn-fade-up 0.8s 0.2s ease both;
+  }
+  .actions {
+    animation: mgn-fade-up 0.8s 0.25s ease both;
+  }
+  .image {
+    animation: mgn-fade-up 1s 0.35s ease both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .name,
+    .text,
+    .tagline,
+    .actions,
+    .image {
+      animation: none;
+    }
+  }
+</style>

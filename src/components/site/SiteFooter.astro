@@ -1,0 +1,120 @@
+---
+// The site footer on website pages (layouts/Website.astro), docs pages (the
+// Starlight PageFrame override) and the 404: Lifecycle, Tools and Docs
+// columns from data/lifecycle.ts, then the legal row. German DDG §5 requires
+// the Impressum, and GDPR Art. 13 the privacy policy, reachable from every
+// page. The legal row's text and links are those of the VitePress
+// LegalFooter.
+import { PHASES, TOOLS, docsLink } from "../../data/lifecycle"
+import { LEGAL } from "../../data/nav"
+
+const columns = [
+  { title: "Lifecycle", links: PHASES.map((phase) => ({ name: phase.name, url: phase.link })) },
+  { title: "Tools", links: TOOLS.map((tool) => ({ name: tool.name, url: tool.link })) },
+  { title: "Docs", links: TOOLS.map((tool) => ({ name: tool.name, url: docsLink(tool) })) },
+]
+---
+
+<footer class="site-footer">
+  <div class="inner">
+    <nav class="columns" aria-label="Site map">
+      {columns.map((column) => (
+        <div class="column">
+          <p class="column-title">{column.title}</p>
+          <ul>
+            {column.links.map((link) => (
+              <li>
+                <a href={link.url}>{link.name}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+    <div class="legal">
+      <span class="copyright">© 2022–2026 Miragon GmbH</span>
+      <nav class="legal-links" aria-label="Legal">
+        {LEGAL.map((link) => (
+          <a href={link.url} target="_blank" rel="noopener noreferrer">
+            {link.name}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Explicit margins, list and link styles: the footer renders on website
+     pages and inside Starlight, two different resets. */
+  .site-footer {
+    position: relative;
+    z-index: 1;
+    padding: 40px 24px 16px;
+    border-top: 1px solid var(--site-divider);
+    background: var(--site-bg);
+    color: var(--site-text-2);
+    font-family: var(--site-font);
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .inner {
+    max-width: 1152px;
+    margin: 0 auto;
+  }
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+  @media (min-width: 640px) {
+    .columns {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .column-title {
+    margin: 0 0 12px;
+    color: var(--site-text-1);
+    font-weight: 600;
+  }
+  ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    margin: 0;
+  }
+  a {
+    color: var(--site-text-2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  a:hover {
+    color: var(--site-accent);
+  }
+  a:focus-visible {
+    border-radius: 2px;
+    outline: 2px solid var(--cd-blau-hell);
+    outline-offset: 2px;
+  }
+
+  /* The legal row, as the VitePress LegalFooter drew it. */
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--site-divider);
+    font-size: 13px;
+  }
+  .legal-links {
+    display: flex;
+    gap: 20px;
+  }
+</style>

@@ -1,11 +1,9 @@
-node_modules/
-pnpm-lock.yaml
+dist/
+.astro/
+.netlify/
 .context/
-
-# VitePress build output and dev-server cache
-.vitepress/cache/
-.vitepress/dist/
+pnpm-lock.yaml
 
 # CI design tokens, vendored verbatim from Miragon/corporate-identity and
 # pinned by scripts/check-brand-assets.mjs: never formatted or hand-edited.
-.vitepress/theme/cd-tokens.generated.css
+src/styles/cd-tokens.generated.css

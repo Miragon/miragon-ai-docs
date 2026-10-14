@@ -1,0 +1,78 @@
+// The icons pages may name (frontmatter `icon:` of cards and features), and
+// the Lucide icon each one draws. The keys are the 63 of the VitePress
+// theme's landing/Icon.vue, plus cog (the agent, as in the landing's hero
+// and on the phase pages). data/schemas.ts accepts exactly these names, and
+// landing/Icon.astro renders them with @lucide/astro, in the CI's heavier
+// stroke (2.5).
+export const ICONS = {
+  activity: "Activity",
+  arrow: "ArrowRight",
+  ban: "Ban",
+  book: "BookOpen",
+  boxes: "Boxes",
+  bug: "Bug",
+  cable: "Cable",
+  chart: "ChartColumn",
+  check: "Check",
+  "check-circle": "CircleCheck",
+  question: "CircleHelp",
+  clipboard: "ClipboardCheck",
+  clock: "Clock",
+  code: "Code",
+  cog: "Cog",
+  container: "Container",
+  database: "Database",
+  external: "ExternalLink",
+  eye: "Eye",
+  "file-code": "FileCode",
+  file: "FileText",
+  tree: "FolderTree",
+  gauge: "Gauge",
+  branch: "GitBranch",
+  merge: "GitMerge",
+  "pull-request": "GitPullRequest",
+  // Not in @lucide/astro: Lucide dropped its brand icons. Icon.astro draws it
+  // from the lucide-vue-next 1.0.0 paths the VitePress site used.
+  github: "Github",
+  globe: "Globe",
+  handshake: "Handshake",
+  history: "History",
+  inbox: "Inbox",
+  key: "KeyRound",
+  layers: "Layers",
+  dashboard: "LayoutDashboard",
+  library: "Library",
+  link: "Link",
+  list: "ListChecks",
+  lock: "Lock",
+  map: "Map",
+  message: "MessageSquare",
+  chat: "MessagesSquare",
+  monitor: "Monitor",
+  network: "Network",
+  package: "Package",
+  pen: "PenTool",
+  play: "Play",
+  plug: "Plug",
+  puzzle: "Puzzle",
+  refresh: "RefreshCw",
+  route: "Route",
+  scale: "Scale",
+  search: "Search",
+  server: "Server",
+  share: "Share2",
+  shield: "ShieldCheck",
+  target: "Target",
+  terminal: "Terminal",
+  ticket: "Ticket",
+  warning: "TriangleAlert",
+  "user-check": "UserCheck",
+  users: "Users",
+  workflow: "Workflow",
+  wrench: "Wrench",
+  x: "X",
+} as const
+
+export type IconName = keyof typeof ICONS
+
+export const ICON_NAMES = Object.keys(ICONS) as [IconName, ...IconName[]]

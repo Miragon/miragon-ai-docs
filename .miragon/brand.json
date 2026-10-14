@@ -1,5 +1,5 @@
 {
   "_comment": "Activates the miragon-brand brand-lint hook and the CI brand-lint step. The site is English (Miragon/miragon-ai-docs#1), so the German-only copy rules are off: du (A1), umlauts (A3), German passive (A4), German claim (A7), gender forms (A11) and German UI texts (C5). Em dashes as connectors (A2), spellings such as CIB seven and Miragon AI (A10), the anti-slop patterns (S*), palette and token rules stay on.",
-  "ignorieren": [".vitepress/theme/cd-tokens.generated.css", "pnpm-lock.yaml", "CHANGELOG.md"],
+  "ignorieren": ["src/styles/cd-tokens.generated.css", "pnpm-lock.yaml", "CHANGELOG.md"],
   "aus": ["A1", "A3", "A4", "A7", "A11", "C5"]
 }

@@ -1,0 +1,53 @@
+---
+// A small line above the hero name of a tool or phase page that places the
+// page: "Miragon AI · Execute" on a tool page (the frontmatter
+// `eyebrow: { phase, link }`), "Miragon AI · Lifecycle" on a phase page,
+// the label linking to its page. hero/Hero.astro renders it only when the
+// page has one.
+import type { HeroEyebrowLink } from "./Hero.astro"
+
+interface Props {
+  eyebrow: HeroEyebrowLink
+}
+
+const { eyebrow } = Astro.props
+---
+
+<p class="eyebrow">
+  <span>Miragon AI</span>
+  <span class="sep" aria-hidden="true">
+    ·
+  </span>
+  <a href={eyebrow.link}>{eyebrow.label}</a>
+</p>
+
+<style>
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 18px;
+    font-family: var(--site-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--cd-weiss) 72%, transparent);
+  }
+  /* Below 960px the hero centres its text (text-align), which a flex row
+     does not follow: centre it with the name and headline. */
+  @media (max-width: 959px) {
+    .eyebrow {
+      justify-content: center;
+    }
+  }
+  .sep {
+    color: color-mix(in srgb, var(--cd-weiss) 50%, transparent);
+  }
+  .eyebrow a {
+    color: var(--cd-weiss);
+    text-decoration: none;
+  }
+  .eyebrow a:hover {
+    text-decoration: underline;
+  }
+</style>

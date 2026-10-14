@@ -1,0 +1,38 @@
+/*
+ * Code blocks (Expressive Code) on every page, website and docs alike:
+ * imported by the website layout (layouts/Website.astro) and listed in
+ * Starlight's customCss. Their look is set in astro.config.mjs
+ * (expressiveCode.styleOverrides); this file adds what the options cannot.
+ */
+
+/* The code's language in the top right corner, as on the VitePress site.
+   Expressive Code writes it on <pre data-language>. The label is placed in
+   the frame (the positioned box), so it stays put when long code scrolls
+   sideways. It gives way to the copy button, which takes the same corner on
+   hover and focus; on touch screens the copy button always shows there, so
+   the label only shows where there is a pointer that hovers. */
+@media (hover: hover) {
+  .expressive-code .frame:not(.has-title, .is-terminal) > pre[data-language]::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 2px;
+    right: 8px;
+    z-index: 1;
+    color: var(--site-text-2);
+    font-family: var(--site-font);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    user-select: none;
+    transition: opacity 0.4s;
+  }
+  .expressive-code .frame:is(:hover, :focus-within) > pre[data-language]::before {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .expressive-code .frame > pre[data-language]::before {
+    transition: none;
+  }
+}

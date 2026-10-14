@@ -1,0 +1,80 @@
+---
+// The closing call to action of a website page, as on miragon.io: a blue,
+// strongly rounded box with a headline, one sentence, a pill button and a
+// quiet note below it, in a full-width band of its own.
+// Props: title, text, label, href, note.
+import PillButton from "./PillButton.astro"
+
+interface Props {
+  title: string
+  text?: string
+  label?: string
+  href?: string
+  note?: string
+}
+
+const { title, text, label = "Talk to us", href = "/#contact", note } = Astro.props
+---
+
+<div class="cta-wrap">
+  <div class="cta">
+    <h2 class="title">{title}</h2>
+    {text && <p class="text">{text}</p>}
+    <PillButton href={href} label={label} variant="light" />
+    {note && <p class="note">{note}</p>}
+  </div>
+</div>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  :root .cta-wrap {
+    padding: 56px 24px;
+    background: var(--l-band-plain);
+  }
+  @media (min-width: 768px) {
+    :root .cta-wrap {
+      padding: 80px 48px;
+    }
+  }
+  :root .cta {
+    max-width: 1152px;
+    margin: 0 auto;
+    padding: 56px 28px;
+    border-radius: 40px;
+    background: var(--l-cta-bg);
+    text-align: center;
+  }
+  @media (min-width: 768px) {
+    :root .cta {
+      padding: 72px 64px;
+    }
+  }
+  :root .cta .title {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    color: var(--cd-weiss);
+  }
+  :root .cta .text {
+    max-width: 640px;
+    margin: 16px auto 28px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--cd-weiss) 92%, transparent);
+  }
+  /* 90% white keeps the small note above 4.5:1 on --cd-blau (86%: 4.47:1). */
+  :root .cta .note {
+    margin: 16px 0 0;
+    font-size: 13px;
+    color: color-mix(in srgb, var(--cd-weiss) 90%, transparent);
+  }
+</style>

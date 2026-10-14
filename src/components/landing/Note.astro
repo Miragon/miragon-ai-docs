@@ -1,0 +1,59 @@
+---
+// A note box in a website page's text, for what VitePress wrote as
+// `::: info Title`: a box with the title as its first paragraph, in the
+// look of the band's cards. The text comes in the slot. Docs pages use
+// Starlight's asides.
+interface Props {
+  title?: string
+}
+
+const { title } = Astro.props
+---
+
+<div class="note">
+  {title && <p class="title">{title}</p>}
+  <slot />
+</div>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  /* A card on the band, marked as a note (the CI's info status on dark: a
+     light blue edge, the ground stays dark). */
+  :root .note {
+    margin: 20px 0;
+    padding: 20px 24px;
+    border: 1px solid var(--l-card-border);
+    border-left: 3px solid var(--cd-info-hell);
+    border-radius: 16px;
+    background-color: var(--l-card-bg);
+    color: var(--l-text);
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+  /* The title stays in the text colour: the light blue on a lifted card
+     falls below 4.5:1 at this size. */
+  :root .note .title {
+    font-weight: 600;
+  }
+  :root .note :global(p) {
+    margin: 6px 0 0;
+  }
+  :root .note :global(p:first-child) {
+    margin: 0;
+  }
+  :root .note :global(a) {
+    color: var(--l-link);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  :root .note :global(a:hover) {
+    text-decoration-thickness: 2px;
+  }
+  :root .note :global(code) {
+    font-size: 0.9em;
+  }
+</style>

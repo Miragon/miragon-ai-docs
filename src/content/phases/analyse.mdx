@@ -1,0 +1,112 @@
+---
+title: Analyse
+description: How analyzr and your team bring process models from engines, BPM suites, modelling tools and interviews into one reviewed map of which processes you have, how they connect and where each one sits in your value chain.
+hero:
+  name: Analyse
+  text: Know which processes you have and how they connect.
+  tagline: Your team brings the process models from all your sources into one landscape, reviews the links between them and places each process on your value chain, so you see what a change affects before you make it. Analyse comes once, at the start.
+  actions:
+    - theme: brand
+      text: Meet analyzr
+      link: "#tools"
+    - theme: alt
+      text: Talk to us
+      link: /#contact
+compare:
+  before:
+    title: Today
+    items:
+      - Your processes live as BPMN in your engines, in BPM suites such as Signavio, as Visio or draw.io diagrams, and in the heads of the people who run them
+      - The links between processes sit inside the models, in call activities, message and signal names and end events that start the next process
+      - Nobody has reviewed who calls whom, or which process belongs to which step of the value chain
+      - The folders follow your departments while the value stream cuts across them, so every change and every migration starts with a guess about what it affects
+  after:
+    title: With analyzr
+    items:
+      - analyzr reads the BPMN models from these sources into one landscape
+      - Code without an LLM extracts the facts, and agents in an MCP client you choose propose how the processes connect
+      - Your team reviews the proposals, and every link and placement records where it came from and who decided it
+      - Each process sits on a step of your value chain, so you see what a change affects before you make it
+tools:
+  - tool: analyzr
+    text:
+      - analyzr reads BPMN models from the sources below into one landscape. Code without an LLM extracts the facts, and agents in an MCP client you choose, such as Claude Code, propose how the processes connect and which value chain step each one belongs to. You get a reviewed as-is landscape in which every link and placement records where it came from and who decided it.
+      - The [read-only demo](https://analyzr-demo.fly.dev/projects/nordwind-handel/review) shows two synthetic landscapes, worked by a simulation agent without an LLM.
+    status: Early alpha (0.1.0-alpha.0) in a private repository, with no public release yet, local mode only, web UI and agent rationales in German.
+sources:
+  - icon: server
+    eyebrow: Works today
+    title: Camunda 7, Camunda 8, CIB seven, Operaton
+    text: BPMN files or whole folders, uploaded in the browser or pushed with the CLI or REST. Tested on Camunda 7 and Camunda 8 models.
+  - icon: layers
+    eyebrow: Not tested yet
+    title: Flowable, Signavio and other BPM suites
+    text: Their BPMN 2.0 export, uploaded the same way.
+  - icon: file
+    eyebrow: Via designIQ
+    title: Visio, draw.io, Word, Confluence, images
+    text: The import-process skill of designIQ drafts a BPMN model, and your team checks it.
+    link: /tools/design-iq/
+    linkText: More on designIQ
+  - icon: users
+    eyebrow: Via designIQ
+    title: Interviews with process owners
+    text: The capture-process skill of designIQ turns the interview into a BPMN model.
+    link: /tools/design-iq/
+    linkText: More on designIQ
+  - icon: plug
+    eyebrow: Planned, not built
+    title: Engines, Camunda Web Modeler, Git
+    text: Direct connectors that read the models where they live.
+human:
+  - icon: cog
+    title: The agents
+    text: Propose links and placements with confidence and a rationale but cannot accept them. A rule without an LLM accepts unambiguous call activities.
+  - icon: users
+    title: Your team
+    text: A person on your team decides every other proposal in review (accept, reject, hold or correct), unless an auto-accept rule that the project owner set covers it. There are none by default.
+handover:
+  - direction: in
+    label: At the start
+    text: Your existing models from the sources above, optionally with a value chain in the format of the public [value-chain-modeler](https://github.com/Miragon/value-chain-modeler). If you re-upload a changed model later, it becomes a new revision, only models whose facts changed are analysed again, and earlier decisions stay valid unless an endpoint's meaning changed.
+    formats:
+      - BPMN 2.0 XML (.bpmn, .bpmn2, .bpmn20.xml)
+      - .vc.json
+  - direction: out
+    label: To Design
+    link: /design/
+    text: The reviewed as-is landscape with the relations between processes, the placements on the value chain, findings such as unresolved calls or processes without a step, and the model revisions. analyzr has no direct connection to designIQ or bpmn-cli yet.
+    formats:
+      - REST (OpenAPI 3.1)
+      - MCP read tools
+      - .vc.json via analyzr value-chain pull
+---
+
+<PageSection tone="tint" eyebrow="The problem today" title="Every change starts with a guess about what it affects">
+  <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
+</PageSection>
+
+<PageSection id="tools" eyebrow="How Miragon AI helps" title="One reviewed map of your processes">
+  <PhaseTools items={frontmatter.tools} />
+
+<Note title="What analyzr does not do">
+
+analyzr reads BPMN models that already exist. It does not mine logs, read runtime data or generate BPMN.
+
+</Note>
+
+</PageSection>
+
+<PageSection tone="tint" id="sources" eyebrow="Sources" title="Where the models come from, and what works today" intro="The BPMN export is the common ground. Models from engines work today, and the other sources come in through designIQ or are planned.">
+  <CardGrid items={frontmatter.sources} />
+</PageSection>
+
+<PageSection eyebrow="Human and AI" title="Agents propose, your team decides">
+  <CardGrid items={frontmatter.human} columns={2} />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Hand-over" title="From your existing models to a reviewed landscape for Design">
+  <HandOver items={frontmatter.handover} />
+</PageSection>
+
+<CtaBox title="Find out what a change affects before you make it." text="Tell us where your processes live today and which change you are planning. We look at which of your sources analyzr reads today." note="A 30-minute first call." />

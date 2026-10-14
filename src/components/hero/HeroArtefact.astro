@@ -1,0 +1,51 @@
+---
+// The hero artefact, picked by the page's frontmatter `artefact`:
+//   { type: chat }                                   PulseChat
+//   { type: terminal, title, lines: [...] }          TerminalWindow
+//   { type: screenshot, src, alt, url, caption }     ScreenshotFrame
+//   { type: orbit }                                  HeroOrbit (the landing)
+// Without `artefact` the lifecycle graphic renders (LifecycleMap).
+//
+// LifecycleMap is a Vue island (client:visible): Astro renders its HTML, the
+// browser hydrates it once it scrolls into view. The others are static;
+// their motion is CSS only.
+import type { Artefact } from "../../data/schemas"
+import PulseChat from "./PulseChat.astro"
+import HeroOrbit from "./HeroOrbit.astro"
+import ScreenshotFrame from "./ScreenshotFrame.astro"
+import TerminalWindow from "./TerminalWindow.astro"
+import LifecycleMap from "../vue/LifecycleMap.vue"
+
+interface Props {
+  artefact?: Artefact
+}
+
+const { artefact } = Astro.props
+
+// The schema allows only these types, so another one means stale data (a
+// dev server whose content cache missed a change). Fail loudly instead of
+// falling back to the lifecycle graphic.
+const TYPES = ["chat", "terminal", "screenshot", "orbit"]
+if (artefact && !TYPES.includes(artefact.type)) {
+  throw new Error(
+    `HeroArtefact: unknown artefact type "${artefact.type}". Restart pnpm dev if the frontmatter says otherwise.`,
+  )
+}
+---
+
+{artefact?.type === "chat" ? (
+  <PulseChat />
+) : artefact?.type === "terminal" ? (
+  <TerminalWindow title={artefact.title} lines={artefact.lines} />
+) : artefact?.type === "screenshot" ? (
+  <ScreenshotFrame
+    src={artefact.src}
+    alt={artefact.alt}
+    url={artefact.url}
+    caption={artefact.caption}
+  />
+) : artefact?.type === "orbit" ? (
+  <HeroOrbit />
+) : (
+  <LifecycleMap client:visible />
+)}

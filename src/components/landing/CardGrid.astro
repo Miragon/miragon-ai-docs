@@ -1,0 +1,156 @@
+---
+// Cards as on miragon.io: rounded, a light ground that lifts on hover, an
+// optional icon tile, a title, a sentence or two and an optional link. A
+// card with `link` is one link as a whole. Items:
+// { icon?, eyebrow?, title, text?, link?, linkText? }; `icon` is a key of
+// icons.ts, `eyebrow` a small label above the title (a phase, a version).
+// External links open in a new tab and read "Open", internal ones read
+// "Learn more" unless the card sets linkText.
+import type { Card } from "../../data/schemas"
+import Icon from "./Icon.astro"
+
+interface Props {
+  items: Card[]
+  columns?: 2 | 3 | 4
+  center?: boolean
+}
+
+const { items, columns = 3, center = false } = Astro.props
+
+const isExternal = (link: string) => /^https?:\/\//.test(link)
+---
+
+<ul class:list={["cards", `cols-${columns}`, { center }]}>
+  {items.map((item) => {
+    const Tag = item.link ? "a" : "div"
+    const external = item.link ? isExternal(item.link) : false
+    return (
+      <li>
+        <Tag
+          class:list={["card", { linked: item.link }]}
+          href={item.link}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noopener" : undefined}
+        >
+          {item.icon && (
+            <span class="tile">
+              <Icon name={item.icon} />
+            </span>
+          )}
+          {item.eyebrow && <span class="eyebrow">{item.eyebrow}</span>}
+          <span class="title">{item.title}</span>
+          {item.text && <span class="text">{item.text}</span>}
+          {item.link && (
+            <span class="more">
+              {item.linkText ?? (external ? "Open" : "Learn more")}
+              <Icon name={external ? "external" : "arrow"} size={15} />
+            </span>
+          )}
+        </Tag>
+      </li>
+    )
+  })}
+</ul>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  :root .cards {
+    display: grid;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 768px) {
+    :root .cols-2,
+    :root .cols-3,
+    :root .cols-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    :root .cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    :root .cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  :root .cards li {
+    display: flex;
+    margin: 0;
+  }
+  :root .card {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 28px;
+    border: 1px solid var(--l-card-border);
+    border-radius: 24px;
+    background: var(--l-card-bg);
+    color: var(--l-text);
+    /* A linked card is an <a> inside .prose: reset its link weight. */
+    font-weight: 400;
+    text-decoration: none;
+    transition:
+      transform var(--cd-motion-base) var(--cd-ease),
+      box-shadow var(--cd-motion-base) var(--cd-ease),
+      border-color var(--cd-motion-base) var(--cd-ease);
+  }
+  :root .card.linked:hover {
+    transform: translateY(-4px);
+    border-color: var(--l-border-strong);
+    box-shadow: var(--cd-shadow-3);
+  }
+  :root .card.linked:focus-visible {
+    outline: 2px solid var(--cd-blau-hell);
+    outline-offset: 2px;
+  }
+  :root .center .card {
+    align-items: center;
+    text-align: center;
+  }
+  :root .tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background: var(--l-tile-bg);
+    color: var(--l-tile-fg);
+  }
+  :root .eyebrow {
+    margin-bottom: 6px;
+    font-family: var(--site-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--l-text-muted);
+  }
+  :root .title {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  :root .text {
+    margin-top: 8px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--l-text-muted);
+  }
+  :root .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 20px;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--l-link);
+  }
+</style>

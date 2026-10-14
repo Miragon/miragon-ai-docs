@@ -8,6 +8,10 @@ if [ ! -d node_modules ]; then
   exit 1
 fi
 
-# Conductor hands each workspace its own port range; Vite moves to the next
+# Conductor hands each workspace its own port range; Astro moves to the next
 # free port if this one is taken.
-exec pnpm dev --port "${CONDUCTOR_PORT:-5173}" --open
+# Astro 7 backgrounds `astro dev` when it detects an AI agent (CLAUDECODE=1
+# and the like): the command returns after the server is up, and
+# `pnpm astro dev stop` ends it. A Conductor run started by a human stays in
+# the foreground.
+exec pnpm dev --port "${CONDUCTOR_PORT:-4321}" --open

@@ -1,0 +1,58 @@
+---
+// Docs on phones: Starlight's menu (the docs sidebar) ends with the website
+// nav, since the header's burger is hidden there below 50rem. Replaces
+// Starlight's default (social icons, theme and language select): the site
+// has neither a theme nor a language picker.
+import { CTA, GITHUB, NAV } from "../../data/nav"
+
+const links = NAV.flatMap((item) =>
+  "url" in item ? [item] : "children" in item ? item.children : item.groups.flatMap((g) => g.items),
+)
+---
+
+<nav class="site-mobile-nav" aria-label="Miragon AI">
+  <ul>
+    {links.map((link) => (
+      <li>
+        <a href={link.url}>{link.name}</a>
+      </li>
+    ))}
+    <li>
+      <a href={CTA.url}>{CTA.name}</a>
+    </li>
+    <li>
+      <a href={GITHUB}>GitHub</a>
+    </li>
+  </ul>
+</nav>
+
+<style>
+  .site-mobile-nav {
+    padding-block: 1rem;
+    border-top: 1px solid var(--sl-color-hairline);
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    columns: 2;
+    column-gap: 1rem;
+  }
+  li {
+    break-inside: avoid;
+  }
+  a {
+    display: block;
+    padding: 0.375rem 0;
+    color: var(--sl-color-gray-2);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--sl-color-white);
+  }
+  @media (min-width: 50rem) {
+    .site-mobile-nav {
+      display: none;
+    }
+  }
+</style>

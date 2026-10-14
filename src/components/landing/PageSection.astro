@@ -1,0 +1,158 @@
+---
+// A full-width band of a website page, as on miragon.io: an optional
+// eyebrow (small, bold, accent colour), a title, an intro and the content
+// (Markdown or components in the slot). Bands alternate `tint` and
+// `plain`, starting with `tint` below the black hero; `dark` is for one
+// emphasised band. `align="center"` centres the header,
+// as for step and card sections; content stays in a 1152px container.
+//
+// The route templates render the page body at full width, so the band
+// needs no breakout margins. Anchor jumps land below the sticky header
+// through the page's scroll-padding-top (styles/website.css); a
+// scroll-margin here would add to it.
+interface Props {
+  id?: string
+  eyebrow?: string
+  title?: string
+  intro?: string
+  tone?: "plain" | "tint" | "dark"
+  align?: "left" | "center"
+}
+
+const { id, eyebrow, title, intro, tone = "plain", align = "left" } = Astro.props
+---
+
+<section id={id} class:list={["page-section", `tone-${tone}`, `align-${align}`]}>
+  <div class="inner">
+    {(eyebrow || title || intro) && (
+      <header class="head">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        {title && <h2 class="title">{title}</h2>}
+        {intro && <p class="intro">{intro}</p>}
+      </header>
+    )}
+    <div class="content">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Each rule starts with :root. Starlight makes Astro scope these styles
+     with :where(), which adds no specificity; the extra class keeps them
+     above the page text's element rules (.prose a, .prose ul, .prose p,
+     .prose li + li in styles/website.css), which they reset. */
+  :root .page-section {
+    padding: 56px 24px;
+    background: var(--l-band-plain);
+    color: var(--l-text);
+  }
+  @media (min-width: 768px) {
+    :root .page-section {
+      padding: 80px 48px;
+    }
+  }
+  :root .tone-tint {
+    background: var(--l-band-tint);
+    /* Cards on a grey band are white (lifted surfaces on the dark site). */
+    --l-card-bg: var(--l-card-on-tint);
+  }
+  :root .tone-dark {
+    background: var(--l-band-dark);
+    --l-text: var(--cd-weiss);
+    --l-text-muted: color-mix(in srgb, var(--cd-weiss) 75%, transparent);
+    --l-accent: var(--cd-gruen);
+  }
+
+  /* Code blocks keep their box on a grey band (their default background is
+     the band's own lift): Expressive Code's backgrounds, set on its root. */
+  :root .tone-tint :global(.expressive-code) {
+    --ec-codeBg: var(--l-band-plain);
+    --ec-frm-edBg: var(--l-band-plain);
+    --ec-frm-edActTabBg: var(--l-band-plain);
+    --ec-frm-edTabBarBg: var(--l-band-plain);
+    --ec-frm-trmTtbBg: var(--l-band-plain);
+    --ec-frm-trmBg: var(--l-band-plain);
+  }
+
+  :root .inner {
+    max-width: 1152px;
+    margin: 0 auto;
+  }
+
+  :root .head {
+    max-width: 760px;
+    margin-bottom: 40px;
+  }
+  :root .align-center .head {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  :root .head:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Reset the .prose heading rules (border, margins) for the band header. */
+  :root .page-section .eyebrow {
+    margin: 0 0 8px;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--l-accent);
+  }
+  :root .page-section .title {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    color: var(--l-text);
+  }
+  @media (min-width: 768px) {
+    :root .page-section .title {
+      font-size: 32px;
+    }
+  }
+  :root .page-section .intro {
+    margin: 20px 0 0;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--l-text-muted);
+  }
+
+  /* Markdown in the slot keeps the page text styles, at a readable measure.
+     Markdown output has no class; the components' own lists keep the full
+     width. */
+  :root .content > :global(:is(p, ul, ol, blockquote, h3, h4):not([class])) {
+    max-width: 760px;
+  }
+  :root .align-center .content > :global(:is(p, h3, h4):not([class])) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  :root .content > :global(:first-child) {
+    margin-top: 0;
+  }
+  :root .content > :global(:last-child) {
+    margin-bottom: 0;
+  }
+  :root .content :global(h3) {
+    border: 0;
+    padding: 0;
+  }
+
+  /* Text after a list, cards or steps keeps its distance from them. */
+  :root .content > :global(:is(.cards, .features, .steps, .compare) + *) {
+    margin-top: 32px;
+  }
+
+  /* The lifecycle graphic as the landing's first band, centred. */
+  :root .content :global(.lifecycle-band) {
+    display: flex;
+    justify-content: center;
+  }
+</style>

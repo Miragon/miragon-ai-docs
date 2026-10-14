@@ -5,8 +5,9 @@
 // site left that monorepo (Miragon/miragon-ai-docs#1).
 //
 // 1. Pin: every vendored file matches its SHA-256 from the pinned release.
-// 2. No fork: no other stylesheet, component or page (a <style> block in
-//    Markdown) declares a --cd-* token.
+// 2. No fork: no other stylesheet, component (.astro, .vue), page (.md,
+//    .mdx, a <style> block in either) or TypeScript module declares a --cd-*
+//    token.
 // 3. Source: when a miragon-brand plugin of the pinned version is at hand,
 //    every vendored file equals its CI source byte for byte. CI checks out
 //    Miragon/corporate-identity and points MIRAGON_BRAND_DIR at it; locally
@@ -23,7 +24,7 @@ const BRAND = {
   version: "1.8.0",
   files: [
     {
-      path: ".vitepress/theme/cd-tokens.generated.css",
+      path: "src/styles/cd-tokens.generated.css",
       source: "skills/modeler-tool-design/assets/cd-tokens.generated.css",
       sha256: "36d76f3a330a1250d332c6862be1dc4f7564d2461e7051d9a565ba723ef2c379",
     },
@@ -46,13 +47,9 @@ const BRAND = {
 }
 
 const ROOT = new URL("..", import.meta.url).pathname
-// Dot directories hold tooling (.git, .context, a CI checkout in .ci-source),
-// not site sources; .vitepress is the one that is.
-const skip = (entry) =>
-  entry === "node_modules" ||
-  entry === "cache" ||
-  entry === "dist" ||
-  (entry.startsWith(".") && entry !== ".vitepress")
+// Not site sources: packages, the build output, and dot directories, which
+// hold tooling (.git, .astro, .netlify, .context, a CI checkout in .ci-source).
+const skip = (entry) => entry === "node_modules" || entry === "dist" || entry.startsWith(".")
 const TOKEN_DECLARATION = /--cd-[\w-]+\s*:/
 
 const errors = []
@@ -74,7 +71,7 @@ function* walk(dir) {
     if (skip(entry)) continue
     const path = join(dir, entry)
     if (statSync(path).isDirectory()) yield* walk(path)
-    else if (/\.(css|vue|md)$/.test(entry)) yield path
+    else if (/\.(css|astro|vue|mdx?|ts)$/.test(entry)) yield path
   }
 }
 const vendored = new Set(BRAND.files.map((f) => join(ROOT, f.path)))

@@ -1,0 +1,576 @@
+---
+// The one header of the site: website pages (layouts/Website.astro) and docs
+// pages (the Starlight Header override) render this component. The wordmark
+// with "AI" beside it, the website nav from data/nav.ts, Starlight's own
+// Search (one Pagefind index for website and docs), "Talk to us" and GitHub.
+//
+// Behaviour (the dropdown script of miragon.io's header, ported):
+// - From 64rem the nav sits in the bar. Hover opens a dropdown, a click or
+//   Enter pins it, Escape closes it and returns focus to its button, a click
+//   outside or moving focus out closes it. Without JavaScript, CSS opens the
+//   dropdowns on hover and focus.
+// - Below 64rem the nav folds into the burger's menu, the dropdowns become
+//   sections that open in place.
+// - Docs pages below 50rem: Starlight's menu button (the docs sidebar, which
+//   ends with this nav, components/starlight/MobileMenuFooter.astro) takes
+//   the burger's place.
+// - The current page is marked, and its section underlined; a tool's docs
+//   (/docs/<tool>/...) count as the tool's section.
+// The script runs once on load: there is no ClientRouter, so astro:page-load
+// never fires.
+import Search from "@astrojs/starlight/components/Search.astro"
+import { CTA, GITHUB, NAV } from "../../data/nav"
+
+interface Props {
+  /** On docs pages: below 50rem the burger is hidden, the nav moves into
+      Starlight's phone menu (components/starlight/MobileMenuFooter.astro). */
+  docs?: boolean
+}
+
+const { docs = false } = Astro.props
+
+const withSlash = (path: string) => (path.endsWith("/") ? path : `${path}/`)
+const here = withSlash(Astro.url.pathname)
+/** A tool's docs belong to its section: /docs/pulse/... counts as /tools/pulse/... */
+const section = here.replace(/^\/docs\/([^/]+)\//, "/tools/$1/")
+/** The exact page: aria-current="page". */
+const isPage = (url: string) => withSlash(url) === here
+/** The page or a page below it, or the tool's docs: data-current, the underline in the bar. */
+const inSection = (urls: string[]) =>
+  urls.some((url) => url !== "/" && section.startsWith(withSlash(url)))
+---
+
+<div class="site-header" data-variant={docs ? "docs" : "website"}>
+  <a class="brand" href="/" aria-label="Miragon AI, home">
+    <img src="/logo/miragon-logo-weiss.svg" alt="" width="157" height="24" />
+    <span class="brand-product" aria-hidden="true">
+      AI
+    </span>
+  </a>
+
+  {/* Before the nav, so Tab moves from the burger into its menu; CSS places
+      it at the end of the bar. */}
+  <button
+    class="burger"
+    type="button"
+    aria-expanded="false"
+    aria-controls="site-nav"
+    aria-label="Open menu"
+  >
+    <svg class="icon-open" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+    <svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 6l12 12M18 6 6 18"></path>
+    </svg>
+  </button>
+
+  <nav id="site-nav" class="menu" aria-label="Main">
+    <ul class="menu-list">
+      {NAV.map((item, index) =>
+        "url" in item ? (
+          <li>
+            <a
+              class="link"
+              href={item.url}
+              aria-current={isPage(item.url) ? "page" : undefined}
+              data-current={inSection([item.url]) ? "" : undefined}
+            >
+              {item.name}
+            </a>
+          </li>
+        ) : (
+          <li class="dropdown">
+            <button
+              class="link toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls={`site-nav-${index}`}
+              data-current={
+                inSection(
+                  "children" in item
+                    ? item.children.map((child) => child.url)
+                    : item.groups.flatMap((group) => group.items.map((child) => child.url)),
+                )
+                  ? ""
+                  : undefined
+              }
+            >
+              {item.name}
+              <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+            <div class="panel" id={`site-nav-${index}`}>
+              {"children" in item ? (
+                <ul>
+                  {item.children.map((child) => (
+                    <li>
+                      <a href={child.url} aria-current={isPage(child.url) ? "page" : undefined}>
+                        {child.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                item.groups.map((group) => (
+                  <div class="group">
+                    <span class="group-label">{group.label}</span>
+                    <ul>
+                      {group.items.map((child) => (
+                        <li>
+                          <a href={child.url} aria-current={isPage(child.url) ? "page" : undefined}>
+                            {child.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              )}
+            </div>
+          </li>
+        ),
+      )}
+      <li class="menu-cta">
+        <a class="pill" href={CTA.url}>
+          {CTA.name}
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="actions">
+    <Search />
+    <a class="pill" href={CTA.url}>
+      {CTA.name}
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </a>
+    <a class="github" href={GITHUB} aria-label="Miragon on GitHub">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3"></path>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<script>
+  const desktop = window.matchMedia("(min-width: 64rem)")
+
+  function init(header: HTMLElement) {
+    const dropdowns = Array.from(header.querySelectorAll<HTMLElement>(".dropdown"))
+    const isOpen = (dropdown: HTMLElement) => dropdown.hasAttribute("data-open")
+    // mode "hover": opened by the mouse, closes when it leaves.
+    // mode "pinned": opened by click, Enter or focus, stays until closed.
+    const setDropdown = (dropdown: HTMLElement, open: boolean, mode = "pinned") => {
+      dropdown.toggleAttribute("data-open", open)
+      if (open) dropdown.dataset.mode = mode
+      else delete dropdown.dataset.mode
+      dropdown.querySelector(".toggle")?.setAttribute("aria-expanded", String(open))
+      if (open) dropdowns.forEach((other) => other !== dropdown && setDropdown(other, false))
+    }
+    const closeDropdowns = () => dropdowns.forEach((dropdown) => setDropdown(dropdown, false))
+
+    for (const dropdown of dropdowns) {
+      const toggle = dropdown.querySelector<HTMLButtonElement>(".toggle")
+      if (!toggle) continue
+      toggle.addEventListener("click", () => {
+        if (isOpen(dropdown) && dropdown.dataset.mode === "hover") dropdown.dataset.mode = "pinned"
+        else setDropdown(dropdown, !isOpen(dropdown))
+      })
+      dropdown.addEventListener("pointerenter", (event) => {
+        if (event.pointerType !== "mouse" || !desktop.matches || isOpen(dropdown)) return
+        setDropdown(dropdown, true, "hover")
+      })
+      dropdown.addEventListener("pointerleave", (event) => {
+        if (event.pointerType === "mouse" && dropdown.dataset.mode === "hover") {
+          setDropdown(dropdown, false)
+        }
+      })
+      dropdown.addEventListener("focusin", (event) => {
+        if (event.target !== toggle && dropdown.dataset.mode !== "pinned")
+          setDropdown(dropdown, true)
+      })
+      dropdown.addEventListener("focusout", (event) => {
+        const next = event.relatedTarget
+        if (
+          desktop.matches &&
+          isOpen(dropdown) &&
+          next instanceof Node &&
+          !dropdown.contains(next)
+        ) {
+          setDropdown(dropdown, false)
+        }
+      })
+      dropdown.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape" || !isOpen(dropdown)) return
+        event.stopPropagation()
+        setDropdown(dropdown, false)
+        toggle.focus()
+      })
+    }
+
+    const burger = header.querySelector<HTMLButtonElement>(".burger")
+    const setMenu = (open: boolean) => {
+      header.toggleAttribute("data-menu-open", open)
+      burger?.setAttribute("aria-expanded", String(open))
+      burger?.setAttribute("aria-label", open ? "Close menu" : "Open menu")
+      if (!open) closeDropdowns()
+    }
+    burger?.addEventListener("click", () => setMenu(!header.hasAttribute("data-menu-open")))
+
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Node) || header.contains(event.target)) return
+      closeDropdowns()
+      setMenu(false)
+    })
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return
+      closeDropdowns()
+      if (!header.hasAttribute("data-menu-open")) return
+      const focusInMenu = header.querySelector(".menu")?.contains(document.activeElement)
+      setMenu(false)
+      if (focusInMenu) burger?.focus()
+    })
+    desktop.addEventListener("change", () => setMenu(false))
+
+    // From here on the script decides when a dropdown is open, not CSS.
+    header.toggleAttribute("data-ready", true)
+  }
+
+  document.querySelectorAll<HTMLElement>(".site-header").forEach(init)
+</script>
+
+<style>
+  /* One 1152px row, centred, on every page: the website layout's header bar
+     and Starlight's full-width one (24px side padding in both) hold it, so
+     the wordmark and the actions stay in place between website and docs. */
+  .site-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 1152px;
+    height: 100%;
+    margin-inline: auto;
+    font-family: var(--site-font);
+    font-size: 15px;
+    line-height: 24px;
+  }
+  .site-header ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .brand {
+    display: flex;
+    flex: none;
+    align-items: center;
+    border-radius: var(--cd-radius-sm);
+    /* Starlight underlines links; the "AI" beside the wordmark is no link text. */
+    text-decoration: none;
+  }
+  .brand img {
+    display: block;
+    width: auto;
+    height: 24px;
+  }
+  /* The product's name beside the wordmark, in Geist (CI: products show the
+     wordmark and write their name next to it), green as the header's one
+     accent. Raised like an exponent: its top a little above the wordmark's. */
+  .brand-product {
+    align-self: flex-start;
+    margin: -3px 0 0 5px;
+    font-family: var(--site-font);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--cd-gruen);
+  }
+
+  /* Top-level entries: text-1, green on hover, the current page or section
+     underlined in green (colour alone is not enough). */
+  .menu-list {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: var(--cd-radius-sm);
+    background: none;
+    color: var(--site-text-1);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color var(--cd-motion-fast) var(--cd-ease);
+  }
+  .link:hover,
+  .dropdown[data-open] > .link {
+    color: var(--site-accent);
+  }
+  .link:is([aria-current="page"], [data-current]) {
+    text-decoration: underline 2px var(--site-accent);
+    text-underline-offset: 8px;
+    text-decoration-skip-ink: none;
+  }
+  .chevron {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: rotate var(--cd-motion-base) var(--cd-ease);
+  }
+  .dropdown {
+    position: relative;
+  }
+  .dropdown[data-open] .chevron {
+    rotate: 180deg;
+  }
+
+  /* Dropdown panel: the elevated surface with a line border. */
+  .panel {
+    position: absolute;
+    top: 100%;
+    left: -8px;
+    z-index: 30;
+    display: none;
+    min-width: 240px;
+    padding: 8px;
+    border: 1px solid var(--site-border);
+    border-radius: var(--cd-radius-lg);
+    background: var(--site-bg-elv);
+    box-shadow: var(--cd-shadow-3);
+  }
+  .dropdown[data-open] .panel,
+  .site-header:not([data-ready]) .dropdown:is(:hover, :focus-within) .panel {
+    display: block;
+  }
+  .panel a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: var(--cd-radius-sm);
+    color: var(--site-text-1);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .panel a:hover,
+  .panel a[aria-current="page"] {
+    background: var(--site-bg-soft);
+    color: var(--site-accent);
+  }
+  .panel a[aria-current="page"] {
+    font-weight: 600;
+  }
+  .group + .group {
+    margin-top: 8px;
+  }
+  .group-label {
+    display: block;
+    padding: 4px 12px;
+    color: var(--site-text-3);
+    font-family: var(--site-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .actions {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  /* "Talk to us": the CI button, blue with a white label. */
+  .pill {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px 8px 18px;
+    border-radius: var(--cd-radius-pill);
+    background: var(--site-button-bg);
+    color: var(--site-button-text);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color var(--cd-motion-base) var(--cd-ease);
+  }
+  .pill:hover {
+    background: var(--site-button-bg-hover);
+  }
+  .pill svg,
+  .burger svg {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .github {
+    display: flex;
+    flex: none;
+    border-radius: var(--cd-radius-sm);
+    color: var(--site-text-1);
+    transition: color var(--cd-motion-fast) var(--cd-ease);
+  }
+  .github:hover {
+    color: var(--site-accent);
+  }
+  .github svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+  .menu-cta {
+    display: none;
+  }
+  .burger {
+    display: none;
+    flex: none;
+    padding: 6px;
+    border: 0;
+    border-radius: var(--cd-radius-sm);
+    background: none;
+    color: var(--site-text-1);
+    cursor: pointer;
+  }
+  .burger svg {
+    width: 24px;
+    height: 24px;
+  }
+  .icon-close,
+  [data-menu-open] .icon-open {
+    display: none;
+  }
+  [data-menu-open] .icon-close {
+    display: block;
+  }
+
+  .site-header :focus-visible {
+    outline: 2px solid var(--cd-blau-hell);
+    outline-offset: 2px;
+  }
+
+  /* Below 64rem the nav folds into the burger's menu: a full-width sheet
+     under the bar (the bar is the positioned ancestor: sticky on website
+     pages, fixed in Starlight). */
+  @media (max-width: 63.999rem) {
+    .burger {
+      display: flex;
+      order: 3;
+    }
+    .actions {
+      order: 2;
+    }
+    .actions .pill {
+      display: none;
+    }
+    .menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      z-index: 30;
+      display: none;
+      max-height: calc(100dvh - var(--site-header-height));
+      overflow-y: auto;
+      padding: 16px 24px 24px;
+      border-block: 1px solid var(--site-divider);
+      background: var(--site-bg);
+    }
+    [data-menu-open] .menu {
+      display: block;
+    }
+    .menu-list {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    .link {
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 8px;
+    }
+    .link:is([aria-current="page"], [data-current]) {
+      text-underline-offset: 6px;
+    }
+    .panel {
+      position: static;
+      min-width: 0;
+      margin: 0 0 8px;
+      border: 0;
+      border-radius: var(--cd-radius-md);
+      background: var(--site-bg-soft);
+      box-shadow: none;
+    }
+    .site-header:not([data-ready]) .dropdown:is(:hover, :focus-within) .panel {
+      display: none;
+    }
+    .dropdown[data-open] .panel {
+      display: block;
+    }
+    .panel a:hover,
+    .panel a[aria-current="page"] {
+      background: var(--site-bg-elv);
+    }
+    .menu-cta {
+      display: block;
+      margin-top: 16px;
+    }
+  }
+
+  /* Docs on phones: Starlight's own menu button (sidebar plus
+     MobileMenuFooter with this nav) takes the burger's place. */
+  @media (max-width: 49.999rem) {
+    [data-variant="docs"] .burger,
+    [data-variant="docs"] .menu {
+      display: none;
+    }
+    .github {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chevron,
+    .link,
+    .pill,
+    .github {
+      transition: none;
+    }
+  }
+
+  /* Search results: Starlight draws every result as a card with its
+     headings nested inside. A website page without headings that carry an
+     id has no nested results, and Pagefind puts its excerpt straight under
+     the title: the same card for it. */
+  :global(#starlight__search .pagefind-ui__result-inner > .pagefind-ui__result-excerpt) {
+    margin: 0;
+    padding: var(--sl-search-result-nested-pad-block) var(--sl-search-result-pad-inline-end);
+    padding-inline-start: var(--sl-search-result-pad-inline-start);
+    background-color: var(--sl-color-black);
+  }
+</style>

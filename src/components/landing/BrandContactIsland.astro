@@ -1,0 +1,8 @@
+---
+// The contact block (vue/BrandContact.vue) as an island: Astro renders its
+// HTML, Netlify Forms detects the form in it, and the browser hydrates it
+// once it scrolls into view. Never client:only, or the form leaves the HTML.
+import BrandContact from "../vue/BrandContact.vue"
+---
+
+<BrandContact client:visible />
