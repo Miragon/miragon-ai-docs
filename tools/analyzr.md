@@ -1,0 +1,202 @@
+---
+layout: home
+title: analyzr
+description: analyzr shows which processes you have and how they connect. It brings your BPMN models from engines, BPM suites and modelling tools into one landscape, AI agents propose the links, and your team decides.
+eyebrow: { phase: Analyse, link: /analyse }
+hero:
+  name: analyzr
+  text: Which processes do you have, and how do they connect?
+  tagline: analyzr brings your process models from engines, BPM suites and modelling tools into one landscape. AI agents propose how the processes connect, your team decides, and you see what a change affects before you make it.
+  actions:
+    - theme: brand
+      text: Try the demo
+      link: https://analyzr-demo.fly.dev/projects/nordwind-handel/review
+    - theme: alt
+      text: Talk to us
+      link: /#contact
+artefact:
+  type: screenshot
+  src: /screens/analyzr-review.jpg
+  alt: "analyzr's review screen: on the left a Camunda 7 model with the message throw 'Rechnung versendet', on the right a Camunda 8 model with the message catch 'Invoice sent', and a side panel with the proposed message link at 73% confidence, its rationale, evidence and origin."
+  url: analyzr-demo.fly.dev/projects/nordwind-handel/review/rel_01M4QR6HPTKSC1A8SZB96GM609
+  caption: "The review screen of the read-only demo (the UI is in German). A message link from a Camunda 7 model to a Camunda 8 model, proposed at 73% confidence by the demo's simulation agent, which runs without an LLM."
+compare:
+  before:
+    title: Today
+    items:
+      - Models spread over engines, BPM suites, Visio files and people's heads
+      - Links hidden in call activities, messages and signals
+      - Folders sorted by department, not by value stream
+      - A hand-kept map that goes stale with the next change
+  after:
+    title: With analyzr
+    items:
+      - One landscape from every source that exports BPMN
+      - Every link proposed with confidence, rationale and evidence
+      - Each process placed on a step of your value chain
+      - What a change touches, before you make it
+sources:
+  - icon: check-circle
+    eyebrow: Works today
+    title: Camunda 7 and Camunda 8
+    text: Upload BPMN files or whole folders in the browser, or push them with the CLI or REST. Models from CIB seven and Operaton come in the same way.
+  - icon: package
+    eyebrow: BPMN export, not tested yet
+    title: Flowable, Signavio and other BPM suites
+    text: They export BPMN 2.0, and analyzr reads the links standard BPMN carries. We have not tested their exports yet.
+  - icon: file
+    eyebrow: Via designIQ
+    title: Visio, draw.io, Word, Confluence
+    text: designIQ's import-process skill drafts a BPMN model from them. Your team checks the draft before it goes in.
+    link: /tools/design-iq
+    linkText: About designIQ
+  - icon: users
+    eyebrow: Via designIQ
+    title: Interviews
+    text: designIQ's capture-process skill turns an interview with the process owner into a BPMN model.
+    link: /tools/design-iq
+    linkText: About designIQ
+  - icon: plug
+    eyebrow: Planned
+    title: Direct connectors
+    text: Reading models straight from your engines, the Camunda Web Modeler or a Git repository is planned, not built.
+steps:
+  - title: Import
+    text: Bring in BPMN 2.0 files (.bpmn, .bpmn2, .bpmn20.xml) or whole folders in the browser, or with the CLI or REST. The folder path becomes the model key.
+  - title: Extract
+    text: Code without an LLM reads calls, messages, signals, start and end events. It accepts call activities that point to exactly one process and proposes identical message and signal names.
+  - title: Propose
+    text: AI agents in your MCP client judge the remaining candidate pairs with confidence, rationale and evidence. They also propose a value chain step for each process.
+  - title: Decide
+    text: Your team sees both models side by side in bpmn-js and accepts, rejects, holds or corrects each proposal.
+roles:
+  - icon: user-check
+    title: Agents never decide
+    text: Agents propose links and placements. Their project tokens never get the review scope, and no MCP tool accepts a proposal.
+  - icon: key
+    title: No LLM credentials in analyzr
+    text: The model comes with your agent, for example Claude Code on your own subscription or API key.
+  - icon: shield
+    title: Auto-accept is off by default
+    text: Only the project owner can set auto-accept rules, per kind, tier and minimum confidence.
+  - icon: check-circle
+    title: Each pair judged once
+    text: Agents judge every candidate pair once, even with several agents at work. A "no link" verdict stays visible to your reviewers.
+landscape:
+  - icon: network
+    title: Relations
+    text: Every call, message, signal and trigger between your processes, with confidence, rationale and the decision.
+  - icon: map
+    title: Value chain placements
+    text: Each process on its step of your value chain. You draw the chain in the browser or import it as a .vc.json file.
+  - icon: warning
+    title: Findings
+    text: Gaps such as unresolved calls or processes without a value chain step.
+  - icon: history
+    title: Revisions
+    text: A changed model becomes a new revision. Agents see it again only if its facts changed, and your decisions stay unless an endpoint's meaning changed.
+  - icon: plug
+    title: REST and MCP
+    text: The landscape goes out over REST (OpenAPI 3.1) and to your agents over MCP read tools.
+  - icon: file
+    title: Value chain file
+    text: The value chain goes out as a .vc.json file in the format of the public value-chain-modeler.
+status:
+  - icon: lock
+    title: Private repository
+    text: The source (MIT licence) sits in a private repository for now. No release, image or package is published.
+  - icon: server
+    title: Local mode only
+    text: analyzr runs with one owner on 127.0.0.1.
+  - icon: globe
+    title: German only
+    text: The web UI is German only, and the agent procedure asks for rationales in German.
+  - icon: play
+    title: A simulated demo
+    text: The demo's proposals come from a simulation agent without an LLM. They show the workflow, not the quality of a model, and we have not published numbers on proposal quality yet.
+proof:
+  - icon: monitor
+    title: Read-only demo
+    text: Two synthetic landscapes with their value chains, proposals and review screens. No login needed.
+    link: https://analyzr-demo.fly.dev
+  - icon: file-code
+    title: REST API description
+    text: OpenAPI 3.1, served by the demo, with the routes for the landscape, relations, findings and value chains.
+    link: https://analyzr-demo.fly.dev/api/v1/openapi.json
+  - icon: github
+    title: Miragon/value-chain-modeler
+    text: The public editor for the .vc.json format, at 0.4.0. analyzr pins the format packages at 0.3.0, and we have not verified that files move between the two without loss.
+    link: https://github.com/Miragon/value-chain-modeler
+fits:
+  - eyebrow: Phase
+    title: Analyse
+    text: The phase that runs once, before the loop. It shows how your processes connect and where each one sits in your value chain.
+    link: /analyse
+  - eyebrow: Next phase
+    title: Design
+    text: Your team takes the reviewed map into Design and knows which processes a change touches. analyzr has no direct connection to the Design tools yet.
+    link: /design
+  - eyebrow: Model the change
+    title: designIQ
+    text: Model with your team and your AI, and release by pull request.
+    link: /tools/design-iq
+  - eyebrow: Model the change
+    title: bpmn-cli
+    text: Your agent edits the model by naming elements, and the tool writes the XML.
+    link: /tools/bpmn-cli
+  - eyebrow: Runtime data
+    title: Pulse
+    text: Ask your engines in Execute what is stuck and why. analyzr reads no runtime data.
+    link: /tools/pulse/
+  - eyebrow: Runtime data
+    title: operate
+    text: What is stuck on your engine, in one command, for the shell, a coding agent or CI.
+    link: /tools/operate
+---
+
+<PageSection eyebrow="The problem" title="Your processes live everywhere, their links nowhere" intro="Process models sit in engines, BPM suites, Visio files and in people's heads. Nobody has a reviewed picture of which process calls, messages or starts which, so every change and every migration starts with a guess about what it affects.">
+  <CompareCards :before="$frontmatter.compare.before" :after="$frontmatter.compare.after" />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Where your processes come from" title="Import from wherever your processes live" intro="analyzr reads the links standard BPMN 2.0 carries: call activities, messages and signals. Whatever exports BPMN can feed it. Today it is tested on models for Camunda 7 and Camunda 8.">
+  <CardGrid :items="$frontmatter.sources" />
+</PageSection>
+
+<PageSection align="center" eyebrow="How it works" title="From scattered models to a reviewed map" intro="analyzr reads models that already exist. It does not mine event logs, read runtime data from your engines or generate BPMN.">
+  <StepList :items="$frontmatter.steps" />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="What your team gets" title="See what a change affects before you make it" intro="The reviewed landscape shows which processes a change touches, which ones a migration has to move together and which steps of your value chain have no process yet. Every relation and placement records who proposed it, with confidence and rationale, and who decided.">
+  <CardGrid :items="$frontmatter.landscape" />
+</PageSection>
+
+<PageSection eyebrow="Human and AI" title="Agents propose, your team decides" intro="A rule settles what it can without an LLM. Agents propose the rest, and each proposal waits for your team or for an auto-accept rule the project owner set.">
+  <FeatureList :items="$frontmatter.roles" />
+</PageSection>
+
+<PageSection id="get-started" tone="tint" eyebrow="Get started" title="Open the demo in your browser" intro="Nothing to install and no login. The demo project nordwind-handel is a synthetic landscape of 31 models for Camunda 7 and Camunda 8.">
+
+1. Open the [review inbox of nordwind-handel](https://analyzr-demo.fly.dev/projects/nordwind-handel/review). The demo stops when idle, so the first request can take a few seconds.
+2. Open a proposal to see both models with the agent's confidence, rationale and evidence. The models sit side by side in a window at least 1280 pixels wide, and one at a time in a narrower one.
+3. Switch to the tab "Kein Zusammenhang" for the pairs the agent judged as unrelated.
+4. Open the [value chain](https://analyzr-demo.fly.dev/projects/nordwind-handel/value-chain) to see where each process sits and which placements wait for review.
+
+<PillButton href="https://analyzr-demo.fly.dev/projects/nordwind-handel/review" label="Open the review inbox" variant="light" />
+
+For your own BPMN files, analyzr runs locally with Docker Compose (PostgreSQL included) and connects to your agent over MCP with a project token. While the repository is private, [ask us](/#contact) for self-hosting.
+
+</PageSection>
+
+<PageSection eyebrow="Status" title="Where analyzr stands on 13 October 2026" intro="analyzr 0.1.0-alpha.0 is an early alpha, and the public demo runs the same version.">
+  <FeatureList :items="$frontmatter.status" />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Proof you can open" title="The demo is public, the source not yet">
+  <CardGrid :items="$frontmatter.proof" />
+</PageSection>
+
+<PageSection eyebrow="Where it fits" title="analyzr in the lifecycle" intro="analyzr captures your as-is landscape once, at the start. The loop then runs from Design to Optimize, and what your team learns in Optimize goes back into Design.">
+  <CardGrid :items="$frontmatter.fits" />
+</PageSection>
+
+<CtaBox title="Map your own process landscape." text="Tell us where your processes live today and which change you are planning. Until the source is public, self-hosting goes through us." note="A 30-minute first call." />

@@ -1,8 +1,10 @@
 <!--
-  Prominent "try it now" CTA lower on the landing page, modelled on the
-  marketing site's CtaBanner (centered card under a brand-gradient edge).
-  The button opens the hosted playground in the MCP inspector; the
-  example-prompt hint shows newcomers a concrete first thing to ask.
+  Pulse's playground card: a prominent "try it now" CTA on the Pulse
+  landing page (tools/pulse/index.md), modelled on the marketing site's
+  CtaBanner (centered card under a brand-gradient edge). The button opens
+  Pulse's hosted playground (miragon-ai-playground.fly.dev) in the MCP
+  inspector; the example-prompt hint shows newcomers a concrete first thing
+  to ask.
   Colours come from the theme's CSS variables (custom.css → CI tokens).
 -->
 <script setup lang="ts">
@@ -18,8 +20,8 @@ const INSPECTOR_URL =
       <p class="eyebrow"><span class="dot" />Live playground</p>
       <h2 class="title">Talk to your processes.</h2>
       <p class="desc">
-        No install, no login. Open the hosted playground in an MCP chat, connected to a live, seeded
-        CIB Seven engine — ask a question and watch the interactive widgets render.
+        No install, no login. Open Pulse's hosted playground in an MCP chat, connected to a live,
+        seeded CIB seven engine. Ask a question and watch the interactive widgets render.
       </p>
 
       <a class="cta" :href="INSPECTOR_URL" target="_blank" rel="noopener noreferrer">

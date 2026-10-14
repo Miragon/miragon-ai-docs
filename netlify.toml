@@ -1,6 +1,6 @@
-# Netlify deployment of the docs site (docs/ → VitePress), mirroring how
-# miragon-ai-website deploys. Base stays at the repo root so the pnpm
-# workspace install works; all paths below resolve relative to it.
+# Netlify deployment of the site (VitePress at the repo root). It serves
+# https://miragon.ai; before this repo existed the same site built from
+# Miragon/miragon-ai (docs/).
 #
 # One-time site setup in the Netlify UI:
 # - Forms > Enable form detection (the landing-page contact form posts to
@@ -10,11 +10,57 @@
 #   HTML "Auto Minify" OFF (it strips comments Vue needs for hydration).
 
 [build]
-  command = "pnpm docs:build"
-  publish = "docs/.vitepress/dist"
+  command = "pnpm build"
+  publish = ".vitepress/dist"
 
 [build.environment]
-  # Install only the docs package (+ its workspace deps — none), so the deps of
-  # the other workspace packages are never fetched on Netlify.
-  PNPM_FLAGS = "--filter @miragon-ai/docs..."
   NODE_VERSION = "22"
+
+# miragon-ai's four pages moved from the root into its section under
+# /tools/pulse/: old links and bookmarks keep working. No SPA catch-all,
+# so unknown paths still get the site's 404 page.
+[[redirects]]
+  from = "/architecture"
+  to = "/tools/pulse/architecture"
+  status = 301
+
+[[redirects]]
+  from = "/architecture.html"
+  to = "/tools/pulse/architecture"
+  status = 301
+
+[[redirects]]
+  from = "/developer"
+  to = "/tools/pulse/developer"
+  status = 301
+
+[[redirects]]
+  from = "/developer.html"
+  to = "/tools/pulse/developer"
+  status = 301
+
+[[redirects]]
+  from = "/operations"
+  to = "/tools/pulse/operations"
+  status = 301
+
+[[redirects]]
+  from = "/operations.html"
+  to = "/tools/pulse/operations"
+  status = 301
+
+[[redirects]]
+  from = "/usage"
+  to = "/tools/pulse/usage"
+  status = 301
+
+[[redirects]]
+  from = "/usage.html"
+  to = "/tools/pulse/usage"
+  status = 301
+
+# The section's first name on the way to the launch.
+[[redirects]]
+  from = "/tools/miragon-ai/*"
+  to = "/tools/pulse/:splat"
+  status = 301

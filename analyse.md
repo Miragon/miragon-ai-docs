@@ -1,0 +1,47 @@
+---
+title: Analyse
+description: How analyzr and your team bring process models from engines, BPM suites, modelling tools and interviews into one reviewed map of which processes you have, how they connect and where each one sits in your value chain.
+---
+
+# Analyse
+
+Analyse answers two questions: which processes you have, and how they connect. Your team brings the process models from all your sources into one landscape, reviews the links between them and places each process on your value chain, so you see what a change affects before you make it. Analyse comes once, at the start. Later findings from [Optimize](/optimize) go back into [Design](/design).
+
+## The problem today
+
+Your processes live in several places: as BPMN in your engines (Camunda 7, Camunda 8, CIB seven, Operaton, Flowable), in BPM suites such as Signavio, as Visio or draw.io diagrams, and in the heads of the people who run them. The links between processes sit inside the models: call activities, message and signal names, end events that start the next process. Nobody has reviewed who calls whom, or which process belongs to which step of the value chain. The folders follow your departments while the value stream cuts across them, so every change and every migration starts with a guess about what it affects.
+
+## How Miragon AI helps
+
+### analyzr
+
+analyzr reads BPMN models from these sources into one landscape. Code without an LLM extracts the facts, and agents in an MCP client you choose, such as Claude Code, propose how the processes connect and which value chain step each one belongs to. You get a reviewed as-is landscape in which every link and placement records where it came from and who decided it.
+
+| Source                                    | How the models get in                                                                                   | Status                                                |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Camunda 7, Camunda 8, CIB seven, Operaton | BPMN files or whole folders, uploaded in the browser or pushed with the CLI or REST                     | Works today, tested on Camunda 7 and Camunda 8 models |
+| Flowable, Signavio and other BPM suites   | Their BPMN 2.0 export, uploaded the same way                                                            | Not tested yet                                        |
+| Visio, draw.io, Word, Confluence, images  | The `import-process` skill of [designIQ](/tools/design-iq) drafts a BPMN model, and your team checks it | Via designIQ                                          |
+| Interviews with process owners            | The `capture-process` skill of designIQ turns the interview into a BPMN model                           | Via designIQ                                          |
+| Engines, Camunda Web Modeler, Git         | Direct connectors that read the models where they live                                                  | Planned, not built                                    |
+
+Status: early alpha (0.1.0-alpha.0) in a private repository, with no public release yet, local mode only, web UI and agent rationales in German. The [read-only demo](https://analyzr-demo.fly.dev/projects/nordwind-handel/review) shows two synthetic landscapes, worked by a simulation agent without an LLM.
+
+Details and first steps: [analyzr](/tools/analyzr)
+
+::: info What analyzr does not do
+analyzr reads BPMN models that already exist. It does not mine logs, read runtime data or generate BPMN.
+:::
+
+## Human and AI
+
+Agents propose links and placements with confidence and a rationale but cannot accept them, and a rule without an LLM accepts unambiguous call activities. A person on your team decides every other proposal in review (accept, reject, hold or correct), unless an auto-accept rule that the project owner set covers it (there are none by default).
+
+## Hand-over
+
+| Direction            | What is handed over                                                                                                                                                                                                                        | Format                                                                                                                                                                                                                                |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| At the start         | Your existing models from the sources above. If you re-upload a changed model later, it becomes a new revision, only models whose facts changed are analysed again, and earlier decisions stay valid unless an endpoint's meaning changed. | BPMN 2.0 XML (`.bpmn`, `.bpmn2`, `.bpmn20.xml`), tested with Camunda 7 and Camunda 8 models, optionally a value chain as `.vc.json` in the format of the public [value-chain-modeler](https://github.com/Miragon/value-chain-modeler) |
+| To [Design](/design) | The reviewed as-is landscape: relations between processes, placements on the value chain, findings such as unresolved calls or processes without a step, and the model revisions.                                                          | REST (OpenAPI 3.1) and MCP read tools; the value chain also as `.vc.json` via `analyzr value-chain pull`                                                                                                                              |
+
+analyzr has no direct connection to designIQ or bpmn-cli yet.

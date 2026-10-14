@@ -1,15 +1,19 @@
 <!--
-  Hero signature: a live-feeling MCP conversation that shows the product's
-  whole thesis in one frame — a plain-language question about running BPMN
-  processes, answered by a rendered widget instead of a wall of text. The
-  numbers mirror the real playground (147 open incidents on miraveloLeasing
-  + assessCreditworthiness, all failed jobs). Replaces the generic orbital
-  galaxy as the hero's characteristic image.
+  Pulse's hero artefact: an MCP conversation that shows the product's thesis
+  in one frame. A plain-language question about running BPMN processes is
+  answered by a rendered widget instead of a wall of text. The numbers are a
+  snapshot of the public playground on 2026-10-13, 14:04 UTC (read-only call
+  camunda7_incidents_data on server 0.20.0: 112 open incidents, all failedJob,
+  miraveloLeasing 61, assessCreditworthiness 51). The engine reseeds every
+  night and live traffic adds incidents, so the live numbers move; the
+  timestamp next to "Pulse" says when the snapshot was taken. "Assess in
+  chat" is the hand-off label of the real incidents widget. Pulse is the MCP
+  server from Miragon/miragon-ai.
 -->
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
-// Clicking the input opens the real playground in the MCP inspector — same
-// destination as the hero's "Try it out" button.
+// Clicking the input opens the real playground in the MCP inspector, the
+// same destination as the page's "Try the playground" button.
 const INSPECTOR_URL =
   "https://inspector.manufact.com/inspector?server=https%3A%2F%2Fmiragon-ai-playground.fly.dev%2Fmcp&tab=chat"
 const shown = ref(false)
@@ -34,29 +38,29 @@ onMounted(() => {
         </div>
 
         <div class="turn asst" style="--i: 1">
-          <span class="who">miragon-ai</span>
+          <span class="who">Pulse <span class="when">· 2026-10-13, 14:04 UTC</span></span>
           <p class="line">
-            Across 2 process definitions, <b>147 open incidents</b> — all failed jobs.
+            Across 2 process definitions, <b>112 open incidents</b>, all of them failed jobs.
           </p>
 
           <div class="widget">
             <div class="w-head">
               <span class="w-title">Open incidents</span>
-              <span class="w-total">147</span>
+              <span class="w-total">112</span>
             </div>
             <div class="w-row" style="--j: 0">
               <span class="pk">miraveloLeasing</span>
-              <span class="track"><span class="fill" style="width: 62%" /></span>
-              <span class="n">91</span>
+              <span class="track"><span class="fill" style="width: 54%" /></span>
+              <span class="n">61</span>
             </div>
             <div class="w-row" style="--j: 1">
               <span class="pk">assessCreditworthiness</span>
-              <span class="track"><span class="fill" style="width: 38%" /></span>
-              <span class="n">56</span>
+              <span class="track"><span class="fill" style="width: 46%" /></span>
+              <span class="n">51</span>
             </div>
             <div class="w-foot">
               <span class="tag">all failedJob</span>
-              <span class="act">Triage →</span>
+              <span class="act">Assess in chat →</span>
             </div>
           </div>
         </div>
@@ -81,6 +85,8 @@ onMounted(() => {
   width: 100%;
   max-width: 460px;
   margin: 0 auto;
+  /* The hero centres its text below 960px; a chat reads left-aligned. */
+  text-align: left;
 }
 
 .win {
@@ -157,6 +163,12 @@ onMounted(() => {
 .turn.asst .who {
   color: var(--vp-c-brand-1);
 }
+/* When the snapshot was taken: the numbers are not live */
+.when {
+  color: var(--vp-c-text-3);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
 
 .turn.user {
   margin-bottom: 20px;
@@ -184,7 +196,7 @@ onMounted(() => {
   font-weight: 600;
 }
 
-/* Rendered "widget" card — mirrors the real analytics widgets */
+/* Rendered "widget" card, mirroring the real incident widgets */
 .widget {
   border: 1px solid var(--vp-c-divider);
   border-radius: var(--cd-radius-md);
@@ -249,6 +261,25 @@ onMounted(() => {
   font-size: 13px;
   color: var(--vp-c-text-1);
   text-align: right;
+}
+/* On phones the bar moves below the process key, so the full key fits. */
+@media (max-width: 479px) {
+  .w-row {
+    grid-template-columns: 1fr auto;
+    row-gap: 6px;
+  }
+  .pk {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .n {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
 }
 .w-foot {
   display: flex;

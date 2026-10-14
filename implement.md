@@ -1,0 +1,43 @@
+---
+title: Implement
+description: How Skills help your coding agent make a BPMN model deployable on Camunda 7, CIB seven or Operaton, and how Solution templates connect your AI to your own systems.
+---
+
+# Implement
+
+In Implement, your team makes the model from Design deployable and runs it once on a dev engine. This is also where you connect your AI to the engine and to your own systems.
+
+## The problem today
+
+Before Camunda 7, CIB seven or Operaton can run a model, someone adds the engine details: topics or delegates, input and output mappings, error codes and a historyTimeToLive. If the historyTimeToLive is missing, you find out only when the engine rejects the deployment. A coding agent without guidance tends to edit the BPMN XML by hand and breaks the drawing along the way. And if your AI should reach your ERP as well as the engine, you fork Pulse or build an MCP server from scratch.
+
+## How Miragon AI helps
+
+### Skills
+
+Your coding agent in Claude Code combines two skills. The bpmn skill from the bpmn-cli plugin sets Camunda 7 or Camunda 8 attributes by element id and keeps the drawn layout, and `bpmn validate --strict` reports each deploy blocker with the command that fixes it before the file reaches the engine. The operate skill then deploys the model to Camunda 7, CIB seven or Operaton and runs one test instance to the end; if it hits an incident, `operate wait` stops with exit code 9. No skill generates worker or delegate code yet.
+
+Status: early. bpmn-cli 0.6.0 and operate 0.5.0 are pre-1.0 (as of 2026-10-13). Camunda 8 files can be edited and validated, but no skill runs them. Both skills install from the public plugin marketplaces in [Miragon/bpmn-cli](https://github.com/Miragon/bpmn-cli/tree/main/plugins/bpmn-cli) and [Miragon/operate](https://github.com/Miragon/operate/blob/main/docs/agents.md).
+
+Details and first steps: [Skills](/tools/skills)
+
+### Solution templates
+
+[miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter) and [mcp-toolkit-starter](https://github.com/Miragon/mcp-toolkit-starter) are GitHub template repositories that start your own MCP server; neither contains process automation code such as job workers or engine setup. miragon-ai-starter combines the Pulse modules for Camunda 7, CIB seven and Operaton with modules for your own systems, such as your ERP, and builds a Docker image with OAuth, health checks, `/metrics` and read-only defaults. A new module starts as a copy of the example module, and guard tests report a missed wiring step. mcp-toolkit-starter is the minimal base for an MCP server with interactive widgets and no BPM modules.
+
+Status: miragon-ai-starter is MIT-licensed and pins Pulse's `@miragon-ai` packages at 0.20.0 (as of 2026-10-13). They are pre-1.0 and release about weekly, often with breaking changes. mcp-toolkit-starter builds on the Miragon MCP Toolkit 2.8.1 and has no licence yet.
+
+Details and first steps: [Solution templates](/tools/solution-templates)
+
+## Human and AI
+
+Your coding agent sets and checks the engine attributes, then runs one test instance on your dev engine. Your team owns the interfaces and the worker code, and reviews every change the agent makes.
+
+## Hand-over
+
+| Direction                | What is handed over                                                                                                                                                           | Format                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| From [Design](/design)   | Models approved in Design, from designIQ, Camunda Modeler or bpmn-cli. The bpmn skill makes the BPMN executable; there is no DMN skill yet.                                   | `.bpmn`, `.dmn`            |
+| To [Execute](/execute)   | BPMN files that pass `bpmn validate --strict` and have run once on Camunda 7, CIB seven or Operaton (`operate deploy` with `--start`), plus the decisions and forms they use. | `.bpmn`, `.dmn`, `.form`   |
+| To [Execute](/execute)   | Your own MCP server, built from a Solution template, which your team runs the way it runs Pulse.                                                                              | Docker image               |
+| From [Execute](/execute) | Ticket drafts from Pulse and root-cause findings from operate, as input for the next fix.                                                                                     | Markdown with labels, JSON |

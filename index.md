@@ -1,70 +1,234 @@
 ---
 layout: home
+title: Miragon AI
+description: Miragon AI gives your AI agents tools for four of the five phases of your BPM lifecycle on Camunda 7, CIB seven and Operaton, while your team makes the decisions.
 
 hero:
-  name: Your processes,
-  text: one conversation away.
-  tagline: "An MCP server for Camunda 7 / CIB Seven — run operations, analytics, and incident response by asking, with every answer rendered as an interactive widget right in the chat."
+  name: The agent does the legwork.
+  text: Your team makes the call.
+  tagline: Miragon AI gives your AI agents tools for four of the five phases of your BPM lifecycle, on Camunda 7, CIB seven and Operaton. You sign off by review or pull request, and the knowledge stays in your team.
   actions:
     - theme: brand
-      text: Try it out
-      link: "https://inspector.manufact.com/inspector?server=https%3A%2F%2Fmiragon-ai-playground.fly.dev%2Fmcp&tab=chat"
-      target: _blank
+      text: Explore the lifecycle
+      link: "#lifecycle"
     - theme: alt
-      text: Connect Claude
-      link: "#connect-your-claude"
+      text: Talk to us
+      link: /#contact
     - theme: alt
       text: GitHub
-      link: https://github.com/Miragon/miragon-ai
-
-features:
-  - title: For End Users
-    details: Connect Claude, ask questions about your processes, fix incidents.
-    link: /usage
-    linkText: Start using it
-  - title: For Developers
-    details: Clone, install, and run the full stack locally in a few minutes.
-    link: /developer
-    linkText: Set up your machine
-  - title: Architecture
-    details: A one-page mental model of the server, modules, and external systems.
-    link: /architecture
-    linkText: See the diagram
-  - title: Operations
-    details: Deployment artifact, environment variables, and observability.
-    link: /operations
-    linkText: Run it in production
+      link: https://github.com/Miragon
+roles:
+  - eyebrow: Architect
+    title: Before a bigger change or an AI decision, you cannot say which processes you have and how they connect
+    text: analyzr brings your process models into one landscape and links them for your review.
+    link: /tools/analyzr
+    linkText: Start with analyzr
+  - eyebrow: Product owner
+    title: Sign-off happens outside Git, and you review DMN changes as an XML diff
+    text: In designIQ every release is a pull request, and a DMN review shows a table of changed answers.
+    link: /tools/design-iq
+    linkText: Start with designIQ
+  - eyebrow: Automation lead
+    title: The backlog of processes to automate grows, and every project wires up the engine again
+    text: The Skills make your models deployable, and the Solution templates connect your own systems.
+    link: /tools/skills
+    linkText: Start with Skills
+  - eyebrow: Lead developer
+    title: Your coding agent writes BPMN XML by hand
+    text: With bpmn-cli your agent edits BPMN by command and keeps the layout, and the Skills add the engine details.
+    link: /tools/bpmn-cli
+    linkText: Start with bpmn-cli
+  - eyebrow: Platform lead
+    title: Every engine has its own Cockpit, and runtime questions need PromQL
+    text: Pulse answers in the chat across your engines, and operate hands the engine state to your shell, agent and CI.
+    link: /tools/pulse/
+    linkText: Start with Pulse
+  - eyebrow: Head of IT
+    title: You have a mandate to bring in AI, but no agent may reach production unchecked
+    text: Without OAuth, Pulse starts read-only. Whether an agent gets write access is your team's decision.
+    link: /tools/pulse/
+    linkText: Start with Pulse in read-only mode
+phases:
+  - eyebrow: Phase 1 · once
+    title: Analyse
+    text: Which processes do you have, and how do they connect? analyzr brings your models from engines, BPM suites and modelling tools into one landscape. A rule links unambiguous call activities, and agents propose further links and the place of each process in your value chain.
+    link: /analyse
+  - eyebrow: Phase 2 · loop
+    title: Design
+    text: An AI agent that edits a model tends to rewrite the whole XML, coordinates included, and moves your hand-drawn layout. In designIQ your team edits models live in the browser while AI assistants work on the same models over MCP, and every release is a pull request. bpmn-cli changes BPMN by command and keeps the layout.
+    link: /design
+  - eyebrow: Phase 3 · loop
+    title: Implement
+    text: A missing historyTimeToLive shows up only when the engine rejects the deployment. With the Skills for bpmn-cli and operate, your agent in Claude Code sets the engine details and tests on a dev engine. The Solution templates miragon-ai-starter and mcp-toolkit-starter start your own MCP server.
+    link: /implement
+  - eyebrow: Phase 4 · loop
+    title: Execute
+    text: Your team pieces the state together from Cockpit tabs and stack traces, one engine at a time. Pulse shows the incidents across your engines in chat, grouped by failing activity and incident type, and drafts the ticket. operate runs the triage in one command, in your shell and in CI.
+    link: /execute
+  - eyebrow: Phase 5 · loop
+    title: Optimize
+    text: When someone in operations notices that a model no longer fits, there is no set way back to the model. We have no tool for this phase yet, so your team carries the finding back itself.
+    link: /optimize
+  - eyebrow: The way back
+    title: Back into Design
+    text: Your team pins the finding as a todo on the BPMN element in designIQ, a GitHub issue in your repo. From there the loop starts again.
+    link: /tools/design-iq
+    linkText: Todos in designIQ
+human:
+  - eyebrow: Analyse
+    title: The agent proposes links with confidence and a rationale
+    text: Your team decides on each proposal, in review or by an auto-accept rule it sets.
+  - eyebrow: Design
+    title: The agent turns described changes into valid BPMN
+    text: Your team models the business flow and signs off by merge.
+  - eyebrow: Implement
+    title: The agent sets engine attributes and tests on the dev engine
+    text: Your team writes the worker code and reviews.
+  - eyebrow: Execute
+    title: The agent reads the state and drafts tickets
+    text: Your team decides whether the agent gets write access, and files the ticket.
+  - eyebrow: Optimize
+    title: The agent has no tool here yet
+    text: Your team decides what goes back into Design.
+  - eyebrow: Every phase
+    title: Your own permissions apply
+    text: designIQ follows the write permissions on your GitHub repo, where CODEOWNERS and branch protection decide who may merge. Without OAuth, Pulse stays read-only.
+why:
+  - icon: handshake
+    title: Process automation since 2019
+    text: Miragon has been a consultancy for process automation since 2019 and is a Camunda partner. We introduce the tools together with your team until you run them on your own.
+  - icon: server
+    title: On your own infrastructure
+    text: You run Pulse yourself. Without OAuth it starts read-only, and it needs neither a migration nor access to the engine database.
+  - icon: github
+    title: Public under the MIT licence
+    text: designIQ, bpmn-cli, operate, Pulse and the miragon-ai-starter template are public on GitHub. For now we show analyzr as a read-only demo.
+  - icon: check-circle
+    title: Tested against three engines
+    text: On every change, operate's CI runs its integration tests against Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0.
+proof:
+  - icon: github
+    eyebrow: Version 5.3.0
+    title: designIQ
+    text: The repo Miragon/design-iq, with the self-hosted image.
+    link: https://github.com/Miragon/design-iq
+  - icon: github
+    eyebrow: Version 0.6.0
+    title: bpmn-cli
+    text: The repo Miragon/bpmn-cli, with the Skills plugin for it.
+    link: https://github.com/Miragon/bpmn-cli
+  - icon: github
+    eyebrow: Version 0.5.0
+    title: operate
+    text: The repo Miragon/operate, with its plugin marketplace.
+    link: https://github.com/Miragon/operate
+  - icon: github
+    eyebrow: Version 0.20.0
+    title: Pulse
+    text: Pulse is the MCP server from the repo Miragon/miragon-ai.
+    link: https://github.com/Miragon/miragon-ai
+  - icon: tree
+    eyebrow: Template
+    title: miragon-ai-starter
+    text: A GitHub template that starts your own MCP server.
+    link: https://github.com/Miragon/miragon-ai-starter
+  - icon: monitor
+    eyebrow: Read-only demo
+    title: analyzr
+    text: The early alpha on a synthetic process landscape. Its repo stays private.
+    link: https://analyzr-demo.fly.dev
+  - icon: check-circle
+    eyebrow: Every change
+    title: operate's CI
+    text: Integration tests against Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0.
+    link: https://github.com/Miragon/operate/actions/workflows/ci.yml
+  - icon: play
+    eyebrow: No login
+    title: Pulse playground
+    text: Add it as an MCP server. Read-only, on a CIB seven engine with live demo traffic.
+    link: https://miragon-ai-playground.fly.dev/mcp
+limits:
+  - icon: ban
+    title: No process mining
+    text: analyzr reads the process models you already have and does not evaluate event logs.
+  - icon: user-check
+    title: No autonomous remediation
+    text: Agents carry out what your team approves.
+  - icon: gauge
+    title: No tool for Optimize
+    text: The analytics module of Pulse belongs to Execute, looks back 30 days at most and knows neither waiting times nor variants.
+  - icon: code
+    title: No generated worker code
+    text: The Skills make a model deployable, but no tool writes the worker or delegate code behind it. Your team does.
+  - icon: warning
+    title: analyzr is early alpha
+    text: Version 0.1.0-alpha.0, in a private repository, with an interface in German only.
+  - icon: refresh
+    title: Pre-1.0 interfaces
+    text: bpmn-cli, operate and Pulse are pre-1.0 and still change their interfaces. The mcp-toolkit-starter template has no licence yet.
+  - icon: clock
+    title: Hosted designIQ is pre-GA
+    text: The public launch of the hosted service is planned around mid-November 2026. The self-hosted image is released.
+  - icon: chart
+    title: No savings numbers
+    text: No numbers on time or cost savings until we have published them.
+artefact:
+  type: flow
+  examples:
+    - tool: analyzr
+      phase: Analyse
+      link: /tools/analyzr
+      agent: proposes a message link
+      detail: "Invoicing → Order handling, at 73 % confidence"
+      team: Accept the link
+    - tool: designIQ
+      phase: Design
+      link: /tools/design-iq
+      agent: edits order-to-cash.bpmn
+      detail: adds the user task “Check credit limit”
+      team: Merge the pull request
+    - tool: Skills
+      phase: Implement
+      link: /tools/skills
+      agent: makes payment.bpmn deployable
+      detail: sets the external task topic, validate --strict passes
+      team: Review the change
+    - tool: Pulse
+      phase: Execute
+      link: /tools/pulse/
+      agent: groups the open incidents
+      detail: 112 failed jobs on 2 processes, one ticket draft
+      team: File the ticket
 ---
 
-<TryItOut />
+<PageSection id="lifecycle" align="center" eyebrow="The lifecycle" title="Analyse once, then one loop" intro="Analyse maps what you have. Design, Implement, Execute and Optimize form the loop, and what you learn in Optimize goes back into Design. Every phase and tool below is a link.">
+  <div class="lifecycle-band"><LifecycleMap /></div>
+</PageSection>
 
-## Connect your Claude in 30 seconds {#connect-your-claude}
+<PageSection tone="tint" eyebrow="Who it is for" title="New tools for the Camunda 7 world" intro="For teams with their own developers whose processes run on Camunda 7, CIB seven or Operaton. Miragon AI brings AI agents to exactly that stack: they map your process landscape, edit your models, make them deployable and tell you what is stuck. No new engine, no migration. Find your role and the tool to start with.">
+  <CardGrid :items="$frontmatter.roles" />
+</PageSection>
 
-The hosted [playground](https://miragon-ai-playground.fly.dev/mcp) runs a seeded
-CIB Seven engine with live traffic and the full analytics stack — read-only,
-nothing to install. Point any MCP client at it:
+<PageSection eyebrow="What Miragon AI does" title="A tool for four of the five phases" intro="Analyse runs once, at the start. Design, Implement, Execute and Optimize form the loop, and what you learn in Optimize goes back into Design.">
+  <CardGrid :items="$frontmatter.phases" />
+</PageSection>
 
-```
-https://miragon-ai-playground.fly.dev/mcp
-```
+<PageSection tone="tint" eyebrow="Human and AI" title="Who does what, phase by phase" intro="The business flow of a process stays with people. In every phase the agent prepares the work and someone on your team decides.">
+  <CardGrid :items="$frontmatter.human" />
+</PageSection>
 
-::: code-group
+<PageSection eyebrow="Why Miragon" title="Built by a process automation consultancy">
+  <FeatureList :items="$frontmatter.why" />
+</PageSection>
 
-```sh [Claude Code]
-claude mcp add --transport http miragon-ai https://miragon-ai-playground.fly.dev/mcp
-```
+<PageSection tone="tint" eyebrow="Proof you can open" title="Open it before you talk to us" intro="Versions as of 13 October 2026. Every link is public and needs no login.">
+  <CardGrid :items="$frontmatter.proof" :columns="4" />
+</PageSection>
 
-```txt [claude.ai]
-Settings → Connectors → Add custom connector
-URL: https://miragon-ai-playground.fly.dev/mcp
-```
+<PageSection eyebrow="What we don't promise" title="Where the tools stop today">
+  <FeatureList :items="$frontmatter.limits" />
+</PageSection>
 
-:::
-
-Then ask: _"Which processes have open incidents right now?"_ — and drill into
-the interactive widgets. Ready for your own stack? Head to
-[For Developers](/developer).
-
-<CockpitToConversation />
-
-<BrandContact />
+<PageSection tone="tint">
+  <BrandContact />
+</PageSection>
