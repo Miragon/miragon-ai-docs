@@ -14,19 +14,21 @@
 //    the Claude Code plugin cache is used. Without either, this step skips.
 //
 // Moving to a new CI release: copy the files from the miragon-brand skills,
-// then update BRAND.version and the hashes below in the same commit.
+// then update BRAND.version, the hashes below and the ref of the brand job in
+// .github/workflows/ci.yml in the same commit.
 import { createHash } from "node:crypto"
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
 import { homedir } from "node:os"
 import { join, relative } from "node:path"
 
 const BRAND = {
-  version: "1.8.0",
+  version: "1.9.0",
   files: [
     {
+      // The token file for websites (palette, roles --cd-ui-* light and dark).
       path: "src/styles/cd-tokens.generated.css",
-      source: "skills/modeler-tool-design/assets/cd-tokens.generated.css",
-      sha256: "36d76f3a330a1250d332c6862be1dc4f7564d2461e7051d9a565ba723ef2c379",
+      source: "skills/corporate-design/assets/cd-tokens.generated.css",
+      sha256: "948b67914780119f6d6ca7075935f9e6e33663e6ac12e4e3d9d0b9b8ecea1594",
     },
     {
       path: "public/logo/miragon-komet-blau.svg",

@@ -1,30 +1,22 @@
 // @ts-check
 import { defineConfig } from "astro/config"
-import starlight from "@astrojs/starlight"
 import vue from "@astrojs/vue"
 import mdx from "@astrojs/mdx"
 import { satteri } from "@astrojs/markdown-satteri"
 import sitemap from "@astrojs/sitemap"
-import mermaid from "astro-mermaid"
-import starlightLinksValidator from "starlight-links-validator"
-import { DOCS_SIDEBAR } from "./src/data/docs-sidebar.ts"
-import { PHASES, TOOLS } from "./src/data/lifecycle.ts"
-
-const DESCRIPTION =
-  "Miragon AI gives your AI agents tools for four of the five phases of your BPM lifecycle on Camunda 7, CIB seven and Operaton, while your team makes the decisions."
-
-// Website pages content may link to; the validator cannot see them (picomatch globs).
-const WEBSITE_PAGES = ["/", ...PHASES.map((p) => p.link), ...TOOLS.map((t) => t.link)]
-  .map((path) => path.replace(/\/$/, ""))
-  .flatMap((path) => [path || "/", `${path}/`, `${path}#*`, `${path}/#*`])
+import expressiveCode from "astro-expressive-code"
 
 export default defineConfig({
   site: "https://miragon.ai",
-  // Every page is <path>/index.html, linked as /<path>/ (also what
-  // Pagefind and Starlight's canonicals use). Netlify serves /<path> from
-  // the same file.
+  // Every page is <path>/index.html, linked as /<path>/ (also what the
+  // canonicals use). Netlify serves /<path> from the same file.
   build: { format: "directory" },
   trailingSlash: "ignore",
+  // Component styles are scoped with :where(), which adds no specificity:
+  // the page text's element rules (.prose in styles/website.css) stay
+  // beatable, and the components put :root in front of their rules to
+  // reset them.
+  scopedStyleStrategy: "where",
   // Astro's default Markdown processor, minus smart punctuation: straight
   // quotes stay straight in Markdown and MDX, as the page text was written.
   markdown: { processor: satteri({ features: { smartPunctuation: false } }) },
@@ -33,63 +25,40 @@ export default defineConfig({
   // meta-refresh pages, and a file at the old path would shadow Netlify's
   // 301 rule. Redirects live in netlify.toml.
   integrations: [
-    // Must come before starlight: it adds its Markdown plugin before
-    // Starlight's Expressive Code sees ```mermaid blocks.
-    mermaid({ theme: "dark", autoTheme: false, enableLog: false }),
-    starlight({
-      title: "Miragon AI",
-      description: DESCRIPTION,
-      // Website pages own the 404 (src/pages/404.astro).
-      disable404Route: true,
-      // No `favicon`: components/site/HeadCommon.astro sets the icons on
-      // every page (src/routeData.ts drops Starlight's default link).
-      lastUpdated: true,
-      customCss: ["./src/styles/tokens.css", "./src/styles/code.css", "./src/styles/starlight.css"],
-      // The website's header and footer on every docs page; always dark.
-      // No `logo`: the header override draws the wordmark.
-      components: {
-        Head: "./src/components/starlight/Head.astro",
-        Header: "./src/components/starlight/Header.astro",
-        MobileMenuFooter: "./src/components/starlight/MobileMenuFooter.astro",
-        PageFrame: "./src/components/starlight/PageFrame.astro",
-        ThemeProvider: "./src/components/starlight/ThemeProvider.astro",
-        ThemeSelect: "./src/components/starlight/ThemeSelect.astro",
-      },
-      sidebar: DOCS_SIDEBAR,
-      routeMiddleware: "./src/routeData.ts",
-      // Always dark: one code theme. `frames` too, or terminal frames keep
-      // Expressive Code's own background. The blocks look like the VitePress
-      // ones: rounded, no border or shadow, 14px code with VitePress'
-      // spacing, and no terminal title bar on shell code (`frame: "code"`).
-      // The language label in the corner is in src/styles/code.css.
-      expressiveCode: {
-        themes: ["github-dark-default"],
-        defaultProps: { frame: "code" },
-        styleOverrides: {
-          borderRadius: "8px",
-          borderWidth: "0px",
-          codeFontSize: "14px",
-          codeLineHeight: "1.7",
-          codePaddingBlock: "20px",
-          codePaddingInline: "24px",
-          codeBackground: "var(--site-bg-alt)",
-          borderColor: "var(--site-divider)",
-          frames: {
-            frameBoxShadowCssValue: "none",
-            terminalBackground: "var(--site-bg-alt)",
-            terminalTitlebarBackground: "var(--site-bg-alt)",
-            terminalTitlebarBorderBottomColor: "var(--site-divider)",
-            editorTabBarBackground: "var(--site-bg-alt)",
-            editorActiveTabBackground: "var(--site-bg-alt)",
-            editorTabBarBorderBottomColor: "var(--site-divider)",
-            editorActiveTabIndicatorTopColor: "var(--cd-gruen)",
-          },
+    // The code blocks on the tool pages. Always dark: one code theme. `frames`
+    // too, or terminal frames keep Expressive Code's own background. The
+    // blocks look like the VitePress ones: rounded, no border or shadow,
+    // 14px code with VitePress' spacing, and no terminal title bar on shell
+    // code (`frame: "code"`). The language label in the corner is in
+    // src/styles/code.css. The cascade layer ranks the blocks' styles above
+    // the reset and below the page text (styles/website.css).
+    // Must come before mdx().
+    expressiveCode({
+      themes: ["github-dark-default"],
+      cascadeLayer: "expressive-code",
+      defaultProps: { frame: "code" },
+      styleOverrides: {
+        borderRadius: "8px",
+        borderWidth: "0px",
+        codeFontFamily: "var(--site-font-mono)",
+        codeFontSize: "14px",
+        codeLineHeight: "1.7",
+        codePaddingBlock: "20px",
+        codePaddingInline: "24px",
+        uiFontFamily: "var(--site-font)",
+        codeBackground: "var(--site-bg-alt)",
+        borderColor: "var(--site-divider)",
+        frames: {
+          frameBoxShadowCssValue: "none",
+          terminalBackground: "var(--site-bg-alt)",
+          terminalTitlebarBackground: "var(--site-bg-alt)",
+          terminalTitlebarBorderBottomColor: "var(--site-divider)",
+          editorTabBarBackground: "var(--site-bg-alt)",
+          editorActiveTabBackground: "var(--site-bg-alt)",
+          editorTabBarBorderBottomColor: "var(--site-divider)",
+          editorActiveTabIndicatorTopColor: "var(--cd-gruen)",
         },
       },
-      // Validates the links in Markdown and MDX (pages and #hashes). Links
-      // to website pages count as custom pages it cannot see into, so they
-      // are excluded here and checked over dist by scripts/check-dist.mjs.
-      plugins: [starlightLinksValidator({ exclude: WEBSITE_PAGES })],
     }),
     vue(),
     mdx(),

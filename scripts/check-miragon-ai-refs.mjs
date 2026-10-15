@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 // miragon-ai references: the pages name only tools the miragon-ai server
-// registers, and the Pulse section (the miragon-ai server's pages: its tool
-// page and its docs) cites only repo paths that exist.
-// It took over the docs half of miragon-ai's docs-refs.test.ts when the site
-// left that monorepo (Miragon/miragon-ai-docs#1). Run it against a checkout
+// registers, and the Pulse section (Pulse's tool page) cites only repo paths
+// that exist. The Pulse docs live in Miragon/miragon-ai, whose
+// docs-refs.test.ts checks them. Run it against a checkout
 // of Miragon/miragon-ai: MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs
 // CI checks out the public repo for it, and runs it without `pnpm install`,
 // so it uses no npm package. Without MIRAGON_AI_DIR it skips.
@@ -12,7 +11,7 @@ import { join, relative } from "node:path"
 
 const ROOT = new URL("..", import.meta.url).pathname
 // The Pulse section: a folder (trailing slash) or a single page.
-const SECTION = ["src/content/docs/docs/pulse/", "src/content/tools/pulse.mdx"]
+const SECTION = ["src/content/tools/pulse.mdx"]
 const inSection = (page) =>
   SECTION.some((entry) => (entry.endsWith("/") ? page.startsWith(entry) : page === entry))
 const MIRAGON_AI = process.env.MIRAGON_AI_DIR

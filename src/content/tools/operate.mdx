@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: /docs/operate/getting-started/
+      link: https://miragon.github.io/operate/getting-started
     - theme: alt
       text: GitHub
       link: https://github.com/Miragon/operate
@@ -18,11 +18,11 @@ hero:
       link: /#contact
 artefact:
   type: terminal
-  title: operate 0.5.0 · local Operaton 2.1.5
+  title: operate 0.7.0 · local Operaton 2.1.5
   lines:
     - { note: "3 orders failed at the same service task" }
     - { cmd: "operate status" }
-    - { out: "Engine  http://localhost:8080/engine-rest (version 2.1.5, 21ms)", tone: dim }
+    - { out: "Engine  http://localhost:8080/engine-rest (version 2.1.5, 15ms)", tone: dim }
     - { out: "Status  warning", tone: warn }
     - { out: "" }
     - { out: "Findings:" }
@@ -50,7 +50,7 @@ compare:
       - operate status --fail-on fails the CI job with exit code 9
 steps:
   - title: Connect
-    text: operate talks to the engine's REST API. A profile holds the URL and the Basic auth, OAuth or bearer token settings.
+    text: operate talks to the engine's REST API. A profile holds the URL and the Basic auth, OAuth or bearer token settings, and a project file (.operate.json) shares the profiles with your team.
   - title: Triage
     text: operate status reads the engine in parallel requests and groups root incidents by activity and message, each with a root-cause line from the stack trace.
   - title: Inspect
@@ -97,8 +97,8 @@ guards:
     text: "--dry-run previews any write, and delete and bulk commands refuse to run without --yes."
 status:
   - icon: package
-    title: npm only until 0.6.0
-    text: Standalone binaries and a container image are planned for 0.6.0 and not released yet.
+    title: Binaries not notarized
+    text: The macOS binaries are signed ad hoc and not notarized, and the Windows binary has no Authenticode signature, so your system may block or warn about a copy you download in a browser.
   - icon: ban
     title: No Camunda 8
     text: operate does not support Camunda 8 and is unrelated to Operate, the Camunda 8 web app.
@@ -116,18 +116,18 @@ proof:
   - icon: route
     title: Quick start
     text: From an empty Operaton container to a finished instance, with a sample order.bpmn.
-    link: https://github.com/Miragon/operate/blob/main/docs/quick-start.md
+    link: https://miragon.github.io/operate/quick-start
   - icon: terminal
     title: Workflow commands
     text: The six commands on one page, with a sample inspect view.
-    link: https://github.com/Miragon/operate/blob/main/docs/workflow-commands.md
+    link: https://miragon.github.io/operate/workflow-commands
   - icon: boxes
     title: npm package
-    text: "@miragon/operate, latest version 0.5.0."
+    text: "@miragon/operate, latest version 0.7.0."
     link: https://www.npmjs.com/package/@miragon/operate
   - icon: history
     title: Releases
-    text: Every release from 0.1.0 to 0.5.0.
+    text: Every release from 0.1.0 to 0.7.0. Since 0.6.0, each one carries standalone binaries for Linux, macOS and Windows.
     link: https://github.com/Miragon/operate/releases
   - icon: check-circle
     title: CI on three engines
@@ -171,15 +171,15 @@ Underneath, operate turns all 396 operations of the Camunda 7 REST API into comm
   <FeatureList items={frontmatter.guards} />
 </PageSection>
 
-<PageSection tone="tint" id="get-started" eyebrow="Get started" title="A first triage in four commands">
-  <PillButton href="/docs/operate/getting-started/" label="Get started" />
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Install it, then run a first process" intro="You need an engine, such as a local Operaton container, and Node.js 22.12 or later, the standalone binary or the container image. The operate docs have the install and a first triage.">
+  <PillButton href="https://miragon.github.io/operate/getting-started" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where operate stands on 13 October 2026" intro="operate is at version 0.5.0, released on 11 October 2026 to npm as @miragon/operate. It is pre-1.0, so commands and output can still change. The repository Miragon/operate is public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where operate stands on 14 October 2026" intro="operate is at version 0.7.0, released on 14 October 2026 to npm as @miragon/operate, as standalone binaries and as the container image ghcr.io/miragon/operate. It is pre-1.0, and 0.7.0 brought its first breaking change (a token command now comes only from OPERATE_TOKEN_COMMAND), so pin the version you run. The repository Miragon/operate is public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public" intro="The session at the top of this page is operate 0.5.0 against a local operaton/operaton:2.1.5 container, with three orders whose delegate class the engine cannot load.">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public" intro="The session at the top of this page is operate 0.7.0 against a local operaton/operaton:2.1.5 container, with three orders whose delegate class the engine cannot load.">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 

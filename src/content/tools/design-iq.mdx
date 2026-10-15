@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: /docs/design-iq/getting-started/
+      link: https://miragon.github.io/design-iq/getting-started
     - theme: alt
       text: GitHub
       link: https://github.com/Miragon/design-iq
@@ -146,17 +146,17 @@ fits:
     link: /optimize/
 docs:
   - icon: book
-    title: README
-    text: Run modes and the content repo contract.
-    link: https://github.com/Miragon/design-iq#readme
+    title: All docs
+    text: Getting started, self-hosting, AI clients, extending and the architecture decisions.
+    link: https://miragon.github.io/design-iq/
   - icon: server
     title: Self-hosting guide
     text: Login with an OIDC provider, your own GitHub App, private repos and release as pull request.
-    link: https://github.com/Miragon/design-iq/blob/main/docs/on-prem/README.md
+    link: https://miragon.github.io/design-iq/on-prem/
   - icon: cable
     title: MCP integration guide
     text: Every MCP tool and the inline modeler widgets.
-    link: https://github.com/Miragon/design-iq/blob/main/docs/mcp-integration.md
+    link: https://miragon.github.io/design-iq/mcp-integration
 ---
 
 <PageSection tone="tint" eyebrow="The problem" title="Process models live outside the repo your team reviews in" intro="Process models usually live in a separate modelling tool, away from the repo your developers work in. One person at a time works on a diagram there, and nobody signs it off in a pull request. An AI assistant either cannot see the current model, or it rewrites the whole BPMN XML when it changes one. In review, a DMN change arrives as an XML diff, where a >= that became > is easy to miss.">
@@ -175,11 +175,11 @@ docs:
   <CardGrid items={frontmatter.notations} />
 </PageSection>
 
-<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Run designIQ on your machine">
-  <PillButton href="/docs/design-iq/getting-started/" label="Get started" />
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Run designIQ on your machine" intro="One Docker command starts an evaluation container with the example models, without login. The designIQ docs have the command and the way to your own models.">
+  <PillButton href="https://miragon.github.io/design-iq/getting-started" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where designIQ stands on 13 October 2026" intro="The self-hosted platform is at v5.3.0, released on 13 October 2026 as the fourth release since 4 October. The repo (MIT licence) and the Docker image are public.">
+<PageSection eyebrow="Status" title="Where designIQ stands on 14 October 2026" intro="The self-hosted platform is at v5.3.0, released on 13 October 2026 as the fourth release since 4 October. The repo (MIT licence) and the Docker image are public.">
   <FeatureList items={frontmatter.status} />
 
 Follow GitLab support in [issue #5](https://github.com/Miragon/design-iq/issues/5) and the playground in [issue #43](https://github.com/Miragon/design-iq/issues/43).
@@ -194,7 +194,7 @@ Follow GitLab support in [issue #5](https://github.com/Miragon/design-iq/issues/
   <CardGrid items={frontmatter.fits} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Docs" title="The reference lives in the repo">
+<PageSection tone="tint" eyebrow="Docs" title="The full reference is in the docs">
   <CardGrid items={frontmatter.docs} />
 </PageSection>
 

@@ -1,7 +1,5 @@
-// The website nav, shared by the website header (components/site/SiteHeader.astro),
-// the docs header (the Starlight Header override renders the same component)
-// and the docs phone menu (components/starlight/MobileMenuFooter.astro).
-// Built from lifecycle.ts so a tool is added in one place.
+// The website nav of the header (components/site/SiteHeader.astro). Built
+// from lifecycle.ts so a tool is added in one place.
 import { PHASES, TOOLS } from "./lifecycle"
 
 export interface NavLink {

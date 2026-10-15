@@ -1,5 +1,5 @@
-# Netlify deployment of https://miragon.ai: a static Astro + Starlight build
-# (no adapter), published from dist/. Every page is <path>/index.html and is
+# Netlify deployment of https://miragon.ai: a static Astro build (no
+# adapter), published from dist/. Every page is <path>/index.html and is
 # linked as /<path>/; Netlify serves /<path> from the same file.
 #
 # One-time site setup in the Netlify UI:
@@ -10,11 +10,9 @@
 #   from.
 
 [build]
-  # - git fetch --unshallow: Starlight's "Last updated" reads each page's
-  #   last commit, which a shallow clone does not have.
-  # - rm -rf node_modules/.astro: a cached content store can keep a stale
-  #   Expressive Code stylesheet link (unstyled code on the docs pages).
-  command = "git fetch --unshallow --quiet 2>/dev/null || true; rm -rf node_modules/.astro; pnpm build"
+  # rm -rf node_modules/.astro: a cached content store can keep a stale
+  # Expressive Code stylesheet link (unstyled code blocks).
+  command = "rm -rf node_modules/.astro; pnpm build"
   publish = "dist"
 
 [build.environment]
@@ -29,135 +27,50 @@
 # Redirects. Netlify applies the first matching rule and matches a source
 # with and without its trailing slash. No rule is forced, so a file at a
 # source path would shadow its rule: scripts/check-dist.mjs fails the build
-# on that, on a target that is not a page, and on any old URL in
+# on that, on a target on this site that is not a page, and on any old URL in
 # scripts/url-map.json that does not land on its new URL in one hop.
 # No Astro `redirects` either: without an adapter they become meta-refresh
 # pages that shadow these rules.
 
 # Pulse's four reference pages, live at the root until this site replaced
-# the old one, moved into the docs.
+# the old one. They live in Pulse's docs site, built from docs/ of
+# Miragon/miragon-ai and served on GitHub Pages.
 [[redirects]]
   from = "/architecture"
-  to = "/docs/pulse/architecture/"
+  to = "https://miragon.github.io/miragon-ai/architecture"
   status = 301
 
 [[redirects]]
   from = "/architecture.html"
-  to = "/docs/pulse/architecture/"
+  to = "https://miragon.github.io/miragon-ai/architecture"
   status = 301
 
 [[redirects]]
   from = "/developer"
-  to = "/docs/pulse/developer/"
+  to = "https://miragon.github.io/miragon-ai/developer"
   status = 301
 
 [[redirects]]
   from = "/developer.html"
-  to = "/docs/pulse/developer/"
+  to = "https://miragon.github.io/miragon-ai/developer"
   status = 301
 
 [[redirects]]
   from = "/operations"
-  to = "/docs/pulse/operations/"
+  to = "https://miragon.github.io/miragon-ai/operations"
   status = 301
 
 [[redirects]]
   from = "/operations.html"
-  to = "/docs/pulse/operations/"
+  to = "https://miragon.github.io/miragon-ai/operations"
   status = 301
 
 [[redirects]]
   from = "/usage"
-  to = "/docs/pulse/usage/"
+  to = "https://miragon.github.io/miragon-ai/usage"
   status = 301
 
 [[redirects]]
   from = "/usage.html"
-  to = "/docs/pulse/usage/"
-  status = 301
-
-# Their home in the Pulse section before the docs existed.
-[[redirects]]
-  from = "/tools/pulse/architecture"
-  to = "/docs/pulse/architecture/"
-  status = 301
-
-[[redirects]]
-  from = "/tools/pulse/developer"
-  to = "/docs/pulse/developer/"
-  status = 301
-
-[[redirects]]
-  from = "/tools/pulse/operations"
-  to = "/docs/pulse/operations/"
-  status = 301
-
-[[redirects]]
-  from = "/tools/pulse/usage"
-  to = "/docs/pulse/usage/"
-  status = 301
-
-# The section's first name on the way to the launch: the four pages go
-# straight to the docs (one hop), the rest to the Pulse page.
-[[redirects]]
-  from = "/tools/miragon-ai/architecture"
-  to = "/docs/pulse/architecture/"
-  status = 301
-
-[[redirects]]
-  from = "/tools/miragon-ai/developer"
-  to = "/docs/pulse/developer/"
-  status = 301
-
-[[redirects]]
-  from = "/tools/miragon-ai/operations"
-  to = "/docs/pulse/operations/"
-  status = 301
-
-[[redirects]]
-  from = "/tools/miragon-ai/usage"
-  to = "/docs/pulse/usage/"
-  status = 301
-
-[[redirects]]
-  from = "/tools/miragon-ai/*"
-  to = "/tools/pulse/"
-  status = 301
-
-# A tool's docs folder has no page of its own: it opens on getting started.
-# One rule per tool (src/data/lifecycle.ts), not /docs/:tool, so a mistyped
-# /docs/<name>/ answers 404 instead of a 301 to a page that does not exist.
-[[redirects]]
-  from = "/docs/analyzr"
-  to = "/docs/analyzr/getting-started/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/design-iq"
-  to = "/docs/design-iq/getting-started/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/bpmn-cli"
-  to = "/docs/bpmn-cli/getting-started/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/skills"
-  to = "/docs/skills/getting-started/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/solution-templates"
-  to = "/docs/solution-templates/getting-started/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/pulse"
-  to = "/docs/pulse/getting-started/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/operate"
-  to = "/docs/operate/getting-started/"
+  to = "https://miragon.github.io/miragon-ai/usage"
   status = 301

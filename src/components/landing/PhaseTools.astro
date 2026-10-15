@@ -1,7 +1,8 @@
 ---
 // The tools of a phase page, one card each: the tool's job in the phase
 // (data/lifecycle.ts) as a small label, its name, what it does in this
-// phase, its status, and links to its page and its getting-started page.
+// phase, its status, and links to its page and to where you start with it
+// (`start` in lifecycle.ts, mostly the tool's repo: a new tab).
 // Two tools sit side by side, with status and links at the foot of each
 // card; one tool takes the full width, its status and links beside the
 // text.
@@ -9,7 +10,7 @@
 // lifecycle.ts, `text` one paragraph per string. Text and status may hold
 // `code` and [links](/path/) (inline.ts).
 import type { PhaseTool } from "../../data/schemas"
-import { TOOLS, docsLink } from "../../data/lifecycle"
+import { TOOLS } from "../../data/lifecycle"
 import Icon from "./Icon.astro"
 import { inline } from "./inline"
 
@@ -24,6 +25,7 @@ const tools = items.map((item) => {
   if (!tool) throw new Error(`PhaseTools: no tool "${item.tool}" in data/lifecycle.ts`)
   return { ...item, tool }
 })
+const external = (href: string) => /^https?:\/\//.test(href)
 ---
 
 <ul class:list={["phase-tools", { pair: tools.length > 1 }]}>
@@ -46,7 +48,12 @@ const tools = items.map((item) => {
             More on {tool.name}
             <Icon name="arrow" size={15} />
           </a>
-          <a class="link" href={docsLink(tool)}>
+          <a
+            class="link"
+            href={tool.start}
+            target={external(tool.start) ? "_blank" : undefined}
+            rel={external(tool.start) ? "noopener" : undefined}
+          >
             Get started
             <Icon name="arrow" size={15} />
           </a>
@@ -57,7 +64,7 @@ const tools = items.map((item) => {
 </ul>
 
 <style>
-  /* Each rule starts with :root. Starlight makes Astro scope these styles
+  /* Each rule starts with :root. astro.config.mjs makes Astro scope these styles
      with :where(), which adds no specificity; the extra class keeps them
      above the page text's element rules (.prose a, .prose ul, .prose p,
      .prose li + li in styles/website.css), which they reset. */

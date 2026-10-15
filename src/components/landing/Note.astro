@@ -1,8 +1,7 @@
 ---
 // A note box in a website page's text, for what VitePress wrote as
 // `::: info Title`: a box with the title as its first paragraph, in the
-// look of the band's cards. The text comes in the slot. Docs pages use
-// Starlight's asides.
+// look of the band's cards. The text comes in the slot.
 interface Props {
   title?: string
 }
@@ -16,7 +15,7 @@ const { title } = Astro.props
 </div>
 
 <style>
-  /* Each rule starts with :root. Starlight makes Astro scope these styles
+  /* Each rule starts with :root. astro.config.mjs makes Astro scope these styles
      with :where(), which adds no specificity; the extra class keeps them
      above the page text's element rules (.prose a, .prose ul, .prose p,
      .prose li + li in styles/website.css), which they reset. */

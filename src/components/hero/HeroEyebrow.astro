@@ -31,7 +31,7 @@ const { eyebrow } = Astro.props
     font-size: 12px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--cd-weiss) 72%, transparent);
+    color: color-mix(in srgb, var(--cd-ui-text) 72%, transparent);
   }
   /* Below 960px the hero centres its text (text-align), which a flex row
      does not follow: centre it with the name and headline. */
@@ -41,10 +41,10 @@ const { eyebrow } = Astro.props
     }
   }
   .sep {
-    color: color-mix(in srgb, var(--cd-weiss) 50%, transparent);
+    color: color-mix(in srgb, var(--cd-ui-text) 50%, transparent);
   }
   .eyebrow a {
-    color: var(--cd-weiss);
+    color: var(--cd-ui-text);
     text-decoration: none;
   }
   .eyebrow a:hover {
