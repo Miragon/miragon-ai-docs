@@ -69,6 +69,10 @@ const isExternal = (link: string) => /^(?:[a-z]+:|\/\/)/i.test(link)
      variant from the old landing.css, the artefact column from custom.css.
      The rules are measured against a 24px line. */
   .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100svh - var(--site-header-height));
     padding: 48px 24px;
     line-height: 24px;
   }
@@ -95,6 +99,7 @@ const isExternal = (link: string) => /^(?:[a-z]+:|\/\/)/i.test(link)
     .container {
       flex-direction: row;
       align-items: center;
+      gap: 64px;
       text-align: left;
     }
   }
@@ -148,6 +153,15 @@ const isExternal = (link: string) => /^(?:[a-z]+:|\/\/)/i.test(link)
       margin: 0;
       font-size: 56px;
       line-height: 64px;
+    }
+  }
+  /* Between 960 and 1200px the text column sits next to the 440px
+     artefact and is too narrow for the full size. */
+  @media (min-width: 960px) and (max-width: 1199px) {
+    .name,
+    .text {
+      font-size: 44px;
+      line-height: 52px;
     }
   }
 
