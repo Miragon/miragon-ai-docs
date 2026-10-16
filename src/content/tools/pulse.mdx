@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: Try the playground
-      link: https://inspector.manufact.com/inspector?server=https%3A%2F%2Fmiragon-ai-playground.fly.dev%2Fmcp&tab=chat
+      link: https://inspector.manufact.com/inspector?server=https%3A%2F%2Fpulse-playground.miragon.ai%2Fmcp&tab=chat
     - theme: alt
       text: GitHub
-      link: https://github.com/Miragon/miragon-ai
+      link: https://github.com/Miragon/pulse
     - theme: alt
       text: Talk to us
       link: /#contact
@@ -68,15 +68,15 @@ proof:
   - icon: play
     title: Playground
     text: "The public MCP endpoint, pinned to camunda7:read-only,analytics:read-only."
-    link: https://miragon-ai-playground.fly.dev/mcp
+    link: https://pulse-playground.miragon.ai/mcp
   - icon: monitor
     title: Browser demo
     text: The playground in a third-party MCP inspector, with nothing to install.
-    link: https://inspector.manufact.com/inspector?server=https%3A%2F%2Fmiragon-ai-playground.fly.dev%2Fmcp&tab=chat
+    link: https://inspector.manufact.com/inspector?server=https%3A%2F%2Fpulse-playground.miragon.ai%2Fmcp&tab=chat
   - icon: github
-    title: Miragon/miragon-ai
+    title: Miragon/pulse
     text: The source under the MIT licence, with changelog and CI.
-    link: https://github.com/Miragon/miragon-ai
+    link: https://github.com/Miragon/pulse
   - icon: container
     title: Docker image
     text: miragon/miragon-ai-server for amd64 and arm64, tag 0.20.0.
@@ -100,25 +100,25 @@ fits:
     link: /tools/operate/
   - eyebrow: Your own systems
     title: Solution templates
-    text: The template miragon-ai-starter mounts Pulse's modules next to your own.
+    text: The template pulse-starter mounts Pulse's modules next to your own.
     link: /tools/solution-templates/
 docs:
   - icon: layers
     title: Architecture
     text: The server, its two modules and the systems they talk to.
-    link: https://miragon.github.io/miragon-ai/architecture
+    link: https://miragon.github.io/pulse/architecture
   - icon: code
     title: Developer
     text: Run the stack from source and build your own server on the modules.
-    link: https://miragon.github.io/miragon-ai/developer
+    link: https://miragon.github.io/pulse/developer
   - icon: server
     title: Operations
     text: The Docker image, security, environment variables, toolsets and health routes.
-    link: https://miragon.github.io/miragon-ai/operations
+    link: https://miragon.github.io/pulse/operations
   - icon: chat
     title: Usage
     text: Connect an assistant, what to ask and your own settings.
-    link: https://miragon.github.io/miragon-ai/usage
+    link: https://miragon.github.io/pulse/usage
 ---
 
 <PageSection tone="tint" eyebrow="The problem" title="Every question about a running process waits for a developer" intro="When a process gets stuck, the people who hear about it first, such as operations staff, support or a product owner, usually cannot see why. They ask a developer, so every question waits for the few people who know each engine's Cockpit and PromQL.">
@@ -130,7 +130,7 @@ docs:
 </PageSection>
 
 <PageSection tone="tint" id="connect-your-claude" eyebrow="Try it" title="Connect your Claude in 30 seconds">
-  <PillButton href="https://miragon.github.io/miragon-ai/getting-started#connect-your-claude-in-30-seconds" label="Get started" />
+  <PillButton href="https://miragon.github.io/pulse/getting-started#connect-your-claude-in-30-seconds" label="Get started" />
   <TryItOut />
 </PageSection>
 
@@ -142,7 +142,7 @@ Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the defa
 </PageSection>
 
 <PageSection tone="tint" id="get-started" eyebrow="Get started" title="Run it on your own engine" intro="You need Docker and the REST API of a Camunda 7, CIB seven or Operaton engine. The Pulse docs have the command.">
-  <PillButton href="https://miragon.github.io/miragon-ai/getting-started#run-it-on-your-own-engine" label="Get started" />
+  <PillButton href="https://miragon.github.io/pulse/getting-started#run-it-on-your-own-engine" label="Get started" />
 </PageSection>
 
 <PageSection eyebrow="Status" title="Where Pulse stands on 14 October 2026" intro="Pulse is at v0.20.0 and pre-1.0. The last three minor releases each list breaking changes, such as renamed tools and result fields, so pin the image tag you run. The public playground runs the same version.">
@@ -160,7 +160,7 @@ Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the defa
 <PageSection tone="tint" eyebrow="Docs" title="The full reference is in the docs">
   <CardGrid items={frontmatter.docs} columns={4} />
 
-The [README](https://github.com/Miragon/miragon-ai#readme) is the full reference for every tool, toolset and environment variable.
+The [README](https://github.com/Miragon/pulse#readme) is the full reference for every tool, toolset and environment variable.
 
 </PageSection>
 

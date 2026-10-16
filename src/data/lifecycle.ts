@@ -89,7 +89,7 @@ export const PHASES: Phase[] = [
         slug: "solution-templates",
         link: "/tools/solution-templates/",
         job: "Connect your own systems",
-        start: "https://github.com/Miragon/miragon-ai-starter#quickstart",
+        start: "https://github.com/Miragon/pulse-starter#quickstart",
       },
     ],
   },
@@ -103,7 +103,7 @@ export const PHASES: Phase[] = [
         slug: "pulse",
         link: "/tools/pulse/",
         job: "Process operations in chat",
-        start: "https://miragon.github.io/miragon-ai/getting-started",
+        start: "https://miragon.github.io/pulse/getting-started",
       },
       {
         name: "operate",

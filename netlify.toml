@@ -34,43 +34,45 @@
 
 # Pulse's four reference pages, live at the root until this site replaced
 # the old one. They live in Pulse's docs site, built from docs/ of
-# Miragon/miragon-ai and served on GitHub Pages.
+# Miragon/pulse and served on GitHub Pages (miragon.github.io/pulse/; the
+# old path /miragon-ai/ has been a 404 since the repo's rename on
+# 2026-10-16, because GitHub Pages does not redirect).
 [[redirects]]
   from = "/architecture"
-  to = "https://miragon.github.io/miragon-ai/architecture"
+  to = "https://miragon.github.io/pulse/architecture"
   status = 301
 
 [[redirects]]
   from = "/architecture.html"
-  to = "https://miragon.github.io/miragon-ai/architecture"
+  to = "https://miragon.github.io/pulse/architecture"
   status = 301
 
 [[redirects]]
   from = "/developer"
-  to = "https://miragon.github.io/miragon-ai/developer"
+  to = "https://miragon.github.io/pulse/developer"
   status = 301
 
 [[redirects]]
   from = "/developer.html"
-  to = "https://miragon.github.io/miragon-ai/developer"
+  to = "https://miragon.github.io/pulse/developer"
   status = 301
 
 [[redirects]]
   from = "/operations"
-  to = "https://miragon.github.io/miragon-ai/operations"
+  to = "https://miragon.github.io/pulse/operations"
   status = 301
 
 [[redirects]]
   from = "/operations.html"
-  to = "https://miragon.github.io/miragon-ai/operations"
+  to = "https://miragon.github.io/pulse/operations"
   status = 301
 
 [[redirects]]
   from = "/usage"
-  to = "https://miragon.github.io/miragon-ai/usage"
+  to = "https://miragon.github.io/pulse/usage"
   status = 301
 
 [[redirects]]
   from = "/usage.html"
-  to = "https://miragon.github.io/miragon-ai/usage"
+  to = "https://miragon.github.io/pulse/usage"
   status = 301

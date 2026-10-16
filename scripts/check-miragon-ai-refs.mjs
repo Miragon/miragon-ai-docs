@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// miragon-ai references: the pages name only tools the miragon-ai server
-// registers, and the Pulse section (Pulse's tool page) cites only repo paths
-// that exist. The Pulse docs live in Miragon/miragon-ai, whose
-// docs-refs.test.ts checks them. Run it against a checkout
-// of Miragon/miragon-ai: MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs
+// Pulse references: the pages name only tools the Pulse server registers,
+// and the Pulse section (Pulse's tool page) cites only repo paths that exist.
+// The Pulse docs live in Miragon/pulse, whose docs-refs.test.ts checks them.
+// The script and its env var keep the names they had before the repo was
+// renamed from Miragon/miragon-ai (2026-10-16). Run it against a checkout
+// of Miragon/pulse: MIRAGON_AI_DIR=../pulse node scripts/check-miragon-ai-refs.mjs
 // CI checks out the public repo for it, and runs it without `pnpm install`,
 // so it uses no npm package. Without MIRAGON_AI_DIR it skips.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
@@ -17,7 +18,7 @@ const inSection = (page) =>
 const MIRAGON_AI = process.env.MIRAGON_AI_DIR
 
 if (!MIRAGON_AI) {
-  console.log("miragon-ai refs: skipped (set MIRAGON_AI_DIR to a checkout of Miragon/miragon-ai)")
+  console.log("miragon-ai refs: skipped (set MIRAGON_AI_DIR to a checkout of Miragon/pulse)")
   process.exit(0)
 }
 
@@ -33,7 +34,7 @@ const looksLikeTool = (token) =>
   /^[a-z0-9]+(?:_[a-z0-9]+)+$/.test(token) &&
   (/^(?:camunda7|analytics)_/.test(token) || /(?:^|_)show_/.test(token) || token.endsWith("_data"))
 // Other pages also name tools of other servers (a template's example module,
-// `notes_show_notes`); there only the miragon-ai modules' prefixes count.
+// `notes_show_notes`); there only the Pulse modules' prefixes count.
 const isMiragonAiTool = (ref) =>
   looksLikeTool(ref.token) && (inSection(ref.page) || /^(?:camunda7|analytics)_/.test(ref.token))
 
@@ -71,9 +72,9 @@ function* pages(dir) {
 const errors = []
 for (const ref of [...pages(ROOT)].flatMap(backticked)) {
   const where = `${ref.page}:${ref.line} \`${ref.token}\``
-  if (isMiragonAiTool(ref) && !known(ref.token)) errors.push(`${where}: no such miragon-ai tool`)
+  if (isMiragonAiTool(ref) && !known(ref.token)) errors.push(`${where}: no such Pulse tool`)
   if (inSection(ref.page) && isPath(ref.token) && !existsSync(join(MIRAGON_AI, pathOf(ref.token))))
-    errors.push(`${where}: no such path in Miragon/miragon-ai`)
+    errors.push(`${where}: no such path in Miragon/pulse`)
 }
 
 if (errors.length) {

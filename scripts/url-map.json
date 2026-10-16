@@ -11,52 +11,52 @@
   },
   {
     "old": "/architecture",
-    "new": "https://miragon.github.io/miragon-ai/architecture",
+    "new": "https://miragon.github.io/pulse/architecture",
     "why": "live: Pulse reference page, 301 to Pulse's docs site"
   },
   {
     "old": "/architecture.html",
-    "new": "https://miragon.github.io/miragon-ai/architecture",
+    "new": "https://miragon.github.io/pulse/architecture",
     "why": "live: .html variant, 301"
   },
   {
     "old": "/developer",
-    "new": "https://miragon.github.io/miragon-ai/developer",
+    "new": "https://miragon.github.io/pulse/developer",
     "why": "live: Pulse reference page, 301 to Pulse's docs site"
   },
   {
     "old": "/developer.html",
-    "new": "https://miragon.github.io/miragon-ai/developer",
+    "new": "https://miragon.github.io/pulse/developer",
     "why": "live: .html variant, 301"
   },
   {
     "old": "/operations",
-    "new": "https://miragon.github.io/miragon-ai/operations",
+    "new": "https://miragon.github.io/pulse/operations",
     "why": "live: Pulse reference page, 301 to Pulse's docs site"
   },
   {
     "old": "/operations.html",
-    "new": "https://miragon.github.io/miragon-ai/operations",
+    "new": "https://miragon.github.io/pulse/operations",
     "why": "live: .html variant, 301"
   },
   {
     "old": "/operations#ci-cd",
-    "new": "https://miragon.github.io/miragon-ai/operations#ci-cd",
+    "new": "https://miragon.github.io/pulse/operations#ci-cd",
     "why": "live anchor: an <a id> before `## CI/CD` keeps it"
   },
   {
     "old": "/usage",
-    "new": "https://miragon.github.io/miragon-ai/usage",
+    "new": "https://miragon.github.io/pulse/usage",
     "why": "live: Pulse reference page, 301 to Pulse's docs site"
   },
   {
     "old": "/usage.html",
-    "new": "https://miragon.github.io/miragon-ai/usage",
+    "new": "https://miragon.github.io/pulse/usage",
     "why": "live: .html variant, 301"
   },
   {
     "old": "/usage#connect-your-assistant",
-    "new": "https://miragon.github.io/miragon-ai/usage#connect-your-assistant",
+    "new": "https://miragon.github.io/pulse/usage#connect-your-assistant",
     "why": "live anchor, the same heading in the Markdown"
   },
   {

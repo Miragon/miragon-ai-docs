@@ -1,4 +1,4 @@
-# Grouping rule (as in Miragon/miragon-ai): patch + minor updates travel
+# Grouping rule (as in Miragon/pulse): patch + minor updates travel
 # together per ecosystem, major updates get their own pull request.
 # Reviewers come from .github/CODEOWNERS (Dependabot retired `reviewers`).
 version: 2

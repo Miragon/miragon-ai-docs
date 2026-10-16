@@ -19,14 +19,15 @@ Optimize feeds back into Design.
 | [Design](src/content/phases/design.mdx)       | designIQ           | [`/tools/design-iq/`](src/content/tools/design-iq.mdx)                   | [designIQ docs](https://miragon.github.io/design-iq/getting-started)                                                                                    |
 | [Design](src/content/phases/design.mdx)       | bpmn-cli           | [`/tools/bpmn-cli/`](src/content/tools/bpmn-cli.mdx)                     | [bpmn-cli docs](https://miragon.github.io/bpmn-cli/getting-started)                                                                                     |
 | [Implement](src/content/phases/implement.mdx) | Skills             | [`/tools/skills/`](src/content/tools/skills.mdx)                         | [bpmn-cli plugin](https://miragon.github.io/bpmn-cli/claude-code-plugin), [operate plugin](https://miragon.github.io/operate/agents#claude-code-plugin) |
-| [Implement](src/content/phases/implement.mdx) | Solution templates | [`/tools/solution-templates/`](src/content/tools/solution-templates.mdx) | [README of Miragon/miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter#quickstart)                                                        |
-| [Execute](src/content/phases/execute.mdx)     | Pulse              | [`/tools/pulse/`](src/content/tools/pulse.mdx)                           | [Pulse docs](https://miragon.github.io/miragon-ai/getting-started)                                                                                      |
+| [Implement](src/content/phases/implement.mdx) | Solution templates | [`/tools/solution-templates/`](src/content/tools/solution-templates.mdx) | [README of Miragon/pulse-starter](https://github.com/Miragon/pulse-starter#quickstart)                                                                  |
+| [Execute](src/content/phases/execute.mdx)     | Pulse              | [`/tools/pulse/`](src/content/tools/pulse.mdx)                           | [Pulse docs](https://miragon.github.io/pulse/getting-started)                                                                                           |
 | [Execute](src/content/phases/execute.mdx)     | operate            | [`/tools/operate/`](src/content/tools/operate.mdx)                       | [operate docs](https://miragon.github.io/operate/getting-started)                                                                                       |
 | [Optimize](src/content/phases/optimize.mdx)   | no tool yet        | [`/optimize/`](src/content/phases/optimize.mdx)                          |                                                                                                                                                         |
 
-Pulse is the MCP server from the repo [Miragon/miragon-ai](https://github.com/Miragon/miragon-ai).
-Its docs, getting started and four reference pages (architecture, developer, operations, usage),
-are a VitePress site built from that repo's `docs/` (https://miragon.github.io/miragon-ai/). The phases and tools above live in one list, `src/data/lifecycle.ts`,
+Pulse is the MCP server from the repo [Miragon/pulse](https://github.com/Miragon/pulse), called
+Miragon/miragon-ai until 2026-10-16. Miragon AI stays the name of the tool family and of this site.
+Pulse's docs, getting started and four reference pages (architecture, developer, operations, usage),
+are a VitePress site built from that repo's `docs/` (https://miragon.github.io/pulse/). The phases and tools above live in one list, `src/data/lifecycle.ts`,
 which draws the lifecycle graphic on the landing page and builds the nav, the tool cards of the
 phase pages and the site footer. Its `start` field holds each tool's getting-started link.
 
@@ -72,7 +73,7 @@ in the background and return at once; `pnpm astro dev stop` and `pnpm astro prev
 │                                and code block CSS
 ├── public/                      favicon, the vendored CI logos, hero screenshots
 ├── astro.config.mjs             Astro config: integrations, code block theme
-├── scripts/                     checks: brand assets, page budgets, Pulse (miragon-ai) references,
+├── scripts/                     checks: brand assets, page budgets, Pulse references,
 │                                the built site; url-map.json lists the old URLs
 ├── .claude/skills/docs-style/   style guide and page budgets for agents editing pages
 ├── .miragon/brand.json          brand-lint configuration
@@ -87,16 +88,16 @@ in the background and return at once; `pnpm astro dev stop` and `pnpm astro prev
 | Job                   | What it does                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Build + checks        | Frozen install, `pnpm format:check`, `pnpm check` (vendored CI tokens and logos match their pinned hashes, no forked `--cd-*` tokens, every page within its line budget), `pnpm build` and a check that every dependency is pinned exactly. After the build, `scripts/check-dist.mjs` checks all of `dist/`: every internal link and `#anchor`, the trailing slash on page links, the redirects in `netlify.toml`, the old URLs in `scripts/url-map.json`, the legal links and the consent scripts on every page, and the contact form on the landing. |
-| miragon-ai references | Checks out [Miragon/miragon-ai](https://github.com/Miragon/miragon-ai) and runs `scripts/check-miragon-ai-refs.mjs`: every backticked name on a page that looks like a Pulse tool is one the server registers, and every repo path on Pulse's tool page (`src/content/tools/pulse.mdx`) exists. The weekly run catches drift from changes in miragon-ai.                                                                                                                                                                                               |
+| miragon-ai references | Checks out [Miragon/pulse](https://github.com/Miragon/pulse) and runs `scripts/check-miragon-ai-refs.mjs`: every backticked name on a page that looks like a Pulse tool is one the server registers, and every repo path on Pulse's tool page (`src/content/tools/pulse.mdx`) exists. The weekly run catches drift from changes in Pulse. The job, the script and `MIRAGON_AI_DIR` keep their names from before the rename (the job is a required check).                                                                                              |
 | Brand                 | Needs the repository secret `CORPORATE_IDENTITY_READ_TOKEN`, a token with read access to the private Miragon/corporate-identity. It checks out the pinned CI release (the tag `v1.9.0` of miragon-brand 1.9.0), compares the vendored tokens and logos with it and runs brand-lint with the rules in `.miragon/brand.json`. Without the secret it leaves a notice and skips.                                                                                                                                                                           |
 
 Pull request titles follow Conventional Commits (`.github/workflows/pr-title.yml`). Dependabot
 groups patch and minor updates weekly.
 
-To run the references check locally, point it at a checkout of Miragon/miragon-ai:
+To run the references check locally, point it at a checkout of Miragon/pulse:
 
 ```bash
-MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs
+MIRAGON_AI_DIR=../pulse node scripts/check-miragon-ai-refs.mjs
 ```
 
 ## Deployment
@@ -109,7 +110,8 @@ served with an immutable cache header.
 
 `netlify.toml` also holds every redirect, all with a 301: the Pulse doc pages of the old site
 (`/architecture`, `/developer`, `/operations`, `/usage` and their `.html` variants) go to their
-pages in Pulse's docs site (https://miragon.github.io/miragon-ai/).
+pages in Pulse's docs site (https://miragon.github.io/pulse/). They pointed at
+`/miragon-ai/` until the repo's rename; GitHub Pages does not redirect that old path.
 Astro's own `redirects` stay unused: without an adapter they become pages that would shadow these
 rules. `scripts/url-map.json` lists every old URL and where it lands, and the build checks it.
 
@@ -145,11 +147,12 @@ pre-1.0. Pages never link to private repos. The full rules and the line budget p
 
 ## History
 
-The site started as `docs/` in [Miragon/miragon-ai](https://github.com/Miragon/miragon-ai). It
+The site started as `docs/` in the repo then called Miragon/miragon-ai, now
+[Miragon/pulse](https://github.com/Miragon/pulse). It
 moved here with `git filter-repo`, which kept the history of `docs/`. From 2026-10-13 to 2026-10-14
 it also held the docs under `/docs/`, built with Starlight; they went back to the tools' repos. Pull request references in
 the imported commit messages were rewritten to `Miragon/miragon-ai#NNN`, so they still point at the
-pull requests in miragon-ai.
+pull requests in that repo; GitHub redirects them to Miragon/pulse.
 
 ## License
 

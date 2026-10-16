@@ -36,7 +36,7 @@ the 404 lives in `src/content/`; the table gives the paths below it.
 | `phases/{analyse,design,implement,execute}.mdx` | `/analyse/`, `/design/`, `/implement/`, `/execute/`                                    | One page per phase: the problem today, how the tools help, human and AI, hand-over to the next phase                                                                                                                               |
 | `phases/optimize.mdx`                           | `/optimize/`                                                                           | The phase without a tool: the problem, what the phase needs, what Execute already hands over                                                                                                                                       |
 | `tools/<tool>.mdx`                              | `/tools/<tool>/` for analyzr, design-iq, bpmn-cli, skills, solution-templates, operate | The tool's landing page (see [Tool landing pages](#tool-landing-pages)): promise and real artefact in the hero, then the problem, how it works, get started (a link to the tool's docs), status, proof you can open, where it fits |
-| `tools/pulse.mdx`                               | `/tools/pulse/`                                                                        | Pulse's landing page: the chat window in the hero, the playground card, connecting your Claude (`#connect-your-claude`), links to the docs in Miragon/miragon-ai                                                                   |
+| `tools/pulse.mdx`                               | `/tools/pulse/`                                                                        | Pulse's landing page: the chat window in the hero, the playground card, connecting your Claude (`#connect-your-claude`), links to the docs in Miragon/pulse                                                                        |
 
 - Link pages absolute from the root and with the trailing slash, exactly as in the URL column
   (`/analyse/`, `/tools/pulse/#connect-your-claude`); `/` and `/#contact` stay as they are. Every
@@ -44,37 +44,45 @@ the 404 lives in `src/content/`; the table gives the paths below it.
   `#anchor` and a page link without its trailing slash.
 - GitHub links are full https URLs.
 - Product names as displayed: analyzr, designIQ (repo Miragon/design-iq), bpmn-cli, Skills,
-  Solution templates, Pulse (the MCP server from the repo Miragon/miragon-ai), operate. The umbrella
+  Solution templates, Pulse (the MCP server from the repo Miragon/pulse), operate. The umbrella
   is Miragon AI.
 - No new top-level page without the team. A new phase or tool page starts in
   `src/data/lifecycle.ts` and gets a row in the budget table below. A new tool also needs its
   `start` there: the getting-started section in its own repo.
 - The Pulse doc pages of the old site sat at the root. `netlify.toml` redirects `/architecture`,
   `/developer`, `/operations` and `/usage` (and their `.html` variants) with a 301 to their
-  pages in Pulse's docs site (`https://miragon.github.io/miragon-ai/<page>`).
+  pages in Pulse's docs site (`https://miragon.github.io/pulse/<page>`; the old path
+  `/miragon-ai/` has been a 404 since the repo's rename, because GitHub Pages does not redirect).
   `scripts/url-map.json` lists every old URL and its target, and the build checks that each lands
   there in one hop. If you move a page, add a redirect and a URL map entry.
 
-## Pulse and miragon-ai
+## Pulse and its identifiers
 
-Pulse is the product name of the MCP server built in the repo Miragon/miragon-ai (the owner's
-decision of 2026-10-13). Its docs are the VitePress site in `docs/` of that repo,
-https://miragon.github.io/miragon-ai/: `getting-started` (with
-`#connect-your-claude-in-30-seconds` and `#run-it-on-your-own-engine`), `architecture`,
-`developer`, `operations` and `usage`. Prose says Pulse. Where a reader needs the mapping,
-say it once per page:
-"Pulse is the MCP server from the repo Miragon/miragon-ai" or "Pulse (the miragon-ai MCP server)".
-Technical identifiers stay exact, because readers copy them:
+Pulse is the product name (the owner's decision of 2026-10-13) of the MCP server built in the repo
+Miragon/pulse. On 2026-10-16 the repo was renamed from Miragon/miragon-ai to Miragon/pulse; Miragon
+AI stays the name of the tool family and of this site, and Miragon/miragon-ai-docs keeps its name.
+Pulse's docs are the VitePress site in `docs/` of that repo, https://miragon.github.io/pulse/:
+`getting-started` (with `#connect-your-claude-in-30-seconds` and `#run-it-on-your-own-engine`),
+`architecture`, `developer`, `operations` and `usage`. Prose says Pulse. Where a reader needs the
+repo, say it once per page: "Pulse is the MCP server from the repo Miragon/pulse". Technical
+identifiers stay exact, because readers copy them:
 
-| Identifier                     | Stays as                                                                              |
-| ------------------------------ | ------------------------------------------------------------------------------------- |
-| Repo and template              | `Miragon/miragon-ai`, `Miragon/miragon-ai-starter`                                    |
-| Docker image                   | `miragon/miragon-ai-server`                                                           |
-| npm packages                   | `@miragon-ai/*`                                                                       |
-| MCP server name                | `claude mcp add --transport http miragon-ai …`, the `"miragon-ai"` key in host config |
-| Playground host                | `miragon-ai-playground.fly.dev`                                                       |
-| Environment variables, tools   | `MCP_OAUTH`, `CAMUNDA_BASE_URL` and the rest; `camunda7_*`, `analytics_*`             |
-| The refs check and its env var | `scripts/check-miragon-ai-refs.mjs`, `MIRAGON_AI_DIR`                                 |
+| Identifier                     | Write                                                                                                           |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| Repo                           | `Miragon/pulse` (GitHub redirects `Miragon/miragon-ai`)                                                         |
+| Template                       | `Miragon/pulse-starter`, in prose pulse-starter (GitHub redirects `Miragon/miragon-ai-starter`)                 |
+| Docs                           | `https://miragon.github.io/pulse/<page>` (the old `/miragon-ai/` path is a 404)                                 |
+| Docker image                   | Up to 0.20.0 `miragon/miragon-ai-server`; from 0.21.0 on `miragon/pulse-server` (not released yet)              |
+| npm packages                   | Up to 0.20.0 `@miragon-ai/<name>`; from 0.21.0 on `@miragon/pulse-<name>` (not released yet)                    |
+| MCP client key                 | `claude mcp add --transport http pulse …`, the `"pulse"` key in host config                                     |
+| Playground host                | `pulse-playground.miragon.ai` (the old `miragon-ai-playground.fly.dev` keeps answering)                         |
+| Environment variables, tools   | `MCP_OAUTH`, `CAMUNDA_BASE_URL` and the rest; `camunda7_*`, `analytics_*`                                       |
+| The refs check and its env var | `scripts/check-miragon-ai-refs.mjs`, `MIRAGON_AI_DIR` and the CI job "miragon-ai references" (a required check) |
+
+Pages name only what is published. Until 0.21.0 is out, the proof cards, the status lines and the
+starter's pin keep the 0.20.0 names, versions and links (`@miragon-ai/*`,
+`miragon/miragon-ai-server`); the starter mirrors that release until its next sync. When 0.21.0 is
+on npm and Docker Hub, switch them in one change and run the refs check.
 
 ## One list of phases and tools
 
@@ -217,7 +225,7 @@ page follows this order; adapt it to the tool. Bands alternate `tint` and `plain
 
 Pulse's page also keeps the band `Connect your Claude in 30 seconds` with
 `id="connect-your-claude"`, `<TryItOut />` and a pill to `getting-started#connect-your-claude-in-30-seconds`
-in Miragon/miragon-ai, and a `Docs` band with a card for each of its reference pages there. Only the main landing carries the contact form (`<BrandContact />`) in its last band; tool
+in Pulse's docs, and a `Docs` band with a card for each of its reference pages there. Only the main landing carries the contact form (`<BrandContact />`) in its last band; tool
 pages close with the `CtaBox`.
 
 ## Components
@@ -288,14 +296,15 @@ start with `@`, `*`, `&`, `!`, `%` or a quote. Never put prose into a YAML flow 
 
 Taken on 2026-10-13 in Miragon/miragon-ai-docs#1; the rows from Pulse to Lifecycle loop came the
 same day with the tool landing pages (Miragon/miragon-ai-docs#3), the last row is the owner's
-decision of 2026-10-14. Follow them; changing one needs the team.
+decision of 2026-10-14, and the owner decided the repo's rename in the Pulse row on 2026-10-16.
+Follow them; changing one needs the team.
 
 | Topic                  | Decision                                                                                                                                                                                                                    |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Language               | The site is English. Landing and phase copy adapt the agreed German value proposition in Notion (page "Value Proposition und Positionierung von Miragon.ai"). Adapt it into natural English; never translate word for word. |
 | Optimize               | Honest: no tool yet. The Optimize page describes the problem and the outlook. Pulse stays in Execute, and its analytics module is never presented as the Optimize answer.                                                   |
 | The old marketing site | This site replaces miragon-ai-website. Value proposition, lifecycle story and contact live here. Redirecting or archiving the old site is a separate step.                                                                  |
-| Pulse                  | The site calls the MCP server from Miragon/miragon-ai Pulse; its technical identifiers keep their names (see [Pulse and miragon-ai](#pulse-and-miragon-ai)).                                                                |
+| Pulse                  | The site calls the MCP server Pulse, and since 2026-10-16 its repo is Miragon/pulse; its technical identifiers stay exact (see [Pulse and its identifiers](#pulse-and-its-identifiers)).                                    |
 | Tool pages             | Every tool page is a landing page of its own with the tool's real artefact in the hero.                                                                                                                                     |
 | Website look           | The landing pages look like a website in miragon.io's visual language (bands, cards, icon lists, steps, a closing box) and stay always dark, the hero included (no blue gradient).                                          |
 | Lifecycle loop         | Analyse runs once, at the start. Design, Implement, Execute and Optimize form the loop, and what you learn in Optimize goes back into Design.                                                                               |
@@ -341,9 +350,9 @@ decision of 2026-10-14. Follow them; changing one needs the team.
   (`.prettierrc.json`).
 - Commands in fenced code blocks with a language.
 - A backticked snake_case token that looks like a Pulse tool (a `camunda7_` or `analytics_` prefix,
-  `show_` in it or a `_data` ending) must be a tool the miragon-ai server registers, on any page. A
+  `show_` in it or a `_data` ending) must be a tool the Pulse server registers, on any page. A
   backticked repo path on Pulse's tool page (`src/content/tools/pulse.mdx`) must exist in
-  Miragon/miragon-ai. The refs check reads both.
+  Miragon/pulse. The refs check reads both.
 
 ## Stack
 
@@ -396,7 +405,7 @@ decision of 2026-10-14. Follow them; changing one needs the team.
 | Legal row on every page, 404 included | `src/components/site/SiteFooter.astro`, in the Website layout          | Impressum and Datenschutz must be reachable from every page. The build fails on a page without both links.                                                                                                 |
 | consentmanager scripts                | `src/data/head.ts`, rendered by `src/components/site/HeadCommon.astro` | Cookie consent with autoblocking; third-party scripts such as the Calendly embed wait for consent. They stay classic scripts ahead of every stylesheet and module script, and the build checks that order. |
 | `BrandContact` with `id="contact"`    | landing page, an island whose form is in the built HTML                | Contact form on Netlify Forms plus Calendly; the header's "Talk to us" and every other "Talk to us" link point to `/#contact`. The build checks the form in `dist/index.html`.                             |
-| `#connect-your-claude`                | the band on `src/content/tools/pulse.mdx`                              | Older links land on the band, which links on to Pulse's getting started in Miragon/miragon-ai.                                                                                                             |
+| `#connect-your-claude`                | the band on `src/content/tools/pulse.mdx`                              | Older links land on the band, which links on to Pulse's getting started in Miragon/pulse.                                                                                                                  |
 | `#get-started`                        | the band on every tool page                                            | Older links to the band still land on the tool page, which links on to the tool's docs.                                                                                                                    |
 | Netlify settings                      | Netlify UI, documented in `README.md`                                  | Form detection on (the form needs it); Pretty URLs and Auto Minify off, so Netlify serves the HTML the build checked (Auto Minify would also strip the comments the Vue islands need for hydration).       |
 
@@ -420,7 +429,7 @@ stop them with `pnpm astro dev stop` and `pnpm astro preview stop`.
 | ---------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Brand assets     | `pnpm check` runs `scripts/check-brand-assets.mjs`                                                        | Vendored tokens or logos changed, forked `--cd-*` tokens; with the miragon-brand plugin at hand (or `MIRAGON_BRAND_DIR`) also drift from the CI source.                                                                                                                                                                                                                                                                               |
 | Page budgets     | `pnpm check` runs `scripts/check-page-budgets.mjs`                                                        | A page over its budget, a page without a budget row. It reads the table below.                                                                                                                                                                                                                                                                                                                                                        |
-| Pulse references | `MIRAGON_AI_DIR=../miragon-ai node scripts/check-miragon-ai-refs.mjs`                                     | Tool names the miragon-ai server does not register (any page), repo paths on Pulse's tool page that do not exist. Skips without `MIRAGON_AI_DIR`; CI runs it on every pull request and every Monday. The Pulse docs are checked in Miragon/miragon-ai (`docs-refs.test.ts`).                                                                                                                                                          |
+| Pulse references | `MIRAGON_AI_DIR=../pulse node scripts/check-miragon-ai-refs.mjs` (a checkout of Miragon/pulse)            | Tool names the Pulse server does not register (any page), repo paths on Pulse's tool page that do not exist. Skips without `MIRAGON_AI_DIR`; CI runs it on every pull request and every Monday. The Pulse docs are checked in Miragon/pulse (`docs-refs.test.ts`).                                                                                                                                                                    |
 | brand-lint       | `.miragon/brand.json` enables it                                                                          | Em dashes, spellings, anti-slop patterns, off-palette colours, the dark-mode rules (C6). The miragon-brand hook lints each file you write; CI runs it on the repo. Zero hard findings.                                                                                                                                                                                                                                                |
 | Built site       | `pnpm build` runs `scripts/check-dist.mjs` after `astro build`; it also runs alone on an existing `dist/` | Over all of `dist/`: a dead internal link or `#anchor` (MDX and components alike), a page link without its trailing slash, a redirect in `netlify.toml` that a file shadows or that leads nowhere, an old URL in `scripts/url-map.json` that does not land on its target in one hop (on this site or in a tool's docs), a page without both legal links or with the consent scripts out of order, a landing without the contact form. |
 | Build            | `pnpm build`                                                                                              | Broken Markdown, MDX or components, frontmatter the schemas reject.                                                                                                                                                                                                                                                                                                                                                                   |

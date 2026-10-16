@@ -5,23 +5,23 @@ eyebrow: { phase: Implement, link: /implement/ }
 hero:
   name: Solution templates
   text: Your own MCP server, engine tools included.
-  tagline: miragon-ai-starter, a GitHub template for developers, brings Pulse's modules for Camunda 7, CIB seven and Operaton, plus room for your own modules, such as your ERP. mcp-toolkit-starter is the base without BPM.
+  tagline: pulse-starter, a GitHub template for developers, brings Pulse's modules for Camunda 7, CIB seven and Operaton, plus room for your own modules, such as your ERP. mcp-toolkit-starter is the base without BPM.
   actions:
     - theme: brand
       text: Get started
-      link: https://github.com/Miragon/miragon-ai-starter#quickstart
+      link: https://github.com/Miragon/pulse-starter#quickstart
     - theme: alt
       text: GitHub
-      link: https://github.com/Miragon/miragon-ai-starter
+      link: https://github.com/Miragon/pulse-starter
     - theme: alt
       text: Talk to us
       link: /#contact
 artefact:
   type: terminal
-  title: miragon-ai-starter
+  title: pulse-starter
   lines:
     - cmd: 'gh repo create my-mcp-server \'
-    - cont: '  --template Miragon/miragon-ai-starter \'
+    - cont: '  --template Miragon/pulse-starter \'
     - cont: "  --private --clone"
     - cmd: cd my-mcp-server
     - cmd: pnpm install
@@ -45,7 +45,7 @@ compare:
       - Login and permissions built by hand
       - Dockerfile, probes and metrics endpoint by hand
   after:
-    title: With miragon-ai-starter
+    title: With pulse-starter
     items:
       - camunda7_* and analytics_* tools with widgets, from Pulse's modules
       - A copy of the example module mcp-notes, next to the engine modules
@@ -65,9 +65,9 @@ steps:
 templates:
   - icon: workflow
     eyebrow: Engine plus your systems
-    title: miragon-ai-starter
+    title: pulse-starter
     text: Pulse's modules for Camunda 7, CIB seven and Operaton, the example module mcp-notes, the guard tests, CLAUDE.md and four Claude Code skills. MIT licence.
-    link: https://github.com/Miragon/miragon-ai-starter
+    link: https://github.com/Miragon/pulse-starter
   - icon: boxes
     eyebrow: Without BPM
     title: mcp-toolkit-starter
@@ -89,7 +89,7 @@ skills:
 status:
   - icon: refresh
     title: Synced on every Pulse release
-    text: miragon-ai-starter mirrors templates/composed-server and syncs once install and tests pass against the public npm registry. Neither template repo has releases of its own.
+    text: pulse-starter mirrors templates/composed-server and syncs once install and tests pass against the public npm registry. Neither template repo has releases of its own.
   - icon: package
     title: Pre-1.0 packages
     text: The starter pins the @miragon-ai packages at 0.20.0. They release about weekly and still bring breaking changes.
@@ -102,8 +102,8 @@ status:
 proof:
   - icon: github
     title: templates/composed-server
-    text: The source of miragon-ai-starter in Miragon/miragon-ai, where issues and pull requests go.
-    link: https://github.com/Miragon/miragon-ai/tree/main/templates/composed-server
+    text: The source of pulse-starter in Miragon/pulse, where issues and pull requests go.
+    link: https://github.com/Miragon/pulse/tree/main/templates/composed-server
   - icon: github
     title: templates/minimal-server
     text: The source of mcp-toolkit-starter in Miragon/mcp-toolkit.
@@ -111,7 +111,7 @@ proof:
   - icon: play
     title: Pulse playground
     text: An MCP endpoint without login, running the stock Pulse server built from the same @miragon-ai modules, read-only.
-    link: https://miragon-ai-playground.fly.dev/mcp
+    link: https://pulse-playground.miragon.ai/mcp
   - icon: route
     title: Toolkit playground tour
     text: Seven stops through the toolkit's tools and widgets on a hosted server.
@@ -155,7 +155,7 @@ fits:
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection align="center" eyebrow="How it works" title="From the template to a server with your own module" intro="Shown for miragon-ai-starter. mcp-toolkit-starter brings a tasks module in place of the engine modules.">
+<PageSection align="center" eyebrow="How it works" title="From the template to a server with your own module" intro="Shown for pulse-starter. mcp-toolkit-starter brings a tasks module in place of the engine modules.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
@@ -166,18 +166,18 @@ Both templates build on [mcp-use](https://mcp-use.com). Neither contains process
 
 </PageSection>
 
-<PageSection eyebrow="Built for your coding agent" title="Four skills walk the agent through the wiring" intro="Open miragon-ai-starter in Claude Code, or any agent that reads CLAUDE.md, and describe what you want. The skills in .claude/skills/ cover the four common tasks.">
+<PageSection eyebrow="Built for your coding agent" title="Four skills walk the agent through the wiring" intro="Open pulse-starter in Claude Code, or any agent that reads CLAUDE.md, and describe what you want. The skills in .claude/skills/ cover the four common tasks.">
   <CardGrid items={frontmatter.skills} columns={4} />
 
 Everything also works by hand. `CLAUDE.md` is the compact architecture reference, and the guard tests in `server/test/` fail when a wiring step is missing.
 
 </PageSection>
 
-<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Your own MCP server from the template" intro="Create your repo from the template, then run it from source or as a container. The README of Miragon/miragon-ai-starter has the steps.">
-  <PillButton href="https://github.com/Miragon/miragon-ai-starter#quickstart" label="Get started" />
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Your own MCP server from the template" intro="Create your repo from the template, then run it from source or as a container. The README of Miragon/pulse-starter has the steps.">
+  <PillButton href="https://github.com/Miragon/pulse-starter#quickstart" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where the templates stand on 14 October 2026" intro="Pulse is the MCP server from the repo Miragon/miragon-ai. miragon-ai-starter is at Pulse v0.20.0, released 2026-10-13, and public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where the templates stand on 14 October 2026" intro="Pulse is the MCP server from the repo Miragon/pulse. pulse-starter is at Pulse v0.20.0, released 2026-10-13, and public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
@@ -192,4 +192,4 @@ Models from [designIQ](/tools/design-iq/) or [bpmn-cli](/tools/bpmn-cli/) reach 
 
 </PageSection>
 
-<CtaBox title="Bring your own systems next to the engine." text="Tell us which systems your assistant should reach besides Camunda 7, CIB seven or Operaton. You get an honest assessment of whether miragon-ai-starter is the right start." note="A 30-minute first call." />
+<CtaBox title="Bring your own systems next to the engine." text="Tell us which systems your assistant should reach besides Camunda 7, CIB seven or Operaton. You get an honest assessment of whether pulse-starter is the right start." note="A 30-minute first call." />
