@@ -18,11 +18,11 @@ hero:
       link: /#contact
 artefact:
   type: terminal
-  title: operate 0.7.0 · local Operaton 2.1.5
+  title: operate 0.9.0 · local Operaton 2.1.5
   lines:
     - { note: "3 orders failed at the same service task" }
     - { cmd: "operate status" }
-    - { out: "Engine  http://localhost:8080/engine-rest (version 2.1.5, 15ms)", tone: dim }
+    - { out: "Engine  http://localhost:8080/engine-rest (version 2.1.5, 28ms)", tone: dim }
     - { out: "Status  warning", tone: warn }
     - { out: "" }
     - { out: "Findings:" }
@@ -123,11 +123,11 @@ proof:
     link: https://miragon.github.io/operate/workflow-commands
   - icon: boxes
     title: npm package
-    text: "@miragon/operate, latest version 0.7.0."
+    text: "@miragon/operate, latest version 0.9.0."
     link: https://www.npmjs.com/package/@miragon/operate
   - icon: history
     title: Releases
-    text: Every release from 0.1.0 to 0.7.0. Since 0.6.0, each one carries standalone binaries for Linux, macOS and Windows.
+    text: Every release from 0.1.0 to 0.9.0. Since 0.6.0, each one carries standalone binaries for Linux, macOS and Windows.
     link: https://github.com/Miragon/operate/releases
   - icon: check-circle
     title: CI on three engines
@@ -171,15 +171,15 @@ Underneath, operate turns all 396 operations of the Camunda 7 REST API into comm
   <FeatureList items={frontmatter.guards} />
 </PageSection>
 
-<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Install it, then run a first process" intro="You need an engine, such as a local Operaton container, and Node.js 22.12 or later, the standalone binary or the container image. The operate docs have the install and a first triage.">
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Install it, then run a first process" intro="You need an engine, such as a local Operaton container, and Node.js 22.12 or later, Homebrew, the standalone binary or the container image. The operate docs have the install and a first triage.">
   <PillButton href="https://miragon.github.io/operate/getting-started" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where operate stands on 14 October 2026" intro="operate is at version 0.7.0, released on 14 October 2026 to npm as @miragon/operate, as standalone binaries and as the container image ghcr.io/miragon/operate. It is pre-1.0, and 0.7.0 brought its first breaking change (a token command now comes only from OPERATE_TOKEN_COMMAND), so pin the version you run. The repository Miragon/operate is public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where operate stands on 16 October 2026" intro="operate is at version 0.9.0, released on 16 October 2026 to npm as @miragon/operate, through Homebrew (miragon/tap/operate), as standalone binaries and as the container image ghcr.io/miragon/operate. It is pre-1.0, and 0.7.0 and 0.8.0 brought breaking changes (a token command comes only from OPERATE_TOKEN_COMMAND, and OAuth logins cached by 0.7.0 or earlier need one new operate auth login), so pin the version you run. The repository Miragon/operate is public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public" intro="The session at the top of this page is operate 0.7.0 against a local operaton/operaton:2.1.5 container, with three orders whose delegate class the engine cannot load.">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public" intro="The session at the top of this page is operate 0.9.0 against a local operaton/operaton:2.1.5 container, with three orders whose delegate class the engine cannot load.">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 
