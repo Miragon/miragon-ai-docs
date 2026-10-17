@@ -2,13 +2,13 @@
 // Pulse's hero artefact: an MCP conversation that shows the product's thesis
 // in one frame. A plain-language question about running BPMN processes is
 // answered by a rendered widget instead of a wall of text. The numbers are a
-// snapshot of the public playground on 2026-10-13, 14:04 UTC (read-only call
-// camunda7_incidents_data on server 0.20.0: 112 open incidents, all
-// failedJob, miraveloLeasing 61, assessCreditworthiness 51). The engine
+// snapshot of the public playground on 2026-10-16, 15:07 UTC (read-only call
+// camunda7_incidents_data on server 0.21.0: 151 open incidents, all
+// failedJob, miraveloLeasing 78, assessCreditworthiness 73). The engine
 // reseeds every night and live traffic adds incidents, so the live numbers
 // move; the timestamp next to "Pulse" says when the snapshot was taken.
 // "Assess in chat" is the hand-off label of the real incidents widget. Pulse
-// is the MCP server from Miragon/miragon-ai.
+// is the MCP server from Miragon/pulse.
 //
 // The turns come in one after the other and the bars fill (CSS only; with
 // prefers-reduced-motion everything shows at once).
@@ -16,7 +16,7 @@
 // Clicking the input opens the real playground in the MCP inspector, the
 // same destination as the page's "Try the playground" button.
 const INSPECTOR_URL =
-  "https://inspector.manufact.com/inspector?server=https%3A%2F%2Fmiragon-ai-playground.fly.dev%2Fmcp&tab=chat"
+  "https://inspector.manufact.com/inspector?server=https%3A%2F%2Fpulse-playground.miragon.ai%2Fmcp&tab=chat"
 ---
 
 <div class="convo">
@@ -25,7 +25,7 @@ const INSPECTOR_URL =
       <span class="live">
         <span class="dot"></span>playground
       </span>
-      <span class="host">miragon-ai-playground.fly.dev</span>
+      <span class="host">pulse-playground.miragon.ai</span>
     </div>
 
     <div class="body">
@@ -36,30 +36,30 @@ const INSPECTOR_URL =
 
       <div class="turn asst" style="--i: 1">
         <span class="who">
-          Pulse <span class="when">· 2026-10-13, 14:04 UTC</span>
+          Pulse <span class="when">· 2026-10-16, 15:07 UTC</span>
         </span>
         <p class="line">
-          Across 2 process definitions, <b>112 open incidents</b>, all of them failed jobs.
+          Across 2 process definitions, <b>151 open incidents</b>, all of them failed jobs.
         </p>
 
         <div class="widget">
           <div class="w-head">
             <span class="w-title">Open incidents</span>
-            <span class="w-total">112</span>
+            <span class="w-total">151</span>
           </div>
           <div class="w-row" style="--j: 0">
             <span class="pk">miraveloLeasing</span>
             <span class="track">
-              <span class="fill" style="width: 54%"></span>
+              <span class="fill" style="width: 52%"></span>
             </span>
-            <span class="n">61</span>
+            <span class="n">78</span>
           </div>
           <div class="w-row" style="--j: 1">
             <span class="pk">assessCreditworthiness</span>
             <span class="track">
-              <span class="fill" style="width: 46%"></span>
+              <span class="fill" style="width: 48%"></span>
             </span>
-            <span class="n">51</span>
+            <span class="n">73</span>
           </div>
           <div class="w-foot">
             <span class="tag">all failedJob</span>

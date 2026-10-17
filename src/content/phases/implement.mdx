@@ -26,7 +26,7 @@ compare:
       - The bpmn skill sets Camunda 7 or Camunda 8 attributes by element id
       - bpmn validate --strict reports each deploy blocker with the command that fixes it, before the file reaches the engine
       - The agent keeps the drawn layout, and the operate skill deploys the model and runs one test instance to the end
-      - miragon-ai-starter combines the Pulse modules with modules for your own systems, such as your ERP
+      - pulse-starter combines the Pulse modules with modules for your own systems, such as your ERP
 tools:
   - tool: Skills
     text:
@@ -35,9 +35,9 @@ tools:
     status: Early. bpmn-cli 0.7.0 and operate 0.7.0 are pre-1.0 (as of 2026-10-14). Camunda 8 files can be edited and validated, but no skill runs them. Both skills install from the public plugin marketplaces in [Miragon/bpmn-cli](https://miragon.github.io/bpmn-cli/claude-code-plugin) and [Miragon/operate](https://miragon.github.io/operate/agents#claude-code-plugin).
   - tool: Solution templates
     text:
-      - "[miragon-ai-starter](https://github.com/Miragon/miragon-ai-starter) and [mcp-toolkit-starter](https://github.com/Miragon/mcp-toolkit-starter) are GitHub template repositories that start your own MCP server. Neither contains process automation code such as job workers or engine setup."
-      - miragon-ai-starter combines the Pulse modules for Camunda 7, CIB seven and Operaton with modules for your own systems, such as your ERP, and builds a Docker image with OAuth, health checks, `/metrics` and read-only defaults. A new module starts as a copy of the example module, and guard tests report a missed wiring step. mcp-toolkit-starter is the minimal base for an MCP server with interactive widgets and no BPM modules.
-    status: miragon-ai-starter is MIT-licensed and pins Pulse's `@miragon-ai` packages at 0.20.0 (as of 2026-10-14). They are pre-1.0 and release about weekly, often with breaking changes. mcp-toolkit-starter builds on the Miragon MCP Toolkit 2.8.1 and has no licence yet.
+      - "[pulse-starter](https://github.com/Miragon/pulse-starter) and [mcp-toolkit-starter](https://github.com/Miragon/mcp-toolkit-starter) are GitHub template repositories that start your own MCP server. Neither contains process automation code such as job workers or engine setup."
+      - pulse-starter combines the Pulse modules for Camunda 7, CIB seven and Operaton with modules for your own systems, such as your ERP, and builds a Docker image with OAuth, health checks, `/metrics` and read-only defaults. A new module starts as a copy of the example module, and guard tests report a missed wiring step. mcp-toolkit-starter is the minimal base for an MCP server with interactive widgets and no BPM modules.
+    status: pulse-starter is MIT-licensed and pins Pulse's `@miragon/pulse-*` packages at 0.21.0 (as of 2026-10-16). They are pre-1.0 and release about weekly, often with breaking changes. mcp-toolkit-starter builds on the Miragon MCP Toolkit 2.8.1 and has no licence yet.
 human:
   - icon: cog
     title: Your coding agent
