@@ -30,8 +30,8 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
       '@lucide/astro':
-        specifier: 1.56.0
-        version: 1.56.0(astro@7.3.8(@astrojs/markdown-remark@7.3.2)(@types/node@24.19.2)(yaml@2.9.1))
+        specifier: 1.57.0
+        version: 1.57.0(astro@7.3.8(@astrojs/markdown-remark@7.3.2)(@types/node@24.19.2)(yaml@2.9.1))
       astro:
         specifier: 7.3.8
         version: 7.3.8(@astrojs/markdown-remark@7.3.2)(@types/node@24.19.2)(yaml@2.9.1)
@@ -39,14 +39,14 @@ importers:
         specifier: 0.44.2
         version: 0.44.2(astro@7.3.8(@astrojs/markdown-remark@7.3.2)(@types/node@24.19.2)(yaml@2.9.1))
       prettier:
-        specifier: 3.9.6
-        version: 3.9.6
+        specifier: 3.9.10
+        version: 3.9.10
       prettier-plugin-astro:
         specifier: 1.1.1
-        version: 1.1.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(prettier@3.9.6)
+        version: 1.1.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(prettier@3.9.10)
       smol-toml:
-        specifier: 1.4.2
-        version: 1.4.2
+        specifier: 1.9.1
+        version: 1.9.1
       vue:
         specifier: 3.5.44
         version: 3.5.44
@@ -652,8 +652,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@lucide/astro@1.56.0':
-    resolution: {integrity: sha512-BLLnB+qj1SG60WyvkcGxSfBo0Nq2ZMjJI+39KVhgZJlQKQ4+1XOArJonl4Ktx/D2N6OcbJXNnFLsCbunf1AtXQ==}
+  '@lucide/astro@1.57.0':
+    resolution: {integrity: sha512-c7PitaHb87ZTtttqi2j+3dJ72pqx5dSnuh59Cudr4OS+POofYvWVyBXFS/sdVjuWn6sQUl/o3qGK8w9rtI7GTA==}
     peerDependencies:
       astro: ^4 || ^5 || ^6 || ^7
 
@@ -1809,8 +1809,8 @@ packages:
     peerDependencies:
       prettier: ^3.5.3
 
-  prettier@3.9.6:
-    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
+  prettier@3.9.10:
+    resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -1957,10 +1957,6 @@ packages:
     resolution: {integrity: sha512-S6hzjGJSG3d6if0YoF5kTyeRJvia6FSTBroE5fQ0bu1QNxyJqhhinfUsXi9fH3MgtXODWvwo2BDyQSnhPQ88uQ==}
     engines: {node: '>=20.19.5', npm: '>=10.8.2'}
     hasBin: true
-
-  smol-toml@1.4.2:
-    resolution: {integrity: sha512-rInDH6lCNiEyn3+hH8KVGFdbjc099j47+OSgbMrfDYX1CmXLfdKd7qi6IfcWj2wFxvSVkuI46M+wPGYfEOEj6g==}
-    engines: {node: '>= 18'}
 
   smol-toml@1.9.1:
     resolution: {integrity: sha512-j7WyPdf0CJoutMzMoPLF/bVXHtKZIT9Rb4eGeEbWw8X2t5oirjPgpL+OpaENZrILYaXqYwnVH+qgUwVbl+pUJQ==}
@@ -2921,7 +2917,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@lucide/astro@1.56.0(astro@7.3.8(@astrojs/markdown-remark@7.3.2)(@types/node@24.19.2)(yaml@2.9.1))':
+  '@lucide/astro@1.57.0(astro@7.3.8(@astrojs/markdown-remark@7.3.2)(@types/node@24.19.2)(yaml@2.9.1))':
     dependencies:
       astro: 7.3.8(@astrojs/markdown-remark@7.3.2)(@types/node@24.19.2)(yaml@2.9.1)
 
@@ -4491,17 +4487,17 @@ snapshots:
 
   powershell-utils@0.2.1: {}
 
-  prettier-plugin-astro@1.1.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(prettier@3.9.6):
+  prettier-plugin-astro@1.1.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(prettier@3.9.10):
     dependencies:
       '@astrojs/compiler-rs': 0.4.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)
       '@prettier/parse-srcset': 3.1.0
-      prettier: 3.9.6
+      prettier: 3.9.10
       sass-formatter: 0.8.0
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  prettier@3.9.6: {}
+  prettier@3.9.10: {}
 
   prismjs@1.30.0: {}
 
@@ -4763,8 +4759,6 @@ snapshots:
       '@types/sax': 1.2.7
       arg: 5.0.2
       sax: 1.6.1
-
-  smol-toml@1.4.2: {}
 
   smol-toml@1.9.1: {}
 
