@@ -67,22 +67,23 @@ Pulse's docs are the VitePress site in `docs/` of that repo, https://miragon.git
 repo, say it once per page: "Pulse is the MCP server from the repo Miragon/pulse". Technical
 identifiers stay exact, because readers copy them:
 
-| Identifier                     | Write                                                                                                           |
-| ------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| Repo                           | `Miragon/pulse` (GitHub redirects `Miragon/miragon-ai`)                                                         |
-| Template                       | `Miragon/pulse-starter`, in prose pulse-starter (GitHub redirects `Miragon/miragon-ai-starter`)                 |
-| Docs                           | `https://miragon.github.io/pulse/<page>` (the old `/miragon-ai/` path is a 404)                                 |
-| Docker image                   | Up to 0.20.0 `miragon/miragon-ai-server`; from 0.21.0 on `miragon/pulse-server` (not released yet)              |
-| npm packages                   | Up to 0.20.0 `@miragon-ai/<name>`; from 0.21.0 on `@miragon/pulse-<name>` (not released yet)                    |
-| MCP client key                 | `claude mcp add --transport http pulse …`, the `"pulse"` key in host config                                     |
-| Playground host                | `pulse-playground.miragon.ai` (the old `miragon-ai-playground.fly.dev` keeps answering)                         |
-| Environment variables, tools   | `MCP_OAUTH`, `CAMUNDA_BASE_URL` and the rest; `camunda7_*`, `analytics_*`                                       |
-| The refs check and its env var | `scripts/check-miragon-ai-refs.mjs`, `MIRAGON_AI_DIR` and the CI job "miragon-ai references" (a required check) |
+| Identifier                     | Write                                                                                                                                       |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Repo                           | `Miragon/pulse` (GitHub redirects `Miragon/miragon-ai`)                                                                                     |
+| Template                       | `Miragon/pulse-starter`, in prose pulse-starter (GitHub redirects `Miragon/miragon-ai-starter`)                                             |
+| Docs                           | `https://miragon.github.io/pulse/<page>` (the old `/miragon-ai/` path is a 404)                                                             |
+| Docker image                   | `ghcr.io/miragon/pulse-server` (GitHub Container Registry) from 0.21.0 on; `miragon/miragon-ai-server` on Docker Hub stays frozen at 0.20.0 |
+| npm packages                   | `@miragon/pulse-<name>` from 0.21.0 on; the old `@miragon-ai/<name>` are deprecated, their last version is 0.20.0                           |
+| MCP client key                 | `claude mcp add --transport http pulse …`, the `"pulse"` key in host config                                                                 |
+| Playground host                | `pulse-playground.miragon.ai` (the old `miragon-ai-playground.fly.dev` keeps answering)                                                     |
+| Environment variables, tools   | `MCP_OAUTH`, `CAMUNDA_BASE_URL` and the rest; `camunda7_*`, `analytics_*`                                                                   |
+| The refs check and its env var | `scripts/check-miragon-ai-refs.mjs`, `MIRAGON_AI_DIR` and the CI job "miragon-ai references" (a required check)                             |
 
-Pages name only what is published. Until 0.21.0 is out, the proof cards, the status lines and the
-starter's pin keep the 0.20.0 names, versions and links (`@miragon-ai/*`,
-`miragon/miragon-ai-server`); the starter mirrors that release until its next sync. When 0.21.0 is
-on npm and Docker Hub, switch them in one change and run the refs check.
+Pages name only what is published. Since 0.21.0 (released 2026-10-16) the proof cards, the status
+lines and the starter's pin name `@miragon/pulse-*` (linked on npm) and `ghcr.io/miragon/pulse-server`
+(linked to its package page, https://github.com/Miragon/pulse/pkgs/container/pulse-server). Never
+present the deprecated `@miragon-ai/*` packages or the frozen Docker Hub image as current. A new
+release switches every version on the pages in one change, followed by the refs check.
 
 ## One list of phases and tools
 

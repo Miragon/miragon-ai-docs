@@ -32,7 +32,7 @@ tools:
     text:
       - Your team hosts Pulse once, and operations, support and product owners ask it about running processes in Claude, ChatGPT or another MCP client. It reads one or several engines without a migration or access to the engine database, and answers with widgets in the chat, such as incident clusters by failing activity and incident type, down to the stack trace. Without OAuth it starts read-only. For an incident it drafts a ticket, and you decide where it goes.
       - The [Pulse page](/tools/pulse/) links the public playground, where you can ask it first.
-    status: v0.20.0 (released 2026-10-13), pre-1.0, and each of the last three minor releases brought breaking changes. Runtime figures such as durations and incident rates need no PromQL, but they work only on CIB seven with the metrics plugin and reach back 30 days at most.
+    status: v0.21.0 (released 2026-10-16), pre-1.0, and each of the last three minor releases brought breaking changes. Runtime figures such as durations and incident rates need no PromQL, but they work only on CIB seven with the metrics plugin and reach back 30 days at most.
   - tool: operate
     text:
       - operate turns the 396 operations of the engine REST API into commands for your shell, a coding agent such as Claude Code, or a CI job. `operate status` triages the whole engine in one read-only call and names the next command for each finding, and `operate inspect --business-key ORD-1001` shows where one instance waits and why.

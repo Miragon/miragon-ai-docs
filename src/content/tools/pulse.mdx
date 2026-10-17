@@ -79,16 +79,16 @@ proof:
     link: https://github.com/Miragon/pulse
   - icon: container
     title: Docker image
-    text: miragon/miragon-ai-server for amd64 and arm64, tag 0.20.0.
-    link: https://hub.docker.com/r/miragon/miragon-ai-server
+    text: ghcr.io/miragon/pulse-server for amd64 and arm64, tag 0.21.0, pullable without login.
+    link: https://github.com/Miragon/pulse/pkgs/container/pulse-server
   - icon: package
     title: Metrics plugin
-    text: "io.miragon.mcp:cibseven-history-metrics 0.20.0 on Maven Central."
+    text: "io.miragon.mcp:cibseven-history-metrics 0.21.0 on Maven Central."
     link: https://repo1.maven.org/maven2/io/miragon/mcp/cibseven-history-metrics/
   - icon: boxes
     title: npm packages
-    text: "@miragon-ai/camunda7-connector and @miragon-ai/analytics-connector, both at 0.20.0."
-    link: https://www.npmjs.com/package/@miragon-ai/camunda7-connector
+    text: "@miragon/pulse-camunda7-connector and @miragon/pulse-analytics-connector, both at 0.21.0."
+    link: https://www.npmjs.com/package/@miragon/pulse-camunda7-connector
 fits:
   - eyebrow: Phase
     title: Execute
@@ -145,7 +145,7 @@ Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the defa
   <PillButton href="https://miragon.github.io/pulse/getting-started#run-it-on-your-own-engine" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where Pulse stands on 14 October 2026" intro="Pulse is at v0.20.0 and pre-1.0. The last three minor releases each list breaking changes, such as renamed tools and result fields, so pin the image tag you run. The public playground runs the same version.">
+<PageSection eyebrow="Status" title="Where Pulse stands on 16 October 2026" intro="Pulse is at v0.21.0 and pre-1.0. The last three minor releases each list breaking changes, such as renamed packages, tools and result fields, so pin the image tag you run. The public playground runs the same version.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 

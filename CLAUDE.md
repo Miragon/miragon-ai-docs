@@ -20,9 +20,10 @@ only: docs and getting started live in each tool's repo, as a VitePress site in 
   `src/content/tools/pulse.mdx`, its docs are the VitePress site in `docs/` of Miragon/pulse
   (https://miragon.github.io/pulse/). Say "Pulse" in prose and keep the technical identifiers exact
   (repo, starter Miragon/pulse-starter, Docker image, npm packages, MCP client key `pulse`,
-  playground host pulse-playground.miragon.ai, tool names). Name only what is published: until
-  0.21.0 is out, the image and the packages are `miragon/miragon-ai-server` and `@miragon-ai/*` at
-  0.20.0. The skill's identifier table has both names.
+  playground host pulse-playground.miragon.ai, tool names). Name only what is published: since
+  0.21.0 (2026-10-16) the image is `ghcr.io/miragon/pulse-server` and the packages are
+  `@miragon/pulse-*`; the Docker Hub image `miragon/miragon-ai-server` and the deprecated
+  `@miragon-ai/*` packages stay frozen at 0.20.0. The skill's identifier table has both names.
 - Every tool page is a landing page (an entry of the `tools` collection, no `layout: home`: eyebrow,
   hero with the tool's real artefact, then a short body). Its Get started band links to the place
   in the tool's docs site that holds the commands. The skill describes the pattern and its truth rule
