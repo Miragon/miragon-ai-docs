@@ -1,0 +1,222 @@
+---
+title: bpmn-to-code
+description: bpmn-to-code is a Gradle and Maven plugin that generates typed constants from your BPMN models, so a topic, job type or message renamed in the model breaks your build instead of a running process.
+eyebrow: { phase: Implement, link: /implement/ }
+hero:
+  name: bpmn-to-code
+  text: A rename in the model breaks the build, not the running process.
+  tagline: A Gradle and Maven plugin that turns the element ids, topics, job types and messages of your BPMN models into Kotlin or Java constants, for Camunda 7, CIB seven, Operaton and Camunda 8.
+  actions:
+    - theme: brand
+      text: Get started
+      link: https://miragon.github.io/bpmn-to-code/getting-started/gradle
+    - theme: alt
+      text: GitHub
+      link: https://github.com/Miragon/bpmn-to-code
+    - theme: alt
+      text: Talk to us
+      link: /#contact
+artefact:
+  type: terminal
+  title: bpmn-to-code 6.5.0 · Gradle
+  lines:
+    - { cmd: "grep -n ORDER_BIKE src/main/kotlin/OrderBikeWorker.kt" }
+    - { out: "9:@ExternalTaskSubscription(ServiceTasks.MIRAVELO_ORDER_BIKE)" }
+    - { cmd: "./gradlew build" }
+    - { out: "> Task :generateBpmnModelApi" }
+    - { out: "  Generated: bikeLeasing (from bike-leasing.bpmn)" }
+    - { out: "> Task :compileKotlin" }
+    - { out: "BUILD SUCCESSFUL in 972ms", tone: ok }
+    - { note: "in the model, the topic becomes miravelo.placeBikeOrder" }
+    - { cmd: "./gradlew build" }
+    - { out: "> Task :compileKotlin FAILED", tone: err }
+    - { out: "e: file:///private/tmp/miravelo/src/main/kotlin/OrderBikeWorker.kt:9:40 Unresolved reference 'MIRAVELO_ORDER_BIKE'.", tone: err }
+    - { out: "BUILD FAILED in 902ms", tone: err }
+compare:
+  before:
+    title: Today
+    items:
+      - Workers carry their topic or job type as a string copied from the modeler
+      - A topic renamed in the model still compiles, and the instance waits for a worker that never comes
+      - Process tests type element ids by hand and fail only when they run
+      - A service task without a topic shows up when the engine rejects the deployment
+  after:
+    title: With bpmn-to-code
+    items:
+      - Workers reference a generated constant for each topic and job type
+      - The next build after the rename names every worker that still uses the old constant
+      - A ProcessPath built from the generated flow nodes stops compiling when the model no longer has that path
+      - Generation stops on a service task without implementation, a message without a name or a timer without a definition
+steps:
+  - title: Add the plugin
+    text: Apply the Gradle plugin or bind the Maven goal, and set the engine, the output language and the package.
+  - title: Generate
+    text: generateBpmnModelApi checks every model against the built-in rules, then writes one ProcessApi object per BPMN file and shared objects such as ServiceTasks, Messages and Errors.
+  - title: Reference
+    text: Workers, process adapters and process tests use the constants and the typed FlowNodes instead of strings.
+  - title: Rebuild
+    text: After a change to the model, the next build regenerates the API, and the compiler points at every line that no longer fits.
+result:
+  - icon: shield
+    title: Validation before generation
+    text: Built-in rules stop the run on an error and write nothing. The testing library bpmn-to-code-testing adds rules of your own, such as your modelling conventions.
+  - icon: route
+    title: Process paths that compile
+    text: ProcessPath walks a route through the generated flow nodes and hands its ids to the flow assertion of your test library.
+  - icon: package
+    title: No engine dependency
+    text: The generated code is plain constants and objects. Kotlin and Java need only bpmn-to-code-runtime, which the Gradle plugin adds for you.
+  - icon: refresh
+    title: Same model, same code
+    text: The output depends only on the BPMN files and the configuration, so a CI job can regenerate and fail when committed code is out of date.
+  - icon: code
+    title: Kotlin, Java or C#
+    text: Kotlin and Java use the small runtime library. C# output is experimental and carries its types in each file.
+  - icon: globe
+    title: Without a build
+    text: The web app takes up to three BPMN files in the browser, and the Docker image miragon/bpmn-to-code-web runs it on your own infrastructure.
+skills:
+  - icon: wrench
+    eyebrow: Setup
+    title: Plugin and migration
+    text: setup-bpmn-to-code detects build tool, engine, language and BPMN files and configures the plugin. migrate-to-bpmn-to-code-apis replaces hardcoded strings with the generated constants.
+  - icon: code
+    eyebrow: Engine code
+    title: One element at a time
+    text: create-worker writes the handler for one service task and create-process-adapter one call to the engine, each with a test skill. test-process runs a scenario and asserts its ProcessPath.
+  - icon: check-circle
+    eyebrow: Style guide
+    title: Your rules as tests
+    text: generate-rule-to-enforce-bpmn-styleguide turns one rule of your BPMN_STYLE_GUIDE.md into a validation rule for the testing library.
+  - icon: search
+    eyebrow: Review
+    title: process-reviewer
+    text: A subagent that checks one process against its code, from one handler per job type to a process test per branch. It reports and changes nothing.
+status:
+  - icon: warning
+    title: Agent Skills in beta
+    text: Skill names and instructions may still change.
+  - icon: terminal
+    title: Newer parts are experimental
+    text: The command-line tool (new in 6.5.0), the validate task and C# output may change in a minor release.
+  - icon: file
+    title: Process JSON is deprecated
+    text: The compact JSON view of each process goes away in 7.0.
+  - icon: code
+    title: Declared variables only
+    text: A variable that only occurs inside an expression, such as a gateway condition, gets no constant. The model is the contract for its variables.
+  - icon: plug
+    title: Build time only
+    text: bpmn-to-code neither deploys nor runs a model. On your dev engine, the Skills and operate do that.
+  - icon: users
+    title: The business logic is yours
+    text: The skills write a handler and its test. The use case the handler calls stays your team's code.
+proof:
+  - icon: github
+    title: Miragon/bpmn-to-code
+    text: The source under the MIT licence, with the README and the changelog.
+    link: https://github.com/Miragon/bpmn-to-code
+  - icon: package
+    title: Gradle Plugin Portal
+    text: The plugin io.miragon.bpmn-to-code-gradle, version 6.5.0.
+    link: https://plugins.gradle.org/plugin/io.miragon.bpmn-to-code-gradle
+  - icon: package
+    title: Maven Central
+    text: The Maven plugin io.miragon:bpmn-to-code-maven and the runtime library, version 6.5.0.
+    link: https://central.sonatype.com/artifact/io.miragon/bpmn-to-code-maven
+  - icon: globe
+    title: Web app
+    text: Generate from your own BPMN files in the browser, without an install.
+    link: https://bpmn-to-code.miragon.io/static/index.html
+  - icon: play
+    title: Drift in a worker
+    text: A clip of a topic string that drifts from the model, and of the build that points at the worker once it uses the constant.
+    link: https://github.com/Miragon/bpmn-to-code/blob/main/docs/public/drift-in-worker.gif
+  - icon: tree
+    title: Blueprint on CIB seven
+    text: A bike-leasing service whose external-task workers and tests use the generated API, in Kotlin with Gradle and in Java with Maven.
+    link: https://github.com/miragon-blueprints/cibseven-remote-example
+fits:
+  - eyebrow: Phase
+    title: Implement
+    text: Where your team makes the model run. bpmn-to-code ties the code around it to the model.
+    link: /implement/
+  - eyebrow: Same phase
+    title: Skills
+    text: The bpmn skill sets topics and job types by element id, and bpmn-to-code turns them into constants.
+    link: /tools/skills/
+  - eyebrow: Reads models with
+    title: bpmn-cli
+    text: The Agent Skills read models through bpmn-cli, and the bpmn-to-code plugin installs the bpmn-cli plugin with it.
+    link: /tools/bpmn-cli/
+  - eyebrow: From Design
+    title: designIQ
+    text: Your team models in designIQ and releases by pull request. The merged .bpmn file is what bpmn-to-code reads.
+    link: /tools/design-iq/
+  - eyebrow: Deploy and test
+    title: operate
+    text: Deploys the model to Camunda 7, CIB seven or Operaton and runs a test instance.
+    link: /tools/operate/
+  - eyebrow: Next phase
+    title: Execute
+    text: Your workers run against the engine, and Pulse and operate show what is stuck.
+    link: /execute/
+docs:
+  - icon: list
+    title: Generated API
+    text: What the generated files contain and how to use them.
+    link: https://miragon.github.io/bpmn-to-code/guide/generated-api
+  - icon: route
+    title: Process paths
+    text: Typed routes through the model for your process tests.
+    link: https://miragon.github.io/bpmn-to-code/guide/process-path
+  - icon: shield
+    title: Validation
+    text: The built-in rules, the validate task and the testing library.
+    link: https://miragon.github.io/bpmn-to-code/validate/
+  - icon: book
+    title: All docs
+    text: Configuration, engines, the web app and the changelog with its migration guides.
+    link: https://miragon.github.io/bpmn-to-code/
+---
+
+<PageSection tone="tint" eyebrow="The problem" title="Nothing tells your code when the model changes" intro="Workers, message correlation and process tests carry names from the model as strings: topics, job types, message names, element ids. When someone renames one in the modeler, the code still compiles. You find out at runtime, when a worker stops picking up its tasks or a message finds no instance.">
+  <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
+</PageSection>
+
+<PageSection align="center" eyebrow="How it works" title="From the model to constants, on every build" intro="One task reads a set of BPMN files for one engine, one language and one package. A project that mixes engines registers one task per group.">
+  <StepList items={frontmatter.steps} />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="What you get" title="Generated code your compiler checks" intro="The plugin writes ordinary source files into the folder you choose. Generate into the build directory to keep them out of Git, or commit them and let CI check that they are current.">
+  <FeatureList items={frontmatter.result} columns={3} />
+</PageSection>
+
+<PageSection eyebrow="For your coding agent" title="Your agent writes against the generated API" intro="A Claude Code plugin with eight skills and one subagent, in beta. Each skill does one thing for one element, in Kotlin or Java: on Camunda 8, on Camunda 7, CIB seven or Operaton with delegates or external tasks, or through the process-engine-api.">
+  <CardGrid items={frontmatter.skills} columns={2} />
+</PageSection>
+
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Add the plugin to your build" intro="You need JDK 21 or newer and Gradle or Maven. The bpmn-to-code docs walk through both plugins and the install of the Agent Skills.">
+  <div class="pills">
+    <PillButton href="https://miragon.github.io/bpmn-to-code/getting-started/gradle" label="Gradle" />
+    <PillButton href="https://miragon.github.io/bpmn-to-code/getting-started/maven" label="Maven" />
+  </div>
+</PageSection>
+
+<PageSection eyebrow="Status" title="Where bpmn-to-code stands on 18 October 2026" intro="bpmn-to-code is at 6.5.0, released on 18 October 2026 to the Gradle Plugin Portal and Maven Central. The repository is public under the MIT licence. Major versions bring breaking changes, and the docs have a migration guide for each.">
+  <FeatureList items={frontmatter.status} columns={3} />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public">
+  <CardGrid items={frontmatter.proof} />
+</PageSection>
+
+<PageSection eyebrow="Where it fits" title="bpmn-to-code in the lifecycle" intro="bpmn-to-code reads the models your team released in Design and made deployable in Implement. What it generates lives in your codebase and runs with your workers in Execute.">
+  <CardGrid items={frontmatter.fits} />
+</PageSection>
+
+<PageSection tone="tint" eyebrow="Docs" title="The full reference is in the docs">
+  <CardGrid items={frontmatter.docs} columns={4} />
+</PageSection>
+
+<CtaBox title="Tie your process code to your models." text="Tell us which engines and build tools you use and how your workers find their topics today. Together we check where bpmn-to-code and its skills fit into your codebase." note="A 30-minute first call." />

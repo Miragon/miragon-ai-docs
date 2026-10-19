@@ -58,7 +58,7 @@ phases:
     link: /design/
   - eyebrow: Phase 3 · loop
     title: Implement
-    text: A missing historyTimeToLive shows up only when the engine rejects the deployment. With the Skills for bpmn-cli and operate, your agent in Claude Code sets the engine details and tests on a dev engine. The Solution templates pulse-starter and mcp-toolkit-starter start your own MCP server.
+    text: A missing historyTimeToLive shows up only when the engine rejects the deployment. With the Skills for bpmn-cli and operate, your agent in Claude Code sets the engine details and tests on a dev engine. bpmn-to-code turns topics and job types into constants, so a rename in the model breaks the build. The Solution templates pulse-starter and mcp-toolkit-starter start your own MCP server.
     link: /implement/
   - eyebrow: Phase 4 · loop
     title: Execute
@@ -82,7 +82,7 @@ human:
     text: Your team models the business flow and signs off by merge.
   - eyebrow: Implement
     title: The agent sets engine attributes and tests on the dev engine
-    text: Your team writes the worker code and reviews.
+    text: Your team owns the worker code and reviews.
   - eyebrow: Execute
     title: The agent reads the state and drafts tickets
     text: Your team decides whether the agent gets write access, and files the ticket.
@@ -101,7 +101,7 @@ why:
     text: You run Pulse yourself. Without OAuth it starts read-only, and it needs neither a migration nor access to the engine database.
   - icon: github
     title: Public under the MIT licence
-    text: designIQ, bpmn-cli, operate, Pulse and the pulse-starter template are public on GitHub. For now we show analyzr as a read-only demo.
+    text: designIQ, bpmn-cli, bpmn-to-code, operate, Pulse and the pulse-starter template are public on GitHub. For now we show analyzr as a read-only demo.
   - icon: check-circle
     title: Tested against three engines
     text: On every change, operate's CI runs its integration tests against Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0.
@@ -116,6 +116,11 @@ proof:
     title: bpmn-cli
     text: The repo Miragon/bpmn-cli, with the Skills plugin for it.
     link: https://github.com/Miragon/bpmn-cli
+  - icon: github
+    eyebrow: Version 6.5.0
+    title: bpmn-to-code
+    text: The repo Miragon/bpmn-to-code, with the Gradle and Maven plugins.
+    link: https://github.com/Miragon/bpmn-to-code
   - icon: github
     eyebrow: Version 0.7.0
     title: operate
@@ -157,8 +162,8 @@ limits:
     title: No tool for Optimize
     text: The analytics module of Pulse belongs to Execute, looks back 30 days at most and knows neither waiting times nor variants.
   - icon: code
-    title: No generated worker code
-    text: The Skills make a model deployable, but no tool writes the worker or delegate code behind it. Your team does.
+    title: No finished worker code
+    text: bpmn-to-code generates the constants, and its skills (beta) write a worker per service task. The use case the worker calls is your team's code.
   - icon: warning
     title: analyzr is early alpha
     text: Version 0.1.0-alpha.0, in a private repository, with an interface in German only.
@@ -196,8 +201,8 @@ artefact: { type: orbit }
   <FeatureList items={frontmatter.why} />
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Open it before you talk to us" intro="Versions as of 14 October 2026, Pulse's as of 16 October. Every link is public and needs no login.">
-  <CardGrid items={frontmatter.proof} columns={4} />
+<PageSection eyebrow="Proof you can open" title="Open it before you talk to us" intro="Versions as of 14 October 2026, Pulse's as of 16 October and bpmn-to-code's as of 18 October. Every link is public and needs no login.">
+  <CardGrid items={frontmatter.proof} columns={3} />
 </PageSection>
 
 <PageSection tone="tint" eyebrow="What we don't promise" title="Where the tools stop today">

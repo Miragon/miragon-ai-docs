@@ -68,8 +68,8 @@ roles:
     text: Decides the topics, job types and error codes, writes the worker or delegate code they call and reviews the change before the model goes on to Execute.
 status:
   - icon: code
-    title: Worker code is yours
-    text: No skill writes the worker or delegate code that the topics and job types point to.
+    title: No worker code
+    text: Neither plugin writes the worker or delegate code that the topics and job types point to. The Agent Skills of bpmn-to-code (beta) do.
   - icon: server
     title: Camunda 8 stops at validation
     text: Camunda 8 gets modelling and validation only. No skill deploys to or runs on it.
@@ -127,10 +127,10 @@ fits:
     title: operate
     text: The CLI behind the operate skill shows what runs and what is stuck on your engine.
     link: /tools/operate/
-  - eyebrow: In Execute
-    title: Pulse
-    text: Pulse shows grouped incidents across your engines in the chat and drafts the ticket.
-    link: /tools/pulse/
+  - eyebrow: Same phase
+    title: bpmn-to-code
+    text: Turns the topics and job types the bpmn skill sets into constants, and its skills write the workers against them.
+    link: /tools/bpmn-to-code/
   - eyebrow: Your own systems
     title: Solution templates
     text: Start there if your agent also needs your own systems next to the engine.

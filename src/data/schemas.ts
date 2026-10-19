@@ -139,7 +139,7 @@ export const toolSchema = z.strictObject({
   sources: z.array(card).optional(), // analyzr: CardGrid
   landscape: z.array(card).optional(), // analyzr: CardGrid
   roles: z.array(card).optional(), // analyzr: FeatureList, skills: CardGrid (both card-shaped)
-  result: z.array(feature).optional(), // bpmn-cli: FeatureList
+  result: z.array(feature).optional(), // bpmn-cli, bpmn-to-code: FeatureList
   agent: z.array(feature).optional(), // design-iq: FeatureList
   notations: z.array(card).optional(), // design-iq: CardGrid
   commands: z.array(card).optional(), // operate: CardGrid

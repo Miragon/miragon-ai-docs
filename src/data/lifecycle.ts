@@ -85,6 +85,13 @@ export const PHASES: Phase[] = [
         start: "/tools/skills/#get-started",
       },
       {
+        name: "bpmn-to-code",
+        slug: "bpmn-to-code",
+        link: "/tools/bpmn-to-code/",
+        job: "Typed constants from the model",
+        start: "https://miragon.github.io/bpmn-to-code/getting-started/gradle",
+      },
+      {
         name: "Solution templates",
         slug: "solution-templates",
         link: "/tools/solution-templates/",
