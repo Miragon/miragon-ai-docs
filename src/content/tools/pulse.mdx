@@ -79,25 +79,25 @@ proof:
     link: https://github.com/Miragon/pulse
   - icon: container
     title: Docker image
-    text: ghcr.io/miragon/pulse-server for amd64 and arm64, tag 0.21.0, pullable without login.
+    text: ghcr.io/miragon/pulse-server for amd64 and arm64, tag 0.22.0, pullable without login.
     link: https://github.com/Miragon/pulse/pkgs/container/pulse-server
   - icon: package
     title: Metrics plugin
-    text: "io.miragon.mcp:cibseven-history-metrics 0.21.0 on Maven Central."
+    text: "io.miragon.mcp:cibseven-history-metrics 0.22.0 on Maven Central."
     link: https://repo1.maven.org/maven2/io/miragon/mcp/cibseven-history-metrics/
   - icon: boxes
     title: npm packages
-    text: "@miragon/pulse-camunda7-connector and @miragon/pulse-analytics-connector, both at 0.21.0."
+    text: "@miragon/pulse-camunda7-connector and @miragon/pulse-analytics-connector, both at 0.22.0."
     link: https://www.npmjs.com/package/@miragon/pulse-camunda7-connector
 fits:
   - eyebrow: Phase
     title: Execute
     text: Pulse reads the models that already run on the engine and sends ticket drafts back to Implement.
     link: /execute/
-  - eyebrow: Same engines
-    title: operate
+  - eyebrow: Same repo
+    title: Pulse CLI
     text: The CLI without a server, for developers, coding agents and CI.
-    link: /tools/operate/
+    link: /tools/pulse-cli/
   - eyebrow: Your own systems
     title: Solution templates
     text: The template pulse-starter mounts Pulse's modules next to your own.
@@ -145,7 +145,7 @@ Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the defa
   <PillButton href="https://miragon.github.io/pulse/getting-started#run-it-on-your-own-engine" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where Pulse stands on 16 October 2026" intro="Pulse is at v0.21.0 and pre-1.0. The last three minor releases each list breaking changes, such as renamed packages, tools and result fields, so pin the image tag you run. The public playground runs the same version.">
+<PageSection eyebrow="Status" title="Where Pulse stands on 26 October 2026" intro="Pulse is at v0.22.0 (released 25 October 2026) and pre-1.0. The last three minor releases each list breaking changes, such as renamed packages, tools and result fields, and since 0.22.0 an engine without a flavor counts as Camunda 7, so pin the image tag you run. The public playground still runs 0.21.0.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
@@ -160,7 +160,7 @@ Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the defa
 <PageSection tone="tint" eyebrow="Docs" title="The full reference is in the docs">
   <CardGrid items={frontmatter.docs} columns={4} />
 
-The [README](https://github.com/Miragon/pulse#readme) is the full reference for every tool, toolset and environment variable.
+The [Reference](https://miragon.github.io/pulse/reference) lists every tool, the toolsets and the common settings, and Operations has every environment variable.
 
 </PageSection>
 

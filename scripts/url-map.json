@@ -121,7 +121,22 @@
   },
   {
     "old": "/tools/operate",
-    "new": "/tools/operate/",
+    "new": "/tools/pulse-cli/",
+    "why": "operate became Pulse CLI"
+  },
+  {
+    "old": "/tools/operate/",
+    "new": "/tools/pulse-cli/",
+    "why": "operate became Pulse CLI"
+  },
+  {
+    "old": "/tools/operate/index.html",
+    "new": "/tools/pulse-cli/",
+    "why": "operate became Pulse CLI, its old file"
+  },
+  {
+    "old": "/tools/pulse-cli",
+    "new": "/tools/pulse-cli/",
     "why": "tool page, same file"
   },
   {
@@ -166,7 +181,7 @@
   },
   {
     "old": "/tools/operate#get-started",
-    "new": "/tools/operate/#get-started",
+    "new": "/tools/pulse-cli/#get-started",
     "why": "Get started band, now a link to the tool's repo"
   },
   {

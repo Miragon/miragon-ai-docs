@@ -30,7 +30,7 @@ export const NAV: NavItem[] = [
     groups: [
       {
         label: "For your coding agent",
-        items: [tool("bpmn-cli"), tool("operate"), tool("Skills")],
+        items: [tool("bpmn-cli"), tool("Pulse CLI"), tool("Skills")],
       },
       { label: "Build your own", items: [tool("bpmn-to-code"), tool("Solution templates")] },
       { label: "Early access", items: [tool("analyzr")] },

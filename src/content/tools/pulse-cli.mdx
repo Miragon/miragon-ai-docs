@@ -1,33 +1,33 @@
 ---
-title: operate
-description: operate is a command line tool for Camunda 7, CIB seven and Operaton that shows what is stuck on your engine in one command and names the next one to run.
+title: Pulse CLI
+description: Pulse CLI is a command line tool for Camunda 7, CIB seven and Operaton that shows what is stuck on your engine in one command and names the next one to run.
 eyebrow: { phase: Execute, link: /execute/ }
 hero:
-  name: operate
+  name: Pulse CLI
   text: What is stuck on your engine, in one command.
-  tagline: operate is a command line tool for Camunda 7, CIB seven and Operaton. It groups incidents by root cause and names the next command, whether you, your coding agent or a CI job runs it.
+  tagline: Pulse CLI is a command line tool for Camunda 7, CIB seven and Operaton. It groups incidents by root cause and names the next command, whether you, your coding agent or a CI job runs it.
   actions:
     - theme: brand
       text: Get started
-      link: https://miragon.github.io/operate/getting-started
+      link: https://miragon.github.io/pulse/cli/getting-started
     - theme: alt
       text: GitHub
-      link: https://github.com/Miragon/operate
+      link: https://github.com/Miragon/pulse/tree/main/apps/cli
     - theme: alt
       text: Talk to us
       link: /#contact
 artefact:
   type: terminal
-  title: operate 0.9.0 · local Operaton 2.1.5
+  title: pulse-cli 0.22.0 · local Operaton 2.1.5
   lines:
     - { note: "3 orders failed at the same service task" }
-    - { cmd: "operate status" }
-    - { out: "Engine  http://localhost:8080/engine-rest (version 2.1.5, 28ms)", tone: dim }
+    - { cmd: "pulse-cli status" }
+    - { out: "Engine  http://localhost:8080/engine-rest (version 2.1.5, 25ms)", tone: dim }
     - { out: "Status  warning", tone: warn }
     - { out: "" }
     - { out: "Findings:" }
     - { out: "  warning  3 failedJob incidents at order/charge: ClassNotFoundException: com.example.payment.ChargeCardDelegate", tone: warn }
-    - { out: "           next: operate retry --process-definition-key order --activity-id charge --dry-run" }
+    - { out: "           next: pulse-cli retry --process-definition-key order --activity-id charge --dry-run" }
     - { out: "" }
     - { out: "Definitions:" }
     - { out: "KEY            VERSIONS  INSTANCES  INCIDENTS  FAILED JOBS", tone: dim }
@@ -42,50 +42,50 @@ compare:
       - Agents guessing endpoints they don't know
       - No single call that tells CI if the engine is healthy
   after:
-    title: With operate
+    title: With Pulse CLI
     items:
       - One command for the engine, one for a single instance
       - The next command under every finding, ready to run
       - Agents looking commands up in the CLI itself
-      - operate status --fail-on fails the CI job with exit code 9
+      - pulse-cli status --fail-on fails the CI job with exit code 9
 steps:
   - title: Connect
-    text: operate talks to the engine's REST API. A profile holds the URL and the Basic auth, OAuth or bearer token settings, and a project file (.operate.json) shares the profiles with your team.
+    text: Pulse CLI talks to the engine's REST API. A profile holds the URL and the Basic auth, OAuth or bearer token settings, and a project file (.pulse-cli.json) shares the profiles with your team.
   - title: Triage
-    text: operate status reads the engine in parallel requests and groups root incidents by activity and message, each with a root-cause line from the stack trace.
+    text: pulse-cli status reads the engine in parallel requests and groups root incidents by activity and message, each with a root-cause line from the stack trace.
   - title: Inspect
-    text: operate inspect shows where one instance waits and why, across called sub-instances, with its incidents and variables.
+    text: pulse-cli inspect shows where one instance waits and why, across called sub-instances, with its incidents and variables.
   - title: Act
     text: Every finding names the next command to run, and --dry-run previews any write first.
 commands:
   - icon: activity
     eyebrow: Read
-    title: operate status
+    title: pulse-cli status
     text: Engine triage. Root incidents by root cause, overdue jobs, external task topics with waiting tasks or expired locks, and failed batches.
   - icon: search
     eyebrow: Read
-    title: operate inspect
+    title: pulse-cli inspect
     text: Where one instance waits and why, across called sub-instances. Select it by id, business key or the latest instance of a definition.
   - icon: clock
     eyebrow: Read
-    title: operate wait
+    title: pulse-cli wait
     text: Replaces sleep and poll loops. An incident ends the wait at once, with exit code 9.
   - icon: play
     eyebrow: Write
-    title: operate advance
+    title: pulse-cli advance
     text: Completes the user task, external task, message or timer the instance waits for. You name the instance, for example by business key, not the task.
   - icon: refresh
     eyebrow: Write
-    title: operate retry
+    title: pulse-cli retry
     text: Sets the retries behind open incidents. After you deploy a fix, --now runs the jobs again at once.
   - icon: package
     eyebrow: Write
-    title: operate deploy
+    title: pulse-cli deploy
     text: Deploys only the changed .bpmn, .dmn and .form files and can start an instance right away.
 guards:
   - icon: book
     title: Commands an agent can look up
-    text: operate guide, operate commands --search and operate describe tell an agent which commands exist and what they take.
+    text: pulse-cli guide, pulse-cli commands --search and pulse-cli describe tell an agent which commands exist and what they take.
   - icon: code
     title: JSON in a pipe, a table on a terminal
     text: Piped output is JSON that a script or an agent reads as it is. An error is one JSON line with a hint and a stable exit code.
@@ -101,7 +101,7 @@ status:
     text: The macOS binaries are signed ad hoc and not notarized, and the Windows binary has no Authenticode signature, so your system may block or warn about a copy you download in a browser.
   - icon: ban
     title: No Camunda 8
-    text: operate does not support Camunda 8 and is unrelated to Operate, the Camunda 8 web app.
+    text: Pulse CLI does not support Camunda 8, whose API is a different one.
   - icon: server
     title: No hosted playground
     text: You try it against a local engine, such as the Operaton container above.
@@ -111,44 +111,44 @@ status:
 proof:
   - icon: play
     title: Demo GIF
-    text: One operate advance completes the task an order process waits at.
-    link: https://github.com/Miragon/operate/blob/main/docs/assets/demo.gif
+    text: pulse-cli status and pulse-cli inspect, recorded in a terminal.
+    link: https://github.com/Miragon/pulse/blob/main/docs/assets/cli-triage.gif
   - icon: route
     title: Quick start
     text: From an empty Operaton container to a finished instance, with a sample order.bpmn.
-    link: https://miragon.github.io/operate/quick-start
+    link: https://miragon.github.io/pulse/cli/quick-start
   - icon: terminal
     title: Workflow commands
     text: The six commands on one page, with a sample inspect view.
-    link: https://miragon.github.io/operate/workflow-commands
+    link: https://miragon.github.io/pulse/cli/workflow-commands
   - icon: boxes
     title: npm package
-    text: "@miragon/operate, latest version 0.9.0."
-    link: https://www.npmjs.com/package/@miragon/operate
+    text: "@miragon/pulse-cli, latest version 0.22.0."
+    link: https://www.npmjs.com/package/@miragon/pulse-cli
   - icon: history
     title: Releases
-    text: Every release from 0.1.0 to 0.9.0. Since 0.6.0, each one carries standalone binaries for Linux, macOS and Windows.
-    link: https://github.com/Miragon/operate/releases
+    text: Pulse's releases carry the standalone binaries for Linux, macOS and Windows since 0.22.0. operate's releases up to 0.10.0 stay in the archived repo Miragon/operate.
+    link: https://github.com/Miragon/pulse/releases
   - icon: check-circle
     title: CI on three engines
     text: Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0 on every change.
-    link: https://github.com/Miragon/operate/actions/workflows/ci.yml
+    link: https://github.com/Miragon/pulse/actions/workflows/ci.yml
 fits:
   - eyebrow: Phase
     title: Execute
-    text: operate finds what is stuck on the engine and why.
+    text: Pulse CLI finds what is stuck on the engine and why.
     link: /execute/
-  - eyebrow: Same engines
+  - eyebrow: Same repo
     title: Pulse
-    text: The MCP server from the repo Miragon/pulse, for questions in a chat. The two share no code.
+    text: The MCP server from the repo Miragon/pulse, for questions in a chat. It ships in the same release as the CLI.
     link: /tools/pulse/
   - eyebrow: In Implement
     title: Skills
-    text: The operate skill lets your coding agent deploy and run a model from bpmn-cli, designIQ or your own modeler on a dev engine.
+    text: The pulse-cli skill lets your coding agent deploy and run a model from bpmn-cli, designIQ or your own modeler on a dev engine.
     link: /tools/skills/
   - eyebrow: No tool yet
     title: Optimize
-    text: operate offers raw history queries as JSON, with no KPIs.
+    text: Pulse CLI offers raw history queries as JSON, with no KPIs.
     link: /optimize/
 ---
 
@@ -156,14 +156,14 @@ fits:
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection align="center" eyebrow="How it works" title="From the engine's state to the next command" intro="operate runs in your shell or your pipeline and speaks the Camunda 7 REST API, which Operaton and CIB seven share.">
+<PageSection align="center" eyebrow="How it works" title="From the engine's state to the next command" intro="Pulse CLI runs in your shell or your pipeline and speaks the Camunda 7 REST API, which Operaton and CIB seven share.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
 <PageSection tone="tint" eyebrow="Workflow commands" title="Six commands for the questions you ask most" intro="Each one combines several REST requests into one answer and lists the commands to run next.">
   <CardGrid items={frontmatter.commands} />
 
-Underneath, operate turns all 396 operations of the Camunda 7 REST API into commands such as `operate task list`, and `operate api` sends a raw request.
+Underneath, Pulse CLI turns all 396 operations of the Camunda 7 REST API into commands such as `pulse-cli task list`, and `pulse-cli api` sends a raw request.
 
 </PageSection>
 
@@ -171,20 +171,20 @@ Underneath, operate turns all 396 operations of the Camunda 7 REST API into comm
   <FeatureList items={frontmatter.guards} />
 </PageSection>
 
-<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Install it, then run a first process" intro="You need an engine, such as a local Operaton container, and Node.js 22.12 or later, Homebrew, the standalone binary or the container image. The operate docs have the install and a first triage.">
-  <PillButton href="https://miragon.github.io/operate/getting-started" label="Get started" />
+<PageSection tone="tint" id="get-started" eyebrow="Get started" title="Install it, then run a first process" intro="You need an engine, such as a local Operaton container, and Node.js 22.12 or later, Homebrew, the standalone binary or the container image. The Pulse CLI docs have the install and a first triage.">
+  <PillButton href="https://miragon.github.io/pulse/cli/getting-started" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where operate stands on 16 October 2026" intro="operate is at version 0.9.0, released on 16 October 2026 to npm as @miragon/operate, through Homebrew (miragon/tap/operate), as standalone binaries and as the container image ghcr.io/miragon/operate. It is pre-1.0, and 0.7.0 and 0.8.0 brought breaking changes (a token command comes only from OPERATE_TOKEN_COMMAND, and OAuth logins cached by 0.7.0 or earlier need one new operate auth login), so pin the version you run. The repository Miragon/operate is public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where Pulse CLI stands on 26 October 2026" intro="Pulse CLI is at version 0.22.0, released on 25 October 2026 to npm as @miragon/pulse-cli, through Homebrew (miragon/tap/pulse-cli), as standalone binaries and as the container image ghcr.io/miragon/pulse-cli. Up to 0.10.0 it was operate, from the repo Miragon/operate, now archived. 0.22.0 moved it into the repo Miragon/pulse, onto Pulse's version numbers and onto new names for its package, command, image, formula, variables and files; it still reads operate's variables and files, with a warning, until the first release after 31 January 2027. It is pre-1.0, so pin the version you run. The repo Miragon/pulse is public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public" intro="The session at the top of this page is operate 0.9.0 against a local operaton/operaton:2.1.5 container, with three orders whose delegate class the engine cannot load.">
+<PageSection tone="tint" eyebrow="Proof you can open" title="Everything here is public" intro="The session at the top of this page is pulse-cli 0.22.0 against a local operaton/operaton:2.1.5 container, with three orders whose delegate class the engine cannot load.">
   <CardGrid items={frontmatter.proof} />
 </PageSection>
 
-<PageSection eyebrow="Where it fits" title="operate in the lifecycle" intro="Pulse reads the same engines as a server your team runs. operate needs no server and talks to one engine per call.">
+<PageSection eyebrow="Where it fits" title="Pulse CLI in the lifecycle" intro="Pulse reads the same engines as a server your team runs. Pulse CLI needs no server and talks to one engine per call.">
   <CardGrid items={frontmatter.fits} columns={4} />
 </PageSection>
 
-<CtaBox title="Point operate at your own engines." text="Tell us which engines you run and where a health check in your pipeline would help. We go through it with you and say where operate fits today." note="A 30-minute first call." />
+<CtaBox title="Point Pulse CLI at your own engines." text="Tell us which engines you run and where a health check in your pipeline would help. We go through it with you and say where Pulse CLI fits today." note="A 30-minute first call." />

@@ -37,6 +37,17 @@
 # Miragon/pulse and served on GitHub Pages (miragon.github.io/pulse/; the
 # old path /miragon-ai/ has been a 404 since the repo's rename on
 # 2026-10-16, because GitHub Pages does not redirect).
+# operate became Pulse CLI on 2026-10-25 (Pulse 0.22.0, the repo Miragon/pulse).
+[[redirects]]
+  from = "/tools/operate/"
+  to = "/tools/pulse-cli/"
+  status = 301
+
+[[redirects]]
+  from = "/tools/operate/index.html"
+  to = "/tools/pulse-cli/"
+  status = 301
+
 [[redirects]]
   from = "/architecture"
   to = "https://miragon.github.io/pulse/architecture"

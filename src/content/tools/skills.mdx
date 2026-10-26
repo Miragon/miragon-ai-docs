@@ -18,7 +18,7 @@ hero:
       link: /#contact
 artefact:
   type: terminal
-  title: bpmn-cli 0.7.0 · operate 0.9.0
+  title: bpmn-cli 0.8.0 · pulse-cli 0.22.0
   lines:
     - { note: "asked to make payment.bpmn deployable, the bpmn skill runs" }
     - { cmd: "bpmn validate payment.bpmn --strict" }
@@ -29,11 +29,11 @@ artefact:
     - { cmd: "bpmn set payment.bpmn Activity_ChargeCard camunda:topic=charge" }
     - { cmd: "bpmn validate payment.bpmn --strict" }
     - { out: "valid, 0 warning(s)", tone: ok }
-    - { note: "asked for one run on Operaton 2.1.5, the operate skill runs" }
-    - { cmd: "operate deploy payment.bpmn --start --business-key B-1" }
+    - { note: "asked for one run on Operaton 2.1.5, the pulse-cli skill runs" }
+    - { cmd: "pulse-cli deploy payment.bpmn --start --business-key B-1" }
     - { out: "payment.bpmn  deployed  process  Process_Payment  1" }
-    - { cmd: "operate advance --business-key B-1" }
-    - { cmd: "operate wait --business-key B-1 --until ended" }
+    - { cmd: "pulse-cli advance --business-key B-1" }
+    - { cmd: "pulse-cli wait --business-key B-1 --until ended" }
     - { out: "State             COMPLETED", tone: ok }
 compare:
   before:
@@ -47,7 +47,7 @@ compare:
     items:
       - The agent changes elements by id, and your layout stays
       - bpmn validate --strict names each blocker and the command that fixes it
-      - operate runs one instance by business key and checks that it ends
+      - pulse-cli runs one instance by business key and checks that it ends
 steps:
   - title: Ask
     text: You ask in Claude Code in plain words, for example "make payment.bpmn deployable on Camunda 7, charging the card is an external task".
@@ -56,7 +56,7 @@ steps:
   - title: Validate
     text: bpmn validate --strict flags what the engine would refuse and names the command that fixes each finding.
   - title: Run once
-    text: The operate skill deploys the file, starts one instance, completes what it waits for and checks that it ends. It finds the instance by business key, so the agent copies no ids.
+    text: The pulse-cli skill deploys the file, starts one instance, completes what it waits for and checks that it ends. It finds the instance by business key, so the agent copies no ids.
 roles:
   - icon: terminal
     eyebrow: The agent
@@ -81,7 +81,7 @@ status:
     text: We have not published eval results for either plugin yet.
   - icon: terminal
     title: Plugins for Claude Code
-    text: Other coding agents can use both CLIs without a skill, through the guides the CLIs print (bpmn guide, operate guide).
+    text: Other coding agents can use both CLIs without a skill, through the guides the CLIs print (bpmn guide, pulse-cli guide).
   - icon: play
     title: No recorded demo
     text: A recorded demo of both skills on a real process application does not exist yet.
@@ -99,17 +99,17 @@ proof:
     text: What the skill does, how you install it and how it stays in step with the CLI version.
     link: https://github.com/Miragon/bpmn-cli/tree/main/plugins/bpmn-cli
   - icon: file-code
-    title: The operate skill
+    title: The pulse-cli skill
     text: Its setup, workflow commands and safety rules.
-    link: https://github.com/Miragon/operate/blob/main/skills/operate/SKILL.md
+    link: https://github.com/Miragon/pulse/blob/main/apps/cli/skills/pulse-cli/SKILL.md
   - icon: package
     title: "@miragon/bpmn-cli"
-    text: The CLI behind the bpmn skill, 0.7.0 on npm.
+    text: The CLI behind the bpmn skill, 0.8.0 on npm.
     link: https://www.npmjs.com/package/@miragon/bpmn-cli
   - icon: package
-    title: "@miragon/operate"
-    text: The CLI behind the operate skill, 0.9.0 on npm.
-    link: https://www.npmjs.com/package/@miragon/operate
+    title: "@miragon/pulse-cli"
+    text: The CLI behind the pulse-cli skill, 0.22.0 on npm.
+    link: https://www.npmjs.com/package/@miragon/pulse-cli
 fits:
   - eyebrow: Phase
     title: Implement
@@ -124,9 +124,9 @@ fits:
     text: The CLI behind the bpmn skill. In Design it creates and changes models by command.
     link: /tools/bpmn-cli/
   - eyebrow: In Execute
-    title: operate
-    text: The CLI behind the operate skill shows what runs and what is stuck on your engine.
-    link: /tools/operate/
+    title: Pulse CLI
+    text: The CLI behind the pulse-cli skill shows what runs and what is stuck on your engine.
+    link: /tools/pulse-cli/
   - eyebrow: Same phase
     title: bpmn-to-code
     text: Turns the topics and job types the bpmn skill sets into constants, and its skills write the workers against them.
@@ -141,14 +141,14 @@ fits:
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection align="center" eyebrow="How it works" title="Your agent changes the model by command and runs it once" intro="Validation covers Camunda 7, CIB seven and Operaton (W_C7_DEPLOY_* findings) and Camunda 8 (W_C8_DEPLOY_*). If the test instance runs into an incident, operate wait fails with exit code 9 and still shows where it stopped.">
+<PageSection align="center" eyebrow="How it works" title="Your agent changes the model by command and runs it once" intro="Validation covers Camunda 7, CIB seven and Operaton (W_C7_DEPLOY_* findings) and Camunda 8 (W_C8_DEPLOY_*). If the test instance runs into an incident, pulse-cli wait fails with exit code 9 and still shows where it stopped.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
 <PageSection tone="tint" id="get-started" eyebrow="Get started" title="Install both plugins in Claude Code" intro="Each plugin installs from the marketplace in its tool's repo, and each repo describes the install.">
   <div class="pills">
     <PillButton href="https://miragon.github.io/bpmn-cli/claude-code-plugin" label="The bpmn-cli plugin" />
-    <PillButton href="https://miragon.github.io/operate/agents#claude-code-plugin" label="The operate plugin" />
+    <PillButton href="https://miragon.github.io/pulse/cli/agents#claude-code-plugin" label="The pulse-cli plugin" />
   </div>
 </PageSection>
 
@@ -164,20 +164,20 @@ Commit both marketplaces and plugins to your repo's `.claude/settings.json`, so 
 {
   "extraKnownMarketplaces": {
     "miragon-bpmn": { "source": { "source": "github", "repo": "Miragon/bpmn-cli" } },
-    "miragon": { "source": { "source": "github", "repo": "Miragon/operate" } }
+    "pulse": { "source": { "source": "github", "repo": "Miragon/pulse" } }
   },
   "enabledPlugins": {
     "bpmn-cli@miragon-bpmn": true,
-    "operate@miragon": true
+    "pulse-cli@pulse": true
   }
 }
 ```
 
-Claude Code does not update these plugins on its own. After a release, refresh the marketplace (`miragon-bpmn` or `miragon`) and update the plugin, or turn on auto-update for both marketplaces under `/plugin` > Marketplaces. The details are in the docs of the [bpmn-cli plugin](https://miragon.github.io/bpmn-cli/claude-code-plugin#update) and of the [operate plugin](https://miragon.github.io/operate/agents#claude-code-plugin).
+Claude Code does not update these plugins on its own. After a release, refresh the marketplace (`miragon-bpmn` or `pulse`) and update the plugin, or turn on auto-update for both marketplaces under `/plugin` > Marketplaces. The details are in the docs of the [bpmn-cli plugin](https://miragon.github.io/bpmn-cli/claude-code-plugin#update) and of the [pulse-cli plugin](https://miragon.github.io/pulse/cli/agents#claude-code-plugin).
 
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where the skills stand on 16 October 2026" intro="bpmn-cli 0.7.0 (released 2026-10-14) and operate 0.9.0 (released 2026-10-16) are public under the MIT licence, and each plugin carries the version of its CLI on npm. Both are pre-1.0, and both have shipped breaking changes in minor releases.">
+<PageSection eyebrow="Status" title="Where the skills stand on 26 October 2026" intro="bpmn-cli 0.8.0 (released 2026-10-21) and pulse-cli 0.22.0 (released 2026-10-25) are public under the MIT licence, and each plugin carries the version of its CLI on npm. Both are pre-1.0, and both have shipped breaking changes in minor releases.">
   <FeatureList items={frontmatter.status} columns={3} />
 </PageSection>
 

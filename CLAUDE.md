@@ -24,6 +24,11 @@ only: docs and getting started live in each tool's repo, as a VitePress site in 
   0.21.0 (2026-10-16) the image is `ghcr.io/miragon/pulse-server` and the packages are
   `@miragon/pulse-*`; the Docker Hub image `miragon/miragon-ai-server` and the deprecated
   `@miragon-ai/*` packages stay frozen at 0.20.0. The skill's identifier table has both names.
+- Pulse CLI was operate until 0.10.0 (Miragon/operate, now archived). Since Pulse 0.22.0
+  (2026-10-25) it ships from Miragon/pulse (`apps/cli`, docs https://miragon.github.io/pulse/cli/)
+  as `@miragon/pulse-cli`, command `pulse-cli`, plugin `pulse-cli@pulse`. Its page is
+  `src/content/tools/pulse-cli.mdx`; `/tools/operate/` redirects there. Say "Pulse CLI" in prose and
+  `pulse-cli` for the command, never operate for anything current.
 - Every tool page is a landing page (an entry of the `tools` collection, no `layout: home`: eyebrow,
   hero with the tool's real artefact, then a short body). Its Get started band links to the place
   in the tool's docs site that holds the commands. The skill describes the pattern and its truth rule
