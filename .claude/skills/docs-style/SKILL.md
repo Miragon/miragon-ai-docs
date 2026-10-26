@@ -30,13 +30,13 @@ back needs the team.
 Value proposition first, then one page per phase, then one landing page per tool. Every page except
 the 404 lives in `src/content/`; the table gives the paths below it.
 
-| Page                                            | URL                                                                                                  | Holds                                                                                                                                                                                                                              |
-| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `landing/index.mdx`                             | `/`                                                                                                  | The value proposition: lifecycle graphic, who it is for, what Miragon AI does per phase, human and AI, why Miragon, what we don't promise, contact form (`/#contact`)                                                              |
-| `phases/{analyse,design,implement,execute}.mdx` | `/analyse/`, `/design/`, `/implement/`, `/execute/`                                                  | One page per phase: the problem today, how the tools help, human and AI, hand-over to the next phase                                                                                                                               |
-| `phases/optimize.mdx`                           | `/optimize/`                                                                                         | The phase without a tool: the problem, what the phase needs, what Execute already hands over                                                                                                                                       |
-| `tools/<tool>.mdx`                              | `/tools/<tool>/` for analyzr, design-iq, bpmn-cli, skills, bpmn-to-code, solution-templates, operate | The tool's landing page (see [Tool landing pages](#tool-landing-pages)): promise and real artefact in the hero, then the problem, how it works, get started (a link to the tool's docs), status, proof you can open, where it fits |
-| `tools/pulse.mdx`                               | `/tools/pulse/`                                                                                      | Pulse's landing page: the chat window in the hero, the playground card, connecting your Claude (`#connect-your-claude`), links to the docs in Miragon/pulse                                                                        |
+| Page                                            | URL                                                                                                    | Holds                                                                                                                                                                                                                              |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `landing/index.mdx`                             | `/`                                                                                                    | The value proposition: lifecycle graphic, who it is for, what Miragon AI does per phase, human and AI, why Miragon, what we don't promise, contact form (`/#contact`)                                                              |
+| `phases/{analyse,design,implement,execute}.mdx` | `/analyse/`, `/design/`, `/implement/`, `/execute/`                                                    | One page per phase: the problem today, how the tools help, human and AI, hand-over to the next phase                                                                                                                               |
+| `phases/optimize.mdx`                           | `/optimize/`                                                                                           | The phase without a tool: the problem, what the phase needs, what Execute already hands over                                                                                                                                       |
+| `tools/<tool>.mdx`                              | `/tools/<tool>/` for analyzr, design-iq, bpmn-cli, skills, bpmn-to-code, solution-templates, pulse-cli | The tool's landing page (see [Tool landing pages](#tool-landing-pages)): promise and real artefact in the hero, then the problem, how it works, get started (a link to the tool's docs), status, proof you can open, where it fits |
+| `tools/pulse.mdx`                               | `/tools/pulse/`                                                                                        | Pulse's landing page: the chat window in the hero, the playground card, connecting your Claude (`#connect-your-claude`), links to the docs in Miragon/pulse                                                                        |
 
 - Link pages absolute from the root and with the trailing slash, exactly as in the URL column
   (`/analyse/`, `/tools/pulse/#connect-your-claude`); `/` and `/#contact` stay as they are. Every
@@ -44,8 +44,9 @@ the 404 lives in `src/content/`; the table gives the paths below it.
   `#anchor` and a page link without its trailing slash.
 - GitHub links are full https URLs.
 - Product names as displayed: analyzr, designIQ (repo Miragon/design-iq), bpmn-cli, Skills,
-  bpmn-to-code, Solution templates, Pulse (the MCP server from the repo Miragon/pulse), operate. The umbrella
-  is Miragon AI.
+  bpmn-to-code, Solution templates, Pulse (the MCP server from the repo Miragon/pulse), Pulse CLI (from the
+  same repo, command `pulse-cli`; operate until 0.10.0, `/tools/operate/` redirects to its page). The
+  umbrella is Miragon AI.
 - No new top-level page without the team. A new phase or tool page starts in
   `src/data/lifecycle.ts` and gets a row in the budget table below. A new tool also needs its
   `start` there: the getting-started section in its own repo.
@@ -150,7 +151,7 @@ texts stay plain.
 
 Every tool page is a landing page of its own, in the spirit of the landing:
 `src/content/tools/` holds `analyzr.mdx`, `design-iq.mdx`, `bpmn-cli.mdx`, `skills.mdx`,
-`bpmn-to-code.mdx`, `solution-templates.mdx`, `operate.mdx` and `pulse.mdx`. The route template
+`bpmn-to-code.mdx`, `solution-templates.mdx`, `pulse-cli.mdx` and `pulse.mdx`. The route template
 `src/pages/tools/[tool].astro` renders the hero from the frontmatter and the body below it, always
 dark like the landing. There is no `layout` key. The frontmatter:
 
@@ -334,7 +335,7 @@ Follow them; changing one needs the team.
   eval numbers.
 - Never link a private repo: Miragon/analyzr, Miragon/skills, Miragon/corporate-identity,
   Miragon/miragon-ai-website. analyzr's public proof is the demo at https://analyzr-demo.fly.dev.
-  Skills install from the public plugin marketplaces in Miragon/bpmn-cli and Miragon/operate.
+  Skills install from the public plugin marketplaces in Miragon/bpmn-cli and Miragon/pulse.
 - Pages never mention internal sources (Notion pages, internal trainings, pitches, internal eval
   runs).
 

@@ -26,15 +26,15 @@ compare:
     items:
       - The bpmn skill sets Camunda 7 or Camunda 8 attributes by element id
       - bpmn validate --strict reports each deploy blocker with the command that fixes it, before the file reaches the engine
-      - The agent keeps the drawn layout, and the operate skill deploys the model and runs one test instance to the end
+      - The agent keeps the drawn layout, and the pulse-cli skill deploys the model and runs one test instance to the end
       - bpmn-to-code generates the topics and job types as constants, so the rename breaks the next build
       - pulse-starter combines the Pulse modules with modules for your own systems, such as your ERP
 tools:
   - tool: Skills
     text:
       - Your coding agent in Claude Code combines two skills. The bpmn skill from the bpmn-cli plugin sets Camunda 7 or Camunda 8 attributes by element id and keeps the drawn layout, and `bpmn validate --strict` reports each deploy blocker with the command that fixes it before the file reaches the engine.
-      - The operate skill then deploys the model to Camunda 7, CIB seven or Operaton and runs one test instance to the end. If it hits an incident, `operate wait` stops with exit code 9. Neither skill writes worker or delegate code; bpmn-to-code's skills do.
-    status: Early. bpmn-cli 0.7.0 and operate 0.9.0 are pre-1.0 (as of 2026-10-16). Camunda 8 files can be edited and validated, but no skill runs them. Both skills install from the public plugin marketplaces in [Miragon/bpmn-cli](https://miragon.github.io/bpmn-cli/claude-code-plugin) and [Miragon/operate](https://miragon.github.io/operate/agents#claude-code-plugin).
+      - The pulse-cli skill then deploys the model to Camunda 7, CIB seven or Operaton and runs one test instance to the end. If it hits an incident, `pulse-cli wait` stops with exit code 9. Neither skill writes worker or delegate code; bpmn-to-code's skills do.
+    status: Early. bpmn-cli 0.8.0 and pulse-cli 0.22.0 are pre-1.0 (as of 2026-10-26). Camunda 8 files can be edited and validated, but no skill runs them. Both skills install from the public plugin marketplaces in [Miragon/bpmn-cli](https://miragon.github.io/bpmn-cli/claude-code-plugin) and [Miragon/pulse](https://miragon.github.io/pulse/cli/agents#claude-code-plugin).
   - tool: bpmn-to-code
     text:
       - The Gradle and Maven plugin generates Kotlin or Java constants from your BPMN models, such as element ids, topics, job types and message names. Workers and process tests reference them, so a task renamed in the model breaks the next build and no longer leaves an instance waiting for its worker.
@@ -63,14 +63,14 @@ handover:
   - direction: in
     label: From Execute
     link: /execute/
-    text: Ticket drafts from Pulse and root-cause findings from operate, as input for the next fix.
+    text: Ticket drafts from Pulse and root-cause findings from Pulse CLI, as input for the next fix.
     formats:
       - Markdown with labels
       - JSON
   - direction: out
     label: To Execute
     link: /execute/
-    text: BPMN files that pass `bpmn validate --strict` and have run once on Camunda 7, CIB seven or Operaton (`operate deploy` with `--start`), plus the decisions and forms they use.
+    text: BPMN files that pass `bpmn validate --strict` and have run once on Camunda 7, CIB seven or Operaton (`pulse-cli deploy` with `--start`), plus the decisions and forms they use.
     formats:
       - .bpmn
       - .dmn

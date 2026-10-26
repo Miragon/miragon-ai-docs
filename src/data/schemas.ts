@@ -142,8 +142,8 @@ export const toolSchema = z.strictObject({
   result: z.array(feature).optional(), // bpmn-cli, bpmn-to-code: FeatureList
   agent: z.array(feature).optional(), // design-iq: FeatureList
   notations: z.array(card).optional(), // design-iq: CardGrid
-  commands: z.array(card).optional(), // operate: CardGrid
-  guards: z.array(feature).optional(), // operate: FeatureList
+  commands: z.array(card).optional(), // Pulse CLI: CardGrid
+  guards: z.array(feature).optional(), // Pulse CLI: FeatureList
   toolsets: z.array(card).optional(), // pulse: CardGrid
   templates: z.array(card).optional(), // solution-templates: CardGrid
   skills: z.array(card).optional(), // solution-templates: CardGrid

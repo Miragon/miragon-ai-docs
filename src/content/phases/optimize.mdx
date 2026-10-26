@@ -33,11 +33,11 @@ raw:
     link: /tools/pulse/
     linkText: More on Pulse
   - icon: terminal
-    eyebrow: operate, in Execute
+    eyebrow: Pulse CLI, in Execute
     title: History queries
-    text: Runs history queries such as operate historic-process-instance list and returns the raw results as JSON, without KPIs.
-    link: /tools/operate/
-    linkText: More on operate
+    text: Runs history queries such as pulse-cli historic-process-instance list and returns the raw results as JSON, without KPIs.
+    link: /tools/pulse-cli/
+    linkText: More on Pulse CLI
 human:
   - icon: cog
     title: An agent
@@ -49,10 +49,10 @@ handover:
   - direction: in
     label: From Execute
     link: /execute/
-    text: "The raw material described above: Pulse's activity ranking, BPMN heatmap and KPI deltas, and the raw results of operate's history queries."
+    text: "The raw material described above: Pulse's activity ranking, BPMN heatmap and KPI deltas, and the raw results of Pulse CLI's history queries."
     formats:
       - JSON and chat widgets (Pulse)
-      - JSON (operate)
+      - JSON (Pulse CLI)
   - direction: out
     label: To Design
     link: /design/
@@ -80,7 +80,7 @@ Miragon has no tool for Optimize today, and we say so on purpose. The lifecycle 
 <PageSection tone="tint" id="from-execute" eyebrow="What Execute already hands over" title="Raw material for some of these questions">
   <CardGrid items={frontmatter.raw} columns={2} />
 
-The analytics module needs a CIB seven engine with the metrics plugin `io.miragon.mcp:cibseven-history-metrics`, which exports through Micrometer to Prometheus. The plugin exists for CIB seven only. The module looks back 30 days at most, and data from before you installed the plugin is missing. It shows no waiting times, paths or variants, no business data such as product or channel, and no run times per activity and version. Both Execute tools are pre-1.0 (as of 2026-10-16: Pulse v0.21.0, operate 0.9.0).
+The analytics module needs a CIB seven engine with the metrics plugin `io.miragon.mcp:cibseven-history-metrics`, which exports through Micrometer to Prometheus. The plugin exists for CIB seven only. The module looks back 30 days at most, and data from before you installed the plugin is missing. It shows no waiting times, paths or variants, no business data such as product or channel, and no run times per activity and version. Both Execute tools are pre-1.0 (as of 2026-10-26: Pulse v0.22.0, Pulse CLI 0.22.0).
 
 </PageSection>
 

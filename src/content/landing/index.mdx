@@ -39,7 +39,7 @@ roles:
     linkText: Start with bpmn-cli
   - eyebrow: Platform lead
     title: Every engine has its own Cockpit, and runtime questions need PromQL
-    text: Pulse answers in the chat across your engines, and operate hands the engine state to your shell, agent and CI.
+    text: Pulse answers in the chat across your engines, and Pulse CLI hands the engine state to your shell, agent and CI.
     link: /tools/pulse/
     linkText: Start with Pulse
   - eyebrow: Head of IT
@@ -58,11 +58,11 @@ phases:
     link: /design/
   - eyebrow: Phase 3 · loop
     title: Implement
-    text: A missing historyTimeToLive shows up only when the engine rejects the deployment. With the Skills for bpmn-cli and operate, your agent in Claude Code sets the engine details and tests on a dev engine. bpmn-to-code turns topics and job types into constants, so a rename in the model breaks the build. The Solution templates pulse-starter and mcp-toolkit-starter start your own MCP server.
+    text: A missing historyTimeToLive shows up only when the engine rejects the deployment. With the Skills for bpmn-cli and Pulse CLI, your agent in Claude Code sets the engine details and tests on a dev engine. bpmn-to-code turns topics and job types into constants, so a rename in the model breaks the build. The Solution templates pulse-starter and mcp-toolkit-starter start your own MCP server.
     link: /implement/
   - eyebrow: Phase 4 · loop
     title: Execute
-    text: Your team pieces the state together from Cockpit tabs and stack traces, one engine at a time. Pulse shows the incidents across your engines in chat, grouped by failing activity and incident type, and drafts the ticket. operate runs the triage in one command, in your shell and in CI.
+    text: Your team pieces the state together from Cockpit tabs and stack traces, one engine at a time. Pulse shows the incidents across your engines in chat, grouped by failing activity and incident type, and drafts the ticket. Pulse CLI runs the triage in one command, in your shell and in CI.
     link: /execute/
   - eyebrow: Phase 5 · loop
     title: Optimize
@@ -101,10 +101,10 @@ why:
     text: You run Pulse yourself. Without OAuth it starts read-only, and it needs neither a migration nor access to the engine database.
   - icon: github
     title: Public under the MIT licence
-    text: designIQ, bpmn-cli, bpmn-to-code, operate, Pulse and the pulse-starter template are public on GitHub. For now we show analyzr as a read-only demo.
+    text: designIQ, bpmn-cli, bpmn-to-code, Pulse with Pulse CLI and the pulse-starter template are public on GitHub. For now we show analyzr as a read-only demo.
   - icon: check-circle
     title: Tested against three engines
-    text: On every change, operate's CI runs its integration tests against Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0.
+    text: On every change, Pulse's CI runs the integration tests of Pulse CLI against Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0.
 proof:
   - icon: github
     eyebrow: Version 5.3.0
@@ -121,13 +121,13 @@ proof:
     title: bpmn-to-code
     text: The repo Miragon/bpmn-to-code, with the Gradle and Maven plugins.
     link: https://github.com/Miragon/bpmn-to-code
+  - icon: package
+    eyebrow: Version 0.22.0
+    title: Pulse CLI
+    text: "@miragon/pulse-cli on npm. Its plugin marketplace is in the repo Miragon/pulse."
+    link: https://www.npmjs.com/package/@miragon/pulse-cli
   - icon: github
-    eyebrow: Version 0.9.0
-    title: operate
-    text: The repo Miragon/operate, with its plugin marketplace.
-    link: https://github.com/Miragon/operate
-  - icon: github
-    eyebrow: Version 0.21.0
+    eyebrow: Version 0.22.0
     title: Pulse
     text: Pulse is the MCP server from the repo Miragon/pulse.
     link: https://github.com/Miragon/pulse
@@ -143,9 +143,9 @@ proof:
     link: https://analyzr-demo.fly.dev
   - icon: check-circle
     eyebrow: Every change
-    title: operate's CI
-    text: Integration tests against Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0.
-    link: https://github.com/Miragon/operate/actions/workflows/ci.yml
+    title: Pulse's CI
+    text: Integration tests of Pulse CLI against Operaton 2.1.5, CIB seven 2.2.0 and Camunda 7.24.0.
+    link: https://github.com/Miragon/pulse/actions/workflows/ci.yml
   - icon: play
     eyebrow: No login
     title: Pulse playground
@@ -169,7 +169,7 @@ limits:
     text: Version 0.1.0-alpha.0, in a private repository, with an interface in German only.
   - icon: refresh
     title: Pre-1.0 interfaces
-    text: bpmn-cli, operate and Pulse are pre-1.0 and still change their interfaces. The mcp-toolkit-starter template has no licence yet.
+    text: bpmn-cli, Pulse and Pulse CLI are pre-1.0 and still change their interfaces. The mcp-toolkit-starter template has no licence yet.
   - icon: clock
     title: Hosted designIQ is pre-GA
     text: The public launch of the hosted service is planned around mid-November 2026. The self-hosted image is released.
@@ -201,7 +201,7 @@ artefact: { type: orbit }
   <FeatureList items={frontmatter.why} />
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Open it before you talk to us" intro="Versions as of 14 October 2026, Pulse's and operate's as of 16 October and bpmn-to-code's as of 18 October. Every link is public and needs no login.">
+<PageSection eyebrow="Proof you can open" title="Open it before you talk to us" intro="Versions as of 14 October 2026, bpmn-to-code's as of 18 October and Pulse's as of 26 October. Every link is public and needs no login.">
   <CardGrid items={frontmatter.proof} columns={3} />
 </PageSection>
 
