@@ -67,7 +67,7 @@ status:
 proof:
   - icon: play
     title: Playground
-    text: "The public MCP endpoint, pinned to camunda7:read-only,analytics."
+    text: "The public MCP endpoint, pinned to engine:read-only,analytics."
     link: https://pulse-playground.miragon.ai/mcp
   - icon: monitor
     title: Browser demo
@@ -87,8 +87,8 @@ proof:
     link: https://repo1.maven.org/maven2/io/miragon/mcp/cibseven-history-metrics/
   - icon: boxes
     title: npm packages
-    text: "@miragon/pulse-camunda7-connector and @miragon/pulse-analytics-connector, both at 0.22.0."
-    link: https://www.npmjs.com/package/@miragon/pulse-camunda7-connector
+    text: "@miragon/pulse-engine-connector and @miragon/pulse-analytics-connector, both at 0.25.0."
+    link: https://www.npmjs.com/package/@miragon/pulse-engine-connector
 fits:
   - eyebrow: Phase
     title: Execute
@@ -137,7 +137,7 @@ docs:
 <PageSection eyebrow="Safety" title="Read-only until your team decides otherwise" intro="The AI collects the state of your engines and proposes the next step. Whether it may change anything depends on the toolset the server runs with, and widgets hide the buttons for actions the toolset does not allow.">
   <CardGrid items={frontmatter.toolsets} />
 
-Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the default cannot change an engine, you can hand Pulse to a wider group, such as support or product owners.
+Deployments need `admin` plus `ENGINE_ALLOW_DEPLOYMENTS=true`. Because the default cannot change an engine, you can hand Pulse to a wider group, such as support or product owners.
 
 </PageSection>
 

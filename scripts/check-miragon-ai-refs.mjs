@@ -23,20 +23,28 @@ if (!MIRAGON_AI) {
 }
 
 // The checked-in tool surface of every toolset (the E2E snapshots).
-const EXPECTED_TOOLS = join(MIRAGON_AI, "apps/mcp-server-camunda7/test/expected-tools.ts")
+const EXPECTED_TOOLS = join(MIRAGON_AI, "apps/mcp-server/test/expected-tools.ts")
+if (!existsSync(EXPECTED_TOOLS)) {
+  console.error(
+    `miragon-ai refs: ${EXPECTED_TOOLS} is missing. Pulse keeps its tool surface there since ` +
+      "0.25 (up to 0.24 under apps/mcp-server-camunda7/, with camunda7_ tools); check a checkout " +
+      "of 0.25 or later.",
+  )
+  process.exit(1)
+}
 const tools = new Set(
   readFileSync(EXPECTED_TOOLS, "utf8").match(/(?<=")[a-z0-9]+(?:_[a-z0-9]+)+(?=")/g),
 )
 // A short form (`show_process_list`, `bpmn_heatmap_data`) names the module's tool.
 const known = (name) =>
-  tools.has(name) || tools.has(`camunda7_${name}`) || tools.has(`analytics_${name}`)
+  tools.has(name) || tools.has(`engine_${name}`) || tools.has(`analytics_${name}`)
 const looksLikeTool = (token) =>
   /^[a-z0-9]+(?:_[a-z0-9]+)+$/.test(token) &&
-  (/^(?:camunda7|analytics)_/.test(token) || /(?:^|_)show_/.test(token) || token.endsWith("_data"))
+  (/^(?:engine|analytics)_/.test(token) || /(?:^|_)show_/.test(token) || token.endsWith("_data"))
 // Other pages also name tools of other servers (a template's example module,
 // `notes_show_notes`); there only the Pulse modules' prefixes count.
 const isMiragonAiTool = (ref) =>
-  looksLikeTool(ref.token) && (inSection(ref.page) || /^(?:camunda7|analytics)_/.test(ref.token))
+  looksLikeTool(ref.token) && (inSection(ref.page) || /^(?:engine|analytics)_/.test(ref.token))
 
 const ROOTS = /^(?:apps|packages|scripts|playground|engine-plugins|templates|\.claude|\.github)\//
 // Written by a build or a test run, not checked in.

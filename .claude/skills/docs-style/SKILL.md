@@ -79,7 +79,7 @@ identifiers stay exact, because readers copy them:
 | npm packages                   | `@miragon/pulse-<name>` from 0.21.0 on; the old `@miragon-ai/<name>` are deprecated, their last version is 0.20.0                           |
 | MCP client key                 | `claude mcp add --transport http pulse …`, the `"pulse"` key in host config                                                                 |
 | Playground host                | `pulse-playground.miragon.ai` (the old `miragon-ai-playground.fly.dev` keeps answering)                                                     |
-| Environment variables, tools   | `MCP_USE_OAUTH_*`, `CAMUNDA_BASE_URL` and the rest; `camunda7_*`, `analytics_*`                                                             |
+| Environment variables, tools   | `MCP_USE_OAUTH_*`, `ENGINE_BASE_URL` and the rest; `engine_*`, `analytics_*`                                                                |
 | The refs check and its env var | `scripts/check-miragon-ai-refs.mjs`, `MIRAGON_AI_DIR` and the CI job "miragon-ai references" (a required check)                             |
 
 Pages name only what is published. Since 0.21.0 (released 2026-10-16) the proof cards, the status
@@ -353,7 +353,7 @@ Follow them; changing one needs the team.
   comment fails the build. Prettier keeps every JSX tag in an `.mdx` file on one line
   (`.prettierrc.json`).
 - Commands in fenced code blocks with a language.
-- A backticked snake_case token that looks like a Pulse tool (a `camunda7_` or `analytics_` prefix,
+- A backticked snake_case token that looks like a Pulse tool (an `engine_` or `analytics_` prefix,
   `show_` in it or a `_data` ending) must be a tool the Pulse server registers, on any page. A
   backticked repo path on Pulse's tool page (`src/content/tools/pulse.mdx`) must exist in
   Miragon/pulse. The refs check reads both.
