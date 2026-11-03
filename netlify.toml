@@ -34,9 +34,10 @@
 
 # Pulse's four reference pages, live at the root until this site replaced
 # the old one. They live in Pulse's docs site, built from docs/ of
-# Miragon/pulse and served on GitHub Pages (miragon.github.io/pulse/; the
-# old path /miragon-ai/ has been a 404 since the repo's rename on
-# 2026-10-16, because GitHub Pages does not redirect).
+# Miragon/pulse and served on GitHub Pages (miragon.github.io/pulse/mcp/;
+# the old path /miragon-ai/ has been a 404 since the repo's rename on
+# 2026-10-16, because GitHub Pages does not redirect, and the root pages
+# since the docs moved under mcp/ on 2026-10-26).
 # operate became Pulse CLI on 2026-10-25 (Pulse 0.22.0, the repo Miragon/pulse).
 [[redirects]]
   from = "/tools/operate/"
@@ -50,40 +51,40 @@
 
 [[redirects]]
   from = "/architecture"
-  to = "https://miragon.github.io/pulse/architecture"
+  to = "https://miragon.github.io/pulse/mcp/architecture"
   status = 301
 
 [[redirects]]
   from = "/architecture.html"
-  to = "https://miragon.github.io/pulse/architecture"
+  to = "https://miragon.github.io/pulse/mcp/architecture"
   status = 301
 
 [[redirects]]
   from = "/developer"
-  to = "https://miragon.github.io/pulse/developer"
+  to = "https://miragon.github.io/pulse/mcp/developer"
   status = 301
 
 [[redirects]]
   from = "/developer.html"
-  to = "https://miragon.github.io/pulse/developer"
+  to = "https://miragon.github.io/pulse/mcp/developer"
   status = 301
 
 [[redirects]]
   from = "/operations"
-  to = "https://miragon.github.io/pulse/operations"
+  to = "https://miragon.github.io/pulse/mcp/operations"
   status = 301
 
 [[redirects]]
   from = "/operations.html"
-  to = "https://miragon.github.io/pulse/operations"
+  to = "https://miragon.github.io/pulse/mcp/operations"
   status = 301
 
 [[redirects]]
   from = "/usage"
-  to = "https://miragon.github.io/pulse/usage"
+  to = "https://miragon.github.io/pulse/mcp/usage"
   status = 301
 
 [[redirects]]
   from = "/usage.html"
-  to = "https://miragon.github.io/pulse/usage"
+  to = "https://miragon.github.io/pulse/mcp/usage"
   status = 301

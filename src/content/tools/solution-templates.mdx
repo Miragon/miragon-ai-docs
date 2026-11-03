@@ -31,7 +31,7 @@ artefact:
     - { out: "[mcp-use] dev server ready", tone: ok }
     - out: "  ➜ MCP endpoint:  http://localhost:8400/mcp"
     - out: "  ➜ Inspector:     http://localhost:8400/mcp/inspector"
-    - note: camunda7 and analytics are in
+    - note: engine and analytics are in
     - note: add yours, in a second terminal
     - cmd: cp -R modules/mcp-notes modules/mcp-erp
 compare:
@@ -47,7 +47,7 @@ compare:
   after:
     title: With pulse-starter
     items:
-      - camunda7_* and analytics_* tools with widgets, from Pulse's modules
+      - engine_* and analytics_* tools with widgets, from Pulse's modules
       - A copy of the example module mcp-notes, next to the engine modules
       - Guard tests in server/test/ that fail when a wiring step is missing
       - CLAUDE.md and four Claude Code skills, create-module among them
@@ -117,9 +117,9 @@ proof:
     text: Seven stops through the toolkit's tools and widgets on a hosted server.
     link: https://miragon.github.io/mcp-toolkit/playground/tour
   - icon: package
-    title: pulse-camunda7-connector on npm
-    text: "@miragon/pulse-camunda7-connector, the engine module the starter composes."
-    link: https://www.npmjs.com/package/@miragon/pulse-camunda7-connector
+    title: pulse-engine-connector on npm
+    text: "@miragon/pulse-engine-connector, the engine module the starter composes."
+    link: https://www.npmjs.com/package/@miragon/pulse-engine-connector
   - icon: book
     title: MCP Toolkit docs
     text: The guides behind mcp-toolkit-starter.
@@ -139,7 +139,7 @@ fits:
     link: /execute/
   - eyebrow: Stock server
     title: Pulse
-    text: Your server has the same camunda7_* and analytics_* tools as Pulse, plus your own. You use it the way you use Pulse.
+    text: Your server has the same engine_* and analytics_* tools as Pulse, plus your own. You use it the way you use Pulse.
     link: /tools/pulse/
   - eyebrow: Same engine API
     title: Pulse CLI
@@ -188,7 +188,7 @@ Everything also works by hand. `CLAUDE.md` is the compact architecture reference
 <PageSection eyebrow="Where it fits" title="Solution templates in the lifecycle">
   <CardGrid items={frontmatter.fits} />
 
-Models from [designIQ](/tools/design-iq/) or [bpmn-cli](/tools/bpmn-cli/) reach the server only through the engine, where tools such as `camunda7_get_process_definition_xml` read them. With the `camunda7:admin` toolset and `CAMUNDA_ALLOW_DEPLOYMENTS=true`, the assistant can deploy BPMN and DMN itself.
+Models from [designIQ](/tools/design-iq/) or [bpmn-cli](/tools/bpmn-cli/) reach the server only through the engine, where tools such as `engine_get_process_definition_xml` read them. With the `engine:admin` toolset and `ENGINE_ALLOW_DEPLOYMENTS=true`, the assistant can deploy BPMN and DMN itself.
 
 </PageSection>
 

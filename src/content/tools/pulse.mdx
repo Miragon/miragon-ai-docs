@@ -30,7 +30,7 @@ compare:
     items:
       - One question covers one or several engines
       - Incidents grouped by failing activity and type, down to the trace
-      - Activities ranked by execution time and incident rate, BPMN heatmap
+      - Activities ranked by execution time, with their incidents, BPMN heatmap
       - A ticket draft with title, body and labels
 steps:
   - title: Connect
@@ -44,13 +44,13 @@ steps:
 toolsets:
   - icon: eye
     title: read-only
-    text: The default without OAuth and on the playground. Queries, widgets and ticket drafts.
+    text: The default without OAuth and on the playground. Queries, widgets, ticket drafts and a diagnosis of an instance or an engine in one call.
   - icon: play
     title: operations
     text: The default behind OAuth. Adds starting instances, completing tasks, retries and resolving incidents.
   - icon: key
     title: admin
-    text: Only when an operator names it. Adds deletions, modifications, suspensions, migrations and signals.
+    text: Only when an operator names it. Adds deletions, modifications with the activity instance tree they need, suspensions, migrations and signals.
 status:
   - icon: ticket
     title: Drafts, never files
@@ -67,7 +67,7 @@ status:
 proof:
   - icon: play
     title: Playground
-    text: "The public MCP endpoint, pinned to camunda7:read-only,analytics:read-only."
+    text: "The public MCP endpoint, pinned to engine:read-only,analytics."
     link: https://pulse-playground.miragon.ai/mcp
   - icon: monitor
     title: Browser demo
@@ -87,8 +87,8 @@ proof:
     link: https://repo1.maven.org/maven2/io/miragon/mcp/cibseven-history-metrics/
   - icon: boxes
     title: npm packages
-    text: "@miragon/pulse-camunda7-connector and @miragon/pulse-analytics-connector, both at 0.22.0."
-    link: https://www.npmjs.com/package/@miragon/pulse-camunda7-connector
+    text: "@miragon/pulse-engine-connector and @miragon/pulse-analytics-connector, both at 0.25.0."
+    link: https://www.npmjs.com/package/@miragon/pulse-engine-connector
 fits:
   - eyebrow: Phase
     title: Execute
@@ -106,19 +106,19 @@ docs:
   - icon: layers
     title: Architecture
     text: The server, its two modules and the systems they talk to.
-    link: https://miragon.github.io/pulse/architecture
+    link: https://miragon.github.io/pulse/mcp/architecture
   - icon: code
     title: Developer
     text: Run the stack from source and build your own server on the modules.
-    link: https://miragon.github.io/pulse/developer
+    link: https://miragon.github.io/pulse/mcp/developer
   - icon: server
     title: Operations
     text: The Docker image, security, environment variables, toolsets and health routes.
-    link: https://miragon.github.io/pulse/operations
+    link: https://miragon.github.io/pulse/mcp/operations
   - icon: chat
     title: Usage
-    text: Connect an assistant, what to ask and your own settings.
-    link: https://miragon.github.io/pulse/usage
+    text: Connect an assistant, what to ask, language and theme.
+    link: https://miragon.github.io/pulse/mcp/usage
 ---
 
 <PageSection tone="tint" eyebrow="The problem" title="Every question about a running process waits for a developer" intro="When a process gets stuck, the people who hear about it first, such as operations staff, support or a product owner, usually cannot see why. They ask a developer, so every question waits for the few people who know each engine's Cockpit and PromQL.">
@@ -130,19 +130,19 @@ docs:
 </PageSection>
 
 <PageSection tone="tint" id="connect-your-claude" eyebrow="Try it" title="Connect your Claude in 30 seconds">
-  <PillButton href="https://miragon.github.io/pulse/getting-started#connect-your-claude-in-30-seconds" label="Get started" />
+  <PillButton href="https://miragon.github.io/pulse/mcp/getting-started#connect-your-claude-in-30-seconds" label="Get started" />
   <TryItOut />
 </PageSection>
 
 <PageSection eyebrow="Safety" title="Read-only until your team decides otherwise" intro="The AI collects the state of your engines and proposes the next step. Whether it may change anything depends on the toolset the server runs with, and widgets hide the buttons for actions the toolset does not allow.">
   <CardGrid items={frontmatter.toolsets} />
 
-Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the default cannot change an engine, you can hand Pulse to a wider group, such as support or product owners.
+Deployments need `admin` plus `ENGINE_ALLOW_DEPLOYMENTS=true`. Because the default cannot change an engine, you can hand Pulse to a wider group, such as support or product owners.
 
 </PageSection>
 
 <PageSection tone="tint" id="get-started" eyebrow="Get started" title="Run it on your own engine" intro="You need Docker and the REST API of a Camunda 7, CIB seven or Operaton engine. The Pulse docs have the command.">
-  <PillButton href="https://miragon.github.io/pulse/getting-started#run-it-on-your-own-engine" label="Get started" />
+  <PillButton href="https://miragon.github.io/pulse/mcp/getting-started#run-it-on-your-own-engine" label="Get started" />
 </PageSection>
 
 <PageSection eyebrow="Status" title="Where Pulse stands on 26 October 2026" intro="Pulse is at v0.22.0 (released 25 October 2026) and pre-1.0. The last three minor releases each list breaking changes, such as renamed packages, tools and result fields, and since 0.22.0 an engine without a flavor counts as Camunda 7, so pin the image tag you run. The public playground still runs 0.21.0.">
@@ -160,7 +160,7 @@ Deployments need `admin` plus `CAMUNDA_ALLOW_DEPLOYMENTS=true`. Because the defa
 <PageSection tone="tint" eyebrow="Docs" title="The full reference is in the docs">
   <CardGrid items={frontmatter.docs} columns={4} />
 
-The [Reference](https://miragon.github.io/pulse/reference) lists every tool, the toolsets and the common settings, and Operations has every environment variable.
+The [Reference](https://miragon.github.io/pulse/mcp/reference) lists every tool, the toolsets and the common settings, and Operations has every environment variable.
 
 </PageSection>
 

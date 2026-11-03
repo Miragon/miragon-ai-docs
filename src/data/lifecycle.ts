@@ -110,7 +110,7 @@ export const PHASES: Phase[] = [
         slug: "pulse",
         link: "/tools/pulse/",
         job: "Process operations in chat",
-        start: "https://miragon.github.io/pulse/getting-started",
+        start: "https://miragon.github.io/pulse/mcp/getting-started",
       },
       {
         name: "Pulse CLI",

@@ -113,7 +113,7 @@ served with an immutable cache header.
 
 `netlify.toml` also holds every redirect, all with a 301: the Pulse doc pages of the old site
 (`/architecture`, `/developer`, `/operations`, `/usage` and their `.html` variants) go to their
-pages in Pulse's docs site (https://miragon.github.io/pulse/). They pointed at
+pages in Pulse's docs site (https://miragon.github.io/pulse/mcp/). They pointed at
 `/miragon-ai/` until the repo's rename; GitHub Pages does not redirect that old path.
 Astro's own `redirects` stay unused: without an adapter they become pages that would shadow these
 rules. `scripts/url-map.json` lists every old URL and where it lands, and the build checks it.

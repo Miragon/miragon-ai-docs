@@ -52,8 +52,9 @@ the 404 lives in `src/content/`; the table gives the paths below it.
   `start` there: the getting-started section in its own repo.
 - The Pulse doc pages of the old site sat at the root. `netlify.toml` redirects `/architecture`,
   `/developer`, `/operations` and `/usage` (and their `.html` variants) with a 301 to their
-  pages in Pulse's docs site (`https://miragon.github.io/pulse/<page>`; the old path
-  `/miragon-ai/` has been a 404 since the repo's rename, because GitHub Pages does not redirect).
+  pages in Pulse's docs site (`https://miragon.github.io/pulse/mcp/<page>`; the old path
+  `/miragon-ai/` has been a 404 since the repo's rename, because GitHub Pages does not redirect,
+  and the root pages since the docs moved under `mcp/` on 2026-10-26).
   `scripts/url-map.json` lists every old URL and its target, and the build checks that each lands
   there in one hop. If you move a page, add a redirect and a URL map entry.
 
@@ -62,9 +63,10 @@ the 404 lives in `src/content/`; the table gives the paths below it.
 Pulse is the product name (the owner's decision of 2026-10-13) of the MCP server built in the repo
 Miragon/pulse. On 2026-10-16 the repo was renamed from Miragon/miragon-ai to Miragon/pulse; Miragon
 AI stays the name of the tool family and of this site, and Miragon/miragon-ai-docs keeps its name.
-Pulse's docs are the VitePress site in `docs/` of that repo, https://miragon.github.io/pulse/:
-`getting-started` (with `#connect-your-claude-in-30-seconds` and `#run-it-on-your-own-engine`),
-`architecture`, `developer`, `operations` and `usage`. Prose says Pulse. Where a reader needs the
+Pulse's docs are the VitePress site in `docs/` of that repo, https://miragon.github.io/pulse/; the
+MCP server's pages sit under `mcp/`: `mcp/getting-started` (with
+`#connect-your-claude-in-30-seconds` and `#run-it-on-your-own-engine`), `mcp/architecture`,
+`mcp/developer`, `mcp/operations`, `mcp/reference` and `mcp/usage`; Pulse CLI's under `cli/`. Prose says Pulse. Where a reader needs the
 repo, say it once per page: "Pulse is the MCP server from the repo Miragon/pulse". Technical
 identifiers stay exact, because readers copy them:
 
@@ -72,12 +74,12 @@ identifiers stay exact, because readers copy them:
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | Repo                           | `Miragon/pulse` (GitHub redirects `Miragon/miragon-ai`)                                                                                     |
 | Template                       | `Miragon/pulse-starter`, in prose pulse-starter (GitHub redirects `Miragon/miragon-ai-starter`)                                             |
-| Docs                           | `https://miragon.github.io/pulse/<page>` (the old `/miragon-ai/` path is a 404)                                                             |
+| Docs                           | `https://miragon.github.io/pulse/mcp/<page>`, `https://miragon.github.io/pulse/cli/<page>` (the old `/miragon-ai/` path is a 404)           |
 | Docker image                   | `ghcr.io/miragon/pulse-server` (GitHub Container Registry) from 0.21.0 on; `miragon/miragon-ai-server` on Docker Hub stays frozen at 0.20.0 |
 | npm packages                   | `@miragon/pulse-<name>` from 0.21.0 on; the old `@miragon-ai/<name>` are deprecated, their last version is 0.20.0                           |
 | MCP client key                 | `claude mcp add --transport http pulse …`, the `"pulse"` key in host config                                                                 |
 | Playground host                | `pulse-playground.miragon.ai` (the old `miragon-ai-playground.fly.dev` keeps answering)                                                     |
-| Environment variables, tools   | `MCP_OAUTH`, `CAMUNDA_BASE_URL` and the rest; `camunda7_*`, `analytics_*`                                                                   |
+| Environment variables, tools   | `MCP_USE_OAUTH_*`, `ENGINE_BASE_URL` and the rest; `engine_*`, `analytics_*`                                                                |
 | The refs check and its env var | `scripts/check-miragon-ai-refs.mjs`, `MIRAGON_AI_DIR` and the CI job "miragon-ai references" (a required check)                             |
 
 Pages name only what is published. Since 0.21.0 (released 2026-10-16) the proof cards, the status
@@ -351,7 +353,7 @@ Follow them; changing one needs the team.
   comment fails the build. Prettier keeps every JSX tag in an `.mdx` file on one line
   (`.prettierrc.json`).
 - Commands in fenced code blocks with a language.
-- A backticked snake_case token that looks like a Pulse tool (a `camunda7_` or `analytics_` prefix,
+- A backticked snake_case token that looks like a Pulse tool (an `engine_` or `analytics_` prefix,
   `show_` in it or a `_data` ending) must be a tool the Pulse server registers, on any page. A
   backticked repo path on Pulse's tool page (`src/content/tools/pulse.mdx`) must exist in
   Miragon/pulse. The refs check reads both.
