@@ -20,8 +20,9 @@ each tool's own README, and the page links to it. A tool page that starts to rea
 has outgrown its job; never copy a README.
 
 For now the site is landing pages only (the owner's decision of 2026-10-14). Docs and getting
-started live in each tool's repo as a VitePress site in one style: `docs/` with the theme of
-Miragon/mcp-toolkit (copied unchanged), deployed to GitHub Pages at `https://miragon.github.io/<repo>/`.
+started live in each tool's repo as a VitePress site in one style: `docs/` on the docs kit of the
+miragon-brand skill `docs-site` (Miragon/corporate-identity), copied unchanged into
+`docs/.vitepress/miragon/`, deployed to GitHub Pages at `https://miragon.github.io/<repo>/`.
 The tool pages link there. The site held docs under `/docs/` (Starlight) from 2026-10-13 to 2026-10-14; bringing docs
 back needs the team.
 
@@ -312,7 +313,7 @@ Follow them; changing one needs the team.
 | Tool pages             | Every tool page is a landing page of its own with the tool's real artefact in the hero.                                                                                                                                     |
 | Website look           | The landing pages look like a website in miragon.io's visual language (bands, cards, icon lists, steps, a closing box) and stay always dark, the hero included (no blue gradient).                                          |
 | Lifecycle loop         | Analyse runs once, at the start. Design, Implement, Execute and Optimize form the loop, and what you learn in Optimize goes back into Design.                                                                               |
-| Landing pages only     | For now the site has no docs. Docs and getting started live in each tool's repo as a VitePress site in the style of Miragon/mcp-toolkit, on GitHub Pages; the tool pages link there.                                        |
+| Landing pages only     | For now the site has no docs. Docs and getting started live in each tool's repo as a VitePress site on the docs kit of the skill `docs-site` (miragon-brand), on GitHub Pages; the tool pages link there.                   |
 
 ## Voice
 
