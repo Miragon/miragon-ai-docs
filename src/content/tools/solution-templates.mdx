@@ -1,11 +1,11 @@
 ---
 title: Solution templates
-description: Two GitHub templates that start your own MCP server, one connecting your AI to Camunda 7, CIB seven or Operaton and to your own systems, one without BPM.
+description: pulse-starter, a GitHub template that starts your own MCP server and connects your AI to Camunda 7, CIB seven or Operaton and to your own systems.
 eyebrow: { phase: Implement, link: /implement/ }
 hero:
   name: Solution templates
   text: Your own MCP server, engine tools included.
-  tagline: pulse-starter, a GitHub template for developers, brings Pulse's modules for Camunda 7, CIB seven and Operaton, plus room for your own modules, such as your ERP. mcp-toolkit-starter is the base without BPM.
+  tagline: pulse-starter, a GitHub template for developers, brings Pulse's modules for Camunda 7, CIB seven and Operaton, plus room for your own modules, such as your ERP. mcp-toolkit-starter, the base without BPM, is archived.
   actions:
     - theme: brand
       text: Get started
@@ -50,8 +50,8 @@ compare:
       - engine_* and analytics_* tools with widgets, from Pulse's modules
       - A copy of the example module mcp-notes, next to the engine modules
       - Guard tests in server/test/ that fail when a wiring step is missing
-      - CLAUDE.md and four Claude Code skills, create-module among them
-      - OAuth with Keycloak or Auth0, engine tools start read-only without it
+      - CLAUDE.md and three Claude Code skills, create-module among them
+      - OAuth with Keycloak, Auth0 or another provider, engine tools start read-only without it
       - A Docker image with a health check, /health/live, /health/ready and /metrics
 steps:
   - title: Create
@@ -66,12 +66,12 @@ templates:
   - icon: workflow
     eyebrow: Engine plus your systems
     title: pulse-starter
-    text: Pulse's modules for Camunda 7, CIB seven and Operaton, the example module mcp-notes, the guard tests, CLAUDE.md and four Claude Code skills. MIT licence.
+    text: Pulse's modules for Camunda 7, CIB seven and Operaton, the example module mcp-notes, the guard tests, CLAUDE.md and three Claude Code skills. MIT licence.
     link: https://github.com/Miragon/pulse-starter
   - icon: boxes
-    eyebrow: Without BPM
+    eyebrow: Without BPM, archived
     title: mcp-toolkit-starter
-    text: A plain mcp-use project with one tasks module and a widget, for systems that have nothing to do with a process engine.
+    text: A plain mcp-use project with one tasks module and a widget, on the MCP Toolkit 2.9.0 packages. Archived on 6 November 2026, because those packages are no longer developed.
     link: https://github.com/Miragon/mcp-toolkit-starter
 skills:
   - icon: server
@@ -83,47 +83,44 @@ skills:
   - icon: dashboard
     title: add-widget
     text: An interactive widget for a module.
-  - icon: user-check
-    title: add-settings-section
-    text: Per-user settings for your module.
 status:
   - icon: refresh
     title: Synced on every Pulse release
-    text: pulse-starter mirrors templates/composed-server and syncs once install and tests pass against the public npm registry. Neither template repo has releases of its own.
+    text: pulse-starter mirrors templates/composed-server and syncs once install, build and tests pass against the public npm registry. It has no release of its own yet. From the next Pulse release on, each sync also builds the starter's Docker image, then tags the mirror commit and publishes a release.
   - icon: package
     title: Pre-1.0 packages
-    text: The starter pins the @miragon/pulse-* packages at 0.21.0. They release about weekly and still bring breaking changes.
+    text: The starter pins the @miragon/pulse-* packages at 0.26.0. Pulse released six minor versions from 16 October to 4 November 2026, four of them with breaking changes. There is no upgrade guide; Pulse's changelog lists each breaking change.
+  - icon: history
+    title: mcp-toolkit-starter is archived
+    text: Archived on 6 November 2026 and no longer offered as a template. It pins @miragon/mcp-toolkit-core and -ui 2.9.0, which are no longer developed.
   - icon: scale
     title: No licence for mcp-toolkit-starter
-    text: It is public but has no licence yet, so there are no stated terms for building on it.
-  - icon: warning
-    title: Red CI on mcp-toolkit-starter
-    text: It pins the Miragon MCP Toolkit at 2.8.1, released 2026-10-13. Its own CI failed after the last two syncs, because each ran minutes before the new toolkit version reached npm.
+    text: It is public but has no licence, so there are no stated terms for building on it.
 proof:
   - icon: github
     title: templates/composed-server
     text: The source of pulse-starter in Miragon/pulse, where issues and pull requests go.
     link: https://github.com/Miragon/pulse/tree/main/templates/composed-server
-  - icon: github
-    title: templates/minimal-server
-    text: The source of mcp-toolkit-starter in Miragon/mcp-toolkit.
-    link: https://github.com/Miragon/mcp-toolkit/tree/main/templates/minimal-server
+  - icon: book
+    title: Build your own server
+    text: The page in Pulse's docs that starts your own server from pulse-starter.
+    link: https://miragon.github.io/pulse/mcp/build-your-own
   - icon: play
     title: Pulse playground
     text: An MCP endpoint without login, running the stock Pulse server built from the same @miragon/pulse-* modules, read-only.
     link: https://pulse-playground.miragon.ai/mcp
-  - icon: route
-    title: Toolkit playground tour
-    text: Seven stops through the toolkit's tools and widgets on a hosted server.
-    link: https://miragon.github.io/mcp-toolkit/playground/tour
   - icon: package
     title: pulse-engine-connector on npm
     text: "@miragon/pulse-engine-connector, the engine module the starter composes."
     link: https://www.npmjs.com/package/@miragon/pulse-engine-connector
+  - icon: github
+    title: templates/minimal-server
+    text: The source of mcp-toolkit-starter in Miragon/mcp-toolkit, at its last 2.x release v2.9.0.
+    link: https://github.com/Miragon/mcp-toolkit/tree/v2.9.0/templates/minimal-server
   - icon: book
-    title: MCP Toolkit docs
-    text: The guides behind mcp-toolkit-starter.
-    link: https://miragon.github.io/mcp-toolkit/
+    title: MCP Toolkit 2.x docs
+    text: The guides behind mcp-toolkit-starter, kept at the tag v2.9.0.
+    link: https://github.com/Miragon/mcp-toolkit/tree/v2.9.0/docs
 fits:
   - eyebrow: Phase
     title: Implement
@@ -155,19 +152,19 @@ fits:
   <CompareCards before={frontmatter.compare.before} after={frontmatter.compare.after} />
 </PageSection>
 
-<PageSection align="center" eyebrow="How it works" title="From the template to a server with your own module" intro="Shown for pulse-starter. mcp-toolkit-starter brings a tasks module in place of the engine modules.">
+<PageSection align="center" eyebrow="How it works" title="From the template to a server with your own module" intro="Shown for pulse-starter, from your new repo to a Docker image.">
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Two templates" title="With the engine modules or without them">
+<PageSection tone="tint" eyebrow="Two starters" title="With the engine modules, or archived without them">
   <CardGrid items={frontmatter.templates} columns={2} />
 
-Both templates build on [mcp-use](https://mcp-use.com). Neither contains process automation code such as job workers or a BPMN project. Your team decides which systems the server may reach and reviews the module code.
+Both build on [mcp-use](https://mcp-use.com). Neither contains process automation code such as job workers or a BPMN project. Your team decides which systems the server may reach and reviews the module code.
 
 </PageSection>
 
-<PageSection eyebrow="Built for your coding agent" title="Four skills walk the agent through the wiring" intro="Open pulse-starter in Claude Code, or any agent that reads CLAUDE.md, and describe what you want. The skills in .claude/skills/ cover the four common tasks.">
-  <CardGrid items={frontmatter.skills} columns={4} />
+<PageSection eyebrow="Built for your coding agent" title="Three skills walk the agent through the wiring" intro="Open pulse-starter in Claude Code, or any agent that reads CLAUDE.md, and describe what you want. The skills in .claude/skills/ cover the three common tasks.">
+  <CardGrid items={frontmatter.skills} columns={3} />
 
 Everything also works by hand. `CLAUDE.md` is the compact architecture reference, and the guard tests in `server/test/` fail when a wiring step is missing.
 
@@ -177,7 +174,7 @@ Everything also works by hand. `CLAUDE.md` is the compact architecture reference
   <PillButton href="https://github.com/Miragon/pulse-starter#quickstart" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where the templates stand on 16 October 2026" intro="Pulse is the MCP server from the repo Miragon/pulse. pulse-starter is at Pulse v0.21.0, released 2026-10-16, and public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where the starters stand on 6 November 2026" intro="Pulse is the MCP server from the repo Miragon/pulse. pulse-starter is at Pulse v0.26.0, released 2026-11-04, and public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
