@@ -66,7 +66,7 @@ AI stays the name of the tool family and of this site, and Miragon/miragon-ai-do
 Pulse's docs are the VitePress site in `docs/` of that repo, https://miragon.github.io/pulse/; the
 MCP server's pages sit under `mcp/`: `mcp/getting-started` (with
 `#connect-your-claude-in-30-seconds` and `#run-it-on-your-own-engine`), `mcp/architecture`,
-`mcp/developer`, `mcp/operations`, `mcp/reference` and `mcp/usage`; Pulse CLI's under `cli/`. Prose says Pulse. Where a reader needs the
+`mcp/build-your-own` (pulse-starter), `mcp/developer`, `mcp/operations`, `mcp/reference` and `mcp/usage`; Pulse CLI's under `cli/`. Prose says Pulse. Where a reader needs the
 repo, say it once per page: "Pulse is the MCP server from the repo Miragon/pulse". Technical
 identifiers stay exact, because readers copy them:
 
