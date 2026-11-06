@@ -32,12 +32,12 @@ tools:
     text:
       - Your team hosts Pulse once, and operations, support and product owners ask it about running processes in Claude, ChatGPT or another MCP client. It reads one or several engines without a migration or access to the engine database, and answers with widgets in the chat, such as incident clusters by failing activity and incident type, down to the stack trace. Without OAuth it starts read-only. For an incident it drafts a ticket, and you decide where it goes.
       - The [Pulse page](/tools/pulse/) links the public playground, where you can ask it first.
-    status: v0.22.0 (released 2026-10-25), pre-1.0, and each of the last three minor releases brought breaking changes. Runtime figures such as durations and incident rates need no PromQL, but they work only on CIB seven with the metrics plugin and reach back 30 days at most.
+    status: v0.27.0 (released 2026-11-06), pre-1.0, and each of the last three minor releases brought breaking changes. Runtime figures such as durations and incident rates need no PromQL, but they work only on CIB seven with the metrics plugin and reach back 30 days at most.
   - tool: Pulse CLI
     text:
       - Pulse CLI turns the 396 operations of the engine REST API into commands for your shell, a coding agent such as Claude Code, or a CI job. `pulse-cli status` triages the whole engine in one read-only call and names the next command for each finding, and `pulse-cli inspect --business-key ORD-1001` shows where one instance waits and why.
       - With `--fail-on warning`, any finding (an open incident included) fails the CI job.
-    status: 0.22.0 (released 2026-10-25) on npm, through Homebrew, as standalone binaries for Linux, macOS and Windows and as a container image. Pre-1.0. Up to 0.10.0 it was operate, and 0.22.0 renamed its package, command and files.
+    status: 0.27.0 (released 2026-11-06) on npm, through Homebrew, as standalone binaries for Linux, macOS and Windows and as a container image. Pre-1.0. Up to 0.10.0 it was operate, and 0.22.0 renamed its package, command and files.
 human:
   - icon: cog
     title: The agent

@@ -57,7 +57,7 @@ steps:
   - title: Create
     text: Use the template on GitHub or with gh repo create. Everything installs from the public npm registry, without credentials.
   - title: Run
-    text: pnpm dev serves MCP on port 8400 with an inspector. The example widget renders without an engine or any other system.
+    text: pnpm dev serves MCP on port 8400 with an inspector. The example widget renders without an engine or any other system. For the engine tools, docker compose up -d starts a CIB seven try-out engine on localhost:8410.
   - title: Add your system
     text: Copy modules/mcp-notes into a module for your ERP. The create-module skill walks your coding agent through the wiring.
   - title: Ship
@@ -75,10 +75,10 @@ skills:
 status:
   - icon: refresh
     title: Synced on every Pulse release
-    text: pulse-starter mirrors templates/composed-server and syncs once install, build and tests pass against the public npm registry. It has no release of its own yet. From the next Pulse release on, each sync also builds the starter's Docker image, then tags the mirror commit and publishes a release.
+    text: pulse-starter mirrors templates/composed-server and syncs once install, build and tests pass against the public npm registry and its Docker image builds. Each sync then tags the mirror commit with the Pulse version and publishes a release there, the first at v0.27.0.
   - icon: package
     title: Pre-1.0 packages
-    text: The starter pins the @miragon/pulse-* packages at 0.26.0. Pulse released six minor versions from 16 October to 4 November 2026, four of them with breaking changes, and has no upgrade guide.
+    text: The starter pins the @miragon/pulse-* packages at 0.27.0. Pulse released seven minor versions from 16 October to 6 November 2026, five of them with breaking changes, and has no upgrade guide.
 proof:
   - icon: github
     title: templates/composed-server
@@ -142,10 +142,10 @@ Everything also works by hand. `CLAUDE.md` is the compact architecture reference
   <PillButton href="https://github.com/Miragon/pulse-starter#quickstart" label="Get started" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Status" title="Where the template stands on 6 November 2026" intro="Pulse is the MCP server from the repo Miragon/pulse. pulse-starter is at Pulse v0.26.0, released 2026-11-04, and public under the MIT licence.">
+<PageSection tone="tint" eyebrow="Status" title="Where the template stands on 6 November 2026" intro="Pulse is the MCP server from the repo Miragon/pulse. pulse-starter is at Pulse v0.27.0, released 2026-11-06, and public under the MIT licence. The try-out engine in its compose.yaml records no metrics and comes without Prometheus, so it serves the engine tools only.">
   <FeatureList items={frontmatter.status} />
 
-Pulse's [changelog](https://github.com/Miragon/pulse/blob/main/CHANGELOG.md) lists each breaking change.
+Pulse's [changelog](https://github.com/Miragon/pulse/blob/main/CHANGELOG.md) lists each breaking change, and each [release of pulse-starter](https://github.com/Miragon/pulse-starter/releases) names its Pulse release and links that changelog.
 
 </PageSection>
 
