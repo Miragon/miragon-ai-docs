@@ -50,8 +50,8 @@ compare:
       - engine_* and analytics_* tools with widgets, from Pulse's modules
       - A copy of the example module mcp-notes, next to the engine modules
       - Guard tests in server/test/ that fail when a wiring step is missing
-      - CLAUDE.md and four Claude Code skills, create-module among them
-      - OAuth with Keycloak or Auth0, engine tools start read-only without it
+      - CLAUDE.md and three Claude Code skills, create-module among them
+      - OAuth with Keycloak, Auth0, WorkOS, Better Auth or Convex, engine tools start read-only without it
       - A Docker image with a health check, /health/live, /health/ready and /metrics
 steps:
   - title: Create
@@ -72,21 +72,22 @@ skills:
   - icon: dashboard
     title: add-widget
     text: An interactive widget for a module.
-  - icon: user-check
-    title: add-settings-section
-    text: Per-user settings for your module.
 status:
   - icon: refresh
     title: Synced on every Pulse release
-    text: pulse-starter mirrors templates/composed-server and syncs once install and tests pass against the public npm registry. It has no releases of its own.
+    text: pulse-starter mirrors templates/composed-server and syncs once install, build and tests pass against the public npm registry. It has no release of its own yet. From the next Pulse release on, each sync also builds the starter's Docker image, then tags the mirror commit and publishes a release.
   - icon: package
     title: Pre-1.0 packages
-    text: The starter pins the @miragon/pulse-* packages at 0.21.0. They release about weekly and still bring breaking changes.
+    text: The starter pins the @miragon/pulse-* packages at 0.26.0. Pulse released six minor versions from 16 October to 4 November 2026, four of them with breaking changes, and has no upgrade guide.
 proof:
   - icon: github
     title: templates/composed-server
     text: The source of pulse-starter in Miragon/pulse, where issues and pull requests go.
     link: https://github.com/Miragon/pulse/tree/main/templates/composed-server
+  - icon: book
+    title: Build your own server
+    text: The page in Pulse's docs that starts your own server from pulse-starter.
+    link: https://miragon.github.io/pulse/mcp/build-your-own
   - icon: play
     title: Pulse playground
     text: An MCP endpoint without login, running the stock Pulse server built from the same @miragon/pulse-* modules, read-only.
@@ -130,8 +131,8 @@ fits:
   <StepList items={frontmatter.steps} />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Built for your coding agent" title="Four skills walk the agent through the wiring" intro="Open pulse-starter in Claude Code, or any agent that reads CLAUDE.md, and describe what you want. The skills in .claude/skills/ cover the four common tasks.">
-  <CardGrid items={frontmatter.skills} columns={4} />
+<PageSection tone="tint" eyebrow="Built for your coding agent" title="Three skills walk the agent through the wiring" intro="Open pulse-starter in Claude Code, or any agent that reads CLAUDE.md, and describe what you want. The skills in .claude/skills/ cover the three common tasks.">
+  <CardGrid items={frontmatter.skills} columns={3} />
 
 Everything also works by hand. `CLAUDE.md` is the compact architecture reference, and the guard tests in `server/test/` fail when a wiring step is missing.
 
@@ -141,12 +142,15 @@ Everything also works by hand. `CLAUDE.md` is the compact architecture reference
   <PillButton href="https://github.com/Miragon/pulse-starter#quickstart" label="Get started" />
 </PageSection>
 
-<PageSection tone="tint" eyebrow="Status" title="Where the template stands on 16 October 2026" intro="Pulse is the MCP server from the repo Miragon/pulse. pulse-starter is at Pulse v0.21.0, released 2026-10-16, and public under the MIT licence.">
+<PageSection tone="tint" eyebrow="Status" title="Where the template stands on 6 November 2026" intro="Pulse is the MCP server from the repo Miragon/pulse. pulse-starter is at Pulse v0.26.0, released 2026-11-04, and public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
+
+Pulse's [changelog](https://github.com/Miragon/pulse/blob/main/CHANGELOG.md) lists each breaking change.
+
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Sources, packages and the playground">
-  <CardGrid items={frontmatter.proof} />
+<PageSection eyebrow="Proof you can open" title="Source, docs, playground and package">
+  <CardGrid items={frontmatter.proof} columns={2} />
 </PageSection>
 
 <PageSection tone="tint" eyebrow="Where it fits" title="Solution templates in the lifecycle">
