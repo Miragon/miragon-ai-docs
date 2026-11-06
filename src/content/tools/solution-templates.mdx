@@ -51,7 +51,7 @@ compare:
       - A copy of the example module mcp-notes, next to the engine modules
       - Guard tests in server/test/ that fail when a wiring step is missing
       - CLAUDE.md and three Claude Code skills, create-module among them
-      - OAuth with Keycloak, Auth0 or another provider, engine tools start read-only without it
+      - OAuth with Keycloak, Auth0, WorkOS, Better Auth or Convex, engine tools start read-only without it
       - A Docker image with a health check, /health/live, /health/ready and /metrics
 steps:
   - title: Create
@@ -78,7 +78,7 @@ status:
     text: pulse-starter mirrors templates/composed-server and syncs once install, build and tests pass against the public npm registry. It has no release of its own yet. From the next Pulse release on, each sync also builds the starter's Docker image, then tags the mirror commit and publishes a release.
   - icon: package
     title: Pre-1.0 packages
-    text: The starter pins the @miragon/pulse-* packages at 0.26.0. Pulse released six minor versions from 16 October to 4 November 2026, four of them with breaking changes. There is no upgrade guide; Pulse's changelog lists each breaking change.
+    text: The starter pins the @miragon/pulse-* packages at 0.26.0. Pulse released six minor versions from 16 October to 4 November 2026, four of them with breaking changes, and has no upgrade guide.
 proof:
   - icon: github
     title: templates/composed-server
@@ -144,9 +144,12 @@ Everything also works by hand. `CLAUDE.md` is the compact architecture reference
 
 <PageSection tone="tint" eyebrow="Status" title="Where the template stands on 6 November 2026" intro="Pulse is the MCP server from the repo Miragon/pulse. pulse-starter is at Pulse v0.26.0, released 2026-11-04, and public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
+
+Pulse's [changelog](https://github.com/Miragon/pulse/blob/main/CHANGELOG.md) lists each breaking change.
+
 </PageSection>
 
-<PageSection eyebrow="Proof you can open" title="Source, docs, package and playground">
+<PageSection eyebrow="Proof you can open" title="Source, docs, playground and package">
   <CardGrid items={frontmatter.proof} columns={2} />
 </PageSection>
 
