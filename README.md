@@ -138,8 +138,10 @@ Taken on 2026-10-13 in [Miragon/miragon-ai-docs#1](https://github.com/Miragon/mi
   contact live here; the old site gets redirected or archived in a separate step.
 
 Taken on 2026-10-14 by the owner: for now the site is landing pages only. Docs and getting started
-live in each tool's repo, as a VitePress site in `docs/` with the theme of Miragon/mcp-toolkit, served
-on GitHub Pages at `https://miragon.github.io/<repo>/`. The tool pages link there.
+live in each tool's repo, as a VitePress site in `docs/` in one shared style, served on GitHub Pages
+at `https://miragon.github.io/<repo>/`. The tool pages link there. The style started as the theme of
+Miragon/mcp-toolkit; today it is the docs kit of the miragon-brand skill `docs-site`, which each repo
+copies unchanged into `docs/.vitepress/miragon/`.
 
 ## Writing for the site
 

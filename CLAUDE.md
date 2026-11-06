@@ -2,7 +2,8 @@
 
 This repo is the Miragon AI site (Astro), served at https://miragon.ai. For now it is landing pages
 only: docs and getting started live in each tool's repo, as a VitePress site in one shared style
-(the theme of Miragon/mcp-toolkit) on GitHub Pages. `README.md` covers setup, CI and deployment.
+(the docs kit of the miragon-brand skill `docs-site` from Miragon/corporate-identity) on GitHub
+Pages. `README.md` covers setup, CI and deployment.
 
 - Load the `docs-style` skill (`.claude/skills/docs-style/SKILL.md`) before you edit, review or plan
   any page. It holds the URL scheme, the voice rules, the decisions and the line budget per page.

@@ -145,7 +145,6 @@ export const toolSchema = z.strictObject({
   commands: z.array(card).optional(), // Pulse CLI: CardGrid
   guards: z.array(feature).optional(), // Pulse CLI: FeatureList
   toolsets: z.array(card).optional(), // pulse: CardGrid
-  templates: z.array(card).optional(), // solution-templates: CardGrid
   skills: z.array(card).optional(), // solution-templates: CardGrid
 })
 
