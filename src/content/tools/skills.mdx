@@ -18,15 +18,17 @@ hero:
       link: /#contact
 artefact:
   type: terminal
-  title: bpmn-cli 0.8.0 · pulse-cli 0.22.0
+  title: bpmn-cli 0.10.0 · pulse-cli 0.22.0
   lines:
     - { note: "asked to make payment.bpmn deployable, the bpmn skill runs" }
     - { cmd: "bpmn validate payment.bpmn --strict" }
-    - { out: "W_C7_DEPLOY_EXTERNAL_TOPIC Activity_ChargeCard:", tone: warn }
-    - { out: "serviceTask Activity_ChargeCard is an external task without", tone: warn }
-    - { out: "camunda:topic; the engines refuse the file", tone: warn }
-    - { out: "(`bpmn set <file> Activity_ChargeCard camunda:topic=<topic>`.)", tone: warn }
-    - { cmd: "bpmn set payment.bpmn Activity_ChargeCard camunda:topic=charge" }
+    - { out: "W_C7_DEPLOY_EXTERNAL_TOPIC serviceTask_chargeCard:", tone: warn }
+    - { out: "serviceTask serviceTask_chargeCard is an external task", tone: warn }
+    - { out: "without camunda:topic; the engines refuse the file", tone: warn }
+    - { out: "(`bpmn set <file> serviceTask_chargeCard", tone: warn }
+    - { out: "camunda:topic=<topic>`.)", tone: warn }
+    - { cmd: 'bpmn set payment.bpmn serviceTask_chargeCard \' }
+    - { cont: "    camunda:topic=charge" }
     - { cmd: "bpmn validate payment.bpmn --strict" }
     - { out: "valid, 0 warning(s)", tone: ok }
     - { note: "asked for one run on Operaton 2.1.5, the pulse-cli skill runs" }
@@ -104,7 +106,7 @@ proof:
     link: https://github.com/Miragon/pulse/blob/main/apps/cli/skills/pulse-cli/SKILL.md
   - icon: package
     title: "@miragon/bpmn-cli"
-    text: The CLI behind the bpmn skill, 0.8.0 on npm.
+    text: The CLI behind the bpmn skill, 0.10.0 on npm (released 2026-11-02).
     link: https://www.npmjs.com/package/@miragon/bpmn-cli
   - icon: package
     title: "@miragon/pulse-cli"
@@ -177,7 +179,7 @@ Claude Code does not update these plugins on its own. After a release, refresh t
 
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where the skills stand on 26 October 2026" intro="bpmn-cli 0.8.0 (released 2026-10-21) and pulse-cli 0.22.0 (released 2026-10-25) are public under the MIT licence, and each plugin carries the version of its CLI on npm. Both are pre-1.0, and both have shipped breaking changes in minor releases.">
+<PageSection eyebrow="Status" title="Where the skills stand" intro="bpmn-cli 0.10.0 (released 2026-11-02, as of 7 November 2026) and pulse-cli 0.22.0 (released 2026-10-25, as of 26 October 2026) are public under the MIT licence, and each plugin carries the version of its CLI on npm. Both are pre-1.0, and both have shipped breaking changes in minor releases.">
   <FeatureList items={frontmatter.status} columns={3} />
 </PageSection>
 
