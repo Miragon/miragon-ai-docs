@@ -74,7 +74,7 @@ result:
     text: Elements a change did not touch keep their exact text.
   - icon: tree
     title: Descriptive ids
-    text: New elements get ids such as serviceTask_reserveStock, never hashes. Only a name that repeats gets a number, with a warning. An id convention in your .bpmnlintrc sets their prefixes and case.
+    text: New elements get ids such as serviceTask_reserveStock, never hashes. An id that is already taken gets a number, with a warning. An id convention in your .bpmnlintrc sets their prefixes and case.
   - icon: clipboard
     title: Requirements on the step
     text: 'With bpmn set <file> <id> doc="...", the agent keeps the requirement text on the step.'
@@ -147,7 +147,7 @@ fits:
 docs:
   - icon: list
     title: Command reference
-    text: Every command with its flags and keys, its output and the exit codes.
+    text: Every command at a glance, the flags and keys they share, what they print and the exit codes.
     link: https://miragon.github.io/bpmn-cli/commands
   - icon: server
     title: Camunda 7 and Camunda 8
