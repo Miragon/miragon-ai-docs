@@ -18,21 +18,23 @@ hero:
       link: /#contact
 artefact:
   type: terminal
-  title: bpmn-cli 0.7.0
+  title: bpmn-cli 0.10.0
   lines:
-    - { cmd: 'bpmn new order.bpmn --name "Order handling" --target camunda7' }
-    - { out: 'created process Process_OrderHandling "Order handling"' }
+    - { cmd: 'bpmn new order.bpmn "Order handling" \' }
+    - { cont: "    --target camunda7" }
     - { cmd: 'bpmn add order.bpmn start "Order received"' }
+    - { out: "created startEvent: startEvent_orderReceived", tone: dim }
     - { cmd: 'bpmn add order.bpmn service "Reserve stock" \' }
-    - { cont: "    --after Event_OrderReceived" }
-    - { cmd: 'bpmn add order.bpmn end "Done" --after Activity_ReserveStock' }
-    - { out: "written: order.bpmn", tone: dim }
+    - { cont: "    --after startEvent_orderReceived" }
+    - { cmd: 'bpmn add order.bpmn end "Done" \' }
+    - { cont: "    --after serviceTask_reserveStock" }
     - { cmd: "bpmn validate order.bpmn --strict" }
-    - { out: "W_C7_DEPLOY_IMPLEMENTATION Activity_ReserveStock:", tone: warn }
-    - { out: "serviceTask Activity_ReserveStock has no implementation", tone: warn }
-    - { out: "(camunda:class, delegateExpression, expression,", tone: warn }
-    - { out: "type=external or a connector); the engines refuse the file", tone: warn }
-    - { out: "(Give it one: `bpmn set <file> Activity_ReserveStock" }
+    - { out: "W_C7_DEPLOY_IMPLEMENTATION serviceTask_reserveStock:", tone: warn }
+    - { out: "serviceTask serviceTask_reserveStock has no", tone: warn }
+    - { out: "implementation (camunda:class, delegateExpression,", tone: warn }
+    - { out: "expression, type=external or a connector); the", tone: warn }
+    - { out: "engines refuse the file", tone: warn }
+    - { out: "(Give it one: `bpmn set <file> serviceTask_reserveStock" }
     - { out: "camunda:type=external camunda:topic=<topic>` (or" }
     - { out: "camunda:delegateExpression=${...}, camunda:class=...," }
     - { out: "camunda:expression=${...}).)" }
@@ -72,7 +74,7 @@ result:
     text: Elements a change did not touch keep their exact text.
   - icon: tree
     title: Descriptive ids
-    text: New elements get ids such as Activity_ReserveStock, never hashes or running numbers. An id convention in your .bpmnlintrc sets their prefixes and case.
+    text: New elements get ids such as serviceTask_reserveStock, never hashes. An id that is already taken gets a number, with a warning. An id convention in your .bpmnlintrc sets their prefixes and case.
   - icon: clipboard
     title: Requirements on the step
     text: 'With bpmn set <file> <id> doc="...", the agent keeps the requirement text on the step.'
@@ -82,7 +84,7 @@ result:
 status:
   - icon: monitor
     title: No hosted playground
-    text: The CLI runs on your machine through npm or npx.
+    text: The CLI runs on your machine through npm, npx or Homebrew.
   - icon: plug
     title: No MCP server of its own
     text: An agent calls the CLI, and designIQ uses it as a library.
@@ -95,7 +97,7 @@ status:
 proof:
   - icon: package
     title: "@miragon/bpmn-cli on npm"
-    text: Version 0.7.0, with the command bpmn, for Node.js 22.12 or later.
+    text: Version 0.10.0 (released 2026-11-02), with the command bpmn, for Node.js 24 or later.
     link: https://www.npmjs.com/package/@miragon/bpmn-cli
   - icon: play
     title: Demo on the docs landing
@@ -145,7 +147,7 @@ fits:
 docs:
   - icon: list
     title: Command reference
-    text: Every command with its options.
+    text: Every command at a glance, the flags and keys they share, what they print and the exit codes.
     link: https://miragon.github.io/bpmn-cli/commands
   - icon: server
     title: Camunda 7 and Camunda 8
@@ -153,7 +155,7 @@ docs:
     link: https://miragon.github.io/bpmn-cli/camunda
   - icon: map
     title: Layout and formatting
-    text: Layout modes and the commands that change only the diagram.
+    text: How a write draws, and the commands that change only the drawing.
     link: https://miragon.github.io/bpmn-cli/layout
   - icon: book
     title: All docs
@@ -172,13 +174,13 @@ docs:
 <PageSection tone="tint" eyebrow="Findings" title="Each finding names the command that fixes it" intro="For the session at the top of this page, one bpmn set gives the service task an external topic, and the next check passes.">
 
 ```sh
-bpmn set order.bpmn Activity_ReserveStock camunda:type=external camunda:topic=reserve-stock
+bpmn set order.bpmn serviceTask_reserveStock camunda:type=external camunda:topic=reserve-stock
 bpmn validate order.bpmn --strict   # valid, 0 warning(s)
 ```
 
 </PageSection>
 
-<PageSection eyebrow="What you get" title="An ordinary BPMN file, checked before the engine sees it" intro="Every change runs one pipeline: load, apply, validate, lay out, then write. The result opens in the tools your team already uses.">
+<PageSection eyebrow="What you get" title="An ordinary BPMN file, checked before the engine sees it" intro="Every change runs one pipeline: load, apply, lay out, validate, then write. The result opens in the tools your team already uses.">
   <FeatureList items={frontmatter.result} columns={3} />
 </PageSection>
 
@@ -186,7 +188,7 @@ bpmn validate order.bpmn --strict   # valid, 0 warning(s)
   <PillButton href="https://miragon.github.io/bpmn-cli/getting-started" label="Get started" />
 </PageSection>
 
-<PageSection eyebrow="Status" title="Where bpmn-cli stands on 14 October 2026" intro="bpmn-cli is at 0.7.0, released to npm on 14 October 2026. It is pre-1.0, and minor versions still bring breaking changes (0.3.0, 0.4.0, 0.5.0 and 0.7.0 did), so pin the version you run. The repository is public under the MIT licence.">
+<PageSection eyebrow="Status" title="Where bpmn-cli stands on 7 November 2026" intro="bpmn-cli is at 0.10.0, released to npm on 2 November 2026. It is pre-1.0, and minor versions still bring breaking changes (0.3.0, 0.4.0, 0.5.0, 0.7.0, 0.9.0 and 0.10.0 did), so pin the version you run. The repository is public under the MIT licence.">
   <FeatureList items={frontmatter.status} />
 </PageSection>
 
