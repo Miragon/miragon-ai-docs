@@ -8,8 +8,8 @@
  * websites (`--cd-*` and the roles `--cd-ui-*`) is vendored verbatim in
  * cd-tokens.generated.css; this file only MAPS the site's roles (--site-*)
  * and the landing building blocks' colours (--l-*) onto it. A CI change
- * means re-copying that one file and updating the pin in
- * scripts/check-brand-assets.mjs; never declare a --cd-* token here.
+ * means re-copying that one file with brand-assets.mjs of the miragon-brand
+ * plugin (.miragon/brand-assets.yaml); never declare a --cd-* token here.
  *
  * The site is always dark, the CI's way (miragon-brand 1.9.0):
  * `data-cd-theme="dark"` on <html> (layouts/Website.astro) switches the

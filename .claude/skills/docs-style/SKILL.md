@@ -392,11 +392,13 @@ Follow them; changing one needs the team.
   `hover`; that change of look waits for the team. `website.css` holds the reset, the base and the
   `.prose` text styles; `code.css` the code blocks' language label.
 - The CI tokens (`src/styles/cd-tokens.generated.css`, the web variant from the corporate-design
-  skill) and the logos (`public/logo/`) are vendored verbatim from Miragon/corporate-identity and
-  pinned by SHA-256 in `scripts/check-brand-assets.mjs` (miragon-brand 1.9.0). Never edit them,
-  and never declare a `--cd-*` token anywhere else. A new CI release means copying the files from
-  the miragon-brand skills, then updating `BRAND.version`, the hashes and the `ref` in
-  `.github/workflows/ci.yml` in one commit.
+  skill) and the logos (`public/logo/`) are vendored verbatim from Miragon/corporate-identity.
+  The tokens are copied with `brand-assets.mjs` of the miragon-brand plugin
+  (`.miragon/brand-assets.yaml`) and pinned by SHA-256 in `.miragon/brand-assets.sha256`; the
+  logos are pinned in `scripts/check-brand-assets.mjs` (miragon-brand 1.9.0). Never edit them,
+  and never declare a `--cd-*` token anywhere else. A new CI release for the tokens means
+  re-running `brand-assets.mjs`; for the logos, copying them from the miragon-brand skills, then
+  updating `BRAND.version`, the hashes and the `ref` in `.github/workflows/ci.yml` in one commit.
 - Redirects live in `netlify.toml` only. Astro's `redirects` stay unused: without an adapter they
   become meta-refresh pages that would shadow Netlify's 301s.
 - Dependencies are pinned exactly (`.npmrc` sets save-exact, CI checks it). Node 22 (Astro needs
