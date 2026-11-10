@@ -1,21 +1,26 @@
 #!/usr/bin/env node
 // Brand asset guard: the CI tokens and logos this site vendors from
-// Miragon/corporate-identity stay byte-identical to one pinned CI release.
+// Miragon/corporate-identity stay byte-identical to their pinned CI release.
+// The tokens are copied with brand-assets.mjs of the miragon-brand plugin and
+// pinned in .miragon/brand-assets.sha256, the logos are pinned below.
 // It took over the docs half of miragon-ai's ui-stylesheet.test.ts when the
 // site left that monorepo (Miragon/miragon-ai-docs#1).
 //
-// 1. Pin: every vendored file matches its SHA-256 from the pinned release.
+// 1. Pin: every vendored file matches its SHA-256 from the pinned release
+//    or from .miragon/brand-assets.sha256.
 // 2. No fork: no other stylesheet, component (.astro, .vue), page (.md,
 //    .mdx, a <style> block in either) or TypeScript module declares a --cd-*
 //    token.
 // 3. Source: when a miragon-brand plugin of the pinned version is at hand,
-//    every vendored file equals its CI source byte for byte. CI checks out
+//    every logo equals its CI source byte for byte. CI checks out
 //    Miragon/corporate-identity and points MIRAGON_BRAND_DIR at it; locally
 //    the Claude Code plugin cache is used. Without either, this step skips.
 //
-// Moving to a new CI release: copy the files from the miragon-brand skills,
-// then update BRAND.version, the hashes below and the ref of the brand job in
-// .github/workflows/ci.yml in the same commit.
+// Moving the tokens to a new CI release: run brand-assets.mjs of the
+// miragon-brand plugin, which rewrites .miragon/brand-assets.sha256. Moving the
+// logos: copy them from the miragon-brand skills, then update BRAND.version,
+// the hashes below and the ref of the brand job in .github/workflows/ci.yml in
+// the same commit.
 import { createHash } from "node:crypto"
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
 import { homedir } from "node:os"
@@ -24,12 +29,6 @@ import { join, relative } from "node:path"
 const BRAND = {
   version: "1.9.0",
   files: [
-    {
-      // The token file for websites (palette, roles --cd-ui-* light and dark).
-      path: "src/styles/cd-tokens.generated.css",
-      source: "skills/corporate-design/assets/cd-tokens.generated.css",
-      sha256: "948b67914780119f6d6ca7075935f9e6e33663e6ac12e4e3d9d0b9b8ecea1594",
-    },
     {
       path: "public/logo/miragon-komet-blau.svg",
       source: "skills/corporate-design/assets/logo/miragon-komet-blau.svg",
@@ -49,6 +48,13 @@ const BRAND = {
 }
 
 const ROOT = new URL("..", import.meta.url).pathname
+const BRAND_ASSETS = readFileSync(join(ROOT, ".miragon/brand-assets.sha256"), "utf8")
+  .trim()
+  .split("\n")
+  .map((line) => {
+    const [sha256, path] = line.split(/\s+/)
+    return { path, sha256 }
+  })
 // Not site sources: packages, the build output, and dot directories, which
 // hold tooling (.git, .astro, .netlify, .context, a CI checkout in .ci-source).
 const skip = (entry) => entry === "node_modules" || entry === "dist" || entry.startsWith(".")
@@ -58,12 +64,12 @@ const errors = []
 const sha256 = (file) => createHash("sha256").update(readFileSync(file)).digest("hex")
 
 // 1. Pin
-for (const { path, sha256: pinned } of BRAND.files) {
+for (const { path, sha256: pinned } of [...BRAND.files, ...BRAND_ASSETS]) {
   const file = join(ROOT, path)
   if (!existsSync(file)) errors.push(`${path}: missing`)
   else if (sha256(file) !== pinned)
     errors.push(
-      `${path}: differs from miragon-brand ${BRAND.version} (hand-edited or re-vendored without updating the pin)`,
+      `${path}: differs from its pin (hand-edited or re-vendored without updating the pin)`,
     )
 }
 
@@ -76,7 +82,7 @@ function* walk(dir) {
     else if (/\.(css|astro|vue|mdx?|ts)$/.test(entry)) yield path
   }
 }
-const vendored = new Set(BRAND.files.map((f) => join(ROOT, f.path)))
+const vendored = new Set([...BRAND.files, ...BRAND_ASSETS].map((f) => join(ROOT, f.path)))
 for (const file of walk(ROOT)) {
   if (vendored.has(file)) continue
   readFileSync(file, "utf8")
@@ -121,5 +127,5 @@ if (errors.length) {
   process.exit(1)
 }
 console.log(
-  `brand assets: ${BRAND.files.length} files match miragon-brand ${BRAND.version}${source ? ` (checked against ${source})` : ""}`,
+  `brand assets: ${BRAND_ASSETS.length} files match .miragon/brand-assets.sha256, ${BRAND.files.length} logos match miragon-brand ${BRAND.version}${source ? ` (checked against ${source})` : ""}`,
 )

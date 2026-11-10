@@ -35,8 +35,9 @@ Pages. `README.md` covers setup, CI and deployment.
   in the tool's docs site that holds the commands. The skill describes the pattern and its truth rule
   for artefacts.
 - Never edit `src/styles/cd-tokens.generated.css` or the logos in `public/logo/`. They are vendored
-  from Miragon/corporate-identity (miragon-brand 1.9.0) and pinned in
-  `scripts/check-brand-assets.mjs`. No other file declares a `--cd-*` token. The site is always
+  from Miragon/corporate-identity: the tokens with `brand-assets.mjs` of the miragon-brand plugin
+  (`.miragon/brand-assets.yaml`, pinned in `.miragon/brand-assets.sha256`), the logos from
+  miragon-brand 1.9.0, pinned in `scripts/check-brand-assets.mjs`. No other file declares a `--cd-*` token. The site is always
   dark through the CI's dark mode (`data-cd-theme="dark"` on `<html>`), and `src/styles/tokens.css`
   maps the site's colours onto the CI roles `--cd-ui-*`; use a role, not a `color-mix()` lift.
 - `.miragon/brand.json` switches brand-lint on: the miragon-brand plugin lints each file you write,

@@ -25,6 +25,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
+      - run: sha256sum -c .miragon/brand-assets.sha256
+
       - uses: pnpm/action-setup@v6.1.0
 
       - uses: actions/setup-node@v7.1.0
@@ -81,7 +83,7 @@ jobs:
 
       - name: No access to Miragon/corporate-identity
         if: env.CI_SOURCE_TOKEN == ''
-        run: echo "::warning title=Brand checks skipped::CORPORATE_IDENTITY_READ_TOKEN is not set, so the vendored tokens and logos are not compared with Miragon/corporate-identity and brand-lint does not run. Add the secret (contents:read on Miragon/corporate-identity)."
+        run: echo "::warning title=Brand checks skipped::CORPORATE_IDENTITY_READ_TOKEN is not set, so the vendored logos are not compared with Miragon/corporate-identity and brand-lint does not run. Add the secret (contents:read on Miragon/corporate-identity)."
 
       # Keep ref on the release pinned as BRAND.version in scripts/check-brand-assets.mjs.
       - uses: actions/checkout@v7.0.1
@@ -98,7 +100,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: Vendored tokens and logos equal the CI source
+      - name: Vendored logos equal the CI source
         if: env.CI_SOURCE_TOKEN != ''
         run: node scripts/check-brand-assets.mjs
         env:
